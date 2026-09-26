@@ -28,6 +28,35 @@ ATTACKS_BY_DAY = {
 BENIGN = "Benign"
 
 
+def _chrono_split_per_class(
+    X: np.ndarray, y: np.ndarray, order: np.ndarray, test_size: float, day: str
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Time-ordered train/test split, stratified by class.
+
+    Within each class, flows are ordered by ``flow_order`` (capture-order
+    proxy); the FIRST (1-test_size) fraction trains, the LAST test_size
+    fraction tests. Guarantees: train is strictly earlier than test within
+    every class; every class with >=2 flows gets >=1 test flow. Singleton
+    classes go to train only (disclosed in the build log).
+    """
+    tr_parts, te_parts = [], []
+    for lab in np.unique(y):
+        idx = np.where(y == lab)[0]
+        idx = idx[np.argsort(order[idx], kind="stable")]
+        n = len(idx)
+        if n == 1:
+            print(f"  [chrono] {day}: singleton class id={lab} -> train only (no test sample)")
+            tr_parts.append(idx)
+            continue
+        n_te = max(1, int(round(n * test_size)))
+        n_te = min(n_te, n - 1)  # keep >=1 train sample
+        tr_parts.append(idx[: n - n_te])
+        te_parts.append(idx[n - n_te :])
+    tr = np.concatenate(tr_parts)
+    te = np.concatenate(te_parts) if te_parts else np.zeros(0, dtype=np.int64)
+    return X[tr], X[te], y[tr], y[te]
+
+
 def build_label_map() -> dict[str, int]:
     label_map = {BENIGN: 0}
     nxt = 1
@@ -46,6 +75,7 @@ def build_tasks(
     benign_per_task: int = 5000,
     seed: int = 42,
     order: str = "default",
+    split: str = "random",
 ) -> tuple[list[dict], dict[str, int]]:
     label_map = build_label_map()
     # Phase 0 fix: repair mojibake Web-Attack labels already baked into the
@@ -68,7 +98,7 @@ def build_tasks(
             return x
 
         df["Label"] = df["Label"].map(_repair)
-    feature_cols = [c for c in df.columns if c not in ("Label", "day")]
+    feature_cols = [c for c in df.columns if c not in ("Label", "day", "flow_order")]
     rng = np.random.RandomState(seed)
     day_order = ORDERS.get(order, DAY_ORDER)
 
@@ -110,17 +140,27 @@ def build_tasks(
         task_df = pd.concat(parts, ignore_index=True)
         y = task_df["Label"].map(label_map).to_numpy()
         X = task_df[feature_cols].to_numpy(dtype=np.float64)
+        task_order = (
+            task_df["flow_order"].to_numpy(dtype=np.int64)
+            if "flow_order" in task_df.columns
+            else np.arange(len(task_df))
+        )
 
         if len(np.unique(y)) < 2 and day != "monday":
             continue
 
-        strat = y if len(np.unique(y)) > 1 else None
-        try:
-            X_tr, X_te, y_tr, y_te = train_test_split(
-                X, y, test_size=test_size, random_state=seed, stratify=strat
+        if split == "chrono":
+            X_tr, X_te, y_tr, y_te = _chrono_split_per_class(
+                X, y, task_order, test_size=test_size, day=day
             )
-        except ValueError:
-            X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=test_size, random_state=seed)
+        else:
+            strat = y if len(np.unique(y)) > 1 else None
+            try:
+                X_tr, X_te, y_tr, y_te = train_test_split(
+                    X, y, test_size=test_size, random_state=seed, stratify=strat
+                )
+            except ValueError:
+                X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=test_size, random_state=seed)
 
         if scenario == "ci" and day == "monday":
             seen_labels = [BENIGN]
@@ -156,6 +196,22 @@ def fit_scaler_on_train(tasks: list[dict]) -> list[dict]:
     for t in tasks:
         sc = StandardScaler()
         t["X_train"] = sc.fit_transform(t["X_train"]).astype(np.float32)
+        t["X_test"] = sc.transform(t["X_test"]).astype(np.float32)
+        t["scaler"] = sc
+    return tasks
+
+
+def fit_scaler_frozen(tasks: list[dict], n_fit: int = 2) -> list[dict]:
+    """Fit ONE StandardScaler on the first ``n_fit`` tasks' TRAIN data only
+    (default T0+T1 = benign + first attacks; nothing from future tasks — the
+    claude's-plan §"Critical" no-backward-leakage protocol) and apply it to
+    every task's train and test splits. Each split is still transformed with
+    statistics that exclude its own test rows and all future-task rows."""
+    sc = StandardScaler()
+    X_fit = np.concatenate([t["X_train"] for t in tasks[:n_fit]], axis=0)
+    sc.fit(X_fit)
+    for t in tasks:
+        t["X_train"] = sc.transform(t["X_train"]).astype(np.float32)
         t["X_test"] = sc.transform(t["X_test"]).astype(np.float32)
         t["scaler"] = sc
     return tasks
@@ -221,6 +277,20 @@ def main():
     ap.add_argument("--order", choices=list(ORDERS.keys()), default="default")
     ap.add_argument("--benign-per-task", type=int, default=5000)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument(
+        "--split",
+        choices=["random", "chrono"],
+        default="random",
+        help="random: stratified train_test_split (status quo secondary); "
+        "chrono: per-class time-ordered split by flow_order (primary).",
+    )
+    ap.add_argument(
+        "--scaler",
+        choices=["pertask", "frozen"],
+        default="pertask",
+        help="pertask: fit one StandardScaler per task train split (status quo); "
+        "frozen: fit one scaler on T0+T1 train only, apply to all tasks.",
+    )
     args = ap.parse_args()
 
     if args.processed.suffix == ".parquet":
@@ -229,10 +299,14 @@ def main():
         df = pd.read_csv(args.processed)
 
     tasks, label_map = build_tasks(
-        df, scenario=args.scenario, benign_per_task=args.benign_per_task, seed=args.seed, order=args.order
+        df, scenario=args.scenario, benign_per_task=args.benign_per_task, seed=args.seed, order=args.order,
+        split=args.split,
     )
-    tasks = fit_scaler_on_train(tasks)
-    feature_cols = [c for c in df.columns if c not in ("Label", "day")]
+    if args.scaler == "frozen":
+        tasks = fit_scaler_frozen(tasks)
+    else:
+        tasks = fit_scaler_on_train(tasks)
+    feature_cols = [c for c in df.columns if c not in ("Label", "day", "flow_order")]
     save_tasks(tasks, label_map, args.out, feature_cols=feature_cols)
 
     for i, t in enumerate(tasks):

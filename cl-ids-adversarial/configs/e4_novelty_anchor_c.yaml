@@ -1,0 +1,24 @@
+name: e4_novelty_anchor_c
+seed: 42
+device: cpu
+cl_method: er
+buffer_size: 500
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+hidden:
+- 128
+- 64
+data:
+  scenario: cii
+  tasks: data/processed/tasks_chrono.npz
+attack:
+  type: novelty
+  mode: anchor
+  budget: 0.01
+  anchor_noise: 0.05
+  unknown_label: 99
+  threshold_quantile: 0.95
+  min_cluster_size: 15
+defense: null
+out_dir: results

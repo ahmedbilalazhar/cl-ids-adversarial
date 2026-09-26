@@ -116,7 +116,221 @@ WILCOXON_PAIRS = [
     # Matched-memory control: federated DER++ with 100/client (~500 total)
     ("f2_fed_derpp_p0_b100", "f2_fed_derpp_p0"),
     ("f2_fed_derpp_p0_b100", "e1_derpp"),
+    # Scaler ablation (Phase 0.4): frozen T0+T1-fit scaler vs per-task scaler,
+    # same seeds, same splits, finetune clean.
+    ("e1_finetune_frozen", "e1_finetune"),
+    # --- Phase-2 chrono+frozen primary suite (_c), random+frozen (_rf) ---
+    # scaler effect under random splits (E1 set, locked 7 seeds)
+    ("e1_clean_rf", "e1_clean"),
+    ("e1_finetune_rf", "e1_finetune"),
+    ("e1_ewc_rf", "e1_ewc"),
+    ("e1_lwf_rf", "e1_lwf"),
+    ("e1_derpp_rf", "e1_derpp"),
+    ("e1_joint_rf", "e1_joint"),
+    # split effect under frozen scaler (chrono primary vs random secondary)
+    ("e1_clean_c", "e1_clean_rf"),
+    ("e1_finetune_c", "e1_finetune_rf"),
+    ("e1_ewc_c", "e1_ewc_rf"),
+    ("e1_lwf_c", "e1_lwf_rf"),
+    ("e1_derpp_c", "e1_derpp_rf"),
+    # chrono single-node headline + attacks + defences + A2
+    ("e1_ewc_c", "e1_clean_c"),
+    ("e1_finetune_c", "e1_clean_c"),
+    ("e1_derpp_c", "e1_clean_c"),
+    ("e1_lwf_c", "e1_clean_c"),
+    ("e1_joint_c", "e1_clean_c"),
+    ("e2_labelflip_c", "e1_clean_c"),
+    ("e3_backdoor_c", "e1_clean_c"),
+    ("e4_novelty_c", "e1_clean_c"),
+    ("e4_novelty_anchor_c", "e4_novelty_nopois_c"),
+    ("e4_novelty_suppress_c", "e1_clean_c"),
+    ("e6_defense_smallloss_c", "e2_labelflip_c"),
+    ("e6_defense_knnconsist_c", "e2_labelflip_c"),
+    ("a2_classil_c", "e1_clean_c"),
+    # A1/A3 chrono (order-invariance as first-class result)
+    ("a1_buffer_1000_c", "e2_labelflip_c"),
+    ("a3_order_alt_c", "e2_labelflip_c"),
+    ("a3_order_rev_c", "e2_labelflip_c"),
+    # growing-head strategy ablation (single-node finetune clean)
+    ("e1_finetune_gh", "e1_finetune_c"),
+    # F2 chrono headline: method ranking + dose-response x4 methods (ER: Phase 3)
+    ("f2_fed_ewc_p0_c", "f2_fed_finetune_p0_c"),
+    ("f2_fed_derpp_p0_c", "f2_fed_finetune_p0_c"),
+    ("f2_fed_er_p0_c", "f2_fed_finetune_p0_c"),
+    ("f2_fed_finetune_p5_c", "f2_fed_finetune_p0_c"),
+    ("f2_fed_finetune_p10_c", "f2_fed_finetune_p0_c"),
+    ("f2_fed_ewc_p5_c", "f2_fed_ewc_p0_c"),
+    ("f2_fed_ewc_p10_c", "f2_fed_ewc_p0_c"),
+    ("f2_fed_derpp_p5_c", "f2_fed_derpp_p0_c"),
+    ("f2_fed_derpp_p10_c", "f2_fed_derpp_p0_c"),
+    ("f2_fed_er_p5_c", "f2_fed_er_p0_c"),
+    ("f2_fed_er_p10_c", "f2_fed_er_p0_c"),
+    # Phase-3 centralized-vs-federated ablation, chrono
+    ("f2_fed_finetune_p0_c", "e1_finetune_c"),
+    ("f2_fed_ewc_p0_c", "e1_ewc_c"),
+    ("f2_fed_derpp_p0_c", "e1_derpp_c"),
+    ("f2_fed_er_p0_c", "e1_clean_c"),
+    # Phase-4 federated defense, chrono
+    ("f4_fed_finetune_p5_sl_c", "f2_fed_finetune_p5_c"),
+    ("f4_fed_finetune_p10_sl_c", "f2_fed_finetune_p10_c"),
+    ("f4_fed_ewc_p5_sl_c", "f2_fed_ewc_p5_c"),
+    ("f4_fed_ewc_p10_sl_c", "f2_fed_ewc_p10_c"),
+    ("f4_fed_derpp_p5_sl_c", "f2_fed_derpp_p5_c"),
+    ("f4_fed_derpp_p10_sl_c", "f2_fed_derpp_p10_c"),
 ]
+
+# Phase-2 step 10: named Holm families. Pairs absent from this map are
+# reported with raw p only (family "unassigned").
+WILCOXON_FAMILIES: dict[str, list[tuple[str, str]]] = {
+    "e_single_node": [
+        ("e1_lwf", "e1_clean"), ("e1_ewc", "e1_clean"),
+        ("e1_finetune", "e1_clean"), ("e1_derpp", "e1_clean"),
+        ("e1_joint", "e1_clean"), ("e2_labelflip", "e1_clean"),
+        ("e3_backdoor", "e1_clean"), ("e4_novelty", "e1_clean"),
+        ("e4_novelty_anchor", "e4_novelty_nopois"),
+        ("e4_novelty_suppress", "e1_clean"),
+        ("e6_defense_smallloss", "e2_labelflip"),
+        ("e6_defense_knnconsist", "e2_labelflip"),
+    ],
+    "f2_headline": [
+        ("f2_fed_ewc_p0", "f2_fed_finetune_p0"),
+        ("f2_fed_derpp_p0", "f2_fed_finetune_p0"),
+        ("f2_fed_finetune_p5", "f2_fed_finetune_p0"),
+        ("f2_fed_finetune_p10", "f2_fed_finetune_p0"),
+        ("f2_fed_ewc_p5", "f2_fed_ewc_p0"),
+        ("f2_fed_ewc_p10", "f2_fed_ewc_p0"),
+        ("f2_fed_derpp_p5", "f2_fed_derpp_p0"),
+        ("f2_fed_derpp_p10", "f2_fed_derpp_p0"),
+    ],
+    "fed_ablation": [
+        ("f2_fed_finetune_p0", "e1_finetune"),
+        ("f2_fed_ewc_p0", "e1_ewc"),
+        ("f2_fed_derpp_p0", "e1_derpp"),
+    ],
+    "f4_defense": [
+        ("f4_fed_finetune_p5_sl", "f2_fed_finetune_p5"),
+        ("f4_fed_finetune_p10_sl", "f2_fed_finetune_p10"),
+        ("f4_fed_ewc_p5_sl", "f2_fed_ewc_p5"),
+        ("f4_fed_ewc_p10_sl", "f2_fed_ewc_p10"),
+        ("f4_fed_derpp_p5_sl", "f2_fed_derpp_p5"),
+        ("f4_fed_derpp_p10_sl", "f2_fed_derpp_p10"),
+    ],
+    "controls": [
+        ("a1_buffer_1000", "e2_labelflip"),
+        ("f2_fed_derpp_p0_b100", "f2_fed_derpp_p0"),
+        ("f2_fed_derpp_p0_b100", "e1_derpp"),
+    ],
+    "scaler_effect": [
+        ("e1_finetune_frozen", "e1_finetune"),
+        ("e1_clean_rf", "e1_clean"), ("e1_finetune_rf", "e1_finetune"),
+        ("e1_ewc_rf", "e1_ewc"), ("e1_lwf_rf", "e1_lwf"),
+        ("e1_derpp_rf", "e1_derpp"), ("e1_joint_rf", "e1_joint"),
+    ],
+    "split_effect": [
+        ("e1_clean_c", "e1_clean_rf"), ("e1_finetune_c", "e1_finetune_rf"),
+        ("e1_ewc_c", "e1_ewc_rf"), ("e1_lwf_c", "e1_lwf_rf"),
+        ("e1_derpp_c", "e1_derpp_rf"),
+    ],
+    "chrono_single": [
+        ("e1_ewc_c", "e1_clean_c"), ("e1_finetune_c", "e1_clean_c"),
+        ("e1_derpp_c", "e1_clean_c"), ("e1_lwf_c", "e1_clean_c"),
+        ("e1_joint_c", "e1_clean_c"), ("e2_labelflip_c", "e1_clean_c"),
+        ("e3_backdoor_c", "e1_clean_c"), ("e4_novelty_c", "e1_clean_c"),
+        ("e4_novelty_anchor_c", "e4_novelty_nopois_c"),
+        ("e4_novelty_suppress_c", "e1_clean_c"),
+        ("e6_defense_smallloss_c", "e2_labelflip_c"),
+        ("e6_defense_knnconsist_c", "e2_labelflip_c"),
+        ("a2_classil_c", "e1_clean_c"),
+    ],
+    "order_invariance": [
+        ("a1_buffer_1000_c", "e2_labelflip_c"),
+        ("a3_order_alt_c", "e2_labelflip_c"),
+        ("a3_order_rev_c", "e2_labelflip_c"),
+    ],
+    "head_strategy": [("e1_finetune_gh", "e1_finetune_c")],
+    "f2_headline_c": [
+        ("f2_fed_ewc_p0_c", "f2_fed_finetune_p0_c"),
+        ("f2_fed_derpp_p0_c", "f2_fed_finetune_p0_c"),
+        ("f2_fed_er_p0_c", "f2_fed_finetune_p0_c"),
+        ("f2_fed_finetune_p5_c", "f2_fed_finetune_p0_c"),
+        ("f2_fed_finetune_p10_c", "f2_fed_finetune_p0_c"),
+        ("f2_fed_ewc_p5_c", "f2_fed_ewc_p0_c"),
+        ("f2_fed_ewc_p10_c", "f2_fed_ewc_p0_c"),
+        ("f2_fed_derpp_p5_c", "f2_fed_derpp_p0_c"),
+        ("f2_fed_derpp_p10_c", "f2_fed_derpp_p0_c"),
+        ("f2_fed_er_p5_c", "f2_fed_er_p0_c"),
+        ("f2_fed_er_p10_c", "f2_fed_er_p0_c"),
+    ],
+    "fed_ablation_c": [
+        ("f2_fed_finetune_p0_c", "e1_finetune_c"),
+        ("f2_fed_ewc_p0_c", "e1_ewc_c"),
+        ("f2_fed_derpp_p0_c", "e1_derpp_c"),
+        ("f2_fed_er_p0_c", "e1_clean_c"),
+    ],
+    "f4_defense_c": [
+        ("f4_fed_finetune_p5_sl_c", "f2_fed_finetune_p5_c"),
+        ("f4_fed_finetune_p10_sl_c", "f2_fed_finetune_p10_c"),
+        ("f4_fed_ewc_p5_sl_c", "f2_fed_ewc_p5_c"),
+        ("f4_fed_ewc_p10_sl_c", "f2_fed_ewc_p10_c"),
+        ("f4_fed_derpp_p5_sl_c", "f2_fed_derpp_p5_c"),
+        ("f4_fed_derpp_p10_sl_c", "f2_fed_derpp_p10_c"),
+    ],
+    "byzantine_headline": [],  # Phase 3 fills (Byzantine attacks x robust aggregators)
+    "adaptive_attack": [],  # Phase 3 fills (defence-specific adaptive attackers)
+}
+FAMILY_OF = {pair: fam for fam, pairs in WILCOXON_FAMILIES.items() for pair in pairs}
+
+
+def matched_rank_biserial(a: list[float], b: list[float]) -> float | str:
+    """Matched-pairs rank-biserial correlation (Kerby 2014): (T+ - T-) / S.
+
+    T+/T- = Wilcoxon positive/negative rank sums (zeros dropped, average
+    ranks for ties, mirroring scipy's zero_method="wilcox"). Returns ""
+    when undefined. Positive => a tends above b.
+    """
+    import numpy as np
+    from scipy.stats import rankdata
+
+    diffs = np.asarray([x - y for x, y in zip(a, b)], dtype=float)
+    nz = diffs[diffs != 0.0]
+    n = len(nz)
+    if n == 0:
+        return ""
+    ranks = rankdata(np.abs(nz), method="average")
+    t_pos = float(ranks[nz > 0].sum())
+    s = n * (n + 1) / 2.0
+    return (2.0 * t_pos - s) / s
+
+
+def bootstrap_ci(
+    vals: list[float], n_boot: int = 10000, ci: float = 0.95, seed: int = 0
+) -> tuple[str, str]:
+    """Percentile bootstrap CI of the mean. Deterministic (fixed seed)."""
+    import numpy as np
+
+    x = np.asarray(vals, dtype=float)
+    if len(x) < 2:
+        return "", ""
+    rng = np.random.default_rng(seed)
+    means = rng.choice(x, size=(n_boot, len(x)), replace=True).mean(axis=1)
+    lo = float(np.percentile(means, (1.0 - ci) / 2.0 * 100.0))
+    hi = float(np.percentile(means, (1.0 + ci) / 2.0 * 100.0))
+    return f"{lo:.6f}", f"{hi:.6f}"
+
+
+def holm_correct(pvals: list[float | str]) -> list[float | str]:
+    """Holm-Bonferroni adjusted p-values (order-preserving output)."""
+    idx = [i for i, p in enumerate(pvals) if isinstance(p, float)]
+    if not idx:
+        return list(pvals)
+    order = sorted(idx, key=lambda i: pvals[i])
+    m = len(order)
+    adj: dict[int, float] = {}
+    running = 0.0
+    for k, i in enumerate(order):
+        running = max(running, min(1.0, (m - k) * float(pvals[i])))
+        adj[i] = running
+    return [adj[i] if i in adj else pvals[i] for i in range(len(pvals))]
 
 
 def mean_std(vals: list[float]) -> tuple[float, float]:
@@ -191,6 +405,10 @@ def main():
                 row[f"{m}_std"] = ""
         seeds = sorted(int(x.get("seed", -1)) for x in items)
         row["seeds"] = ",".join(str(s) for s in seeds)
+        # Bootstrap 95% CI of mean ACC (second, continuous-resolution
+        # estimator alongside Wilcoxon — Phase 2 step 9).
+        acc_vals = [float(x["acc"]) for x in items if x.get("acc") is not None]
+        row["acc_ci_lo"], row["acc_ci_hi"] = bootstrap_ci(acc_vals) if acc_vals else ("", "")
         rows.append(row)
 
     out = RESULTS / "stats_summary.csv"
@@ -198,6 +416,7 @@ def main():
     fields = (
         ["name", "n_seeds", "seeds"]
         + [f"{m}_{s}" for m in METRICS for s in ("mean", "std")]
+        + ["acc_ci_lo", "acc_ci_hi"]
         + disc_fields
         + ["replay_note"]  # Gate D rule 2: buffer-imbalance note travels with the table
     )
@@ -224,7 +443,10 @@ def main():
     print(f"NOTE (Gate D rule 1): random-mode label-flip ASR is {ASR_NA_LABEL}.")
     print(f"NOTE (Gate D rule 2): {BUFFER_NOTE}")
 
-    # Wilcoxon signed-rank vs paired baseline (common seeds only)
+    # Wilcoxon signed-rank vs paired baseline (common seeds only).
+    # Phase-2 step 10: raw p + Holm-within-family + matched rank-biserial
+    # effect size + bootstrap CI of the paired mean difference. `pvalue`
+    # stays the RAW two-sided p (locked rows reproduce exactly).
     from scipy.stats import wilcoxon
 
     wrows = []
@@ -247,24 +469,44 @@ def main():
                 p, stat = float(res.pvalue), float(res.statistic)
         except ValueError:
             p, stat = "", ""
+        diffs = [x - y for x, y in zip(av, bv)]
+        dlo, dhi = bootstrap_ci(diffs) if len(diffs) > 1 else ("", "")
         wrows.append(
             {
                 "name": name,
                 "baseline": base,
+                "family": FAMILY_OF.get((name, base), "unassigned"),
                 "n": len(common),
                 "seeds": ",".join(str(s) for s in common),
                 "acc_mean": f"{sum(av)/len(av):.6f}",
                 "baseline_acc_mean": f"{sum(bv)/len(bv):.6f}",
+                "diff_mean": f"{sum(diffs)/len(diffs):.6f}",
+                "diff_ci_lo": dlo,
+                "diff_ci_hi": dhi,
                 "wilcoxon_stat": stat,
                 "pvalue": p,
+                "effect_r": matched_rank_biserial(av, bv),
+                "p_holm": "",
             }
         )
+    # Holm correction within each family (over numeric raw p only).
+    fam_idx: dict[str, list[int]] = {}
+    for i, r in enumerate(wrows):
+        fam_idx.setdefault(r["family"], []).append(i)
+    for fam, idxs in fam_idx.items():
+        adj = holm_correct([wrows[i]["pvalue"] for i in idxs])
+        for i, a in zip(idxs, adj):
+            wrows[i]["p_holm"] = a
     wout = RESULTS / "wilcoxon.csv"
     if wrows:
         with open(wout, "w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(
                 f,
-                fieldnames=["name", "baseline", "n", "seeds", "acc_mean", "baseline_acc_mean", "wilcoxon_stat", "pvalue"],
+                fieldnames=[
+                    "name", "baseline", "family", "n", "seeds", "acc_mean",
+                    "baseline_acc_mean", "diff_mean", "diff_ci_lo", "diff_ci_hi",
+                    "wilcoxon_stat", "pvalue", "effect_r", "p_holm",
+                ],
             )
             w.writeheader()
             for r in wrows:
@@ -273,7 +515,8 @@ def main():
         for r in wrows:
             print(
                 f"  {r['name']} vs {r['baseline']}: n={r['n']} "
-                f"acc {r['acc_mean']} vs {r['baseline_acc_mean']} p={r['pvalue']}"
+                f"acc {r['acc_mean']} vs {r['baseline_acc_mean']} p={r['pvalue']} "
+                f"p_holm={r['p_holm']} r={r['effect_r']} [{r['family']}]"
             )
 
 

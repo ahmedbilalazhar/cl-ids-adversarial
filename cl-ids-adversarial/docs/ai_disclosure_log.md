@@ -22,6 +22,26 @@ not witnessed; anything reconstructed is marked (reconstructed).
   strategy, all go/no-go and scoping decisions, the eventual paper prose
   argument and interpretation (per plan: "write the actual argument and
   interpretation yourself").
+- 2026-09-26 Phase 0 journal track (witnessed): `fit_scaler_frozen` in
+  `src/data/sequence.py`, `configs/e1_finetune_frozen.yaml`, `scaler_abl`
+  group in `scripts/run_grid.py`, scaler WILCOXON_PAIR, `data/processed/
+  tasks_frozen.npz` — AI-written to specification, verified by finite-value
+  check + identical task sizes/labels vs `tasks.npz` + full n=7 grid.
+  proposal.md §2/§3/§4/§6–§11 rewrites and threat_model.md rewrite —
+  AI-drafted, human-decision-driven (journal pick, H-verdicts, primary/
+  secondary framings are supervisor/student decisions); every number
+  re-checked against `results/wilcoxon.csv` + `results/stats_summary.csv`.
+  Journal-scope evidence: web-surveyed 2026-09-26 (Lavaur C&S 2025,
+  Mao IoT-J 2024, FedSecure 2026, WeiDetect 2025, JKSU-CIS 2026, SSF
+  INFOCOM 2025);   TOPS/JNCA queries rate-limited on first pass — re-run
+  logged as outstanding, journal pick does not depend on them.
+- 2026-09-26 Phase 1 (witnessed): 5 arXiv-API queries run directly by the
+  agent (URLs + hit counts in search_protocol.md #11–16); neighbour
+  descriptions for 2608.04602/Su-2025/Korba/BRFID verified against API
+  records or indexed full text, NOT invented; Scholar/Xplore/Scopus rows
+  honestly marked proxy/outstanding. positioning_memo.md AI-drafted from
+  the verified landscape; the headline LOCK is a human decision.
 
 For the paper: adapt the above into the venue's GenAI-disclosure paragraph;
-AISec 2026+ explicitly values this transparency.
+Computers & Security follows Elsevier's GenAI policy (declare tools used,
+human responsibility for content).

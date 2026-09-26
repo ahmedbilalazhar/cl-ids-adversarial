@@ -1,0 +1,15 @@
+name: e1_lwf_c
+seed: 42
+device: cpu
+cl_method: lwf
+alpha: 1.0
+temperature: 2.0
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+data:
+  scenario: cii
+  tasks: data/processed/tasks_chrono.npz
+attack: null
+defense: null
+out_dir: results

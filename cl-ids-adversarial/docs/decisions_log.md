@@ -75,3 +75,70 @@ One line each: chose / alternative / why. Newest last.
 22. Matched-memory DER++ arm (buffer 100/client federated vs 500 single-node):
     chose to run it / alternative was leaving Phase-3 comparison confounded /
     I introduced the 5x-memory confound; owning the control is correctness.
+23. b100 outcome softens Phase-3 DER++ claim: chose "partly memory artifact"
+    wording / alternative was keeping "federation hurts DER++ (p=0.031)" /
+    matched-memory gap vs single-node is n.s. (p=0.375) while finetune gap
+    (no memory confound) stands — report both, overclaim neither.
+24. Target journal = Elsevier Computers & Security (Q1), fallback JNCA: chose
+    C&S / alternative was TIFS/TDSC/TOPS or staying workshop-shaped / Lavaur
+    et al. C&S 2025 (systematic label-flip x FL IDS) is our paper's shape twin
+    AND the adjacent work we must distinguish (they lack the continual
+    dimension); C&S owns the empirical adversarial-evaluation lineage
+    (Apruzzese driftxperturbation, AIS-NIDS 2024). AISec/ACM-sigconf refs void.
+25. Proposal H1/H2/H3 rewritten to exact wilcoxon.csv values: chose
+    0.3070v0.3187 p=0.4688 (H1 non-reproduction), 0.2742v0.3010 p=0.0781
+    (H2 suggestive), 0.3637v0.3070 p=0.0156 + 0.2612v0.3070 p=0.0313 (H3) /
+    alternative was leaving stale pre-fix numbers (p=0.031/0.047/0.016 drafts)
+    / no claim may lack a trace to wilcoxon.csv; stale numbers are never cited.
+26. CICIDS2017-over-UNSW reason (backfill): chose comparability with
+    arXiv:2608.04602 (H1 target) + Paper-1 future-work naming (CIC-IDS2017
+    first of three) / alternative was the EdgeFedCIL rationale in an old note /
+    the old note was wrong about our own reason; comparability is checkable in
+    proposal.md S4. UNSW-NB15 + CICIoT2023 join as datasets #2/#3 (Phase 4).
+27. Scaler = frozen T0+T1-fit primary, per-task secondary: chose frozen /
+    alternative was keeping per-task primary / same-seed n=7 finetune ablation:
+    frozen 0.5439+-0.0083 vs per-task 0.2991+-0.0162, p=0.0156 — per-task
+    re-standardization injects cross-task shift dominating all method effects;
+    frozen leaks nothing from the future (T0+T1 train only) and matches the
+    plan's no-backward-leakage rule plus Paper-1's single-transform practice.
+    Benefit: principled geometry; cost: locked pre-2026-09-26 numbers become
+    conservative lower bounds (stated, not hidden).
+28. Head = pre-sized fixed, uniform, expand dormant (backfill+resolution):
+    chose document-and-keep / alternative was silent picking or a hidden
+    mixed strategy / run_experiment.py pre-sizes to full label space so
+    expand_head never fires; all methods share base.py::_maybe_expand; LwF
+    slice-to-seen-width (#3) is consistent with this, not a rival strategy.
+    Growing-head ablation scheduled in Phase-2 ablations, not decided silently.
+29. Byzantine + robust aggregators + adaptive attacker promoted to PRIMARY:
+    chose implement all in Phase 3 / alternative was "Option 2-B only" scope /
+    a security journal expects the aggregation attack surface attacked AND the
+    defences adaptively evaded; Lavaur 2025 already owns static FL label-flip.
+30. A1/A2/A3 CUT void, chrono-primary, Holm families, power-set seeds:
+    chose full Phase-2 rebuild / alternative was keeping the cut list /
+    nothing is cut for time under the journal bar; order-invariance (A3) and
+    the chrono-vs-random delta become first-class findings.
+31. Su-2025 citation quarantined: chose "verification pending, do not cite"
+    flag / alternative was citing the web-search description / I have not
+    seen a DOI or arXiv page; Phase-1 step 6 verifies or the claim is narrowed.
+32. Phase-1 arXiv-API pass (5 exact queries, real counts): chose protocol
+    table entries 11-16 with verbatim hit counts / alternative was reusing the
+    2026-09-24 top-10 proxy / the protocol demands database runs; arXiv API
+    is directly queryable so no excuse for proxying it. Scholar/Xplore/Scopus
+    logged as outstanding manual debt (paywall/CAPTCHA), owned by student.
+33. arXiv:2608.04602 VERIFIED as real entry (Azizi Ariffin et al., cs.CR,
+    2026-08-05): chose anchor H1 on the abstract's own numbers / alternative
+    was trusting repo lore / abstract confirms CII scenario, 0.0053 collapse
+    at 1% flip, 0.97/95% backdoor, CICIDS2017, and baseline ladder
+    (finetune 0.0052 / EWC 0.0324 / LwF 0.0699 / iCaRL 0.8770) — the
+    protocol-comparison story for H1 now cites a checked source.
+34. Su 2025 VERIFIED at content level (Junyan Su, indexed record quoting the
+    honest-clients/IID assumptions + poisoning/non-IID future-work call):
+    chose content-verified-but-publisher-page-outstanding status / alternative
+    was full citation or full quarantine / the quoted limitations text matches
+    our gap claim exactly; citing awaits the publisher page at write-up.
+35. Headline locked per positioning memo: federated poisoning+Byzantine x
+    FCIL x method comparison / alternative was discovery-stage or
+    defense-confusion headlines / two independent verified future-work calls
+    (Su 2025, EdgeFedCIL S3.1) name exactly this; adjacent FL-IDS poisoning
+    is uniformly static; discovery effects are n.s.-adjacent. Secondaries:
+    defense-confusion (A), discovery-stage (B).

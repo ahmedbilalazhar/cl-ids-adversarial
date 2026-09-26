@@ -109,6 +109,13 @@ def _clean_frame(df: pd.DataFrame, day: str) -> pd.DataFrame:
     df = df.drop_duplicates()
     after_dup = len(df)
 
+    # Phase-2 provenance: capture-order rank within this day-file, assigned
+    # AFTER dedup (a unique index would defeat duplicate detection). The
+    # CICIDS2017 ML-CSV distribution carries no Timestamp column, so raw-file
+    # row order (CICFlowMeter emission order) is the chronological proxy.
+    # Order-stable through dropna/dedup/concat; used for time-ordered splits.
+    df["flow_order"] = np.arange(len(df), dtype=np.int64)
+
     df["Label"] = _normalise_labels(df["Label"])
     df["day"] = day
 

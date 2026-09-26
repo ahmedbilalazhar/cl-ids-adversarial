@@ -27,6 +27,21 @@ This table is the evidence base for any "first" / "nobody has done X" claim in t
 
 Hits column = top-N returned by the search backend (not full DB totals); IEEE/Scopus exact counts still require manual runs per §"How to fill".
 
+## 2026-09-26 arXiv-API pass (exact queries, real hit counts — Phase 1 step 5)
+
+| # | Query (arXiv API `search_query`) | Date run | DB | Hits | Relevant | Notes |
+|---|-------|----------|-----|------|----------|-------|
+| 11 | `all:"federated class-incremental" AND all:intrusion` | 2026-09-26 | arXiv API | 0 | 0 | Exact-phrase intersection empty |
+| 12 | `all:federated AND all:"class-incremental" AND all:"intrusion detection"` | 2026-09-26 | arXiv API | 1 | 1 | Korba et al. 2407.15700 (life-long FL IDS, 6G IoV) — claims first CIL×FL for attack detection; NO poisoning eval |
+| 13 | `all:"continual learning" AND all:"intrusion detection" AND (all:poisoning OR all:backdoor OR all:adversarial)` | 2026-09-26 | arXiv API | 2 | 1 | 2608.04602 (VERIFIED real entry; our H1 target, numbers match lore) + 1812.00622 (irrelevant UEBA) |
+| 14 | `all:"novelty detection" AND all:poisoning` | 2026-09-26 | arXiv API | 3 | 0 | Web3-FL validation (2606.13180, 2312.05459) + DP theory (1911.07116) — none attacks a continual-IDS discovery stage |
+| 15 | `all:"replay buffer" AND (all:poisoning OR all:backdoor) AND all:"continual learning"` | 2026-09-26 | arXiv API | 2 | 2 | 2608.04602 + 2606.14987 (continual backdoor IoT/CPS) — neither federated nor discovery-stage |
+| 16 | Su-2025 verification (`au:Su_Chunhua AND all:federated` → miss; title-word hunt → hit) | 2026-09-26 | arXiv API + indexed-record search | 1 | 1 | "Evolutionary Replay-Driven Federated Class-Incremental Learning for Cyber-attack Detection", Junyan Su, 2025 — limitations section VERBATIM: honest clients+server assumed, IID assumed, future work = "federated learning poisoning and non-IID client data". Content-verified; publisher/DOI page still outstanding |
+
+## Scholar / Xplore / Scopus status (honest)
+
+Paywalled/CAPTCHA'd databases cannot be queried from this environment. Websearch proxies (site-scoped) were run 2026-09-24/26 covering the same 10 query intents; manual in-browser runs with exact counts remain OUTSTANDING debt (owner: student, ~30 min, run-book in §"How to fill"). No "first" claim enters the paper until those counts are filled.
+
 ---
 
 ## Known neighbours (pre-verified — must be cited and distinguished)
@@ -46,6 +61,14 @@ Hits column = top-N returned by the search backend (not full DB totals); IEEE/Sc
 | arXiv:2606.12655 (Amnesia) | Replay *sampler* composition attack on ER/DER++ | Manipulates buffer indices; not AE+clustering discovery |
 | Sonic, Inf. Sci. 2026 (doi:10.1016/j.ins.2026.123140) | Genetic poisoning of HDBSCAN/FISHDBC clustering | Clustering-only; no continual IDS / novelty pipeline — **must cite as nearest tool-level threat to Option 2-A** |
 | arXiv:2002.02741 | Poisoning online-trained AE anomaly detectors (ICS) | AE poisoning exists, but no clustering/discovery or CL setting |
+| Su 2025 (Junyan Su; content-verified 2026-09-26, publisher page outstanding) | Evolutionary replay-driven federated CIL cyber-attack detection; honest clients+server, IID; poisoning + non-IID = future work | **Our gap license #1** — we answer the quoted call directly (verify publisher page before citing) |
+| Wu et al. 2026 / EdgeFedCIL, Sensors 26:4630 (read in full) | Federated CIL IDS + compression; honest server/clients assumed (§3.1), poisoning/backdoor explicitly out of scope | **Our gap license #2** — poisoning × FCIL-IDS deferred by the closest system |
+| Korba et al., arXiv:2407.15700 | Life-long (CIL×FL) IDS for 6G IoV | No poisoning/adversarial eval; we add the attacker |
+| Jin et al. 2023, IEEE Network (EIDS) | Federated incremental + open-set DAE zero-day IDS | No poisoning eval; discovery is DAE-threshold, not AE+HDBSCAN pipeline |
+| Cerasuolo et al. 2025 (network-agnostic CIL NIDS) | Cross-dataset CIL NIDS; names federated + poisoning-robustness as future work | Single-node CIL; supports our gap from a third angle |
+| Lavaur et al., Comput. Secur. 2025, 156:104462 | Systematic label-flip × static-FL IDS | Static FL, no continual dimension — target-venue adjacent work we extend |
+| BRFID, arXiv:2609.28599 | Single-Byzantine label-flip on CICIDS2017 FL IDS (ensemble aggregation) | Static FL, no CL, non-FedAvg aggregation — cite + distinguish |
+| TSK-FedIDS 2026 / FedSecure 2026 / WeiDetect 2025 / Nowroozi 2025 | FL-IDS poisoning attacks/defences (CIC/UNSW/CICIoT2023) | All static FL; none continual — crowded flank, open continual dimension |
 
 ---
 

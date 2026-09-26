@@ -242,7 +242,16 @@ def run(cfg: dict) -> dict:
         feature_names = [f"f{i}" for i in range(in_dim)]
     n_classes = int(max(label_map.values())) + 1 + int((cfg.get("attack") or {}).get("type") == "novelty")
 
-    model = TabularMLP(in_dim, n_classes, hidden=cfg.get("hidden", [128, 64]))
+    # Phase-2 head-strategy ablation: grow_head=true starts the classifier at
+    # T0 width and lets BaseCLMethod._maybe_expand grow it per task (Paper-1
+    # §4.1 / plan "growing head" protocol). Default False = pre-sized fixed
+    # head (Paper-2 §3.2.1 protocol). Single-node only.
+    grow_head = bool(cfg.get("grow_head", False))
+    if grow_head:
+        n_init = int(tasks[0]["y_train"].max()) + 1
+        model = TabularMLP(in_dim, n_init, hidden=cfg.get("hidden", [128, 64]))
+    else:
+        model = TabularMLP(in_dim, n_classes, hidden=cfg.get("hidden", [128, 64]))
     method_name = cfg.get("cl_method", "er")
     method_cls = METHODS[method_name]
     method_kwargs = {
@@ -314,6 +323,9 @@ def run(cfg: dict) -> dict:
             X_tr, y_tr = X_tr[keep], y_tr[keep]
 
         class_bound = int(max(n_classes, y_tr.max() + 1))
+        if grow_head:
+            # Running seen-width: expand_head only ever grows, old rows copied.
+            class_bound = int(max(int(y_tr.max()) + 1, 1))
         loader = to_loader(X_tr, y_tr, batch_size=batch_size, shuffle=True)
         method.before_task(t, loader, class_bound=class_bound)
         method.train_task(loader, epochs=epochs)

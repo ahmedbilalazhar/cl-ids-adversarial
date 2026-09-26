@@ -24,10 +24,30 @@ GROUPS = {
     "f4_ewc": ["f4_fed_ewc_p5_sl","f4_fed_ewc_p10_sl"],
     "f4_derpp": ["f4_fed_derpp_p5_sl","f4_fed_derpp_p10_sl"],
     "f2_b100": ["f2_fed_derpp_p0_b100","f2_fed_derpp_p10_b100"],
+    "scaler_abl": ["e1_finetune_frozen"],
+    # Phase-2 chrono+frozen primary suite (_c), random+frozen (_rf),
+    # growing-head (_gh). _c/_gh run at SEEDS12 (power+Holm, step 9);
+    # _rf runs at SEEDS7 (paired against locked 7-seed secondaries only).
+    "c_e1": ["e1_clean_c","e1_derpp_c","e1_ewc_c","e1_finetune_c","e1_joint_c","e1_lwf_c"],
+    "c_e2e3": ["e2_labelflip_c","e2_labelflip_5pct_c","e2_labelflip_random_05pct_c","e2_bufferflip_c","e3_backdoor_c"],
+    "c_e4": ["e4_novelty_c","e4_novelty_anchor_c","e4_novelty_nopois_c","e4_novelty_suppress_c"],
+    "c_e6a2": ["e6_defense_knnconsist_c","e6_defense_smallloss_c","a2_classil_c"],
+    "c_a1": ["a1_buffer_1000_c"],
+    "c_a3": ["a3_order_alt_c","a3_order_rev_c"],
+    "c_f2": ["f2_fed_finetune_p0_c","f2_fed_finetune_p1_c","f2_fed_finetune_p5_c","f2_fed_finetune_p10_c","f2_fed_ewc_p0_c","f2_fed_ewc_p1_c","f2_fed_ewc_p5_c","f2_fed_ewc_p10_c","f2_fed_derpp_p0_c","f2_fed_derpp_p1_c","f2_fed_derpp_p5_c","f2_fed_derpp_p10_c","f2_fed_er_p0_c","f2_fed_er_p1_c","f2_fed_er_p5_c","f2_fed_er_p10_c"],
+    "c_f4": ["f4_fed_finetune_p5_sl_c","f4_fed_finetune_p10_sl_c","f4_fed_ewc_p5_sl_c","f4_fed_ewc_p10_sl_c","f4_fed_derpp_p5_sl_c","f4_fed_derpp_p10_sl_c"],
+    "rf_e1": ["e1_clean_rf","e1_derpp_rf","e1_ewc_rf","e1_finetune_rf","e1_joint_rf","e1_lwf_rf"],
+    "gh": ["e1_finetune_gh"],
 }
-FED_GROUPS = {"f2_ft", "f2_ewc", "f2_derpp", "f4_ft", "f4_ewc", "f4_derpp", "f2_b100"}
-SEEDS = [1,2,3,4,5,6,42]
+FED_GROUPS = {"f2_ft", "f2_ewc", "f2_derpp", "f4_ft", "f4_ewc", "f4_derpp", "f2_b100", "c_f2", "c_f4"}
+SEEDS7 = [1,2,3,4,5,6,42]
+# Phase-2 step 9: n=12 — exact Wilcoxon min-p 0.00049 survives Holm in the
+# largest family (chrono_single m=13 -> threshold 0.0038); locked 7 seeds
+# contained, so locked-seed pairings stay valid subsets.
+SEEDS12 = [1,2,3,4,5,6,7,8,9,10,11,42]
+SEEDS12_GROUPS = {"c_e1","c_e2e3","c_e4","c_e6a2","c_a1","c_a3","c_f2","c_f4","gh"}
 group = sys.argv[1]
+SEEDS = SEEDS12 if group in SEEDS12_GROUPS else SEEDS7
 if group in FED_GROUPS:
     from src.federated.fedavg import run_federated as run
 done, skipped = 0, 0

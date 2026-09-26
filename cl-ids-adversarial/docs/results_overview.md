@@ -43,7 +43,12 @@ federation changes is the *baseline*: per-round averaging of diverged client
 models compounds forgetting for finetune/DER++ (−0.05/−0.075, both p=0.031;
 IID control α=1000 recovers only to 0.216, so skew is not the driver), while
 EWC's penalty term anchors clients near the shared solution and transfers
-intact (p=0.94). Headline consequence: **under federation, EWC is the only
+intact (p=0.94). **Memory-confound control (2026-09-26):** federated DER++
+above used 500/client (5× single-node memory). A matched-memory arm
+(100/client ≈ 500 total) scores 0.242 vs 0.224 (p=0.47 n.s.) and vs
+single-node 0.274 (p=0.375 n.s.) — so the DER++ federated deficit is
+partly a memory artifact, while the finetune gap (no memory confound)
+stands. Headline consequence: **under federation, EWC is the only
 of the three that retains single-node performance, with or without
 poisoning** — a method-selection finding, not an attack-amplification one.
 
@@ -99,26 +104,29 @@ evasion 0.636, benign pollution ~0.40.
 RSS ~537–634MB (interpreter-inclusive). No edge-device numbers (stated as
 limitation, not implied).
 
-## Phase 5 — Novelty check (web search, 2026-09-26)
+## Phase 5 — Novelty check (web search, 2026-09-26; PROTOCOL re-run + database verification pending — Phase 1)
 
 Searched: (a) poisoning × federated class-incremental NIDS, (b) backdoor ×
 continual-learning IDS, (c) 2025–26 FL+CL+robustness in netsec. Real matches:
-**Su 2025** (evolutionary replay-driven federated CIL for cyber-attack
-detection) — explicitly assumes honest clients/server and IID clients, and
-names "federated learning poisoning and non-IID client data" as future work:
-this project answers that call directly. **Mao et al. 2024** (hierarchical
+**Su 2025** (Junyan Su; evolutionary replay-driven federated CIL for cyber-attack
+detection) — limitations section content-verified 2026-09-26 against indexed
+record (honest clients/server + IID assumed; "federated learning poisoning
+and non-IID client data" named as future work: this project answers that
+call directly; publisher/DOI page confirmation outstanding before citing). **Mao et al. 2024** (hierarchical
 federated CIL NIDS, no poisoning). **XDFC-IDS 2026** (federated
 class-incremental IDS, no poisoning). **Merzouk et al. 2023** (backdoor
 parameter study in FL IDS on UNSW-NB15 — static, not continual).
 **PoisonShield-FL-NIDS 2025**, **Neurocomputing 2026 FL-poisoning defense**,
 **Zukaib/KBS 2025 backdoor FL IDS** (all FL+poisoning, none continual).
-**arXiv:2608.04602** (single-node CII buffer poisoning — our non-reproduction
+**Lavaur et al., Comput. Secur. 2025, 156:104462** (systematic label-flip ×
+static-FL IDS — the adjacent work our continual dimension extends; target-venue
+lineage). **arXiv:2608.04602** (single-node CII buffer poisoning — our non-reproduction
 target). **Guo et al. 2024 / arXiv:2409.13864** (persistent backdoors in CL —
 vision benchmarks, not IDS). Verdict: FL-poisoning-IDS and CL-IDS are each
 crowded; the **intersection (malicious-client poisoning × federated
 class-incremental IDS × CL-method comparison under attack)** has no exact
-prior — but the margin is one paper deep (Su 2025), so claim "first" only
-with the Su-2025 future-work citation attached.
+prior found yet — but the margin may be one paper deep, so claim "first" only
+with the verified-citation attached, never unqualified.
 
 ## Limitations (paper paragraph — includes the scoped-out claim)
 
@@ -145,12 +153,13 @@ single dataset (CICIDS2017); single malicious client at ≤10% shard budget
 | Phase-4 small-loss eval 42 runs | DONE | significant for EWC only; knn→future work |
 | Phase-5 novelty search | DONE | Su-2025 future-work call = our gap |
 | E5/E7 | DONE | 0.636/0.40; 19k params, ~0.19ms |
-| a1/a3 ablations | CUT | locked scope: only if time allowed |
+| a1/a3 ablations | REINSTATED (Phase 2 step 11) | prior CUT void under journal bar |
+| Scaler | FROZEN PRIMARY (Phase-0 ablation) | frozen 0.544 vs per-task 0.299, p=0.0156 |
 | RF drift-auth system | CUT | scoped out; limitations + instructor note |
 | Backdoor-federated extension | CUT | noted as future work, not run |
 | a2 CI collapse (0.2000) | FLAGGED | mechanistic, reported, secondary |
 | Anchor ACC-cost (p=0.078) | FLAGGED | suggestive only; discovery effect stands |
-| Time-ordered splits | FLAGGED | methodology debt, needs your decision |
+| Time-ordered splits | PHASE-2 PRIMARY | chrono rebuild re-runs full suite; random kept as quantified secondary |
 
 Reproduce: `python scripts/run_grid.py <group>` (e1,e2e3,e4,e6a2,f2_ft,f2_ewc,
 f2_derpp,f4_ft,f4_ewc,f4_derpp) → `python -m src.run_experiment

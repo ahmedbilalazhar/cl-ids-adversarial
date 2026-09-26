@@ -1,0 +1,26 @@
+device: cpu
+cl_method: derpp
+buffer_size: 100
+alpha: 0.5
+beta: 0.5
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+seed: 42
+data:
+  scenario: cii
+  tasks: data/processed/tasks.npz
+defense: null
+fed:
+  n_clients: 5
+  malicious_id: 4
+  alpha: 0.5
+  local_epochs: 3
+out_dir: results
+attack:
+  type: label_flip
+  mode: targeted
+  source_class: DoS Hulk
+  target_class: 0
+  budget: 0.1
+name: f2_fed_derpp_p10_b100

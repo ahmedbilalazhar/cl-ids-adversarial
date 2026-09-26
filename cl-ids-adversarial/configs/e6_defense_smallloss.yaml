@@ -1,0 +1,21 @@
+name: e6_defense_smallloss
+seed: 42
+device: cpu
+cl_method: er
+buffer_size: 500
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+data:
+  scenario: cii
+  tasks: data/processed/tasks.npz
+attack:
+  type: label_flip
+  mode: targeted
+  source_class: DoS Hulk
+  target_class: 0
+  budget: 0.01
+defense:
+  type: small_loss
+  keep_ratio: 0.75
+out_dir: results

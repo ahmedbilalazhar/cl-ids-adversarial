@@ -1,0 +1,37 @@
+name,n_seeds,seeds,acc_mean,acc_std,bwt_mean,bwt_std,forgetting_mean,forgetting_std,asr_mean_mean,asr_mean_std,discovery_miss_rate_mean,discovery_miss_rate_std,fictitious_absorption_mean,fictitious_absorption_std,poison_novel_rate_mean,poison_novel_rate_std,absorbed_attack_rate_mean,absorbed_attack_rate_std,noise_rate_attack_mean,noise_rate_attack_std,n_fictitious_mean,n_fictitious_std,replay_note
+a2_classil,7,"1,2,3,4,5,6,42",0.199957,0.000007,-0.872326,0.062700,0.697861,0.050160,0.000000,0.000000,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e1_clean,7,"1,2,3,4,5,6,42",0.318699,0.035262,-0.806937,0.044281,0.645549,0.035424,0.000000,0.000000,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e1_derpp,7,"1,2,3,4,5,6,42",0.274035,0.016168,-0.861496,0.020564,0.689197,0.016451,0.000000,0.000000,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e1_ewc,7,"1,2,3,4,5,6,42",0.307054,0.028031,-0.820707,0.035089,0.656566,0.028072,0.000000,0.000000,,,,,,,,,,,,,
+e1_finetune,7,"1,2,3,4,5,6,42",0.299096,0.016177,-0.830710,0.020647,0.664568,0.016518,0.000000,0.000000,,,,,,,,,,,,,
+e1_joint,7,"1,2,3,4,5,6,42",0.968126,0.000620,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,,,,,,,,,,,,,
+e1_lwf,7,"1,2,3,4,5,6,42",0.574607,0.012018,-0.344854,0.027974,0.275883,0.022379,0.000000,0.000000,,,,,,,,,,,,,
+e2_bufferflip,7,"1,2,3,4,5,6,42",0.311874,0.028452,-0.815296,0.035879,0.652237,0.028703,0.000039,0.000040,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e2_labelflip,7,"1,2,3,4,5,6,42",0.307011,0.025126,-0.822290,0.031320,0.657832,0.025056,0.000067,0.000061,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e2_labelflip_5pct,7,"1,2,3,4,5,6,42",0.298445,0.035375,-0.833357,0.044272,0.666685,0.035418,0.000110,0.000100,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e2_labelflip_random_0.5pct,7,"1,2,3,4,5,6,42",0.278679,0.014756,-0.857085,0.018924,0.685668,0.015139,N/A (undefined for random-target mode),N/A (undefined for random-target mode),,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e3_backdoor,7,"1,2,3,4,5,6,42",0.281571,0.022754,-0.853378,0.028228,0.682702,0.022582,1.000000,0.000000,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e4_novelty,7,"1,2,3,4,5,6,42",0.297625,0.029441,-0.832002,0.037476,0.665602,0.029981,0.000030,0.000077,0.777939,0.000020,0.011333,0.015820,0.854694,0.019871,0.000000,0.000000,0.228057,0.002198,11.914286,1.165373,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e4_novelty_anchor,7,"1,2,3,4,5,6,42",0.274228,0.031254,-0.860007,0.039973,0.688005,0.031978,0.001588,0.000216,0.777939,0.000020,0.011058,0.003784,0.748316,0.028273,0.119375,0.007912,0.300506,0.020825,8.942857,0.427618,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e4_novelty_nopois,7,"1,2,3,4,5,6,42",0.301031,0.024350,-0.829309,0.030063,0.663447,0.024050,0.000000,0.000000,0.777939,0.000020,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.229776,0.001150,0.000000,0.000000,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e4_novelty_suppress,7,"1,2,3,4,5,6,42",0.301414,0.016101,-0.828329,0.020437,0.662663,0.016349,0.000002,0.000004,0.777939,0.000020,0.000000,0.000000,0.854476,0.016402,0.000000,0.000000,0.228639,0.001474,5.228571,0.657557,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e6_defense_knnconsist,7,"1,2,3,4,5,6,42",0.261238,0.018095,-0.875944,0.023851,0.700755,0.019081,0.000069,0.000061,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+e6_defense_smallloss,7,"1,2,3,4,5,6,42",0.363724,0.042253,-0.649544,0.050856,0.519635,0.040685,0.030890,0.005450,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+f2_fed_derpp_p0,7,"1,2,3,4,5,6,42",0.224274,0.021633,-0.710534,0.027536,0.568427,0.022029,0.000000,0.000000,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+f2_fed_derpp_p1,7,"1,2,3,4,5,6,42",0.223332,0.021306,-0.712508,0.025869,0.570006,0.020695,0.000023,0.000060,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+f2_fed_derpp_p10,7,"1,2,3,4,5,6,42",0.222143,0.020696,-0.716181,0.024154,0.572945,0.019324,0.000023,0.000060,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+f2_fed_derpp_p5,7,"1,2,3,4,5,6,42",0.223044,0.021044,-0.714078,0.024829,0.571262,0.019863,0.000023,0.000060,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+f2_fed_ewc_p0,7,"1,2,3,4,5,6,42",0.307897,0.070852,-0.613055,0.087416,0.490444,0.069933,0.000000,0.000000,,,,,,,,,,,,,
+f2_fed_ewc_p1,7,"1,2,3,4,5,6,42",0.305597,0.068527,-0.615933,0.084584,0.492746,0.067667,0.000175,0.000207,,,,,,,,,,,,,
+f2_fed_ewc_p10,7,"1,2,3,4,5,6,42",0.300841,0.066731,-0.621653,0.082485,0.497323,0.065988,0.000176,0.000210,,,,,,,,,,,,,
+f2_fed_ewc_p5,7,"1,2,3,4,5,6,42",0.302186,0.068029,-0.620171,0.084300,0.496137,0.067440,0.000173,0.000206,,,,,,,,,,,,,
+f2_fed_finetune_p0,7,"1,2,3,4,5,6,42",0.224488,0.030495,-0.716314,0.034901,0.573051,0.027921,0.000000,0.000000,,,,,,,,,,,,,
+f2_fed_finetune_p1,7,"1,2,3,4,5,6,42",0.224203,0.030304,-0.717332,0.035099,0.573866,0.028079,0.000012,0.000026,,,,,,,,,,,,,
+f2_fed_finetune_p10,7,"1,2,3,4,5,6,42",0.222758,0.029274,-0.719591,0.034105,0.575673,0.027284,0.000012,0.000027,,,,,,,,,,,,,
+f2_fed_finetune_p5,7,"1,2,3,4,5,6,42",0.223003,0.029050,-0.719116,0.033709,0.575293,0.026967,0.000012,0.000027,,,,,,,,,,,,,
+f4_fed_derpp_p10_sl,7,"1,2,3,4,5,6,42",0.229479,0.027753,-0.626913,0.034270,0.501531,0.027416,0.027628,0.007836,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+f4_fed_derpp_p5_sl,7,"1,2,3,4,5,6,42",0.232434,0.027041,-0.623333,0.031909,0.498666,0.025527,0.027361,0.007525,,,,,,,,,,,,,Replay buffer (ER/DER++) uses uniform random eviction and inherits stream class imbalance; NOT class-balanced.
+f4_fed_ewc_p10_sl,7,"1,2,3,4,5,6,42",0.421204,0.101608,-0.368758,0.143188,0.295006,0.114550,0.028112,0.007388,,,,,,,,,,,,,
+f4_fed_ewc_p5_sl,7,"1,2,3,4,5,6,42",0.421326,0.099870,-0.368542,0.141660,0.294834,0.113328,0.027953,0.007207,,,,,,,,,,,,,
+f4_fed_finetune_p10_sl,7,"1,2,3,4,5,6,42",0.262132,0.048562,-0.577394,0.070969,0.461915,0.056775,0.027199,0.006678,,,,,,,,,,,,,
+f4_fed_finetune_p5_sl,7,"1,2,3,4,5,6,42",0.259046,0.046448,-0.581527,0.067756,0.465221,0.054204,0.026786,0.006310,,,,,,,,,,,,,

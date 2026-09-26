@@ -1,0 +1,53 @@
+## Environment and core stack
+
+**Where to run it:** Google Colab (free tier). No GPU needed — your models are small MLPs on tabular data, CPU is fine, and Colab gives you a shareable, restartable notebook that's easy to paste into/out of an LLM chat.
+
+**Libraries:**
+- `pandas`, `numpy` — data loading/manipulation
+- `scikit-learn` — preprocessing (`StandardScaler`, `LabelEncoder`, `train_test_split`)
+- `PyTorch` — the model and training loops (you need PyTorch specifically, not just scikit-learn, because EWC requires computing per-parameter gradients/Fisher information, which needs a real autograd framework)
+- `matplotlib`, `seaborn` — plots
+- `scipy.stats` — the statistical comparison across seeds (paired t-test or similar)
+- Skip continual-learning libraries like Avalanche — they're built for image benchmarks (Split-MNIST/CIFAR) and adapting them to tabular network data adds friction without saving real time at this scale. Hand-rolling in plain PyTorch is more transparent, easier to debug, and easier to defend in your methodology section ("we implemented X" beats "a library did X").
+
+## Data pipeline
+
+- Get UNSW-NB15's pre-split files: `UNSW_NB15_training-set.csv` (175,341 rows) and `UNSW_NB15_testing-set.csv` (82,332 rows), 49 features + `attack_cat` label column.
+- Encode categorical columns (`proto`, `service`, `state`) — one-hot or label encoding.
+- **Critical:** fit your `StandardScaler` only on task 1's training rows, not the whole dataset — fitting globally leaks information from later tasks backward, which quietly invalidates the whole "incremental learning" premise.
+- Split `attack_cat`'s categories into your task sequence (e.g., Normal + 3–4 attack types in task 1, remaining types in tasks 2–3), checking class counts first since some categories (like Worms) are tiny.
+
+## Model + continual learning methods
+
+- A basic feedforward MLP (2–3 hidden layers, ReLU), with an output layer that grows as new classes are introduced (start sized for task 1's classes, expand and copy old weights when a new task arrives — this is the standard "growing head" approach, simpler to implement than masking).
+- **Naive fine-tuning:** just keep training on new task data. This is your control condition — no code beyond a normal training loop.
+- **EWC:** after each task, compute the diagonal Fisher information matrix (how sensitive the loss is to each weight) using that task's data, store it alongside the trained weights, and add a penalty term to future losses that discourages changing high-Fisher weights. This is the fiddliest math in the project — have the LLM write it with inline comments explaining each term, and verify by hand that the penalty actually increases when you perturb an important weight.
+- **Replay + distillation:** keep a buffer of stored examples from old tasks (random sampling is fine to start), mix them into new-task batches, and add a distillation loss — the old model's softened output on buffer samples becomes a soft target the new model tries to match. This is the one tied to Paper 2's mechanism, so it's your most important implementation to get right.
+
+## The attack
+
+- Pick one target task and one target class inside it (recommend: flip attack traffic → "Normal," since that's the operationally realistic goal — an attacker wants malicious traffic to look benign).
+- At each poisoning rate (0/1/5/10%), randomly select that percentage of the target class's training rows in that task and flip their labels.
+- **Verification step, non-negotiable:** after generating poisoned data, print 15–20 before/after rows and manually confirm the flip landed on the right rows, in the right split, for the right task. Do this every time you touch the poisoning code, not just once.
+
+## Running the full experiment grid
+
+- Write one function: `run(cl_method, poison_rate, seed) → per-task accuracy, forgetting score`.
+- Loop over the grid with `itertools.product` — 3 methods × 4 poison rates × 5 seeds = 60 runs. At this scale, plain CPU runs finish in minutes total; don't bother with experiment-tracking tools like Weights & Biases, just append each run's results as a row to a single `results.csv`.
+- Analysis: group by method/rate, compute mean ± 95% CI across seeds, run a paired comparison (e.g., Wilcoxon signed-rank via `scipy.stats`) between methods at each poison rate, plot accuracy-vs-poison-rate curves per method.
+
+## How to actually work with the LLM (the discipline part)
+
+- **Decompose, don't ask for "the whole project."** Request one module at a time: preprocessing → task-split logic → MLP class → naive trainer → EWC trainer → replay+distillation trainer → poisoning function → experiment runner → plotting. Test and sanity-check each before moving to the next — this is what protects your week 1–2 timeline.
+- **Ask for the verification code alongside the feature code**, not after. "Write the poisoning function, and also write a small script that prints 20 samples before/after so I can check it worked" gets you both in one pass.
+- **For EWC specifically, ask the LLM to comment the Fisher-information math line by line.** You need to be able to explain this yourself if asked — it's the part most likely to be silently wrong.
+- **Keep the running log** (what you generated vs. wrote/verified yourself) as you go — this becomes your generative-AI disclosure paragraph later, and reconstructing it from memory in week 5 is much harder than logging it live.
+
+## Writing tools
+
+- **Overleaf**, using the ACM sigconf template (for AISec) — free, has the template pre-loaded, and you can draft in Overleaf while having the LLM help write/tighten prose section by section (methodology, related work from your Phase 1 review, results narrative) — but write the actual argument and interpretation yourself.
+- **GitHub repo** for the code — keep it organized by the module breakdown above, so you can link an anonymized version (via anonymous.4open.science, which AISec's submission guidelines specifically point to) at submission time.
+
+---
+
+Given you'll be spending 5 weeks doing sustained, code-heavy work with an LLM, this is exactly the kind of workflow Claude Code is built for — it works directly in your files/terminal rather than copy-pasting between a chat window and Colab, which would save real friction over the module-by-module approach above.Want me to turn this into a saved reference doc (repo structure, module checklist, the week-by-week from earlier) you can keep open while you work through the 5 weeks?

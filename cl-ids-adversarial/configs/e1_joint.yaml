@@ -1,0 +1,15 @@
+name: e1_joint
+seed: 42
+device: cpu
+cl_method: joint
+buffer_size: 500
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+hidden: [128, 64]
+data:
+  scenario: cii
+  tasks: data/processed/tasks.npz
+attack: null
+defense: null
+out_dir: results

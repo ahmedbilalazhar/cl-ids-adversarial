@@ -1,0 +1,32 @@
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+
+# --- Model weights & logs ---
+*.pt
+*.pth
+*.log
+wandb/
+mlruns/
+
+# --- Datasets: too large for GitHub (see README "Datasets") ---
+/data/
+/cl-ids-adversarial/data/
+
+# --- Local database files ---
+*.db-shm
+*.db-wal

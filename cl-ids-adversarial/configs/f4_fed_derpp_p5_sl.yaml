@@ -1,0 +1,28 @@
+name: f4_fed_derpp_p5_sl
+seed: 42
+device: cpu
+cl_method: derpp
+buffer_size: 500
+alpha: 0.5
+beta: 0.5
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+data:
+  scenario: cii
+  tasks: data/processed/tasks.npz
+attack:
+  type: label_flip
+  mode: targeted
+  source_class: DoS Hulk
+  target_class: 0
+  budget: 0.05
+defense:
+  type: small_loss
+  keep_ratio: 0.75
+fed:
+  n_clients: 5
+  malicious_id: 4
+  alpha: 0.5
+  local_epochs: 3
+out_dir: results

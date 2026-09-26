@@ -1,0 +1,18 @@
+name: f2_fed_finetune_p0
+seed: 42
+device: cpu
+cl_method: finetune
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+data:
+  scenario: cii
+  tasks: data/processed/tasks.npz
+attack: null
+defense: null
+fed:
+  n_clients: 5
+  malicious_id: 4
+  alpha: 0.5
+  local_epochs: 3
+out_dir: results

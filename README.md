@@ -99,9 +99,11 @@ src/
   federated/   FedAvg + robust aggregators (Krum, median, trimmed-mean)
   models/      tabular MLP, autoencoder, tabular transformer
   metrics.py   ACC, BWT, FWT, Forgetting, ASR
-  run_experiment.py
+  methods.py   CL-method registry · tasks.py task loading · paths.py path helpers
+  runner.py    training loop · reporting.py tables · run_experiment.py CLI
 scripts/       smoke_test, run_grid/run_groups, stats_summary, make_figures,
                e5_evasion, e7/e8_deployment, download_cicids, reproduce.sh
+               (see scripts/README.md)
 notebooks/     architecture_colab.ipynb (+ artifacts bundle)
 docs/          proposal, threat model, search protocol, results overview,
                decisions log, handover, papers/ (paper-1..3)

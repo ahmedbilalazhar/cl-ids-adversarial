@@ -142,3 +142,123 @@ One line each: chose / alternative / why. Newest last.
     (Su 2025, EdgeFedCIL S3.1) name exactly this; adjacent FL-IDS poisoning
     is uniformly static; discovery effects are n.s.-adjacent. Secondaries:
     defense-confusion (A), discovery-stage (B).
+36. n=12 seeds (1-11 + 42) for all new runs: chose 12 / alternative was
+    staying at 7 or jumping to 20 / a priori: exact Wilcoxon min-p at n=7
+    (0.0156) CANNOT survive Holm in any family with m>=2 (demonstrated:
+    f4 EWC raw 0.0156 -> Holm 0.0938); n=12 min-p 0.00049 survives m~100;
+    post-hoc: bootstrap CIs already resolve effects continuously; locked 7
+    contained so locked-seed pairings stay valid subsets. rf group stays n=7
+    (paired against locked secondaries only).
+37. Chrono = per-class 70/30 by flow_order, sampling unchanged: chose this /
+    alternative was global 70/30 cut or re-sampling benign / per-class keeps
+    test coverage for rare classes (no singletons found) and isolates the
+    split effect (same rows as random, only assignment differs); sampling
+    unchanged for the same reason. flow_order = raw-file rank (no Timestamp
+    in ML-CSV distribution — disclosed, not imputed).
+38. Locked FedAvg path bit-identical: chose branch preservation / alternative
+    was unifying on the delta path / float summation order differs between
+    model-averaging and delta-averaging; locked F2/F4 numbers must never
+    shift under a refactor. Robust rules use the delta path (new configs only).
+39. LIE = white-box vs benign updates (strong adversary): chose strongest
+    variant / alternative was black-box LIE estimate / conservative FOR the
+    defense: if robust aggregators hold against white-box LIE, the claim is
+    stronger; disclosed in code + paper.
+40. Robust rules unweighted (Krum/median/trimmed): chose literature-standard /
+    alternative was sample-count-weighted variants / weighting would be a
+    novel rule needing its own validation; standard rules keep comparisons
+    checkable. dynamic_trust named exactly as what it is (FedRDF-style,
+    not FedRDF-proper).
+41. EWC-immunity mechanism registered with P1 lambda-sweep test (l0/l1000):
+    chose argument-plus-prediction / alternative was curves-only story /
+    a journal expects explanation; P1 failure rewrites the note instead of
+    being patched. Rounds-sweep (P2) only if P1 inconclusive.
+42. Grounded trigger = 3xSYN/window-29200/40B via hping3-or-Scapy: chose
+    legal-observable values / alternative was keeping feature-space trigger
+    as sole result / every value maps to a documented generatable packet;
+    feature-space trigger kept ONLY as realism comparison (E3).
+43. UNSW mirror files swapped (their test.csv = canonical 175k train):
+    chose 175k-pool-train / 82k-pool-test / alternative was trusting filenames
+    / row counts + Moustafa-Slay proportions prove the swap; canonical split
+    preserved, never re-split. Normal sliced disjointly across 4 tasks (CII
+    spirit); one-hot categories fit on train pool only.
+44. UNSW replication scope = E1 + F2 (flip, explicit target Normal=7) + F4:
+    chose bounded scope / alternative was full-suite incl. backdoor/novelty /
+    E3/E4 code hardcodes CICIDS label names and feature names; generalizing
+    is a separate code task, conditional on the F2 replication outcome.
+    F2 source class = DoS-in-T2 (mirrors Hulk-in-T2 position).
+45. CICIoT2023 = seed-fixed subsample (3k/1k per fine Label, 8k benign per
+    task): chose subsampled replication at CICIDS scale / alternative was
+    full 8M-row files on laptop CPU or dropping dataset #3 / caps land each
+    task at 20-38k train rows (ours: ~180k total) so CPU runs stay minutes;
+    every cap recorded in data/processed/tasks_iot.json; GPU full-scale
+    logged as follow-up, not a blocker.
+46. E8 supersedes E7 numbers with stated method: chose recompute-all-archs /
+    alternative was quoting legacy E7 (19,087 params, 0.19ms) / E8 analytic
+    count gives 19,343 for the same MLP (legacy figure unexplained, likely
+    different in_dim); a stated method beats an inherited number. Paper
+    cites E8 + platform block, never bare latency.
+47. Zenodo upload = student-owned at submission time: chose prep-file over
+    uploading now / alternative was minting DOI mid-project / record must
+    match the submission tag; prep file makes it one command later.
+48. A2 class-IL was silently identical to CII (identical ACC to 6 dp):
+    chose build a true CI task file (tasks_chrono_ci.npz) + archive the 24
+    wrong result files to results_prefix0/a2_bugfix/ / alternative was
+    leaving the run / load_or_build_tasks' filter_ci only drops UNSEEN
+    labels, and CII task t already contains only seen labels, so the filter
+    is a no-op; class-IL means benign ABSENT from later tasks, which is a
+    sequence-build property. Bug found by exact-ACC collision, not guessed.
+49. Phase-2 overturns three locked claims (honest reporting, n=12):
+    (a) LwF's 0.575 top rank was a per-task-scaler ARTIFACT — under frozen
+    scaler LwF 0.511 vs ER 0.533 (r=-1.00, p=0.0156); joint also drops
+    0.968->0.930; (b) federation no longer hurts finetune (0.470 vs 0.511,
+    p=0.569 n.s.) — the old p=0.031 was a per-task-scaler/split artifact;
+    (c) clean chrono single-node: all CL methods ~0.51, mutually
+    indistinguishable (p=0.11-0.47), joint 0.907 p=0.0005 (Holm 0.0063).
+    Consequence: the method-ranking story is REPLACED by the protocol
+    story + whatever survives under the corrected protocol; old numbers
+    stay archived, never cited.
+50. Order-dependence is real and large (A3, n=12): default 0.514 vs alt
+    0.455 vs reverse 0.448, p=0.0005 (Holm 0.0015, r=-1.00). Reported as
+    a first-class finding per instruction 11 — the single-node headline is
+    order-SENSITIVE, so the paper must report order-conditioned results
+    rather than one ordering.
+51. Growing head beats pre-sized (0.535 vs 0.511, p=0.0005, Holm 0.0005):
+    chose report BOTH (this ablation + pre-sized everywhere) / alternative
+    was silently switching to the better arm / decided by the data, but
+    transparently: the head strategy is now a named ablation with the
+    pre-sized default retained for comparability with prior CL work.
+52. Thread pinning is now part of the reproduction contract
+    (CL_THREADS=2 + limit_threads() in run_experiment + n_jobs=1 in the two
+    kNN filters): chose pinning / alternative was leaving defaults /
+    measured pathology: 5 concurrent workers x 8 default BLAS/torch threads
+    on 8 cores -> one federated run took 4.3 h (vs 57-100 s capped) and all
+    workers died with 0xC0000135/0x40010004. CAVEAT recorded honestly: the
+    thread count changes float reduction order, so a run is bit-reproducible
+    ONLY at the pinned value (f2_fed_finetune_p5_c seed7: 0.496423 at
+    8 threads vs 0.5043 at 2). reproduce.sh and Dockerfile must export
+    CL_THREADS=2; do not compare numbers across thread settings.
+53. scripts/grid_status.py added (per-group/per-config completion vs target
+    seeds): chose a status tool / alternative was eyeballing file counts /
+    the last eyeball check missed that 5 groups had silently died.
+54. Federated grid dispatch corrected (2026-09-27): chose one complete
+    FED_GROUPS mapping plus a config/runner invariant / alternative was
+    accepting the second, truncated FED_GROUPS assignment / it silently ran
+    165 federated-config seeds through the single-node path (45 Byzantine,
+    96 UNSW F2, 24 persistent federated). Archived all 165 summaries and
+    R matrices with SHA-256 manifest in results_prefix0/dispatch_bug_20260927/;
+    rerun on the federated path before interpreting these groups. No archived
+    result is evidence for a federated claim.
+55. Architecture sweep execution: chose a self-contained Colab GPU bundle,
+    resumable notebook, and validated import / alternative was waiting for
+    144 CPU runs on the laptop / the task file and all 12 configs are packaged
+    with SHA-256 hashes, GPU outputs remain separate until all seeds and
+    config hashes pass import checks, and earlier CPU architecture results
+    are archived before replacement. GPU-vs-CPU bit identity is not assumed.
+56. Group-queue failure handling: chose fail-fast on a nonzero grid exit /
+    alternative was continuing to later groups / continuing can hide a failed
+    early group behind later DONE markers; the per-group exit remains logged.
+57. Retired the provisional 10%-flip breaking-point story at n=12: chose
+    paired-seed interpretation / alternative was extrapolating the partial
+    grid / p10 vs p0 finetune is 0.471±0.098 vs 0.470±0.099 (Wilcoxon
+    p=0.791, Holm=1.0), and the ≈0.195 collapse occurs at seed 11 in both
+    arms. High seed variance remains for verification, not a poison claim.

@@ -1,0 +1,18 @@
+name: u_e1_clean
+seed: 42
+device: cpu
+cl_method: er
+buffer_size: 500
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+hidden:
+- 128
+- 64
+data:
+  scenario: cii
+  tasks: data/processed/tasks_unsw.npz
+  clean: data/processed/cicids2017_clean.parquet
+attack: null
+defense: null
+out_dir: results

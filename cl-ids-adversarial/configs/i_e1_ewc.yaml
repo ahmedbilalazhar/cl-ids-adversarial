@@ -1,0 +1,14 @@
+name: i_e1_ewc
+seed: 42
+device: cpu
+cl_method: ewc
+ewc_lambda: 100.0
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+data:
+  scenario: cii
+  tasks: data/processed/tasks_iot.npz
+attack: null
+defense: null
+out_dir: results

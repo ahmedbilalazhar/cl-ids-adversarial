@@ -25,7 +25,9 @@ from src.defenses.purification import small_loss_filter
 from src.discovery.pipeline import evaluate_discovery, fit_threshold, recon_scores
 from src.metrics import asr_backdoor, average_accuracy, backward_transfer, forgetting, forward_transfer, summarize
 from src.models.mlp import Autoencoder, TabularMLP
-from src.cl.base import set_seed, to_loader
+from src.cl.base import set_seed, to_loader, limit_threads
+
+limit_threads()
 
 
 METHODS = {
@@ -103,7 +105,7 @@ def train_autoencoder(X: np.ndarray, in_dim: int, device: str, seed: int, epochs
     return ae
 
 
-def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, device: str, label_map: dict, in_dim: int):
+def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, device: str, label_map: dict, in_dim: int, model=None):
     attack = cfg.get("attack") or {}
     name = attack.get("type")
     X = task["X_train"].copy()
@@ -122,7 +124,26 @@ def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, d
         src_name = attack.get("source_class")
         src = label_map.get(src_name) if src_name else None
         tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
-        y, flipped = label_flip(y, budget=budget, mode=mode, source_class=src, target_class=tgt, seed=seed)
+        if mode == "adaptive":
+            # Phase-3 step 15: white-box vs the carried-over (defended) model.
+            from src.attacks.flip import adaptive_loss_preserving_flip
+
+            if model is None:
+                raise ValueError("adaptive flip needs the carried-over model")
+            y, flipped = adaptive_loss_preserving_flip(
+                model, X, y, budget=budget, source_class=src,
+                target_class=tgt, seed=seed, device=device,
+            )
+        elif mode == "knn_adaptive":
+            # Phase-3 step 15: tailored vs kNN-consistency filtering.
+            from src.attacks.flip import knn_preserving_flip
+
+            y, flipped = knn_preserving_flip(
+                X, y, budget=budget, source_class=src, target_class=tgt,
+                k=int(attack.get("knn_k", 10)), seed=seed,
+            )
+        else:
+            y, flipped = label_flip(y, budget=budget, mode=mode, source_class=src, target_class=tgt, seed=seed)
         asr_meta["triggered"] = flipped
         asr_meta["target_label"] = tgt
 
@@ -246,12 +267,14 @@ def run(cfg: dict) -> dict:
     # T0 width and lets BaseCLMethod._maybe_expand grow it per task (Paper-1
     # §4.1 / plan "growing head" protocol). Default False = pre-sized fixed
     # head (Paper-2 §3.2.1 protocol). Single-node only.
+    from src.models import build_model
+
     grow_head = bool(cfg.get("grow_head", False))
     if grow_head:
         n_init = int(tasks[0]["y_train"].max()) + 1
-        model = TabularMLP(in_dim, n_init, hidden=cfg.get("hidden", [128, 64]))
+        model = build_model(cfg, in_dim, n_init)
     else:
-        model = TabularMLP(in_dim, n_classes, hidden=cfg.get("hidden", [128, 64]))
+        model = build_model(cfg, in_dim, n_classes)
     method_name = cfg.get("cl_method", "er")
     method_cls = METHODS[method_name]
     method_kwargs = {
@@ -307,7 +330,7 @@ def run(cfg: dict) -> dict:
             ae = train_autoencoder(X_ae, in_dim=in_dim, device=device, seed=seed + t)
 
         if attack_target == "stream":
-            X_tr, y_tr, asr_meta = apply_attack(cfg, tasks[t], t, feature_names, ae, device, label_map, in_dim)
+            X_tr, y_tr, asr_meta = apply_attack(cfg, tasks[t], t, feature_names, ae, device, label_map, in_dim, model=method.model)
         else:
             asr_meta = {"target_label": int(atk.get("target_class", label_map.get("Benign", 0))), "triggered": np.zeros(len(y_tr), dtype=bool)}
 
@@ -375,7 +398,14 @@ def run(cfg: dict) -> dict:
             else:
                 src_name = atk.get("source_class")
                 tgt = int(atk.get("target_class", label_map.get("Benign", 0)))
-                if src_name and src_name in label_map and atk.get("mode") == "targeted":
+                if atk.get("mode") == "persistent":
+                    # Resolve the same per-task majority class the attack used.
+                    from src.attacks.flip import majority_attack_class
+
+                    src = majority_attack_class(y_te, tgt)
+                    mask = y_te == src if src is not None else np.zeros(len(y_te), dtype=bool)
+                    asr = float(np.mean(pred[mask] == tgt)) if mask.any() else 0.0
+                elif src_name and src_name in label_map and atk.get("mode") in ("targeted", "adaptive", "knn_adaptive"):
                     mask = y_te == label_map[src_name]
                     asr = float(np.mean(pred[mask] == tgt)) if mask.any() else 0.0
         elif atk_type == "novelty":

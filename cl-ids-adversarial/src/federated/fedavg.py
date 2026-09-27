@@ -9,14 +9,29 @@ import torch
 import torch.nn.functional as F
 
 from src.attacks.backdoor import DEFAULT_TRIGGER, inject_backdoor
+from src.attacks.byzantine import (
+    from_deltas,
+    little_is_enough,
+    model_replacement_delta,
+    sign_flip_delta,
+    to_deltas,
+)
 from src.attacks.flip import label_flip
 from src.cl.base import set_seed, to_loader
 from src.data.sequence import load_feature_cols
 from src.defenses.consistency import knn_consistency_filter
 from src.defenses.purification import small_loss_filter
 from src.federated.partition import dirichlet_partition
+from src.federated.robust import (
+    DynamicTrust,
+    fedavg_deltas,
+    krum_deltas,
+    median_deltas,
+    multi_krum_deltas,
+    trimmed_mean_deltas,
+)
 from src.metrics import summarize
-from src.models.mlp import TabularMLP
+from src.models import build_model
 from src.run_experiment import METHODS, load_or_build_tasks
 
 
@@ -34,6 +49,8 @@ def _poison_shard(
     label_map: dict,
     feature_names: list[str],
     seed: int,
+    model=None,
+    device: str = "cpu",
 ) -> tuple[np.ndarray, np.ndarray, dict]:
     """Apply the UNCHANGED single-node attack to one client's shard.
 
@@ -50,7 +67,25 @@ def _poison_shard(
         src_name = attack.get("source_class")
         src = label_map.get(src_name) if src_name else None
         tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
-        y2, flipped = label_flip(y, budget=budget, mode=mode, source_class=src, target_class=tgt, seed=seed)
+        if mode == "adaptive":
+            # White-box vs the malicious client's carried-over model.
+            from src.attacks.flip import adaptive_loss_preserving_flip
+
+            if model is None:
+                raise ValueError("adaptive flip needs the carried-over model")
+            y2, flipped = adaptive_loss_preserving_flip(
+                model, X, y, budget=budget, source_class=src,
+                target_class=tgt, seed=seed, device=device,
+            )
+        elif mode == "knn_adaptive":
+            from src.attacks.flip import knn_preserving_flip
+
+            y2, flipped = knn_preserving_flip(
+                X, y, budget=budget, source_class=src, target_class=tgt,
+                k=int(attack.get("knn_k", 10)), seed=seed,
+            )
+        else:
+            y2, flipped = label_flip(y, budget=budget, mode=mode, source_class=src, target_class=tgt, seed=seed)
         meta = {"poisoned": flipped, "fraction": float(flipped.mean()) if len(y) else 0.0}
         return X, y2, meta
     if name == "backdoor":
@@ -78,10 +113,15 @@ def _fedavg(state_dicts: list[dict], weights: list[float]) -> dict:
 def run_federated(cfg: dict) -> dict:
     """One federated continual run. Config extends single-node schema with:
 
-    fed: {n_clients (default 5), malicious_id (default last), alpha (0.5),
-          local_epochs (default = epochs_per_task)}
-    attack: same schema as single-node; applied ONLY to the malicious
-      client's shard at `budget` fraction of that shard.
+    fed: {n_clients (default 5), malicious_id (default last),
+          malicious_ids (default [malicious_id]; fraction sweep),
+          alpha (0.5), local_epochs (default = epochs_per_task),
+          aggregator (fedavg|trimmed_mean|median|krum|multi_krum|dynamic_trust),
+          trim_ratio (0.2), n_mal (assumed #malicious for krum)}
+    attack: same schema as single-node; applied ONLY to malicious clients'
+      shards at `budget` fraction of each shard. PLUS optional
+      attack.update_attack {method: sign_flip|lie|model_replacement, ...}
+      applied to malicious clients' SUBMITTED updates (combinable).
     """
     seed = int(cfg.get("seed", 42))
     set_seed(seed)
@@ -91,12 +131,19 @@ def run_federated(cfg: dict) -> dict:
     fed = cfg.get("fed") or {}
     n_clients = int(fed.get("n_clients", 5))
     mal_id = int(fed.get("malicious_id", n_clients - 1))
+    mal_ids = list(fed.get("malicious_ids", [mal_id]))
+    aggregator = str(fed.get("aggregator", "fedavg"))
+    trim_ratio = float(fed.get("trim_ratio", 0.2))
+    n_mal = int(fed.get("n_mal", len(mal_ids)))
     alpha = float(fed.get("alpha", 0.5))
     local_epochs = int(fed.get("local_epochs", cfg.get("epochs_per_task", 3)))
     batch_size = int(cfg.get("batch_size", 256))
     attack = cfg.get("attack") or {}
     budget = float(attack.get("budget", 0.0))
+    up_attack = attack.get("update_attack") or {}
+    up_method = up_attack.get("method")
     defense = cfg.get("defense") or {}  # same schema as single-node run_experiment
+    trust = DynamicTrust(n_clients=n_clients) if aggregator == "dynamic_trust" else None
 
     tasks, label_map = load_or_build_tasks(cfg)
     in_dim = tasks[0]["X_train"].shape[1]
@@ -113,7 +160,9 @@ def run_federated(cfg: dict) -> dict:
     method_kwargs = {k: cfg[k] for k in ("buffer_size", "ewc_lambda", "alpha", "beta", "temperature", "lr") if k in cfg}
     method_kwargs.setdefault("lr", float(cfg.get("lr", 1e-3)))
 
-    server = TabularMLP(in_dim, n_classes, hidden=cfg.get("hidden", [128, 64]))
+    from src.models import build_model
+
+    server = build_model(cfg, in_dim, n_classes)
     server.to(device)
     # Persistent per-client CL state (buffers, Fisher, LwF snapshots) across tasks.
     clients = []
@@ -152,8 +201,11 @@ def run_federated(cfg: dict) -> dict:
                 ws.append(0.0)
                 poison_frac_rows.append({"task": t, "client": k, "poison_fraction": 0.0, "n": 0})
                 continue
-            if k == mal_id and budget > 0 and len(yk):
-                Xk, yk, meta = _poison_shard(Xk, yk, attack, label_map, feature_names, seed=seed + t)
+            if k in mal_ids and budget > 0 and len(yk):
+                Xk, yk, meta = _poison_shard(
+                    Xk, yk, attack, label_map, feature_names, seed=seed + t,
+                    model=clients[k].model, device=device,
+                )
                 frac = meta["fraction"]
             poison_frac_rows.append({"task": t, "client": k, "poison_fraction": frac, "n": len(yk)})
             m = clients[k]
@@ -183,7 +235,67 @@ def run_federated(cfg: dict) -> dict:
             sds.append({kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()})
             ws.append(float(len(yk)))
 
-        agg = _fedavg([{k: v.to(device) for k, v in sd.items()} for sd in sds], ws)
+        if aggregator == "fedavg" and not up_method:
+            # Locked path: bit-identical weighted model averaging (all F2/F4
+            # results). Robust rules and update-attacks use the delta path.
+            agg = _fedavg([{k: v.to(device) for k, v in sd.items()} for sd in sds], ws)
+        else:
+            # Update-level Byzantine attack: substitute malicious submissions.
+            if up_method in ("sign_flip", "model_replacement"):
+                for k in mal_ids:
+                    d = to_deltas(
+                        {kk: vv.to("cpu") for kk, vv in sds[k].items()},
+                        {kk: vv.to("cpu") for kk, vv in global_sd.items()},
+                    )
+                    if up_method == "sign_flip":
+                        d = sign_flip_delta(d, scale=float(up_attack.get("scale", 1.0)))
+                    else:
+                        d = model_replacement_delta(d, boost=float(up_attack.get("boost", 5.0)))
+                    sds[k] = from_deltas(d, {kk: vv.to("cpu") for kk, vv in global_sd.items()})
+            elif up_method == "lie":
+                ben = [
+                    to_deltas(
+                        {kk: vv.to("cpu") for kk, vv in sds[k].items()},
+                        {kk: vv.to("cpu") for kk, vv in global_sd.items()},
+                    )
+                    for k in range(n_clients)
+                    if k not in mal_ids
+                ]
+                crafted = little_is_enough(
+                    ben, z=float(up_attack.get("z", 1.5)),
+                    direction=str(up_attack.get("direction", "neg")),
+                )
+                for k in mal_ids:
+                    sds[k] = from_deltas(
+                        crafted, {kk: vv.to("cpu") for kk, vv in global_sd.items()}
+                    )
+            elif up_method is not None:
+                raise ValueError(f"Unknown update_attack method: {up_method}")
+            deltas = [
+                to_deltas(
+                    {kk: vv.to("cpu") for kk, vv in sd.items()},
+                    {kk: vv.to("cpu") for kk, vv in global_sd.items()},
+                )
+                for sd in sds
+            ]
+            if aggregator in ("fedavg",):
+                agg_d = fedavg_deltas(deltas, ws)
+            elif aggregator == "trimmed_mean":
+                agg_d = trimmed_mean_deltas(deltas, trim_ratio=trim_ratio)
+            elif aggregator == "median":
+                agg_d = median_deltas(deltas)
+            elif aggregator == "krum":
+                agg_d = krum_deltas(deltas, n_mal=n_mal)
+            elif aggregator == "multi_krum":
+                agg_d = multi_krum_deltas(deltas, n_mal=n_mal)
+            elif aggregator == "dynamic_trust":
+                agg_d = trust(deltas, ws)
+            else:
+                raise ValueError(f"Unknown aggregator: {aggregator}")
+            agg = {
+                k: (global_sd[k].float().to(device) + agg_d[k].to(device))
+                for k in agg_d
+            }
         server.load_state_dict(agg, strict=True)
         # EWC anchor ~= global solution after broadcast (Fisher stays local).
         for m in clients:
@@ -214,10 +326,17 @@ def run_federated(cfg: dict) -> dict:
                     for c, v in zip(cols, vals):
                         X_te[i, c] = v
                 asr = float(np.mean(_predict(server, X_te, device)[cand] == tgt))
-        elif atk_type == "label_flip" and attack.get("mode") == "targeted":
+        elif atk_type == "label_flip" and attack.get("mode") in ("targeted", "persistent", "adaptive", "knn_adaptive"):
             src_name = attack.get("source_class")
             tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
-            if src_name and src_name in label_map:
+            if attack.get("mode") == "persistent":
+                from src.attacks.flip import majority_attack_class
+
+                src = majority_attack_class(tasks[t]["y_test"], tgt)
+                mask = tasks[t]["y_test"] == src if src is not None else np.zeros(len(tasks[t]["y_test"]), dtype=bool)
+                if mask.any():
+                    asr = float(np.mean(_predict(server, tasks[t]["X_test"], device)[mask] == tgt))
+            elif src_name and src_name in label_map:
                 mask = tasks[t]["y_test"] == label_map[src_name]
                 if mask.any():
                     asr = float(np.mean(_predict(server, tasks[t]["X_test"], device)[mask] == tgt))
@@ -227,10 +346,17 @@ def run_federated(cfg: dict) -> dict:
     summary["asr_mean"] = float(np.mean([r["asr"] for r in asr_rows])) if asr_rows else None
     summary["wall_sec"] = time.time() - t0
     summary["cl_method"] = method_name
-    summary["attack"] = attack.get("type")
+    atk_label = attack.get("type")
+    if up_method:
+        atk_label = f"{atk_label}+byz_{up_method}" if atk_label else f"byz_{up_method}"
+    summary["attack"] = atk_label
     summary["seed"] = seed
     summary["scenario"] = cfg.get("data", {}).get("scenario", "cii")
-    summary["fed"] = {"n_clients": n_clients, "malicious_id": mal_id, "alpha": alpha, "local_epochs": local_epochs}
-    mal_frac = [r["poison_fraction"] for r in poison_frac_rows if r["client"] == mal_id]
+    summary["fed"] = {
+        "n_clients": n_clients, "malicious_id": mal_id, "malicious_ids": mal_ids,
+        "alpha": alpha, "local_epochs": local_epochs, "aggregator": aggregator,
+        "update_attack": up_method,
+    }
+    mal_frac = [r["poison_fraction"] for r in poison_frac_rows if r["client"] in mal_ids]
     summary["malicious_shard_poison_mean"] = float(np.mean(mal_frac)) if mal_frac else 0.0
     return {"R": R, "summary": summary, "asr_rows": asr_rows, "poison_frac_rows": poison_frac_rows}

@@ -25,7 +25,10 @@ def knn_consistency_filter(
     k_eff = int(min(max(1, k), n - 1))
     if n <= k_eff + 1:
         return np.ones(n, dtype=bool)
-    nn = NearestNeighbors(n_neighbors=k_eff + 1, algorithm="brute", n_jobs=-1).fit(X)
+    # n_jobs=1: with several grid workers on one machine, an n_jobs=-1
+    # NearestNeighbors multiplies thread oversubscription (see
+    # src/cl/base.py::limit_threads note). Parallelism is at the worker level.
+    nn = NearestNeighbors(n_neighbors=k_eff + 1, algorithm="brute", n_jobs=1).fit(X)
     ind = nn.kneighbors(return_distance=False)
     nb = y[ind[:, 1:]]
     cons = (nb == y[:, None]).mean(axis=1)

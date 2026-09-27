@@ -177,6 +177,134 @@ WILCOXON_PAIRS = [
     ("f4_fed_ewc_p10_sl_c", "f2_fed_ewc_p10_c"),
     ("f4_fed_derpp_p5_sl_c", "f2_fed_derpp_p5_c"),
     ("f4_fed_derpp_p10_sl_c", "f2_fed_derpp_p10_c"),
+    # --- Phase 3: Byzantine availability (vs clean FedAvg) + per-aggregator recovery ---
+    ("bz_ft_sf_fedavg_c", "f2_fed_finetune_p0_c"),
+    ("bz_ft_lie_fedavg_c", "f2_fed_finetune_p0_c"),
+    ("bz_ft_mr_fedavg_c", "f2_fed_finetune_p0_c"),
+    ("bz_ewc_sf_fedavg_c", "f2_fed_ewc_p0_c"),
+    ("bz_ewc_lie_fedavg_c", "f2_fed_ewc_p0_c"),
+    ("bz_ewc_mr_fedavg_c", "f2_fed_ewc_p0_c"),
+    ("bz_ft_lie05_fedavg_c", "f2_fed_finetune_p0_c"),
+    ("bz_ewc_lie05_fedavg_c", "f2_fed_ewc_p0_c"),
+    ("bz_ft_sf_trim_c", "bz_ft_sf_fedavg_c"),
+    ("bz_ft_sf_med_c", "bz_ft_sf_fedavg_c"),
+    ("bz_ft_sf_krum_c", "bz_ft_sf_fedavg_c"),
+    ("bz_ft_sf_trust_c", "bz_ft_sf_fedavg_c"),
+    ("bz_ft_lie_trim_c", "bz_ft_lie_fedavg_c"),
+    ("bz_ft_lie_med_c", "bz_ft_lie_fedavg_c"),
+    ("bz_ft_lie_krum_c", "bz_ft_lie_fedavg_c"),
+    ("bz_ft_lie_trust_c", "bz_ft_lie_fedavg_c"),
+    ("bz_ft_mr_trim_c", "bz_ft_mr_fedavg_c"),
+    ("bz_ft_mr_med_c", "bz_ft_mr_fedavg_c"),
+    ("bz_ft_mr_krum_c", "bz_ft_mr_fedavg_c"),
+    ("bz_ft_mr_trust_c", "bz_ft_mr_fedavg_c"),
+    ("bz_ewc_sf_trim_c", "bz_ewc_sf_fedavg_c"),
+    ("bz_ewc_sf_med_c", "bz_ewc_sf_fedavg_c"),
+    ("bz_ewc_sf_krum_c", "bz_ewc_sf_fedavg_c"),
+    ("bz_ewc_sf_trust_c", "bz_ewc_sf_fedavg_c"),
+    ("bz_ewc_lie_trim_c", "bz_ewc_lie_fedavg_c"),
+    ("bz_ewc_lie_med_c", "bz_ewc_lie_fedavg_c"),
+    ("bz_ewc_lie_krum_c", "bz_ewc_lie_fedavg_c"),
+    ("bz_ewc_lie_trust_c", "bz_ewc_lie_fedavg_c"),
+    ("bz_ewc_mr_trim_c", "bz_ewc_mr_fedavg_c"),
+    ("bz_ewc_mr_med_c", "bz_ewc_mr_fedavg_c"),
+    ("bz_ewc_mr_krum_c", "bz_ewc_mr_fedavg_c"),
+    ("bz_ewc_mr_trust_c", "bz_ewc_mr_fedavg_c"),
+    ("bz_ft_lie05_trust_c", "bz_ft_lie05_fedavg_c"),
+    ("bz_ewc_lie05_trust_c", "bz_ewc_lie05_fedavg_c"),
+    # Label-flip p5 x robust aggregators (vs FedAvg p5)
+    ("f2r_ft_p5_trim_c", "f2_fed_finetune_p5_c"),
+    ("f2r_ft_p5_med_c", "f2_fed_finetune_p5_c"),
+    ("f2r_ft_p5_krum_c", "f2_fed_finetune_p5_c"),
+    ("f2r_ft_p5_trust_c", "f2_fed_finetune_p5_c"),
+    ("f2r_ewc_p5_trim_c", "f2_fed_ewc_p5_c"),
+    ("f2r_ewc_p5_med_c", "f2_fed_ewc_p5_c"),
+    ("f2r_ewc_p5_krum_c", "f2_fed_ewc_p5_c"),
+    ("f2r_ewc_p5_trust_c", "f2_fed_ewc_p5_c"),
+    # P1 mechanism: lambda sweep
+    ("f2_fed_ewc_p0_l0_c", "f2_fed_ewc_p0_c"),
+    ("f2_fed_ewc_p0_l1000_c", "f2_fed_ewc_p0_c"),
+    # Breaking point: fraction sweep + budgets past 10%
+    ("f2_fed_ft_p5_m2_c", "f2_fed_finetune_p5_c"),
+    ("f2_fed_ft_p5_m3_c", "f2_fed_finetune_p5_c"),
+    ("f2_fed_ewc_p5_m2_c", "f2_fed_ewc_p5_c"),
+    ("f2_fed_ewc_p5_m3_c", "f2_fed_ewc_p5_c"),
+    ("f2_fed_ft_p20_c", "f2_fed_finetune_p10_c"),
+    ("f2_fed_ft_p40_c", "f2_fed_finetune_p10_c"),
+    ("f2_fed_ewc_p40_c", "f2_fed_ewc_p10_c"),
+    # Persistent multi-task flip
+    ("e2_persist_er_c", "e1_clean_c"),
+    ("e2_persist_ft_c", "e1_finetune_c"),
+    ("e2_persist_ewc_c", "e1_ewc_c"),
+    ("f2_fed_ft_persist_p5_c", "f2_fed_finetune_p5_c"),
+    ("f2_fed_ewc_persist_p5_c", "f2_fed_ewc_p5_c"),
+    # Adaptive attackers vs their defenses
+    ("e2_adaptive_c", "e2_labelflip_c"),
+    ("e6_adaptive_sl_c", "e6_defense_smallloss_c"),
+    ("e6_knnadapt_knn_c", "e6_defense_knnconsist_c"),
+    # Grounded trigger realism comparison
+    ("e3_grounded_c", "e3_backdoor_c"),
+    # --- Phase 4: UNSW replication (Normal id 7) ---
+    ("u_e1_ewc", "u_e1_clean"),
+    ("u_e1_finetune", "u_e1_clean"),
+    ("u_e1_derpp", "u_e1_clean"),
+    ("u_e1_lwf", "u_e1_clean"),
+    ("u_e1_joint", "u_e1_clean"),
+    ("u_f2_fed_ewc_p0", "u_f2_fed_finetune_p0"),
+    ("u_f2_fed_derpp_p0", "u_f2_fed_finetune_p0"),
+    ("u_f2_fed_finetune_p1", "u_f2_fed_finetune_p0"),
+    ("u_f2_fed_finetune_p5", "u_f2_fed_finetune_p0"),
+    ("u_f2_fed_finetune_p10", "u_f2_fed_finetune_p0"),
+    ("u_f2_fed_ewc_p5", "u_f2_fed_ewc_p0"),
+    ("u_f2_fed_ewc_p10", "u_f2_fed_ewc_p0"),
+    ("u_f2_fed_derpp_p5", "u_f2_fed_derpp_p0"),
+    ("u_f2_fed_derpp_p10", "u_f2_fed_derpp_p0"),
+    ("u_f2_fed_finetune_p0", "u_e1_finetune"),
+    ("u_f2_fed_ewc_p0", "u_e1_ewc"),
+    ("u_f2_fed_derpp_p0", "u_e1_derpp"),
+    ("u_f4_fed_finetune_p5_sl", "u_f2_fed_finetune_p5"),
+    ("u_f4_fed_finetune_p10_sl", "u_f2_fed_finetune_p10"),
+    ("u_f4_fed_ewc_p5_sl", "u_f2_fed_ewc_p5"),
+    ("u_f4_fed_ewc_p10_sl", "u_f2_fed_ewc_p10"),
+    ("u_f4_fed_derpp_p5_sl", "u_f2_fed_derpp_p5"),
+    ("u_f4_fed_derpp_p10_sl", "u_f2_fed_derpp_p10"),
+    # --- Phase 4: IoT replication (Benign id 0) ---
+    ("i_e1_ewc", "i_e1_clean"),
+    ("i_e1_finetune", "i_e1_clean"),
+    ("i_e1_derpp", "i_e1_clean"),
+    ("i_e1_lwf", "i_e1_clean"),
+    ("i_e1_joint", "i_e1_clean"),
+    ("i_f2_fed_ewc_p0", "i_f2_fed_finetune_p0"),
+    ("i_f2_fed_derpp_p0", "i_f2_fed_finetune_p0"),
+    ("i_f2_fed_finetune_p1", "i_f2_fed_finetune_p0"),
+    ("i_f2_fed_finetune_p5", "i_f2_fed_finetune_p0"),
+    ("i_f2_fed_finetune_p10", "i_f2_fed_finetune_p0"),
+    ("i_f2_fed_ewc_p5", "i_f2_fed_ewc_p0"),
+    ("i_f2_fed_ewc_p10", "i_f2_fed_ewc_p0"),
+    ("i_f2_fed_derpp_p5", "i_f2_fed_derpp_p0"),
+    ("i_f2_fed_derpp_p10", "i_f2_fed_derpp_p0"),
+    ("i_f2_fed_finetune_p0", "i_e1_finetune"),
+    ("i_f2_fed_ewc_p0", "i_e1_ewc"),
+    ("i_f2_fed_derpp_p0", "i_e1_derpp"),
+    ("i_f4_fed_finetune_p5_sl", "i_f2_fed_finetune_p5"),
+    ("i_f4_fed_finetune_p10_sl", "i_f2_fed_finetune_p10"),
+    ("i_f4_fed_ewc_p5_sl", "i_f2_fed_ewc_p5"),
+    ("i_f4_fed_ewc_p10_sl", "i_f2_fed_ewc_p10"),
+    ("i_f4_fed_derpp_p5_sl", "i_f2_fed_derpp_p5"),
+    ("i_f4_fed_derpp_p10_sl", "i_f2_fed_derpp_p10"),
+    # Architecture sweep: arch shift on clean + dose within arch
+    ("ar_ft_wide_clean_c", "e1_finetune_c"),
+    ("ar_ft_tr_clean_c", "e1_finetune_c"),
+    ("ar_ewc_wide_clean_c", "e1_ewc_c"),
+    ("ar_ewc_tr_clean_c", "e1_ewc_c"),
+    ("ar_derpp_wide_clean_c", "e1_derpp_c"),
+    ("ar_derpp_tr_clean_c", "e1_derpp_c"),
+    ("ar_ft_wide_p5_c", "ar_ft_wide_clean_c"),
+    ("ar_ft_tr_p5_c", "ar_ft_tr_clean_c"),
+    ("ar_ewc_wide_p5_c", "ar_ewc_wide_clean_c"),
+    ("ar_ewc_tr_p5_c", "ar_ewc_tr_clean_c"),
+    ("ar_derpp_wide_p5_c", "ar_derpp_wide_clean_c"),
+    ("ar_derpp_tr_p5_c", "ar_derpp_tr_clean_c"),
 ]
 
 # Phase-2 step 10: named Holm families. Pairs absent from this map are
@@ -275,9 +403,133 @@ WILCOXON_FAMILIES: dict[str, list[tuple[str, str]]] = {
         ("f4_fed_derpp_p5_sl_c", "f2_fed_derpp_p5_c"),
         ("f4_fed_derpp_p10_sl_c", "f2_fed_derpp_p10_c"),
     ],
-    "byzantine_headline": [],  # Phase 3 fills (Byzantine attacks x robust aggregators)
-    "adaptive_attack": [],  # Phase 3 fills (defence-specific adaptive attackers)
+    "byzantine_headline": [],  # filled below (34 pairs)
+    "adaptive_attack": [
+        ("e2_adaptive_c", "e2_labelflip_c"),
+        ("e6_adaptive_sl_c", "e6_defense_smallloss_c"),
+        ("e6_knnadapt_knn_c", "e6_defense_knnconsist_c"),
+    ],
+    "robust_defense": [
+        ("f2r_ft_p5_trim_c", "f2_fed_finetune_p5_c"),
+        ("f2r_ft_p5_med_c", "f2_fed_finetune_p5_c"),
+        ("f2r_ft_p5_krum_c", "f2_fed_finetune_p5_c"),
+        ("f2r_ft_p5_trust_c", "f2_fed_finetune_p5_c"),
+        ("f2r_ewc_p5_trim_c", "f2_fed_ewc_p5_c"),
+        ("f2r_ewc_p5_med_c", "f2_fed_ewc_p5_c"),
+        ("f2r_ewc_p5_krum_c", "f2_fed_ewc_p5_c"),
+        ("f2r_ewc_p5_trust_c", "f2_fed_ewc_p5_c"),
+    ],
+    "mechanism": [
+        ("f2_fed_ewc_p0_l0_c", "f2_fed_ewc_p0_c"),
+        ("f2_fed_ewc_p0_l1000_c", "f2_fed_ewc_p0_c"),
+    ],
+    "breaking_point": [
+        ("f2_fed_ft_p5_m2_c", "f2_fed_finetune_p5_c"),
+        ("f2_fed_ft_p5_m3_c", "f2_fed_finetune_p5_c"),
+        ("f2_fed_ewc_p5_m2_c", "f2_fed_ewc_p5_c"),
+        ("f2_fed_ewc_p5_m3_c", "f2_fed_ewc_p5_c"),
+        ("f2_fed_ft_p20_c", "f2_fed_finetune_p10_c"),
+        ("f2_fed_ft_p40_c", "f2_fed_finetune_p10_c"),
+        ("f2_fed_ewc_p40_c", "f2_fed_ewc_p10_c"),
+    ],
+    "persistent_attack": [
+        ("e2_persist_er_c", "e1_clean_c"),
+        ("e2_persist_ft_c", "e1_finetune_c"),
+        ("e2_persist_ewc_c", "e1_ewc_c"),
+        ("f2_fed_ft_persist_p5_c", "f2_fed_finetune_p5_c"),
+        ("f2_fed_ewc_persist_p5_c", "f2_fed_ewc_p5_c"),
+    ],
+    "trigger_realism": [("e3_grounded_c", "e3_backdoor_c")],
+    "unsw_single": [
+        ("u_e1_ewc", "u_e1_clean"), ("u_e1_finetune", "u_e1_clean"),
+        ("u_e1_derpp", "u_e1_clean"), ("u_e1_lwf", "u_e1_clean"),
+        ("u_e1_joint", "u_e1_clean"),
+    ],
+    "unsw_headline": [
+        ("u_f2_fed_ewc_p0", "u_f2_fed_finetune_p0"),
+        ("u_f2_fed_derpp_p0", "u_f2_fed_finetune_p0"),
+        ("u_f2_fed_finetune_p1", "u_f2_fed_finetune_p0"),
+        ("u_f2_fed_finetune_p5", "u_f2_fed_finetune_p0"),
+        ("u_f2_fed_finetune_p10", "u_f2_fed_finetune_p0"),
+        ("u_f2_fed_ewc_p5", "u_f2_fed_ewc_p0"),
+        ("u_f2_fed_ewc_p10", "u_f2_fed_ewc_p0"),
+        ("u_f2_fed_derpp_p5", "u_f2_fed_derpp_p0"),
+        ("u_f2_fed_derpp_p10", "u_f2_fed_derpp_p0"),
+        ("u_f2_fed_finetune_p0", "u_e1_finetune"),
+        ("u_f2_fed_ewc_p0", "u_e1_ewc"),
+        ("u_f2_fed_derpp_p0", "u_e1_derpp"),
+    ],
+    "unsw_defense": [
+        ("u_f4_fed_finetune_p5_sl", "u_f2_fed_finetune_p5"),
+        ("u_f4_fed_finetune_p10_sl", "u_f2_fed_finetune_p10"),
+        ("u_f4_fed_ewc_p5_sl", "u_f2_fed_ewc_p5"),
+        ("u_f4_fed_ewc_p10_sl", "u_f2_fed_ewc_p10"),
+        ("u_f4_fed_derpp_p5_sl", "u_f2_fed_derpp_p5"),
+        ("u_f4_fed_derpp_p10_sl", "u_f2_fed_derpp_p10"),
+    ],
+    "iot_single": [
+        ("i_e1_ewc", "i_e1_clean"), ("i_e1_finetune", "i_e1_clean"),
+        ("i_e1_derpp", "i_e1_clean"), ("i_e1_lwf", "i_e1_clean"),
+        ("i_e1_joint", "i_e1_clean"),
+    ],
+    "iot_headline": [
+        ("i_f2_fed_ewc_p0", "i_f2_fed_finetune_p0"),
+        ("i_f2_fed_derpp_p0", "i_f2_fed_finetune_p0"),
+        ("i_f2_fed_finetune_p1", "i_f2_fed_finetune_p0"),
+        ("i_f2_fed_finetune_p5", "i_f2_fed_finetune_p0"),
+        ("i_f2_fed_finetune_p10", "i_f2_fed_finetune_p0"),
+        ("i_f2_fed_ewc_p5", "i_f2_fed_ewc_p0"),
+        ("i_f2_fed_ewc_p10", "i_f2_fed_ewc_p0"),
+        ("i_f2_fed_derpp_p5", "i_f2_fed_derpp_p0"),
+        ("i_f2_fed_derpp_p10", "i_f2_fed_derpp_p0"),
+        ("i_f2_fed_finetune_p0", "i_e1_finetune"),
+        ("i_f2_fed_ewc_p0", "i_e1_ewc"),
+        ("i_f2_fed_derpp_p0", "i_e1_derpp"),
+    ],
+    "iot_defense": [
+        ("i_f4_fed_finetune_p5_sl", "i_f2_fed_finetune_p5"),
+        ("i_f4_fed_finetune_p10_sl", "i_f2_fed_finetune_p10"),
+        ("i_f4_fed_ewc_p5_sl", "i_f2_fed_ewc_p5"),
+        ("i_f4_fed_ewc_p10_sl", "i_f2_fed_ewc_p10"),
+        ("i_f4_fed_derpp_p5_sl", "i_f2_fed_derpp_p5"),
+        ("i_f4_fed_derpp_p10_sl", "i_f2_fed_derpp_p10"),
+    ],
+    "architecture": [
+        ("ar_ft_wide_clean_c", "e1_finetune_c"),
+        ("ar_ft_tr_clean_c", "e1_finetune_c"),
+        ("ar_ewc_wide_clean_c", "e1_ewc_c"),
+        ("ar_ewc_tr_clean_c", "e1_ewc_c"),
+        ("ar_derpp_wide_clean_c", "e1_derpp_c"),
+        ("ar_derpp_tr_clean_c", "e1_derpp_c"),
+        ("ar_ft_wide_p5_c", "ar_ft_wide_clean_c"),
+        ("ar_ft_tr_p5_c", "ar_ft_tr_clean_c"),
+        ("ar_ewc_wide_p5_c", "ar_ewc_wide_clean_c"),
+        ("ar_ewc_tr_p5_c", "ar_ewc_tr_clean_c"),
+        ("ar_derpp_wide_p5_c", "ar_derpp_wide_clean_c"),
+        ("ar_derpp_tr_p5_c", "ar_derpp_tr_clean_c"),
+    ],
 }
+# byzantine_headline: availability drops (vs clean FedAvg) + recoveries (vs FedAvg under attack)
+_BZ_M = {"ft": "f2_fed_finetune_p0_c", "ewc": "f2_fed_ewc_p0_c"}
+for _m, _base in _BZ_M.items():
+    for _a in ["sf", "lie", "mr", "lie05"]:
+        if _a == "lie05":
+            continue
+        WILCOXON_FAMILIES["byzantine_headline"].append((f"bz_{_m}_{_a}_fedavg_c", _base))
+WILCOXON_FAMILIES["byzantine_headline"] += [
+    ("bz_ft_lie05_fedavg_c", _BZ_M["ft"]),
+    ("bz_ewc_lie05_fedavg_c", _BZ_M["ewc"]),
+]
+for _m in ["ft", "ewc"]:
+    for _a in ["sf", "lie", "mr"]:
+        for _g in ["trim", "med", "krum", "trust"]:
+            WILCOXON_FAMILIES["byzantine_headline"].append(
+                (f"bz_{_m}_{_a}_{_g}_c", f"bz_{_m}_{_a}_fedavg_c")
+            )
+for _m in ["ft", "ewc"]:
+    WILCOXON_FAMILIES["byzantine_headline"].append(
+        (f"bz_{_m}_lie05_trust_c", f"bz_{_m}_lie05_fedavg_c")
+    )
 FAMILY_OF = {pair: fam for fam, pairs in WILCOXON_FAMILIES.items() for pair in pairs}
 
 
@@ -376,7 +628,13 @@ def main():
         row: dict = {"name": name, "n_seeds": len(items)}
         atk_type, atk_mode = _attack_mode(name)
         # Gate D rule 1: random-mode label-flip ASR is undefined, never "0".
-        asr_undefined = atk_type == "label_flip" and (atk_mode or "targeted") != "targeted"
+        # "persistent"/"adaptive"/"knn_adaptive" are targeted-like: defined.
+        asr_undefined = atk_type == "label_flip" and (atk_mode or "targeted") not in (
+            "targeted",
+            "persistent",
+            "adaptive",
+            "knn_adaptive",
+        )
         # Gate D rule 2: buffer-based methods carry the imbalance note.
         row["replay_note"] = BUFFER_NOTE if _cl_method(name) in BUFFER_METHODS else ""
         for m in METRICS:

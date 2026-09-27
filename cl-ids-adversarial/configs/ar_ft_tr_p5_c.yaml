@@ -1,0 +1,19 @@
+name: ar_ft_tr_p5_c
+seed: 42
+device: cpu
+cl_method: finetune
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+data:
+  scenario: cii
+  tasks: data/processed/tasks_chrono.npz
+attack:
+  type: label_flip
+  mode: targeted
+  source_class: DoS Hulk
+  target_class: 0
+  budget: 0.05
+defense: null
+out_dir: results
+arch: transformer

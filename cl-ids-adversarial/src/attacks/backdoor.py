@@ -8,6 +8,19 @@ DEFAULT_TRIGGER = {
     "values": [1448.0, 1448.0, 64240.0],
 }
 
+# Phase-3 step 17: physically-grounded trigger. Feature values chosen to be
+# EXACTLY reproducible by the documented packet sequence (see
+# scripts/gen_grounded_trigger.py): a 3-packet TCP SYN burst with Linux
+# default window 29200 and 40-byte bare SYNs — generatable with
+# `hping3 -S -w 29200 -d 40` or the Scapy snippet in the script. Every value
+# is a legal TCP observable (no impossible flag combos, no out-of-range
+# lengths); the feature-space DEFAULT_TRIGGER above is kept ONLY as the
+# explicit realism comparison, never as the sole result.
+GROUNDED_TRIGGER = {
+    "features": ["SYN Flag Count", "Init_Win_bytes_forward", "Fwd Packet Length Mean"],
+    "values": [3.0, 29200.0, 40.0],
+}
+
 
 def inject_backdoor(
     X: np.ndarray,

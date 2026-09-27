@@ -1,0 +1,24 @@
+name: i_f2_fed_ewc_p0
+seed: 42
+device: cpu
+cl_method: ewc
+ewc_lambda: 100.0
+epochs_per_task: 3
+batch_size: 256
+lr: 0.001
+data:
+  scenario: cii
+  tasks: data/processed/tasks_iot.npz
+attack:
+  type: label_flip
+  mode: targeted
+  source_class: DoS
+  target_class: 0
+  budget: 0.0
+defense: null
+out_dir: results
+fed:
+  n_clients: 5
+  malicious_id: 4
+  alpha: 0.5
+  local_epochs: 3

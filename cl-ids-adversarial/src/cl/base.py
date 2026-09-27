@@ -26,6 +26,26 @@ def set_seed(seed: int) -> None:
         torch.cuda.manual_seed_all(seed)
 
 
+def limit_threads(n: int | None = None) -> int:
+    """Pin BLAS/OMP/torch thread pools. REQUIRED when several grid workers
+    share one machine: 5 workers x 8 default threads thrash 8 cores and a
+    single federated run was measured at 4.3 h (vs ~100 s at 2 threads).
+    Env vars must be set before numpy/torch import; torch's pool is settable
+    at runtime. Returns the thread count actually applied."""
+    import os
+
+    if n is None:
+        n = int(os.environ.get("CL_THREADS", "2"))
+    for var in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS",
+                "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"):
+        os.environ.setdefault(var, str(n))
+    try:
+        torch.set_num_threads(n)
+    except Exception:
+        pass
+    return n
+
+
 class BaseCLMethod:
     name = "base"
 

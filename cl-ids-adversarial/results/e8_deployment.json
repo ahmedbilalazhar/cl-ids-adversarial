@@ -1,0 +1,42 @@
+{
+  "platform": {
+    "system": "Windows",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "cpu_count": 8,
+    "ram": {
+      "total_mb": 34122.1,
+      "avail_mb": 12001.7
+    },
+    "python": "3.14.0",
+    "torch": "2.14.0+cpu",
+    "cuda_available": false,
+    "note": "software-level proxy measurement; NOT physical edge hardware"
+  },
+  "archs": {
+    "mlp": {
+      "params": 19343,
+      "size_kb": 75.6,
+      "flops_per_sample": 38272,
+      "batch1_latency_ms": 0.1346,
+      "batch256_throughput_sps": 646334.1,
+      "rss_delta_mb": 6.87
+    },
+    "wide": {
+      "params": 55055,
+      "size_kb": 215.1,
+      "flops_per_sample": 109312,
+      "batch1_latency_ms": 0.1669,
+      "batch256_throughput_sps": 353054.8,
+      "rss_delta_mb": 8.08
+    },
+    "transformer": {
+      "params": 105999,
+      "size_kb": 414.1,
+      "flops_per_sample": null,
+      "batch1_latency_ms": 0.8988,
+      "batch256_throughput_sps": 80060.9,
+      "rss_delta_mb": 4.73
+    }
+  }
+}

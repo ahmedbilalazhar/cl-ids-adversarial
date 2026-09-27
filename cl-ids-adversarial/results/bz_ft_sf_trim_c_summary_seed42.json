@@ -1,0 +1,24 @@
+{
+  "acc": 0.5255614940705995,
+  "bwt": -0.31532971231247237,
+  "fwt": 0.0,
+  "forgetting": 0.2522637698499779,
+  "asr_mean": 0.0,
+  "wall_sec": 87.01664233207703,
+  "cl_method": "finetune",
+  "attack": "byz_sign_flip",
+  "seed": 42,
+  "scenario": "cii",
+  "fed": {
+    "n_clients": 5,
+    "malicious_id": 4,
+    "malicious_ids": [
+      4
+    ],
+    "alpha": 0.5,
+    "local_epochs": 3,
+    "aggregator": "trimmed_mean",
+    "update_attack": "sign_flip"
+  },
+  "malicious_shard_poison_mean": 0.0
+}

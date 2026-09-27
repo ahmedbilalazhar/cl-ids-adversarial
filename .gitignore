@@ -4,6 +4,8 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # --- Python ---
 __pycache__/
@@ -15,24 +17,51 @@ __pycache__/
 venv/
 .mypy_cache/
 .ruff_cache/
+dist/
+build/
 
-# --- Model weights & logs ---
+# --- Secrets / local scratch (never commit) ---
+proxy.txt
+*.pem
+*.key
+.env
+.env.*
+
+# --- Local databases / tool caches ---
+*.db
+*.db-shm
+*.db-wal
+*.sqlite3
+
+# --- Model weights, checkpoints & experiment logs ---
 *.pt
 *.pth
+*.ckpt
+*.safetensors
 *.log
 wandb/
 mlruns/
+lightning_logs/
 
-# --- Datasets: too large for GitHub (see README "Datasets") ---
-/data/
-/cl-ids-adversarial/data/
+# --- Datasets: too large for GitHub (see data/README.md) ---
+# Keep directory skeletons (.gitkeep) but ignore contents.
+/data/raw/*
+/data/processed/*
+/data/processed_v1/*
+/data/_archive/*
+/data/raw_iot/*
+/data/raw_unsw/*
+!/data/raw/.gitkeep
+!/data/processed/.gitkeep
+!/data/external/.gitkeep
 
-# --- Local database files ---
-*.db-shm
-*.db-wal
+# --- Results: raw per-seed outputs are already versioned for this project.
+# New runs should still be captured via `git add results/` explicitly.
+# Uncomment to stop versioning regenerable per-seed files in the future:
+# /results/runs/*_R_seed*.csv
+# /results/runs/*_summary_seed*.json
+/results/run_groups.log
+/results/_archive/
 
-# --- Local scratch notes ---
-/proxy.txt
-
-# --- Archived pre-fix results (invalid, see results_prefix0/README_ARCHIVED_PREFIX0.txt) ---
-/cl-ids-adversarial/results_prefix0/
+# --- Build artifacts ---
+/artifacts/

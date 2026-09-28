@@ -49,6 +49,9 @@ def filter_ci(tasks, label_map):
         nt["y_train"] = t["y_train"][tr]
         nt["X_train"] = t["X_train"][tr]
         nt["y_test"] = t["y_test"][te]
-        nt["X_test"] = t["y_test"][te]
+        nt["X_test"] = t["X_test"][te]
+        if "id_train" in t:
+            nt["id_train"] = t["id_train"][tr]
+            nt["id_test"] = t["id_test"][te]
         out.append(nt)
     return out

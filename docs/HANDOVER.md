@@ -1,5 +1,15 @@
 # HANDOVER — cl-ids-adversarial (paste this into the new chat)
 
+> **2026-09-28 correction overrides the historical handover below.** Do not
+> relaunch the old grid workers or use summary-file existence as completion.
+> The main table has zero manifest-validated seeds after repair; old results
+> remain executed-only or are hashed under `results/_archive/`. Three seeds
+> each for `e1_finetune_dedup` and `e1_finetune_t0` are isolated diagnostics,
+> separate from final comparisons.
+> Read `docs/inventory.md`, `docs/invalidation_table.md`, and
+> `docs/task_audit.md` before any new experiments. The remainder of this file
+> is a historical 2026-09-27 snapshot, not current run instructions.
+
 > **2026-09-27 repo reorg:** the `cl-ids-adversarial/` subdirectory was promoted
 > to repo root and `results_prefix0/` moved to `results/_archive/prefix0/`.
 > Read old `cl-ids-adversarial/...` paths below as repo-root-relative, and old

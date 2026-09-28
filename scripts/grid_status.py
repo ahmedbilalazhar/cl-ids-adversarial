@@ -1,34 +1,40 @@
 """Grid-status helper: per-group/per-config completion vs target seeds."""
-import collections
-import json
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-import yaml  # noqa: E402
+import yaml
 
-RES = ROOT / "results"
+from scripts.groups import GROUPS, seeds_for_group
+from src.paths import RESULTS_DIR, find_config
+from src.reporting import check_artifact
+
+RES = RESULTS_DIR
 RUNS = RES / "runs"
-GCONF = ROOT / "configs"
-
-# Read GROUPS/SEEDS from run_grid.py without executing its main body.
-_rg = (ROOT / "scripts" / "run_grid.py").read_text(encoding="utf-8")
-_ns: dict = {"__file__": str(ROOT / "scripts" / "run_grid.py"), "__name__": "run_grid_meta"}
-exec(compile(_rg.split("group = sys.argv[1]")[0], "run_grid", "exec"), _ns)
-GROUPS = _ns["GROUPS"]
-SEEDS7 = _ns["SEEDS7"]
-SEEDS12 = _ns["SEEDS12"]
-SEEDS12_GROUPS = _ns["SEEDS12_GROUPS"]
-
-def _summaries():
-    # Per-seed summaries live in runs/; fall back to legacy flat layout.
-    files = sorted(RUNS.glob("*_summary_seed*.json")) if RUNS.is_dir() else []
-    files += [p for p in sorted(RES.glob("*_summary_seed*.json")) if p.name not in {q.name for q in files}]
-    return files
 
 
-cnt = collections.Counter(p.name.split("_summary_seed")[0] for p in _summaries())
+def _config_name(key: str) -> str:
+    cfg = yaml.safe_load(find_config(key).read_text(encoding="utf-8"))
+    return str(cfg.get("name", key))
+
+
+def _count_validated(name: str, seeds: list[int]) -> tuple[int, int]:
+    """Return (validated, historical unmanifested pairs)."""
+    cfg0 = yaml.safe_load(find_config(name).read_text(encoding="utf-8"))
+    done = legacy = 0
+    for sd in seeds:
+        cfg = dict(cfg0, seed=sd)
+        hit = check_artifact(RUNS, name, sd, cfg) if RUNS.is_dir() else {"complete": False}
+        if not hit["complete"]:
+            hit = check_artifact(RES, name, sd, cfg)
+        if hit["complete"]:
+            done += 1
+        elif any((directory / f"{name}_summary_seed{sd}.json").exists()
+                 and (directory / f"{name}_R_seed{sd}.csv").exists()
+                 for directory in (RUNS, RES)):
+            legacy += 1
+    return done, legacy
 
 
 def main() -> None:
@@ -39,14 +45,20 @@ def main() -> None:
         if not names:
             print(f"{g}: UNKNOWN GROUP")
             continue
-        target_seeds = len(SEEDS12 if g in SEEDS12_GROUPS else SEEDS7)
-        done = sum(min(cnt[n], target_seeds) for n in names)
-        target = target_seeds * len(names)
+        seeds = seeds_for_group(g)
+        target = len(seeds) * len(names)
+        parts = []
+        done = legacy_total = 0
+        for key in names:
+            name = _config_name(key)
+            c, legacy = _count_validated(name, seeds)
+            done += min(c, len(seeds))
+            legacy_total += legacy
+            parts.append(f"{key.replace('_c','').replace('_rf','')}={min(c, len(seeds))}")
         total_done += done
         total_target += target
         flag = "DONE" if done >= target else ("part" if done else "TODO")
-        print(f"{g:9s} {done:4d}/{target:4d} {flag:4s} | " + " ".join(
-            f"{n.replace('_c','').replace('_rf','')}={min(cnt[n], target_seeds)}" for n in names))
+        print(f"{g:9s} {done:4d}/{target:4d} {flag:4s} (historical pairs {legacy_total}) | " + " ".join(parts))
     print(f"TOTAL {total_done}/{total_target} ({100*total_done/max(1,total_target):.1f}%)")
 
 

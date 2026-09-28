@@ -1,5 +1,21 @@
 # Continual Learning for Network Security — Adversarial IDS
 
+> **Repair status, 2026-09-28:** Historical per-seed files are executed
+> artifacts, not manifest-validated results. The main aggregate CSVs currently
+> contain headers only; do not cite older numerical claims or figures as
+> current evidence. Six validated seeds in `results/diagnostics/` exercise
+> the duplicate-disjoint and T0-only CICIDS sensitivity arms (three each),
+> not a final paired comparison.
+> Historical E4/E5 discovery outputs were archived on 2026-09-28 because
+> held-out flows affected clustering and clusters never affected classifier
+> training. FWT in new summaries is unavailable until measured.
+> UNSW-NB15 and CICIoT2023 task artifacts retain exact cross-pool content
+> matches (3,723 and 604). They are excluded from final claims until a
+> duplicate-disjoint correction and paired rerun are complete.
+> See `docs/inventory.md`, `docs/invalidation_table.md`, and
+> `docs/task_audit.md` and `docs/cicids_cross_file_audit.md`. This is an
+> offline simulation, not a deployed IDS.
+
 Adversarial evaluation of the novelty-discovery stage in continual-learning
 intrusion detection (CIC-IDS-2017, day-based CII sequence).
 
@@ -17,9 +33,9 @@ intrusion detection (CIC-IDS-2017, day-based CII sequence).
 | CICIDS2017 download + clean + CII sequence | done (2.57M rows) |
 | E1 baselines 1–6 (incl. Joint/Oracle) | done, n=7 seeds (1–6, 42; ER also 123) |
 | E2 label-flip (stream + buffer, 0.5/1/5%) | done — H1 **not** a collapse (drop real but small, p=0.031) |
-| E3 backdoor | done — ASR 1.0 all 7 seeds |
-| E4 novelty poison + **discovery stage (AE→HDBSCAN)** | done n=7 — nopois + **anchor variant**: miss rate invariant; attack absorption 0 → 0.143 (anchor vs nopois p=0.047) |
-| E5 novelty-detector evasion + pollution | done ×3 seeds — 69% of discovered attacks evadable; benign pollution +40pp (`scripts/e5_evasion.py`) |
+| E3 backdoor | prior ASR claim invalidated; 38 legacy seed files archived; corrected trigger/ASR implementation needs reruns |
+| E4 novelty poison + **discovery stage (AE→HDBSCAN)** | train-only causal pipeline implemented; synthetic checks in progress; historical outputs archived; corrected numerical comparison pending |
+| E5 novelty-detector evasion + pollution | historical JSONs archived; rerun under the revised discovery protocol pending |
 | E6 small-loss defence | done n=7 — ACC 0.367 vs 0.317 undefended (**p=0.016**) |
 | E6b kNN-consistency defence (H3) | done n=7 — ACC 0.278, **p=0.047 worse** than undefended; Heartbleed/Infiltration retention **0%** even clean |
 | A1–A3 ablations | done (3 seeds each) |
@@ -50,9 +66,9 @@ python scripts/smoke_test.py
 
 # 2. Download CICIDS2017 into data/raw/ (8 CSVs, see data/README.md)
 
-# 3. Clean + build day-based sequence
-python -m src.data.clean --raw data/raw --out data/processed
-python -m src.data.sequence --processed data/processed --out data/processed/tasks.npz --scenario cii
+# 3. Build the primary per-class capture-order/offline-init task sequence.
+# Existing task artifacts must first be archived; builders never overwrite them.
+make data-primary
 
 # 4. Run experiments (config-driven; bare names also work: --config e1_clean)
 python -m src.run_experiment --config configs/baselines/e1_clean.yaml
@@ -73,6 +89,10 @@ python scripts/e5_evasion.py          # E5: discovery evasion/pollution (3 seeds
 
 Or via Make: `make smoke`, `make data`, `make tables`, `make figures`, `make test`.
 Every number in the report must be regenerable from a config in `configs/`.
+`make data` is the legacy random/per-task protocol, not the primary build.
+The primary T0+T1 scaler sees T1 training rows before T0 training (offline
+initialization). `tasks_chrono_t0.npz` is the strictly future-blind T0-only
+sensitivity arm.
 
 ## Datasets
 
@@ -83,7 +103,7 @@ Raw and processed data are **not** committed — see [`data/README.md`](data/REA
   ```bash
   python scripts/download_cicids.py          # writes into data/raw/
   python -m src.data.clean --raw data/raw --out data/processed
-  python -m src.data.sequence --processed data/processed --out data/processed/tasks.npz --scenario cii
+  python -m src.data.sequence --processed data/processed/cicids2017_clean.parquet --out data/processed/tasks_chrono.npz --scenario cii --split chrono --scaler frozen
   ```
 
 ## Layout

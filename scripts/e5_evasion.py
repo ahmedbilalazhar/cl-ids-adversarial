@@ -12,8 +12,9 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from src.discovery.pipeline import fit_threshold, recon_scores  # noqa: E402
-from src.run_experiment import load_tasks, train_autoencoder  # noqa: E402
+from src.data.sequence import load_tasks
+from src.discovery.pipeline import fit_threshold, recon_scores
+from src.runner import train_autoencoder
 
 
 def craft(ae, X: np.ndarray, lo: np.ndarray, hi: np.ndarray, sign: int, eps: float, steps: int, device: str) -> np.ndarray:
@@ -71,7 +72,7 @@ def main() -> None:
 
         att = np.where(y_te != 0)[0]
         ben = np.where(y_te == 0)[0]
-        row: dict = {"task": t, "threshold": float(thr), "n_attack_test": int(len(att)), "n_benign_test": int(len(ben))}
+        row: dict = {"task": t, "threshold": float(thr), "n_attack_test": len(att), "n_benign_test": len(ben)}
 
         if len(att):
             s_att = recon_scores(ae, X_te[att], device=device)
@@ -85,14 +86,14 @@ def main() -> None:
                 row["n_novel_attack"] = int(novel.sum())
                 row["attack_discovery_crafted"] = float((novel.sum() - evaded.sum()) / len(att))
             else:
-                row["evasion_rate"] = 0.0
+                row["evasion_rate"] = None
                 row["n_novel_attack"] = 0
                 row["attack_discovery_crafted"] = float(novel.mean())
         else:
-            row["attack_discovery_base"] = 0.0
-            row["evasion_rate"] = 0.0
+            row["attack_discovery_base"] = None
+            row["evasion_rate"] = None
             row["n_novel_attack"] = 0
-            row["attack_discovery_crafted"] = 0.0
+            row["attack_discovery_crafted"] = None
 
         if len(ben):
             idx = rng.choice(len(ben), size=min(args.benign_sample, len(ben)), replace=False)
@@ -104,11 +105,11 @@ def main() -> None:
             newly = (s_pu >= thr) & (~novel_b)
             row["pollution_rate"] = float(newly.mean())
             row["benign_discovery_crafted"] = float((s_pu >= thr).mean())
-            row["n_benign_crafted"] = int(len(idx))
+            row["n_benign_crafted"] = len(idx)
         else:
-            row["benign_discovery_base"] = 0.0
-            row["pollution_rate"] = 0.0
-            row["benign_discovery_crafted"] = 0.0
+            row["benign_discovery_base"] = None
+            row["pollution_rate"] = None
+            row["benign_discovery_crafted"] = None
             row["n_benign_crafted"] = 0
 
         per_task.append(row)
@@ -120,15 +121,19 @@ def main() -> None:
         )
 
     attack_rows = [r for r in per_task if r["n_attack_test"] > 0]
+    benign_rows = [r for r in per_task if r["n_benign_test"] > 0]
+    def _mean_or_none(rows, key):
+        vals = [float(r[key]) for r in rows if r.get(key) is not None]
+        return float(np.mean(vals)) if vals else None
     summary = {
         "seed": seed,
         "eps": args.eps,
         "steps": args.steps,
-        "evasion_rate_mean": float(np.mean([r["evasion_rate"] for r in attack_rows])) if attack_rows else 0.0,
-        "attack_discovery_base_mean": float(np.mean([r["attack_discovery_base"] for r in attack_rows])) if attack_rows else 0.0,
-        "pollution_rate_mean": float(np.mean([r["pollution_rate"] for r in per_task])),
-        "benign_discovery_base_mean": float(np.mean([r["benign_discovery_base"] for r in per_task])),
-        "benign_discovery_crafted_mean": float(np.mean([r["benign_discovery_crafted"] for r in per_task])),
+        "evasion_rate_mean": _mean_or_none(attack_rows, "evasion_rate"),
+        "attack_discovery_base_mean": _mean_or_none(attack_rows, "attack_discovery_base"),
+        "pollution_rate_mean": _mean_or_none(benign_rows, "pollution_rate"),
+        "benign_discovery_base_mean": _mean_or_none(benign_rows, "benign_discovery_base"),
+        "benign_discovery_crafted_mean": _mean_or_none(benign_rows, "benign_discovery_crafted"),
         "per_task": per_task,
     }
     out = ROOT / "results" / f"e5_evasion_seed{seed}.json"

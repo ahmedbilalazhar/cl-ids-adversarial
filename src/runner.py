@@ -7,8 +7,13 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from src.attacks.backdoor import inject_backdoor
-from src.attacks.flip import label_flip
+from src.attacks.backdoor import backdoor_outcome, inject_backdoor, scaled_trigger
+from src.attacks.flip import (
+    label_flip,
+    majority_attack_class,
+    resolve_attack_target,
+    resolve_class_id,
+)
 from src.attacks.novelty import anchor_novelty_poison, novelty_poison_stream
 from src.cl.base import limit_threads, set_seed, to_loader
 from src.cl.derpp import DERpp
@@ -16,11 +21,17 @@ from src.cl.er import ExperienceReplay
 from src.data.sequence import load_feature_cols
 from src.defenses.consistency import knn_consistency_filter
 from src.defenses.purification import small_loss_filter
-from src.discovery.pipeline import evaluate_discovery, fit_threshold, recon_scores
-from src.metrics import summarize
+from src.discovery.pipeline import (
+    evaluate_discovery,
+    fit_discovery,
+    fit_threshold,
+    provisional_labels,
+    recon_scores,
+)
 from src.methods import METHODS
+from src.metrics import summarize
 from src.models.mlp import Autoencoder
-from src.paths import REPO_ROOT, resolve_repo_path
+from src.paths import resolve_repo_path
 from src.tasks import load_or_build_tasks
 
 limit_threads()
@@ -41,7 +52,7 @@ def train_autoencoder(X: np.ndarray, in_dim: int, device: str, seed: int, epochs
     return ae
 
 
-def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, device: str, label_map: dict, in_dim: int, model=None):
+def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, device: str, label_map: dict, in_dim: int, model=None, trigger=None, discovery_threshold=None):
     attack = cfg.get("attack") or {}
     name = attack.get("type")
     X = task["X_train"].copy()
@@ -58,8 +69,8 @@ def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, d
     if name == "label_flip":
         mode = attack.get("mode", "random")
         src_name = attack.get("source_class")
-        src = label_map.get(src_name) if src_name else None
-        tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
+        src = resolve_class_id(src_name, label_map, role="source") if src_name is not None else None
+        tgt = resolve_attack_target(attack, label_map)
         if mode == "adaptive":
             # Phase-3 step 15: white-box vs the carried-over (defended) model.
             from src.attacks.flip import adaptive_loss_preserving_flip
@@ -87,10 +98,11 @@ def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, d
         atk_name = attack.get("attack_class", "PortScan")
         atk = label_map.get(atk_name)
         if atk is None:
-            atk = int(max(y[y > 0])) if (y > 0).any() else 0
-        tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
+            raise ValueError(f"backdoor attack class absent from label map: {atk_name}")
+        tgt = resolve_attack_target(attack, label_map)
         X, y, triggered = inject_backdoor(
-            X, y, budget=budget, feature_names=feature_names, attack_class=atk, target_label=tgt, seed=seed
+            X, y, budget=budget, feature_names=feature_names, attack_class=atk,
+            target_label=tgt, trigger=trigger, seed=seed
         )
         asr_meta["triggered"] = triggered
         asr_meta["target_label"] = tgt
@@ -104,7 +116,7 @@ def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, d
         eps = float(attack.get("eps", 0.5))
         steps = int(attack.get("steps", 5))
         thr_q = float(attack.get("threshold_quantile", 0.95))
-        thr = asr_meta.get("threshold")
+        thr = discovery_threshold
         if thr is None:
             thr = fit_threshold(recon_scores(ae, X, device=device), quantile=thr_q)
         mode = attack.get("mode", "maxrecon")
@@ -154,20 +166,70 @@ def evaluate(model_method, tasks, upto: int) -> np.ndarray:
     return row
 
 
+def attack_dose_row(
+    attack: dict, original_y: np.ndarray, changed_mask: np.ndarray,
+    label_map: dict, *, task: int, retained_mask: np.ndarray | None = None,
+    target: str = "stream", labels_changed: int | None = None,
+) -> dict:
+    """Report actual candidates, changes, and post-filter retention."""
+    kind = attack.get("type")
+    budget = float(attack.get("buffer_budget", attack.get("budget", 0.0))) if target == "buffer" else float(attack.get("budget", 0.0))
+    source_class = None
+    if kind == "label_flip":
+        mode = attack.get("mode", "random")
+        target_label = resolve_attack_target(attack, label_map)
+        named = attack.get("source_class")
+        if named is not None and mode != "random":
+            source_class = resolve_class_id(named, label_map, role="source")
+        elif mode in {"persistent", "adaptive", "knn_adaptive"}:
+            source_class = majority_attack_class(original_y, target_label)
+        eligible = int((original_y == source_class).sum()) if source_class is not None else (
+            len(original_y) if len(np.unique(original_y)) > 1 else 0
+        )
+    elif kind == "backdoor":
+        source_class = int(label_map[attack.get("attack_class", "PortScan")])
+        target_label = resolve_attack_target(attack, label_map)
+        eligible = int(((original_y == source_class) & (original_y != target_label)).sum())
+    elif kind == "novelty":
+        mode = attack.get("mode", "maxrecon")
+        eligible = int((original_y == 0).sum()) if mode == "anchor" and (original_y != 0).any() else len(original_y)
+    else:
+        eligible = 0
+    changed_mask = np.asarray(changed_mask, dtype=bool)
+    if len(changed_mask) != len(original_y):
+        raise ValueError("attack dose mask length mismatch")
+    if retained_mask is None:
+        retained_mask = np.ones(len(original_y), dtype=bool)
+    changed = int(changed_mask.sum())
+    retained = int((changed_mask & retained_mask).sum())
+    n = len(original_y)
+    return {
+        "task": task, "target": target, "attack": kind,
+        "mode": attack.get("mode"), "source_class": source_class,
+        "attacker_knowledge": "carried_model" if attack.get("mode") == "adaptive" else "configured_input",
+        "configured_budget": budget, "n": n, "eligible": eligible,
+        "changed": changed, "retained_after_defense": retained,
+        "attacker_labels_changed": labels_changed if labels_changed is not None else changed,
+        "realized_shard_dose": changed / n if n else None,
+        "realized_global_dose": changed / n if n else None,
+    }
+
+
 def poison_buffer(method, attack: dict, label_map: dict, seed: int) -> None:
     if not isinstance(method, (ExperienceReplay, DERpp)) or not getattr(method, "buffer_y", None):
         return
     budget = float(attack.get("buffer_budget", attack.get("budget", 0.0)))
     if budget <= 0:
         return
-    rng = np.random.RandomState(seed)
     y = np.asarray(method.buffer_y, dtype=np.int64)
+    src_name = attack.get("source_class")
+    src = resolve_class_id(src_name, label_map, role="source") if src_name is not None else None
     y, flipped = label_flip(
         y,
         budget=budget,
         mode=attack.get("mode", "random"),
-        source_class=label_map.get(attack.get("source_class")) if attack.get("source_class") else None,
-        target_class=int(attack.get("target_class", label_map.get("Benign", 0))),
+        source_class=src,
+        target_class=resolve_attack_target(attack, label_map),
         seed=seed,
     )
     method.buffer_y = [int(v) for v in y]
@@ -175,7 +237,7 @@ def poison_buffer(method, attack: dict, label_map: dict, seed: int) -> None:
         for i in np.where(flipped)[0]:
             if i < len(method.buffer_logits):
                 li = method.buffer_logits[i].copy()
-                tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
+                tgt = resolve_attack_target(attack, label_map)
                 if tgt < len(li):
                     li[:] = 0.0
                     li[tgt] = 1.0
@@ -197,6 +259,12 @@ def run(cfg: dict) -> dict:
         feature_names = load_feature_cols(tasks_path)
     if not feature_names:
         feature_names = [f"f{i}" for i in range(in_dim)]
+    atk = cfg.get("attack") or {}
+    atk_type = atk.get("type")
+    trigger = None
+    if atk_type == "backdoor":
+        tasks_path = resolve_repo_path(Path(cfg.get("data", {}).get("tasks", "data/processed/tasks.npz")))
+        trigger = scaled_trigger(atk.get("trigger"), feature_names, tasks_path)
     n_classes = int(max(label_map.values())) + 1 + int((cfg.get("attack") or {}).get("type") == "novelty")
 
     # Phase-2 head-strategy ablation: grow_head=true starts the classifier at
@@ -228,9 +296,9 @@ def run(cfg: dict) -> dict:
     R = np.zeros((len(tasks), len(tasks)))
     asr_rows = []
     discovery_rows = []
+    poison_rows = []
+    next_provisional_class = int(max(label_map.values())) + 1
     t0 = time.time()
-    atk = cfg.get("attack") or {}
-    atk_type = atk.get("type")
     attack_target = atk.get("target", "stream")
 
     if method_name == "joint":
@@ -247,29 +315,67 @@ def run(cfg: dict) -> dict:
         for j in range(len(tasks)):
             R[j, : j + 1] = row[: j + 1]
         summary = summarize(R)
-        summary["asr_mean"] = 0.0
+        summary["asr_mean"] = None
         summary["wall_sec"] = time.time() - t0
         summary["cl_method"] = method_name
         summary["attack"] = atk_type
         summary["seed"] = seed
         summary["scenario"] = cfg.get("data", {}).get("scenario", "cii")
+        summary["runtime_device"] = device
         return {"R": R, "summary": summary, "asr_rows": asr_rows}
 
     for t in range(len(tasks)):
         X_tr = tasks[t]["X_train"]
         y_tr = tasks[t]["y_train"]
         ae = None
+        discovery_threshold = None
         if atk_type == "novelty":
-            X_ae = X_tr[y_tr == 0] if (y_tr == 0).any() else X_tr
-            if len(X_ae) < 64:
-                X_ae = X_tr
-            ae = train_autoencoder(X_ae, in_dim=in_dim, device=device, seed=seed + t)
+            benign_index = np.flatnonzero(y_tr == 0)
+            if len(benign_index) < 2:
+                raise ValueError("novelty discovery requires separate benign AE and calibration flows")
+            shuffled = np.random.RandomState(seed + t).permutation(benign_index)
+            n_calibration = max(1, len(shuffled) // 5)
+            ae = train_autoencoder(X_tr[shuffled[n_calibration:]], in_dim=in_dim, device=device, seed=seed + t)
+            discovery_threshold = fit_threshold(
+                recon_scores(ae, X_tr[shuffled[:n_calibration]], device=device),
+                quantile=float(atk.get("threshold_quantile", 0.95)),
+            )
 
         if attack_target == "stream":
-            X_tr, y_tr, asr_meta = apply_attack(cfg, tasks[t], t, feature_names, ae, device, label_map, in_dim, model=method.model)
+            X_tr, y_tr, asr_meta = apply_attack(
+                cfg, tasks[t], t, feature_names, ae, device, label_map, in_dim,
+                model=method.model, trigger=trigger, discovery_threshold=discovery_threshold,
+            )
         else:
-            asr_meta = {"target_label": int(atk.get("target_class", label_map.get("Benign", 0))), "triggered": np.zeros(len(y_tr), dtype=bool)}
+            asr_meta = {"target_label": resolve_attack_target(atk, label_map), "triggered": np.zeros(len(y_tr), dtype=bool)}
+        attack_label_changes = int(np.sum(y_tr != tasks[t]["y_train"]))
 
+        fitted_discovery = None
+        cluster_class_map = {}
+        if atk_type == "novelty":
+            fitted_discovery = fit_discovery(
+                ae, discovery_threshold, X_tr, asr_meta["triggered"],
+                device=device, min_cluster_size=int(atk.get("min_cluster_size", 15)),
+                max_cluster_candidates=int(atk.get("max_cluster_candidates", 4000)),
+                seed=seed + t,
+            )
+            if atk.get("training_mode", "discovery") == "direct_label_poison":
+                # Explicit control: train on attacker-supplied labels, with no
+                # cluster label entering the classifier. Remap the config's
+                # sentinel unknown ID to a contiguous model output ID.
+                y_tr = y_tr.copy()
+                y_tr[y_tr == int(asr_meta["target_label"])] = int(max(label_map.values())) + 1
+            else:
+                # Discovery arm: attack-supplied unknown labels are ignored.
+                # Only training-cluster membership can relabel the stream.
+                y_tr, cluster_class_map = provisional_labels(
+                    tasks[t]["y_train"], fitted_discovery, next_provisional_class,
+                )
+                next_provisional_class += len(cluster_class_map)
+            if len(y_tr) and int(y_tr.max()) >= next_provisional_class:
+                next_provisional_class = int(y_tr.max()) + 1
+
+        keep = np.ones(len(y_tr), dtype=bool)
         if defense.get("type") == "small_loss":
             keep = small_loss_filter(
                 method.model, X_tr, y_tr, keep_ratio=float(defense.get("keep_ratio", 0.75)), device=device
@@ -280,6 +386,11 @@ def run(cfg: dict) -> dict:
                 X_tr, y_tr, k=int(defense.get("k", 10)), keep_ratio=float(defense.get("keep_ratio", 0.75))
             )
             X_tr, y_tr = X_tr[keep], y_tr[keep]
+        if atk_type is not None and attack_target == "stream":
+            poison_rows.append(attack_dose_row(
+                atk, tasks[t]["y_train"], asr_meta["triggered"], label_map,
+                task=t, retained_mask=keep, labels_changed=attack_label_changes,
+            ))
 
         class_bound = int(max(n_classes, y_tr.max() + 1))
         if grow_head:
@@ -290,110 +401,119 @@ def run(cfg: dict) -> dict:
         method.train_task(loader, epochs=epochs)
         method.after_task(t, loader)
         if attack_target == "buffer" and atk_type == "label_flip":
+            before_buffer = np.asarray(method.buffer_y, dtype=np.int64).copy()
             poison_buffer(method, atk, label_map, seed=seed + t)
+            after_buffer = np.asarray(method.buffer_y, dtype=np.int64)
+            poison_rows.append(attack_dose_row(
+                atk, before_buffer, before_buffer != after_buffer, label_map,
+                task=t, target="buffer",
+            ))
 
         R[t, : t + 1] = evaluate(method, tasks, t)
 
-        asr = 0.0
+        asr = None
         if atk_type == "backdoor":
-            X_te = tasks[t]["X_test"].copy()
-            y_te = tasks[t]["y_test"]
-            cols, vals = [], []
-            from src.attacks.backdoor import DEFAULT_TRIGGER
-
-            trg = (cfg.get("attack") or {}).get("trigger") or DEFAULT_TRIGGER
-            for fname, fval in zip(trg["features"], trg["values"]):
-                if fname in feature_names:
-                    cols.append(feature_names.index(fname))
-                    vals.append(float(fval))
-            atk_name = (cfg.get("attack") or {}).get("attack_class", "PortScan")
-            atk = label_map.get(atk_name)
-            if atk is None:
-                atk = int(max(label_map.values()))
-            tgt = int((cfg.get("attack") or {}).get("target_class", label_map.get("Benign", 0)))
-            cand = np.where(y_te == atk)[0]
-            if len(cand) == 0:
-                cand = np.arange(len(y_te))
-            if cols and len(cand):
-                for i in cand:
-                    for c, v in zip(cols, vals):
-                        X_te[i, c] = v
-                pred = method.predict(X_te)
-                asr = float(np.mean(pred[cand] == tgt))
-            else:
-                asr = 0.0
+            outcome = backdoor_outcome(
+                method.predict, tasks[t]["X_test"], tasks[t]["y_test"], feature_names,
+                label_map.get(atk.get("attack_class", "PortScan")),
+                resolve_attack_target(atk, label_map), trigger,
+            )
+            attack_class = label_map[atk.get("attack_class", "PortScan")]
+            target_label = resolve_attack_target(atk, label_map)
+            outcome["train_eligible"] = int(np.sum(
+                (tasks[t]["y_train"] == attack_class) & (tasks[t]["y_train"] != target_label)
+            ))
+            outcome["train_poisoned"] = int(np.sum(asr_meta["triggered"]))
+            n_train = len(tasks[t]["y_train"])
+            outcome["train_realized_dose"] = outcome["train_poisoned"] / n_train if n_train else None
+            asr_rows.append({"task": t, **outcome})
         elif atk_type == "label_flip":
             y_te = tasks[t]["y_test"]
             pred = method.predict(tasks[t]["X_test"])
             if attack_target == "buffer":
                 src_name = atk.get("source_class")
-                tgt = int(atk.get("target_class", label_map.get("Benign", 0)))
+                tgt = resolve_attack_target(atk, label_map)
                 if src_name and src_name in label_map:
                     mask = y_te == label_map[src_name]
-                    asr = float(np.mean(pred[mask] == tgt)) if mask.any() else 0.0
+                    asr = float(np.mean(pred[mask] == tgt)) if mask.any() else None
             else:
                 src_name = atk.get("source_class")
-                tgt = int(atk.get("target_class", label_map.get("Benign", 0)))
+                tgt = resolve_attack_target(atk, label_map)
                 if atk.get("mode") == "persistent":
                     # Resolve the same per-task majority class the attack used.
                     from src.attacks.flip import majority_attack_class
 
                     src = majority_attack_class(y_te, tgt)
                     mask = y_te == src if src is not None else np.zeros(len(y_te), dtype=bool)
-                    asr = float(np.mean(pred[mask] == tgt)) if mask.any() else 0.0
+                    asr = float(np.mean(pred[mask] == tgt)) if mask.any() else None
                 elif src_name and src_name in label_map and atk.get("mode") in ("targeted", "adaptive", "knn_adaptive"):
                     mask = y_te == label_map[src_name]
-                    asr = float(np.mean(pred[mask] == tgt)) if mask.any() else 0.0
+                    asr = float(np.mean(pred[mask] == tgt)) if mask.any() else None
         elif atk_type == "novelty":
-            y_te = tasks[t]["y_test"]
-            pred = method.predict(tasks[t]["X_test"])
-            attack_labels = [
-                label_map[a]
-                for a in (
-                    "FTP-Patator",
-                    "SSH-Patator",
-                    "DoS Slowloris",
-                    "DoS Slowhttptest",
-                    "DoS Hulk",
-                    "DoS GoldenEye",
-                    "Heartbleed",
-                    "Web Attack Brute Force",
-                    "Web Attack XSS",
-                    "Web Attack Sql Injection",
-                    "Infiltration",
-                    "Bot",
-                    "PortScan",
-                    "DDoS",
-                )
-                if a in label_map
-            ]
-            known = np.isin(y_te, attack_labels + [0])
-            if known.any():
-                asr = float(np.mean(pred[known] == int(asr_meta["target_label"])))
-        asr_rows.append({"task": t, "asr": asr})
+            # There is no single attack-success target across provisional
+            # clusters. Discovery endpoints below carry their own denominators.
+            asr = None
+        if atk_type != "backdoor":
+            asr_rows.append({"task": t, "asr": asr})
 
-        if atk_type == "novelty" and asr_meta.get("ae") is not None:
+        if atk_type == "novelty" and fitted_discovery is not None:
             disc = evaluate_discovery(
-                ae=asr_meta["ae"],
-                threshold=float(asr_meta.get("threshold", 0.0)),
-                X_tr=asr_meta.get("X_poisoned", tasks[t]["X_train"]),
-                y_tr=asr_meta.get("y_poisoned", tasks[t]["y_train"]),
-                poison_mask=asr_meta.get("triggered", np.zeros(len(tasks[t]["y_train"]), dtype=bool)),
-                X_te=tasks[t]["X_test"],
-                y_te=tasks[t]["y_test"],
+                ae=ae,
+                threshold=discovery_threshold,
+                fitted=fitted_discovery,
+                X_test=tasks[t]["X_test"],
+                y_test=tasks[t]["y_test"],
                 device=device,
-                min_cluster_size=int((cfg.get("attack") or {}).get("min_cluster_size", 15)),
             )
             disc["task"] = t
+            disc["training_mode"] = atk.get("training_mode", "discovery")
+            disc["cluster_class_map"] = {str(k): int(v) for k, v in cluster_class_map.items()}
+            disc["cluster_poison_fraction"] = {str(k): v for k, v in fitted_discovery["poison_fraction"].items()}
+            disc["n_train_poisoned"] = int(np.sum(asr_meta["triggered"]))
+            disc["n_train_relabelled_by_discovery"] = int(np.sum(fitted_discovery["train_labels"] >= 0)) if cluster_class_map else 0
+            disc["n_ae_fit"] = len(shuffled) - n_calibration
+            disc["n_ae_calibration"] = n_calibration
+            disc["n_cluster_fit_candidates"] = fitted_discovery["n_fit_candidates"]
+            disc["n_novel_train_candidates"] = fitted_discovery["n_novel_candidates"]
+            y_test = tasks[t]["y_test"]
+            predictions = method.predict(tasks[t]["X_test"])
+            family_rows = []
+            for class_name, class_id in label_map.items():
+                family = y_test == class_id
+                if family.any():
+                    correct = int((predictions[family] == class_id).sum())
+                    family_rows.append({
+                        "class": class_name, "label": int(class_id),
+                        "n": int(family.sum()), "correct": correct,
+                        "recall": correct / int(family.sum()),
+                    })
+            disc["downstream_family_rows"] = family_rows
+            benign_test = y_test == 0
+            disc["downstream_benign_false_positive_rate"] = (
+                float((predictions[benign_test] != 0).mean()) if benign_test.any() else None
+            )
             discovery_rows.append(disc)
 
     summary = summarize(R)
-    summary["asr_mean"] = float(np.mean([r["asr"] for r in asr_rows])) if asr_rows else None
+    if atk_type == "backdoor":
+        eligible = sum(r["eligible"] for r in asr_rows)
+        summary["asr_mean"] = sum(r["successes"] for r in asr_rows) / eligible if eligible else None
+        summary["asr_eligible"] = eligible
+        summary["asr_successes"] = sum(r["successes"] for r in asr_rows)
+        summary["asr_rows"] = asr_rows
+    else:
+        asr_values = [r["asr"] for r in asr_rows if r["asr"] is not None]
+        summary["asr_mean"] = float(np.mean(asr_values)) if asr_values else None
     summary["wall_sec"] = time.time() - t0
     summary["cl_method"] = method_name
     summary["attack"] = (cfg.get("attack") or {}).get("type")
     summary["seed"] = seed
     summary["scenario"] = cfg.get("data", {}).get("scenario", "cii")
+    summary["runtime_device"] = device
+    if poison_rows:
+        summary["poison_rows"] = poison_rows
+        summary["poison_changed_total"] = sum(row["changed"] for row in poison_rows)
+        summary["poison_eligible_total"] = sum(row["eligible"] for row in poison_rows)
     if discovery_rows:
         summary["discovery_rows"] = discovery_rows
         attack_rows = [r for r in discovery_rows if int(r.get("n_attack_test", 0)) > 0]
@@ -407,9 +527,14 @@ def run(cfg: dict) -> dict:
             ("test_novel_rate", discovery_rows),
             ("n_clusters", discovery_rows),
             ("n_fictitious", discovery_rows),
+            ("benign_false_alert_rate", discovery_rows),
+            ("attack_flagged_rate", attack_rows),
+            ("cluster_assignment_purity", discovery_rows),
+            ("cluster_assignment_ari", discovery_rows),
+            ("downstream_benign_false_positive_rate", discovery_rows),
         )
         for key, rows in mean_specs:
-            vals = [float(r[key]) for r in rows if key in r]
+            vals = [float(r[key]) for r in rows if r.get(key) is not None]
             if vals:
                 summary[f"{key}_mean"] = float(np.mean(vals))
     return {"R": R, "summary": summary, "asr_rows": asr_rows, "discovery_rows": discovery_rows}

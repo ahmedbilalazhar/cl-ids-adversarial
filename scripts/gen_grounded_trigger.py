@@ -1,10 +1,8 @@
-"""Physically-grounded backdoor trigger specification (Phase-3 step 17).
+"""Packet recipe proposed for the feature-space E3 trigger.
 
-The GROUNDED_TRIGGER in src/attacks/backdoor.py is exactly reproducible by
-the packet sequence below: a 3-packet TCP SYN burst, Linux default window
-29200, 40-byte bare SYNs (no payload, no options padding games):
+This builds a three-SYN sequence with TCP window 29200 and no payload:
 
-    hping3 -S -w 29200 -d 40 -c 3 -p 80 <target>
+    hping3 -S -w 29200 -c 3 -p 80 <target>
 
 or equivalently with Scapy (build + dissect work offline; sending needs a
 raw-socket interface):
@@ -13,26 +11,20 @@ raw-socket interface):
     pkts = [IP(dst=TARGET)/TCP(dport=80, flags="S", window=29200) for _ in range(3)]
     send(pkts)
 
-Why these feature values follow:
-- "SYN Flag Count" = 3 ............ three SYNs in the flow.
-- "Init_Win_bytes_forward" = 29200  the window set on each SYN.
-- "Fwd Packet Length Mean" = 40 .... bare 20B IP + 20B TCP, no payload.
-
-Legality check (run: python scripts/gen_grounded_trigger.py): asserts the
-Scapy-built packets dissect to exactly these values and that no impossible
-TCP observable is implied (flags<= legal combos, lengths in range). The old
-feature-space trigger (dst/flag/lenMean conjunction) is kept ONLY as the
-explicit realism comparison (E3), never as the sole backdoor result.
+The script checks only packet header fields and total IP length. It does not
+run the CICIDS flow extractor, establish how that extractor defines packet
+length, or prove all packets form one flow. The proposed feature values are
+therefore an unverified feature-space approximation until an extractor test
+measures them. A 40-byte IP/TCP packet may have a zero-byte payload.
 """
 from __future__ import annotations
-
 
 TRIGGER_SPEC = {
     "n_packets": 3,
     "tcp_flags": "S",
     "window": 29200,
     "packet_len": 40,
-    "hping3": "hping3 -S -w 29200 -d 40 -c 3 -p 80 <target>",
+    "hping3": "hping3 -S -w 29200 -c 3 -p 80 <target>",
 }
 
 EXPECTED_FEATURES = {
@@ -49,7 +41,7 @@ def check_ranges() -> None:
     assert set(TRIGGER_SPEC["tcp_flags"]) <= set("SAFRPUCE"), "legal TCP flags"
     for f, v in EXPECTED_FEATURES.items():
         assert v >= 0, f
-    print("trigger spec legality: OK (no impossible TCP observable)")
+    print("packet header ranges: OK (flow features not verified)")
 
 
 def build_scapy_packets(target: str = "127.0.0.1"):
@@ -66,9 +58,9 @@ def main() -> None:
         from scapy.all import TCP
 
         wins = [int(p[TCP].window) for p in pkts]
-        lens = [len(bytes(p[TCP].payload)) + 40 for p in pkts]
+        lens = [len(bytes(p)) for p in pkts]
         assert wins == [29200] * 3, wins
-        print(f"scapy build: OK (windows={wins}, fwd_len_mean={sum(lens)/len(lens):.1f})")
+        print(f"scapy build: OK (windows={wins}, mean IP packet bytes={sum(lens)/len(lens):.1f})")
     except ImportError:
         print("scapy not installed: spec documented only (no send attempted offline)")
 

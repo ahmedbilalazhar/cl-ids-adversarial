@@ -1,5 +1,15 @@
 # Proposal — Poisoning of Federated Class-Incremental Network Intrusion Detection
 
+> **2026-09-28 audit note:** All result numbers and hypothesis verdicts below
+> are historical, executed-only evidence pending manifest-validated reruns.
+> The T0+T1 scaler is an offline-initialization protocol, not future-blind at
+> T0. Existing CICIDS test sets have exact duplicate-content exposure;
+> `docs/task_audit.md` quantifies it. This proposal is not a deployed IDS claim.
+> E4/E5 discovery results were invalidated and archived on 2026-09-28:
+> held-out flows affected clusters, and cluster assignments never entered
+> classifier training. Historical H2 numbers below are superseded, including
+> all absorption rates, ACC differences, and p-values. Corrected runs are pending.
+
 **Students:** Saneedullah (23I-2568), Ahmed Bilal (23I-2581)  
 **Status:** post-audit revision for supervisor sign-off · primary result F2
 (federated finetune vs EWC vs DER++ × 0/1/5/10%, n=7) + centralized ablation
@@ -92,7 +102,8 @@ Any of these found in full-text search must be cited and the claim narrowed furt
   cross-entropy throughout (an earlier draft's "class-weighted loss" line was
   a documentation error; the code never weighted). Buffers inherit stream
   imbalance (disclosed on every table/figure). SMOTE is *not* used.
-- **No train/test leakage:** never mix datasets for train and test; never split flows from the same capture across both.
+- **Split validity:** no source row is intentionally assigned to both train and test, but legacy CICIDS files lack row IDs and exact duplicate feature records do cross the split. The duplicate-disjoint sensitivity arm excludes these matches; quantify this limitation before any generalization claim.
+- **Scaler correction:** the following historical scaling bullet is superseded where it calls T0+T1 fitting future-blind or treats earlier scores as confirmed lower bounds. The frozen T0+T1 scaler is offline initialization; the T0-only arm and duplicate-disjoint arm are separate sensitivity protocols, with paired comparisons pending.
 - **Feature scaling (locked 2026-09-26, Phase-0 ablation):** PRIMARY = one StandardScaler fit on T0+T1 train only, applied frozen to all tasks (no backward leakage: no future-task row touches the scaler; `src/data/sequence.py::fit_scaler_frozen`, `data/processed/tasks_frozen.npz`). SECONDARY = per-task scalers kept as an explicit preprocessing-pitfall comparison: same-seed finetune ablation (n=7) scores 0.5439 ± 0.0083 frozen vs 0.2991 ± 0.0162 per-task (p=0.0156) — per-task re-standardization injects artificial cross-task covariate shift that dominates all method effects. All locked pre-2026-09-26 numbers used per-task scaling and are thereby conservative lower bounds; the Phase-2 chrono rebuild adopts frozen scaling throughout.
 - **Classification head (resolved 2026-09-26):** pre-sized fixed head over the full label space (Paper-2 §3.2.1 fixed-head protocol), UNIFORM across all methods via `src/cl/base.py::_maybe_expand`; `expand_head` exists but never fires under current configs (class_bound ≤ pre-sized width always); LwF distils sliced to seen width (decisions_log.md #3). A growing-head ablation (T0-width init + live expansion) is scheduled in the Phase-2 ablations family — not silently picked.
 - **Optional carrier validation:** CICDDoS2019 (answers Paper 1's own DDoS complaint); CICIoT2023 if time allows.

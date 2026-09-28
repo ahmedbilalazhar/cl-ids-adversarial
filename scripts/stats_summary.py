@@ -1,13 +1,21 @@
 from __future__ import annotations
 
 import csv
+import argparse
 import json
+import itertools
 import math
+import sys
 from collections import defaultdict
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
-RESULTS = ROOT / "results"
+sys.path.insert(0, str(ROOT))
+from src.paths import RESULTS_DIR
+
+RESULTS = RESULTS_DIR
 RUNS = RESULTS / "runs"
 
 
@@ -617,24 +625,69 @@ def wilcoxon_pair(a: list[float], b: list[float]) -> dict:
         return {"n": len(diffs), "stat": "", "pvalue": f"err:{e}"}
 
 
-def seeds_for(name: str) -> dict[int, dict]:
+def _validated_summary(path: Path):
+    """Return a summary only when its completion manifest validates."""
+    from src.paths import find_config as _find_config
+    from src.reporting import check_artifact
+
+    stem = path.name.removesuffix(".json")
+    base, sep, raw_seed = stem.rpartition("_summary_seed")
+    if not sep or not raw_seed.isdigit():
+        return None
+    try:
+        cfg = yaml.safe_load(_find_config(base).read_text(encoding="utf-8")) or {}
+    except FileNotFoundError:
+        cfg = None
+    try:
+        manifest = json.loads((path.parent / f"{base}_manifest_seed{raw_seed}.json").read_text(
+            encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    if cfg is not None and manifest.get("requested_device") == "cuda":
+        cfg = dict(cfg, device="cuda")
+    if not check_artifact(path.parent, base, int(raw_seed), cfg)["complete"]:
+        return None
+    summary = json.loads(path.read_text(encoding="utf-8"))
+    summary["_device"] = manifest["device"]
+    return summary
+
+
+def seeds_for(name: str, device: str) -> dict[int, dict]:
     out = {}
     for p in _summaries(f"{name}_summary_seed*.json"):
-        s = json.loads(p.read_text())
+        s = _validated_summary(p)
+        if s is None or s["_device"] != device:
+            continue
         out[int(s.get("seed", -1))] = s
     return out
 
 
 def main():
-    groups: dict[str, list[dict]] = defaultdict(list)
-    for p in _summaries():
-        s = json.loads(p.read_text())
+    global RESULTS, RUNS
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--results-dir", type=Path, default=RESULTS)
+    args = ap.parse_args()
+    from src.paths import resolve_repo_path
+
+    RESULTS = resolve_repo_path(args.results_dir)
+    RUNS = RESULTS / "runs"
+    from src.reporting import write_csv_atomic
+
+    groups: dict[tuple[str, str], list[dict]] = defaultdict(list)
+    for p in sorted(_summaries()):
+        s = _validated_summary(p)
+        if s is None:
+            continue
         name = p.name.split("_summary_seed")[0]
-        groups[name].append(s)
+        groups[(name, s["_device"])].append(s)
+    validated_seeds = {
+        key: {int(item["seed"]): item for item in items}
+        for key, items in groups.items()
+    }
 
     rows = []
-    for name, items in sorted(groups.items()):
-        row: dict = {"name": name, "n_seeds": len(items)}
+    for (name, device), items in sorted(groups.items()):
+        row: dict = {"name": name, "device": device, "n_seeds": len(items)}
         atk_type, atk_mode = _attack_mode(name)
         # Gate D rule 1: random-mode label-flip ASR is undefined, never "0".
         # "persistent"/"adaptive"/"knn_adaptive" are targeted-like: defined.
@@ -681,17 +734,13 @@ def main():
     out = RESULTS / "stats_summary.csv"
     disc_fields = [f"{m}_{s}" for m in DISC_METRICS for s in ("mean", "std")]
     fields = (
-        ["name", "n_seeds", "seeds"]
+        ["name", "device", "n_seeds", "seeds"]
         + [f"{m}_{s}" for m in METRICS for s in ("mean", "std")]
         + ["acc_ci_lo", "acc_ci_hi"]
         + disc_fields
         + ["replay_note"]  # Gate D rule 2: buffer-imbalance note travels with the table
     )
-    with open(out, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
-        w.writeheader()
-        for r in rows:
-            w.writerow(r)
+    write_csv_atomic(out, fields, rows)
     print(f"wrote {out} ({len(rows)} groups)")
     print(f"NOTE (Gate D rule 2): {BUFFER_NOTE}")
     for r in rows:
@@ -717,8 +766,9 @@ def main():
     from scipy.stats import wilcoxon
 
     wrows = []
-    for name, base in WILCOXON_PAIRS:
-        a_map, b_map = seeds_for(name), seeds_for(base)
+    for (name, base), device in itertools.product(WILCOXON_PAIRS, ("cpu", "cuda")):
+        a_map = validated_seeds.get((name, device), {})
+        b_map = validated_seeds.get((base, device), {})
         if not a_map or not b_map:
             continue
         common = sorted(set(a_map) & set(b_map))
@@ -742,6 +792,7 @@ def main():
             {
                 "name": name,
                 "baseline": base,
+                "device": device,
                 "family": FAMILY_OF.get((name, base), "unassigned"),
                 "n": len(common),
                 "seeds": ",".join(str(s) for s in common),
@@ -765,19 +816,14 @@ def main():
         for i, a in zip(idxs, adj):
             wrows[i]["p_holm"] = a
     wout = RESULTS / "wilcoxon.csv"
+    write_csv_atomic(
+        wout,
+        ["name", "baseline", "device", "family", "n", "seeds", "acc_mean",
+         "baseline_acc_mean", "diff_mean", "diff_ci_lo", "diff_ci_hi",
+         "wilcoxon_stat", "pvalue", "effect_r", "p_holm"],
+        wrows,
+    )
     if wrows:
-        with open(wout, "w", newline="", encoding="utf-8") as f:
-            w = csv.DictWriter(
-                f,
-                fieldnames=[
-                    "name", "baseline", "family", "n", "seeds", "acc_mean",
-                    "baseline_acc_mean", "diff_mean", "diff_ci_lo", "diff_ci_hi",
-                    "wilcoxon_stat", "pvalue", "effect_r", "p_holm",
-                ],
-            )
-            w.writeheader()
-            for r in wrows:
-                w.writerow(r)
         print(f"wrote {wout}")
         for r in wrows:
             print(

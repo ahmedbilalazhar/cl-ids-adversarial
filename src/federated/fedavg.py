@@ -8,7 +8,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from src.attacks.backdoor import DEFAULT_TRIGGER, inject_backdoor
+from src.attacks.backdoor import backdoor_outcome, inject_backdoor, scaled_trigger
 from src.attacks.byzantine import (
     from_deltas,
     little_is_enough,
@@ -16,7 +16,7 @@ from src.attacks.byzantine import (
     sign_flip_delta,
     to_deltas,
 )
-from src.attacks.flip import label_flip
+from src.attacks.flip import label_flip, majority_attack_class, resolve_attack_target, resolve_class_id
 from src.cl.base import set_seed, to_loader
 from src.data.sequence import load_feature_cols
 from src.defenses.consistency import knn_consistency_filter
@@ -33,6 +33,7 @@ from src.federated.robust import (
 from src.metrics import summarize
 from src.methods import METHODS
 from src.models import build_model
+from src.paths import resolve_repo_path
 from src.tasks import load_or_build_tasks
 
 
@@ -52,6 +53,7 @@ def _poison_shard(
     seed: int,
     model=None,
     device: str = "cpu",
+    trigger=None,
 ) -> tuple[np.ndarray, np.ndarray, dict]:
     """Apply the UNCHANGED single-node attack to one client's shard.
 
@@ -66,8 +68,17 @@ def _poison_shard(
     if name == "label_flip":
         mode = attack.get("mode", "random")
         src_name = attack.get("source_class")
-        src = label_map.get(src_name) if src_name else None
-        tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
+        src = resolve_class_id(src_name, label_map, role="source") if src_name is not None else None
+        tgt = resolve_attack_target(attack, label_map)
+        if src is None and mode in {"persistent", "adaptive", "knn_adaptive"}:
+            source = majority_attack_class(y, tgt)
+        elif mode == "random":
+            source = None
+        else:
+            source = src
+        eligible = int((y == source).sum()) if source is not None else (
+            len(y) if len(np.unique(y)) > 1 else 0
+        )
         if mode == "adaptive":
             # White-box vs the malicious client's carried-over model.
             from src.attacks.flip import adaptive_loss_preserving_flip
@@ -87,18 +98,23 @@ def _poison_shard(
             )
         else:
             y2, flipped = label_flip(y, budget=budget, mode=mode, source_class=src, target_class=tgt, seed=seed)
-        meta = {"poisoned": flipped, "fraction": float(flipped.mean()) if len(y) else 0.0}
+        meta = {"poisoned": flipped, "fraction": float(flipped.mean()) if len(y) else 0.0,
+                "eligible": eligible, "changed": int(flipped.sum()),
+                "labels_changed": int(np.sum(y2 != y)), "source_class": source}
         return X, y2, meta
     if name == "backdoor":
         atk_name = attack.get("attack_class", "PortScan")
         atk = label_map.get(atk_name)
         if atk is None:
-            atk = int(max(y[y > 0])) if (y > 0).any() else 0
-        tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
+            raise ValueError(f"backdoor attack class absent from label map: {atk_name}")
+        tgt = resolve_attack_target(attack, label_map)
         X2, y2, trig = inject_backdoor(
-            X, y, budget=budget, feature_names=feature_names, attack_class=atk, target_label=tgt, seed=seed
+            X, y, budget=budget, feature_names=feature_names, attack_class=atk,
+            target_label=tgt, trigger=trigger, seed=seed
         )
-        meta = {"poisoned": trig, "fraction": float(trig.mean()) if len(y) else 0.0}
+        meta = {"poisoned": trig, "fraction": float(trig.mean()) if len(y) else 0.0,
+                "eligible": int(np.sum((y == atk) & (y != tgt))), "changed": int(trig.sum()),
+                "labels_changed": int(np.sum(y2 != y))}
         return X2, y2, meta
     raise ValueError(f"Federated wrapper supports label_flip/backdoor, got: {name}")
 
@@ -150,10 +166,14 @@ def run_federated(cfg: dict) -> dict:
     in_dim = tasks[0]["X_train"].shape[1]
     feature_names = cfg.get("feature_names")
     if not feature_names:
-        tasks_path = Path(cfg.get("data", {}).get("tasks", "data/processed/tasks.npz"))
+        tasks_path = resolve_repo_path(Path(cfg.get("data", {}).get("tasks", "data/processed/tasks.npz")))
         feature_names = load_feature_cols(tasks_path)
     if not feature_names:
         feature_names = [f"f{i}" for i in range(in_dim)]
+    trigger = None
+    if attack.get("type") == "backdoor":
+        tasks_path = resolve_repo_path(Path(cfg.get("data", {}).get("tasks", "data/processed/tasks.npz")))
+        trigger = scaled_trigger(attack.get("trigger"), feature_names, tasks_path)
     n_classes = int(max(label_map.values())) + 1
 
     method_name = cfg.get("cl_method", "er")
@@ -191,6 +211,7 @@ def run_federated(cfg: dict) -> dict:
             idx = shards[k]
             Xk, yk = X_pool[idx].copy(), y_pool[idx].copy()
             frac = 0.0
+            eligible = changed = 0
             if len(yk) == 0:
                 # Dirichlet skew can leave a client with zero samples on small
                 # tasks. It sits out the round: contributes its (broadcast)
@@ -200,15 +221,25 @@ def run_federated(cfg: dict) -> dict:
                 m.model.load_state_dict(copy.deepcopy(global_sd), strict=True)
                 sds.append({kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()})
                 ws.append(0.0)
-                poison_frac_rows.append({"task": t, "client": k, "poison_fraction": 0.0, "n": 0})
+                poison_frac_rows.append({"task": t, "client": k, "poison_fraction": 0.0,
+                                         "n": 0, "eligible": 0, "changed": 0,
+                                         "labels_changed": 0, "configured_shard_budget": budget,
+                                         "retained_after_defense": 0})
                 continue
             if k in mal_ids and budget > 0 and len(yk):
                 Xk, yk, meta = _poison_shard(
                     Xk, yk, attack, label_map, feature_names, seed=seed + t,
-                    model=clients[k].model, device=device,
+                    model=clients[k].model, device=device, trigger=trigger,
                 )
                 frac = meta["fraction"]
-            poison_frac_rows.append({"task": t, "client": k, "poison_fraction": frac, "n": len(yk)})
+                eligible = meta.get("eligible", 0)
+                changed = meta.get("changed", int(meta["poisoned"].sum()))
+            poison_frac_rows.append({"task": t, "client": k, "poison_fraction": frac,
+                                     "n": len(yk), "eligible": eligible, "changed": changed,
+                                     "labels_changed": meta.get("labels_changed", 0) if k in mal_ids and budget > 0 else 0,
+                                     "configured_shard_budget": budget if k in mal_ids else 0.0,
+                                     "source_class": meta.get("source_class") if k in mal_ids and budget > 0 else None,
+                                     "retained_after_defense": changed})
             m = clients[k]
             # Per-client pre-training defense filter (mirrors single-node
             # run_experiment: applied to the shard AFTER poisoning, using the
@@ -218,11 +249,15 @@ def run_federated(cfg: dict) -> dict:
                     m.model, Xk, yk, keep_ratio=float(defense.get("keep_ratio", 0.75)), device=device
                 )
                 Xk, yk = Xk[keep], yk[keep]
+                if k in mal_ids and budget > 0:
+                    poison_frac_rows[-1]["retained_after_defense"] = int((meta["poisoned"] & keep).sum())
             elif defense.get("type") == "knn_consistency" and len(yk):
                 keep = knn_consistency_filter(
                     Xk, yk, k=int(defense.get("k", 10)), keep_ratio=float(defense.get("keep_ratio", 0.75))
                 )
                 Xk, yk = Xk[keep], yk[keep]
+                if k in mal_ids and budget > 0:
+                    poison_frac_rows[-1]["retained_after_defense"] = int((meta["poisoned"] & keep).sum())
             if len(yk) == 0:
                 m.model.load_state_dict(copy.deepcopy(global_sd), strict=True)
                 sds.append({kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()})
@@ -309,27 +344,19 @@ def run_federated(cfg: dict) -> dict:
             R[t, j] = float(np.mean(pred == tasks[j]["y_test"]))
 
         # ASR on the GLOBAL model (same definitions as single-node).
-        asr = 0.0
+        asr = None
         atk_type = attack.get("type")
         if atk_type == "backdoor":
-            X_te = tasks[t]["X_test"].copy()
-            y_te = tasks[t]["y_test"]
-            trg = attack.get("trigger") or DEFAULT_TRIGGER
-            cols = [feature_names.index(f) for f, _ in zip(trg["features"], trg["values"]) if f in feature_names]
-            vals = [float(v) for f, v in zip(trg["features"], trg["values"]) if f in feature_names]
-            atk = label_map.get(attack.get("attack_class", "PortScan"), int(max(label_map.values())))
-            tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
-            cand = np.where(y_te == atk)[0]
-            if len(cand) == 0:
-                cand = np.arange(len(y_te))
-            if cols and len(cand):
-                for i in cand:
-                    for c, v in zip(cols, vals):
-                        X_te[i, c] = v
-                asr = float(np.mean(_predict(server, X_te, device)[cand] == tgt))
+            outcome = backdoor_outcome(
+                lambda x: _predict(server, x, device), tasks[t]["X_test"],
+                tasks[t]["y_test"], feature_names,
+                label_map.get(attack.get("attack_class", "PortScan")),
+                resolve_attack_target(attack, label_map), trigger,
+            )
+            asr_rows.append({"task": t, **outcome})
         elif atk_type == "label_flip" and attack.get("mode") in ("targeted", "persistent", "adaptive", "knn_adaptive"):
             src_name = attack.get("source_class")
-            tgt = int(attack.get("target_class", label_map.get("Benign", 0)))
+            tgt = resolve_attack_target(attack, label_map)
             if attack.get("mode") == "persistent":
                 from src.attacks.flip import majority_attack_class
 
@@ -341,10 +368,20 @@ def run_federated(cfg: dict) -> dict:
                 mask = tasks[t]["y_test"] == label_map[src_name]
                 if mask.any():
                     asr = float(np.mean(_predict(server, tasks[t]["X_test"], device)[mask] == tgt))
-        asr_rows.append({"task": t, "asr": asr})
+        if atk_type != "backdoor":
+            asr_rows.append({"task": t, "asr": asr})
 
     summary = summarize(R)
-    summary["asr_mean"] = float(np.mean([r["asr"] for r in asr_rows])) if asr_rows else None
+    if attack.get("type") == "backdoor":
+        eligible = sum(r["eligible"] for r in asr_rows)
+        summary["asr_mean"] = sum(r["successes"] for r in asr_rows) / eligible if eligible else None
+        summary["asr_eligible"] = eligible
+        summary["asr_successes"] = sum(r["successes"] for r in asr_rows)
+        summary["asr_rows"] = asr_rows
+        summary["poison_rows"] = poison_frac_rows
+    else:
+        asr_values = [r["asr"] for r in asr_rows if r["asr"] is not None]
+        summary["asr_mean"] = float(np.mean(asr_values)) if asr_values else None
     summary["wall_sec"] = time.time() - t0
     summary["cl_method"] = method_name
     atk_label = attack.get("type")
@@ -353,6 +390,7 @@ def run_federated(cfg: dict) -> dict:
     summary["attack"] = atk_label
     summary["seed"] = seed
     summary["scenario"] = cfg.get("data", {}).get("scenario", "cii")
+    summary["runtime_device"] = device
     summary["fed"] = {
         "n_clients": n_clients, "malicious_id": mal_id, "malicious_ids": mal_ids,
         "alpha": alpha, "local_epochs": local_epochs, "aggregator": aggregator,
@@ -360,4 +398,9 @@ def run_federated(cfg: dict) -> dict:
     }
     mal_frac = [r["poison_fraction"] for r in poison_frac_rows if r["client"] in mal_ids]
     summary["malicious_shard_poison_mean"] = float(np.mean(mal_frac)) if mal_frac else 0.0
+    summary["poison_rows"] = poison_frac_rows
+    summary["poison_changed_total"] = sum(r["changed"] for r in poison_frac_rows)
+    summary["poison_eligible_total"] = sum(r["eligible"] for r in poison_frac_rows)
+    n_train_total = sum(r["n"] for r in poison_frac_rows)
+    summary["poison_realized_global_dose"] = summary["poison_changed_total"] / n_train_total if n_train_total else None
     return {"R": R, "summary": summary, "asr_rows": asr_rows, "poison_frac_rows": poison_frac_rows}

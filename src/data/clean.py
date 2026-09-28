@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import os
 from pathlib import Path
 
 import numpy as np
@@ -169,7 +168,9 @@ def main():
     ap.add_argument("--raw", type=Path, default=Path("data/raw"))
     ap.add_argument("--out", type=Path, default=Path("data/processed"))
     args = ap.parse_args()
-    clean_cicids2017(args.raw, args.out)
+    from src.paths import resolve_repo_path
+
+    clean_cicids2017(resolve_repo_path(args.raw), resolve_repo_path(args.out))
 
 
 if __name__ == "__main__":

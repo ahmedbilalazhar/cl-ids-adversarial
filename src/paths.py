@@ -1,32 +1,43 @@
 """Repo-root-relative path helpers.
 
-Single source of truth for locating configs, data, and results regardless of
-the caller's working directory (repo root, old ``cl-ids-adversarial/`` shim,
-or anywhere else).
+Single source of truth for locating configs, data, and results. Resolution
+order is explicit: an absolute path is used as-is; otherwise the artifact
+root (``$ARTIFACT_ROOT`` when set, else the repo root) wins. A same-named
+file in the caller's working directory is NEVER silently preferred — the old
+CWD-shadowing behavior hid which bytes a run actually consumed.
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
+
+def artifact_root() -> Path:
+    override = os.environ.get("ARTIFACT_ROOT")
+    if override:
+        root = Path(override)
+        if not root.is_absolute():
+            raise ValueError("ARTIFACT_ROOT must be an absolute path")
+        return root
+    return REPO_ROOT
+
 CONFIG_DIR = REPO_ROOT / "configs"
-RESULTS_DIR = REPO_ROOT / "results"
+RESULTS_DIR = artifact_root() / "results"
 RUNS_DIR = RESULTS_DIR / "runs"
-DATA_DIR = REPO_ROOT / "data"
+DATA_DIR = artifact_root() / "data"
 
 
 def resolve_repo_path(p: Path) -> Path:
-    """Resolve a config-relative path against the repo root.
+    """Resolve a config-relative path against the explicit artifact root.
 
-    A CWD-relative path wins if it exists (backward compatible with runs
-    launched from the old ``cl-ids-adversarial/`` subdirectory); otherwise
-    fall back to the repo root.
+    No CWD probing: the returned path is deterministic for a given
+    environment, and callers check existence / fall back explicitly.
     """
-    if p.is_absolute() or p.exists():
+    if p.is_absolute():
         return p
-    rooted = REPO_ROOT / p
-    return rooted if rooted.exists() else p
+    return artifact_root() / p
 
 
 def find_config(name: str) -> Path:
@@ -39,7 +50,14 @@ def find_config(name: str) -> Path:
         return direct
     hits = sorted(CONFIG_DIR.rglob(f"{name}.yaml"))
     if not hits:
-        raise FileNotFoundError(f"config not found: {name}")
+        # One historical filename uses `05pct` while its display name uses
+        # `0.5pct`. Result readers must resolve the name written by the runner.
+        import yaml
+
+        hits = [p for p in sorted(CONFIG_DIR.rglob("*.yaml"))
+                if (yaml.safe_load(p.read_text(encoding="utf-8")) or {}).get("name") == name]
+        if not hits:
+            raise FileNotFoundError(f"config not found: {name}")
     if len(hits) > 1:
         rel = [str(h.relative_to(CONFIG_DIR)) for h in hits]
         raise RuntimeError(f"ambiguous config name {name!r}: {rel}")

@@ -9,6 +9,15 @@
 > **must not be cited as current**. See §PHASE-2 (corrected protocol) for the
 > numbers that supersede them. Decisions 48–51 in `docs/decisions_log.md`.
 
+> **2026-09-28 validation reset:** All numerical claims below are historical
+> executed observations, not currently manifest-validated. The rebuilt main
+> `baseline_table.csv`, `stats_summary.csv`, and `wilcoxon.csv` have no result
+> rows. UNSW/IoT label corrections and the class-IL filter repair invalidate
+> affected prior outputs, archived with hashes. CICIDS legacy tasks expose
+> substantial exact train/test feature overlap, especially Friday; see
+> `docs/task_audit.md`. No old number should be used for a paper claim until
+> the selected protocol is rebuilt and rerun with 12 paired seeds.
+
 > **2026-09-27 federated dispatch correction.** A duplicate runner mapping
 > sent 165 Byzantine, UNSW F2, and persistent-federated runs through the
 > single-node code path. Their summaries and task matrices are preserved in
@@ -99,10 +108,24 @@ DER++ 0.274±0.016 (significantly worse than ER, p=0.031).
 
 Targeted 1% flip: 0.307 vs clean 0.319, **p=0.47 n.s.** (post-fix verdict:
 no detectable ACC effect — H1 non-reproduction stands, strengthened).
-Backdoor 5%: 0.282, p=0.031, **ASR 1.0 on all 7 seeds** (stealthy: report
-ACC+ASR together).
+Backdoor 5% (historical, invalidated): the prior 0.282 ACC, p=0.031, and
+ASR 1.0 on seven seeds came from a path with mismatched training/evaluation
+triggers, raw values inserted into scaled features, and an ASR fallback to
+unrelated classes. The 38 affected per-seed files are preserved under
+`results/_archive/backdoor_protocol_20260928/`; no current backdoor effect
+estimate is available. Corrected 12-seed runs are pending.
 
 ## E4/E5 — Discovery-stage work: RELATED-BUT-DISTINCT threat model
+
+**Invalidated 2026-09-28:** All E4/E5 numerical values below are historical
+and cannot support current claims. E4 fitted HDBSCAN using held-out flows and
+computed clusters after classifier training, so the reported cluster effect
+could not have caused its classifier ACC. Files and figures were moved to
+`results/_archive/discovery_transductive_20260928/` with checksums. The new
+train-only pipeline and direct-label-poison control require fresh diagnostics
+and paired runs; the main result tree has zero validated E4/E5 seeds.
+One version-3 no-poison E4 seed now exists under `results/diagnostics/`; it
+is an exploratory baseline only and does not estimate a poisoning effect.
 
 These test evasion/manipulation of unknown-class DISCOVERY (Paper 1's domain:
 AE novelty → HDBSCAN clustering of *which traffic deserves a new class*),

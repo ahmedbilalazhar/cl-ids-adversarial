@@ -3,11 +3,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "artifacts" / "architecture_colab_bundle.zip"
+OUT = ROOT / "artifacts" / "architecture_colab_bundle_v2.zip"
 
 
 def sha256(data: bytes) -> str:
@@ -19,6 +20,7 @@ def main() -> None:
     files += sorted((ROOT / "configs" / "arch").glob("ar_*.yaml"))
     files += [
         ROOT / "requirements.txt",
+        ROOT / "src/data/legacy_task_hashes.json",
         ROOT / "data/processed/tasks_chrono.npz",
         ROOT / "data/processed/tasks_chrono.json",
     ]
@@ -27,6 +29,11 @@ def main() -> None:
         if not path.is_file():
             raise FileNotFoundError(path)
     OUT.parent.mkdir(parents=True, exist_ok=True)
+    if OUT.exists():
+        raise FileExistsError(f"bundle already exists; preserve or archive it before rebuilding: {OUT}")
+    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    dirty = bool(subprocess.check_output(["git", "status", "--porcelain", "--", "src", "configs/arch"],
+                                         cwd=ROOT, text=True).strip())
     hashes: dict[str, str] = {}
     with zipfile.ZipFile(OUT, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
         for path in files:
@@ -34,7 +41,8 @@ def main() -> None:
             payload = path.read_bytes()
             hashes[rel] = sha256(payload)
             zf.writestr(rel, payload)
-        zf.writestr("bundle_manifest.json", json.dumps({"files_sha256": hashes}, indent=2))
+        zf.writestr("bundle_manifest.json", json.dumps(
+            {"source_commit": commit, "worktree_dirty": dirty, "files_sha256": hashes}, indent=2))
     print(f"Created {OUT} ({OUT.stat().st_size / 1e6:.1f} MB; {len(files)} files)")
     print(f"SHA-256 {sha256(OUT.read_bytes())}")
 

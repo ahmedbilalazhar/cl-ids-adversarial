@@ -3,6 +3,50 @@ from __future__ import annotations
 import numpy as np
 
 
+# Benign-class names across datasets (CICIDS/IoT use "Benign", UNSW uses
+# "Normal"). New task artifacts guarantee the benign class has id 0, but
+# attack configs must name their target — never assume a numeric id.
+BENIGN_NAMES = ("Benign", "Normal")
+
+
+def resolve_class_id(value, label_map: dict, *, role: str = "target") -> int:
+    """Resolve a class reference to an integer id via the task label map.
+
+    Accepts a class NAME (str, looked up in label_map) or a numeric id (int,
+    validated against label_map values). Unknown names, unknown ids, and
+    missing benign fallbacks raise — poisoning targets fail closed, never
+    silently flip to an unintended class (cf. the UNSW Normal=7 / IoT
+    benign=1 label bugs, where numeric targets pointed at the wrong class
+    once the label map was corrected).
+    """
+    if isinstance(value, str):
+        if value not in label_map:
+            raise KeyError(f"unknown {role} class name {value!r}; known: {sorted(label_map)}")
+        return int(label_map[value])
+    if value is None:
+        for b in BENIGN_NAMES:
+            if b in label_map:
+                return int(label_map[b])
+        raise KeyError(f"no benign class found for {role}; known: {sorted(label_map)}")
+    try:
+        i = int(value)
+    except (TypeError, ValueError):
+        raise ValueError(f"invalid {role} class reference {value!r}")
+    if i not in set(label_map.values()):
+        raise ValueError(f"unknown {role} class id {i}; known ids: {sorted(set(label_map.values()))}")
+    return i
+
+
+def resolve_attack_target(attack: dict, label_map: dict) -> int:
+    """Target id for a label-flip/backdoor attack: explicit name or id wins;
+    otherwise the dataset's benign class. Name references are resolved via
+    the stored task label map (never magic numbers)."""
+    attack = attack or {}
+    if attack.get("target_class_name") is not None:
+        return resolve_class_id(attack.get("target_class_name"), label_map, role="target")
+    return resolve_class_id(attack.get("target_class"), label_map, role="target")
+
+
 def majority_attack_class(y: np.ndarray, target_class: int = 0) -> int | None:
     """Most frequent non-target class in y (per-task majority attack class).
     Returns None when y holds only the target class."""

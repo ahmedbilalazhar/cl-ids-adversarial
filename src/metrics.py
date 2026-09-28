@@ -14,13 +14,14 @@ def backward_transfer(R: np.ndarray) -> float:
     return float(np.mean(vals))
 
 
-def forward_transfer(R: np.ndarray, fwt_baseline: np.ndarray | None = None) -> float:
+def forward_transfer(R: np.ndarray, fwt_baseline: np.ndarray | None = None) -> float | None:
     T = R.shape[0]
-    if T < 2:
-        return 0.0
     if fwt_baseline is None:
-        vals = [R[j - 1, j] for j in range(1, T)]
-        return float(np.mean(vals))
+        return None  # Upper triangle is unmeasured in the current runners.
+    if T < 2:
+        return None
+    if len(fwt_baseline) != T or not np.isfinite(fwt_baseline).all():
+        raise ValueError("FWT baseline must contain one finite pretraining score per task")
     vals = [R[j - 1, j] - fwt_baseline[j] for j in range(1, T)]
     return float(np.mean(vals))
 
@@ -40,24 +41,24 @@ def task_accuracy_matrix_row(true: np.ndarray, pred: np.ndarray) -> float:
     return float(np.mean(true == pred))
 
 
-def asr_backdoor(y_true: np.ndarray, y_pred: np.ndarray, triggered: np.ndarray, target_label: int) -> float:
+def asr_backdoor(y_true: np.ndarray, y_pred: np.ndarray, triggered: np.ndarray, target_label: int) -> float | None:
     mask = triggered & (y_true != target_label)
     if mask.sum() == 0:
-        return 0.0
+        return None
     return float(np.mean(y_pred[mask] == target_label))
 
 
-def asr_novelty(y_true: np.ndarray, y_pred: np.ndarray, real_attack_labels: list[int], benign_label: int = 0) -> float:
+def asr_novelty(y_true: np.ndarray, y_pred: np.ndarray, real_attack_labels: list[int], benign_label: int = 0) -> float | None:
     mask = np.isin(y_true, real_attack_labels)
     if mask.sum() == 0:
-        return 0.0
+        return None
     return float(np.mean(y_pred[mask] == benign_label))
 
 
-def summarize(R: np.ndarray) -> dict:
+def summarize(R: np.ndarray, fwt_baseline: np.ndarray | None = None) -> dict:
     return {
         "acc": average_accuracy(R),
         "bwt": backward_transfer(R),
-        "fwt": forward_transfer(R),
+        "fwt": forward_transfer(R, fwt_baseline),
         "forgetting": forgetting(R),
     }

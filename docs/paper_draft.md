@@ -1,5 +1,14 @@
 # Paper draft — Computers & Security (Elsevier, full research article)
 
+> **2026-09-28 validation hold:** All numerical assertions and conclusions in
+> this draft are provisional historical prose. Main result tables currently
+> have zero manifest-validated rows. Reconcile this draft against a new
+> 12-paired-seed, duplicate-aware result set before submission. The
+> T0+T1 scaler is offline initialization, not a future-blind online stream.
+> E4/E5 discovery numerical claims were invalidated on 2026-09-28 because
+> clustering used held-out flows and did not feed classifier training.
+> A train-only rerun with a direct-label-poison control is pending.
+
 **Title (working):** *Poisoning Federated Class-Incremental Network Intrusion
 Detection: continual-learning methods, Byzantine aggregation, and defence
 confusion under non-IID drift*

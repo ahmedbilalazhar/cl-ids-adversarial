@@ -1,5 +1,14 @@
 # Positioning Memo (locked 2026-09-26) — which finding headlines the Computers & Security paper
 
+> **2026-09-28 status:** The rankings and p-values below describe historical
+> executed runs, not validated current evidence. The proposed headline is a
+> research hypothesis pending protocol-corrected, paired 12-seed reruns and
+> an independent literature check. No production IDS claim is made.
+> The E4/E5 discovery evidence was archived on 2026-09-28 after finding
+> transductive clustering and post-training cluster evaluation. Candidate 2
+> and the discovery part of the locked decision below are historical only;
+> no current discovery-effect claim is supported.
+
 Basis: the verified literature landscape (search_protocol.md 2026-09-26
 arXiv-API pass + full reads of Paper-1/2/3), NOT completeness of our runs.
 

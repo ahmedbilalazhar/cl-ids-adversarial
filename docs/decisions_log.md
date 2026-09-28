@@ -268,3 +268,70 @@ One line each: chose / alternative / why. Newest last.
     / alternative was leaving the only ZIP in Downloads / this follows the
     repository's existing artifact and archive structure while keeping every
     replaced result recoverable.
+59. 2026-09-28 result integrity: chose per-seed completion manifests with
+    output, config, task, and task-sidecar hashes / alternative was treating
+    a summary filename as complete / the old reporting path could write a
+    partial seed then fail and the grid would skip it on retry. Historical
+    unmanifested files remain executed-only, never validated by inference.
+60. 2026-09-28 data audit: chose separate source-row and duplicate-content
+    measures / alternative was calling every exact feature match a shared
+    source row / UNSW/IoT train and test use separate positional-ID pools,
+    whereas CICIDS legacy artifacts lack IDs. Friday has more than 26k
+    exact test feature+label matches in each legacy variant; no independent
+    generalization claim from those results until a sensitivity comparison.
+61. 2026-09-28 CICIDS sensitivity: chose a distinct duplicate-disjoint
+    protocol and config / alternative was silently replacing the primary
+    tasks/results / global raw feature+label dedup removed 339,476 records
+    and final-precision exclusion removed six more test matches. Three
+    diagnostic finetune seeds ran separately; selected final comparisons
+    still require 12 paired seeds. T0+T1 scaling remains named offline
+    initialization, with a distinct T0-only frozen-scaler task artifact.
+62. 2026-09-28 E3 repair: chose one task-sidecar-validated, raw-to-model-space
+    trigger for training and evaluation plus class-eligible ASR / alternative
+    was continuing the legacy E3 path / its training ignored the configured
+    trigger, applied raw values to standardized inputs, and substituted all
+    test rows when PortScan was absent. Archived 38 historical E3 seed files;
+    reruns use the distinct duplicate-disjoint v2 task artifact. No backdoor
+    effect claim survives until paired reruns. The packet recipe remains a
+    feature-space approximation until the actual flow extractor verifies its
+    output; the old hping3 payload option was inconsistent with a bare SYN.
+63. 2026-09-28 E4 causal redesign: archived 157 historical E4/E5 files with
+    checksums because held-out flows affected HDBSCAN and provisional labels
+    were never used in classifier training. The new pipeline fits AE on a
+    benign training subset, calibrates on separate benign training rows,
+    clusters training candidates only, assigns held-out rows by a fixed
+    nearest-centroid/radius rule, and trains on task-unique provisional class
+    IDs. Added a matched direct-label-poison control. The HDBSCAN fit is
+    capped at a seeded 4,000 training candidates; cap sensitivity is required
+    before any headline. Chronological E4 configs now use duplicate-disjoint
+    CICIDS tasks. Old absorption and ACC claims are invalid.
+64. 2026-09-28 endpoint/provenance repair: FWT is recorded as null because
+    no runner measures future-task accuracy before training or a baseline.
+    New manifest version 3 hashes all runtime `src/*.py`, including dirty
+    worktree contents, and rejects a seed if code changes during its run.
+    Earlier manifest-v2 diagnostics are exploratory and explicitly marked
+    `pre-code-hash`. One first-pass E4 no-poison diagnostic measured 122 s
+    and 864 MB sampled peak RSS on this CPU host, but was archived before
+    the v3 rerun because its source revision was not fingerprinted.
+65. 2026-09-28 mistake-audit fix (undefined-metric): chose None/N/A for
+    clean/joint ASR and E5 empty-denominator endpoints / alternative was
+    leaving `0.0` / `src/runner.py` joint path and both runners' clean path
+    reported `asr_mean=0.0` with no denominator, and `scripts/e5_evasion.py`
+    reported `0.0` for absent attack/benign cohorts; `src/metrics.py` already
+    returns None for unmeasured FWT/ASR and `stats_summary.py` renders None
+    as blank, so 0.0 was the exact bug class under audit. Verified by
+    `tests/test_backdoor.py` + `tests/test_discovery.py` (9 passed) and
+    `results/diagnostics/runs/e1_finetune_dedup_summary_seed1.json` showing
+    the stale `0.0` pattern.
+66. 2026-09-28 mistake-audit fix (buffer-poison target): chose
+    `resolve_class_id` in `src/runner.py::poison_buffer` / alternative was
+    `label_map.get` / the old lookup returns None for numeric ids (keys are
+    names), silently degrading targeted buffer flips to random; stream path
+    already validated via `resolve_class_id`. Verified: numeric source 1
+    flips 1->0 correctly after fix.
+67. 2026-09-28 mistake-audit scope note: `results/diagnostics/` e1_dedup/t0
+    summaries carry manifest v2 (`pre-code-hash`) with stale `fwt=0.0`; chose
+    to leave files untouched and mark them exploratory / alternative was
+    rewriting diagnostics as validated / they predate manifest v3 and the
+    12-seed standard, so `docs/inventory.md` "validated" wording for those
+    six seeds is overstated until v3 reruns.

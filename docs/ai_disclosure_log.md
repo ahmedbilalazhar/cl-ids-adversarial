@@ -94,3 +94,32 @@ not witnessed; anything reconstructed is marked (reconstructed).
   files, and corrected the earlier partial-grid breaking-point language.
   The low seed-11 ACC is shared by p0 and p10; no poison-specific collapse
   claim is retained. Broader grid and thread-provenance checks remain open.
+- 2026-09-28 repair continuation (AI-written, human review pending): an AI
+  coding agent built transactional result manifests and validated readers,
+  fixed label maps and class-IL filtering, rebuilt UNSW/IoT v2 task files,
+  added CICIDS T0-only and duplicate-disjoint v2 arms, audited task overlap,
+  and ran three-seed finetune diagnostics on both arms. Tests and generated
+  hashes support the engineering checks; no human or independent security
+  validation of the resulting scientific claims is asserted. Main paper
+  comparisons remain pending 12 paired, manifest-validated reruns.
+- 2026-09-28 E3 repair (AI-written, human review pending): an AI coding agent
+  changed backdoor training and evaluation to share a validated trigger
+  converted with the task-sidecar scaler, made ASR class-eligible with a
+  persisted denominator and clean targeted-error rate, added synthetic tests,
+  and archived 38 historical E3 seed files with SHA-256 checksums. The old
+  ASR 1.0 claim is invalid. No corrected E3 dataset run or independent packet
+  extraction validation has been completed.
+  The AI also corrected the packet-recipe script's unsupported claim of exact
+  flow-feature reproduction; the local environment lacks Scapy, and no flow
+  extractor validation was performed.
+- 2026-09-28 E4/provenance continuation (AI-written, human review pending):
+  an AI coding agent replaced test-inclusive HDBSCAN with train-only fitting,
+  separate benign AE calibration, a capped seeded cluster fit, frozen
+  centroid/radius assignment, and provisional labels used during classifier
+  training. It added a direct-label-poison control, synthetic isolation and
+  training-path tests, per-task discovery denominators and attack dose logs,
+  and manifest-v3 runtime source hashes. It archived 157 historical E4/E5
+  artifacts with checksums and invalidated their claims. One no-poison E4
+  CPU diagnostic was measured at 122 s and 864 MB sampled peak RSS, then
+  archived for pre-v3 provenance. No corrected paired effect or human
+  validation is claimed.

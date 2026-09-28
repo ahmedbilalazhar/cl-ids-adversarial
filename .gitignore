@@ -49,6 +49,12 @@ lightning_logs/
 /data/processed/*
 /data/processed_v1/*
 /data/_archive/*
+!/data/_archive/label_fix_20260927/
+!/data/_archive/dedup_pre_postscale_20260928/
+/data/_archive/label_fix_20260927/*
+/data/_archive/dedup_pre_postscale_20260928/*
+!/data/_archive/label_fix_20260927/manifest.json
+!/data/_archive/dedup_pre_postscale_20260928/manifest.json
 /data/raw_iot/*
 /data/raw_unsw/*
 !/data/raw/.gitkeep
@@ -61,7 +67,12 @@ lightning_logs/
 # /results/runs/*_R_seed*.csv
 # /results/runs/*_summary_seed*.json
 /results/run_groups.log
-/results/_archive/
+/results/**/.*.lock
+!/results/_archive/
+/results/_archive/*
+!/results/_archive/label_fix_20260928/
+!/results/_archive/ci_filter_20260927/
+!/results/_archive/derived_pre_manifest_20260927/
 
 # --- Build artifacts ---
 /artifacts/

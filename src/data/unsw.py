@@ -17,7 +17,6 @@ label_map + feature_cols) so run_experiment/fedavg run unchanged.
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 
 import numpy as np
@@ -76,10 +75,17 @@ def build(raw_dir: Path, seed: int = 42):
     df_tr, df_te = load_pools(raw_dir)
     df_tr, df_te, feat, num_cols, nanrep, cat_maps = encode(df_tr, df_te)
     print("NaN prevalence (train pool):", {k: round(v, 4) for k, v in nanrep.items()})
-    labels = ["Normal"] + sorted(
-        set(df_tr[LABEL].unique()) | set(df_te[LABEL].unique()) - {"Normal"}
-    )
-    label_map = {l: i for i, l in enumerate(labels)}
+    # NOTE: the union MUST be parenthesized before subtracting the benign
+    # label. `|` binds looser than `-`, so an unparenthesized
+    # `A | B - {"Normal"}` keeps "Normal" from A and silently duplicates it
+    # at position 0 AND its sorted position — the old code overwrote
+    # Normal's id (benign was 7, not 0) via dict-dedup.
+    all_cats = (set(df_tr[LABEL].unique()) | set(df_te[LABEL].unique())) - {"Normal"}
+    labels = ["Normal"] + sorted(all_cats)
+    assert len(labels) == len(set(labels)), f"duplicate class names: {labels}"
+    label_map = {label: i for i, label in enumerate(labels)}
+    assert label_map["Normal"] == 0, label_map
+    assert sorted(label_map.values()) == list(range(len(label_map)))
     # Disjoint Normal slices across tasks (id order), CII spirit.
     n_tr = df_tr[df_tr[LABEL] == "Normal"].sort_values("id")
     n_te = df_te[df_te[LABEL] == "Normal"].sort_values("id")
@@ -95,6 +101,10 @@ def build(raw_dir: Path, seed: int = 42):
                 continue
             tr_parts.append(df_tr[df_tr[LABEL] == cat].sort_values("id"))
             te_parts.append(df_te[df_te[LABEL] == cat].sort_values("id") if cat in set(df_te[LABEL]) else df_te.iloc[0:0])
+        # Source row ids BEFORE concat resets the index: csv-positional ids
+        # within each pool file (stable provenance for the v2 schema).
+        ids_tr = np.concatenate([p.index.to_numpy(dtype=np.int64) for p in tr_parts])
+        ids_te = np.concatenate([p.index.to_numpy(dtype=np.int64) for p in te_parts])
         tr_df = pd.concat(tr_parts, ignore_index=True)
         te_df = pd.concat(te_parts, ignore_index=True)
         y_tr = tr_df[LABEL].map(label_map).to_numpy(dtype=np.int64)
@@ -103,6 +113,7 @@ def build(raw_dir: Path, seed: int = 42):
         X_te = te_df[feat].to_numpy(dtype=np.float64)
         tasks.append(
             {"X_train": X_tr, "y_train": y_tr, "X_test": X_te, "y_test": y_te,
+             "id_train": ids_tr, "id_test": ids_te,
              "labels": sorted(set(tr_df[LABEL]) | set(te_df[LABEL]))}
         )
         print(f"T{ti} {cats}: train={len(y_tr)} test={len(y_te)}")
@@ -115,17 +126,21 @@ def main() -> None:
     ap.add_argument("--out", type=Path, default=Path("data/processed/tasks_unsw.npz"))
     ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()
+    from src.paths import resolve_repo_path
+
+    args.raw = resolve_repo_path(args.raw)
+    args.out = resolve_repo_path(args.out)
     tasks, label_map, feat, num_cols = build(args.raw, args.seed)[:4]
     # Frozen scaler on T0 train; median imputation with T0 medians.
     med = {}
-    t0 = pd.DataFrame(tasks[0]["X_train"], columns=feat)
+    t0 = pd.DataFrame(tasks[0]["X_train"], columns=feat).replace([np.inf, -np.inf], np.nan)
     for c in num_cols:
         med[c] = float(t0[c].median())
     sc = StandardScaler()
     sc.fit(t0[num_cols].fillna(pd.Series(med)).to_numpy(dtype=np.float64))
     for t in tasks:
-        dtr = pd.DataFrame(t["X_train"], columns=feat)
-        dte = pd.DataFrame(t["X_test"], columns=feat)
+        dtr = pd.DataFrame(t["X_train"], columns=feat).replace([np.inf, -np.inf], np.nan)
+        dte = pd.DataFrame(t["X_test"], columns=feat).replace([np.inf, -np.inf], np.nan)
         dtr[num_cols] = dtr[num_cols].fillna(pd.Series(med))
         dte[num_cols] = dte[num_cols].fillna(pd.Series(med))
         t["X_train"] = np.hstack(
@@ -137,16 +152,29 @@ def main() -> None:
              sc.transform(dte[num_cols].to_numpy(dtype=np.float64)).astype(np.float32)]
         )
         assert np.isfinite(t["X_train"]).all() and np.isfinite(t["X_test"]).all()
-    payload = {"label_map": label_map, "tasks": [
-        {"X_train": t["X_train"], "y_train": t["y_train"],
-         "X_test": t["X_test"], "y_test": t["y_test"], "labels": t["labels"]}
-        for t in tasks]}
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(args.out, payload_obj=np.array(payload, dtype=object), allow_pickle=True)
-    args.out.with_suffix(".json").write_text(
-        json.dumps({"label_map": label_map, "n_tasks": 4, "feature_cols": feat}))
-    print("in_dim:", len(feat), "| label_map:", label_map)
-    print("saved", args.out)
+    from src.data.task_schema import assert_label_map, sha256_file, units_for, write_taskset
+
+    assert_label_map(dict(label_map), "Normal")
+    tr_csv, te_csv = args.raw / "test.csv", args.raw / "train.csv"  # mirror swap
+    feat_out = [c for c in feat if c not in num_cols] + num_cols
+    sidecar = write_taskset(
+        args.out, tasks, dict(label_map),
+        feature_cols=feat_out,
+        feature_units=units_for(feat_out),
+        protocol_id="unsw-standard-v2",
+        split_def={"name": "unsw-4task-cii", "seed": args.seed,
+                   "note": "Normal sliced disjointly (id order) across 4 tasks; attacks by id order"},
+        scaler_info={"kind": "T0-only", "fitted_on": "T0 train (strictly future-blind)",
+                     "mean": [float(v) for v in sc.mean_.tolist()],
+                     "scale": [float(v) for v in sc.scale_.tolist()]},
+        imputation={"method": "T0-train medians", "medians": {k: float(v) for k, v in med.items()}},
+        sources=[{"file": str(tr_csv), "sha256": sha256_file(tr_csv), "role": "canonical-train-pool-175341"},
+                 {"file": str(te_csv), "sha256": sha256_file(te_csv), "role": "canonical-test-pool-82332"}],
+        row_id_kind="UNSW csv positional index (0-based within each pool file)",
+        extra={"n_tasks": 4},
+    )
+    print("in_dim:", len(feat_out), "| label_map:", label_map)
+    print("saved", args.out, sidecar["npz_sha256"][:16])
 
 
 if __name__ == "__main__":

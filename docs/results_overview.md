@@ -122,10 +122,13 @@ and cannot support current claims. E4 fitted HDBSCAN using held-out flows and
 computed clusters after classifier training, so the reported cluster effect
 could not have caused its classifier ACC. Files and figures were moved to
 `results/_archive/discovery_transductive_20260928/` with checksums. The new
-train-only pipeline and direct-label-poison control require fresh diagnostics
-and paired runs; the main result tree has zero validated E4/E5 seeds.
-One version-3 no-poison E4 seed now exists under `results/diagnostics/`; it
-is an exploratory baseline only and does not estimate a poisoning effect.
+train-only pipeline and direct-label-poison control have fresh three-seed
+diagnostics but still require prespecified paired runs; the main result tree
+has zero validated E4/E5 seeds.
+Nine version-3 E4 seeds now exist under `results/diagnostics/`, three each
+for no poison, anchor poison, and direct-label control. The descriptive
+three-seed means in `e4_descriptive.json` are exploratory, with no
+prespecified paired inference or final poisoning estimate.
 
 These test evasion/manipulation of unknown-class DISCOVERY (Paper 1's domain:
 AE novelty → HDBSCAN clustering of *which traffic deserves a new class*),

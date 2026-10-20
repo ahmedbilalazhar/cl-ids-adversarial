@@ -19,7 +19,7 @@ def maximize_recon_error(
     ae.eval()
     X = X.copy()
     n = len(X)
-    k = int(round(n * budget))
+    k = round(n * budget)
     if k <= 0:
         return X, np.zeros(n, dtype=bool), np.zeros(n, dtype=np.float32)
 
@@ -106,7 +106,7 @@ def anchor_novelty_poison(
     """
     rng = np.random.RandomState(seed)
     n = len(X)
-    k = int(round(n * budget))
+    k = round(n * budget)
     if k <= 0:
         return X.copy(), y.copy(), np.zeros(n, dtype=bool)
 

@@ -35,13 +35,15 @@ def main() -> None:
         env[var] = threads
     env["CL_THREADS"] = threads
     log = ROOT / "results" / "run_groups.log"
+    log.parent.mkdir(parents=True, exist_ok=True)
     print(f"CL_THREADS={threads} groups={groups}", flush=True)
+    failed: list[str] = []
     for g in groups:
         t0 = time.time()
         with open(log, "a", encoding="utf-8") as f:
             f.write(f"\n=== {g} start {time.strftime('%H:%M:%S')} threads={threads} ===\n")
             f.flush()
-            proc = subprocess.run(
+            proc = subprocess.run(  # noqa: PLW1510 - returncode recorded per group below
                 [sys.executable, "scripts/run_grid.py", g],
                 cwd=ROOT, stdout=f, stderr=subprocess.STDOUT, text=True, env=env,
             )
@@ -49,7 +51,12 @@ def main() -> None:
             f.flush()
         print(f"{g}: exit={proc.returncode} {(time.time()-t0)/60:.1f} min", flush=True)
         if proc.returncode:
-            raise SystemExit(f"Stopping group queue after {g} failed with exit={proc.returncode}")
+            # Record and continue: one bad group must not silently cancel the
+            # rest of an unattended queue. Nonzero exit at the end preserves
+            # the failure signal for CI and operators.
+            failed.append(f"{g} (exit={proc.returncode})")
+    if failed:
+        raise SystemExit(f"group queue finished with failures: {failed}")
 
 
 if __name__ == "__main__":

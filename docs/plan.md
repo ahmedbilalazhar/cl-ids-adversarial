@@ -1,4 +1,4 @@
-Act as a principal engineer, research scientist, software architect, and critical reviewer preparing this project for a strong security journal submission and, separately, a possible production deployment.
+bAct as a principal engineer, research scientist, software architect, and critical reviewer preparing this project for a strong security journal submission and, separately, a possible production deployment.
 
 **Repository:** `https://github.com/ahmedbilalazhar/cl-ids-adversarial`
 

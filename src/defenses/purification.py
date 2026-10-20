@@ -16,7 +16,7 @@ def small_loss_filter(
         logits = model(torch.from_numpy(X).float().to(device))
         losses = torch.nn.functional.cross_entropy(logits, torch.from_numpy(y).long().to(device), reduction="none")
         losses = losses.cpu().numpy()
-    k = max(1, int(round(len(y) * keep_ratio)))
+    k = max(1, round(len(y) * keep_ratio))
     idx = np.argsort(losses)[:k]
     mask = np.zeros(len(y), dtype=bool)
     mask[idx] = True

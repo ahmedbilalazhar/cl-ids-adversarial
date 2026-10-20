@@ -4,21 +4,20 @@ import sys
 from pathlib import Path
 
 import numpy as np
-import torch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from src.attacks.flip import label_flip
 from src.cl.base import set_seed, to_loader
 from src.cl.derpp import DERpp
 from src.cl.er import ExperienceReplay
 from src.cl.ewc import EWC
 from src.cl.finetune import FineTune
 from src.cl.lwf import LwF
-from src.metrics import backward_transfer, forgetting, summarize
-from src.models.mlp import TabularMLP
-from src.attacks.flip import label_flip
 from src.defenses.purification import small_loss_filter
+from src.metrics import summarize
+from src.models.mlp import TabularMLP
 
 
 def make_synthetic_tasks(n_tasks: int = 5, n_features: int = 20, samples: int = 400, seed: int = 0):
@@ -26,7 +25,6 @@ def make_synthetic_tasks(n_tasks: int = 5, n_features: int = 20, samples: int = 
     tasks = []
     n_classes_total = 1 + (n_tasks - 1) * 2
     for t in range(n_tasks):
-        n_cls = 1 if t == 0 else 2
         labels = [0] if t == 0 else [1 + 2 * (t - 1), 2 + 2 * (t - 1)]
         if t == 0:
             y = np.zeros(samples, dtype=np.int64)
@@ -104,7 +102,7 @@ def main():
     print("OK: task-accuracy matrix finite for all baselines")
 
     y = tasks[2]["y_train"]
-    y_flip, flipped = label_flip(y, budget=0.1, mode="random", seed=0)
+    _, flipped = label_flip(y, budget=0.1, mode="random", seed=0)
     assert flipped.sum() > 0
     print(f"OK: label_flip flipped {flipped.sum()}/{len(y)} samples")
 

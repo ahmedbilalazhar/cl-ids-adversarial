@@ -50,18 +50,30 @@ and poison-fraction maps are persisted per task.
 
 ## Measured limitations and next tests
 
-One no-poison seed is exploratory. Its unweighted mean discovery miss rate
-across tasks with attacks was 0.755; the T1 attack miss rate was 0.998. The
-detector's usefulness must be investigated before interpreting a marginal
-poisoning effect. Its resource probe on the local 8-logical-CPU Windows host
-used `CL_THREADS=2`; see `results/diagnostics/e4_nopois_seed1_final_resource.json`.
+Nine code-hashed exploratory seeds (three per arm) are complete. Mean ACC was
+0.521883 for no poison, 0.530564 for anchor poison, and 0.554113 for the
+direct-label control. Mean pooled attack absorption was 0 in the no-poison
+arm and 0.000935 in each poison arm. These are descriptive diagnostics, not a
+prespecified or significant paired effect. In no-poison seed 1, the unweighted
+mean discovery miss rate across tasks with attacks was 0.755; the T1 attack
+miss rate was 0.998. A post hoc threshold audit at T1 found attack flagged
+rates of 0.00182 at quantile 0.95 and 0.16648 at quantile 0.50, while benign
+false-alert rates rose from 0.014 to 0.35733. The detector's usefulness
+must be investigated before interpreting a marginal poisoning effect.
+Seed-1 local resource records for all three arms are in `results/diagnostics/`.
 
 Candidate capping materially changes decisions. On a seeded 5,000-candidate
 subset of task 2, exact fitting versus a 4,000-candidate fit yielded 126
 versus 103 clusters and adjusted Rand index 0.628. A 1,500/1,000 comparison
 gave 0.522. These are small-case checks, not proof of behavior relative to
 full fitting on 125,570 task-2 candidates. Treat E4 as a **capped discovery
-protocol**; any paper claim must say so. Run matched three-seed no-poison,
-anchor-poison, and direct-label-control diagnostics, and quantify seed and
-cap sensitivity before selecting a 12-seed comparison. Do not infer an
-attack effect from the lone baseline seed.
+protocol**; any paper claim must say so. The matched three-seed diagnostic is
+complete. Quantify cap sensitivity beyond these small subsets and resolve
+detector quality before selecting a 12-seed comparison.
+
+A three-seed follow-up audit is in `docs/e4_detector_cap_audit.md`. T1
+reconstruction-score AUC is 0.120–0.128, with attack scores typically below
+benign scores. Three seeded 5,000-versus-4,000 T2 cap probes have ARI
+0.628–0.728 and fewer capped clusters. This reinforces the current hold on
+final E4 inference; it does not justify changing q0.95 or treating the cap
+as equivalent to fitting the full training candidate stream.

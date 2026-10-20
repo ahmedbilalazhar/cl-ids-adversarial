@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-import csv
 import argparse
-import json
 import itertools
+import json
 import math
 import sys
 from collections import defaultdict
@@ -611,20 +610,6 @@ def mean_std(vals: list[float]) -> tuple[float, float]:
     return m, math.sqrt(var)
 
 
-def wilcoxon_pair(a: list[float], b: list[float]) -> dict:
-    from scipy.stats import wilcoxon
-
-    # align by sorted seed order of caller
-    diffs = [x - y for x, y in zip(a, b)]
-    if all(d == 0 for d in diffs) or len(diffs) < 1:
-        return {"n": len(diffs), "stat": "", "pvalue": ""}
-    try:
-        res = wilcoxon(a, b, zero_method="wilcox", alternative="two-sided")
-        return {"n": len(diffs), "stat": float(res.statistic), "pvalue": float(res.pvalue)}
-    except ValueError as e:
-        return {"n": len(diffs), "stat": "", "pvalue": f"err:{e}"}
-
-
 def _validated_summary(path: Path):
     """Return a summary only when its completion manifest validates."""
     from src.paths import find_config as _find_config
@@ -766,6 +751,11 @@ def main():
     from scipy.stats import wilcoxon
 
     wrows = []
+    known_configs = set(_config_by_name())
+    for orphan in sorted({n for pair in WILCOXON_PAIRS for n in pair if n not in known_configs}):
+        # A renamed/removed config would otherwise drop its prespecified
+        # comparisons silently (empty seed maps hit `continue` below).
+        print(f"WARNING: comparison references unknown config: {orphan}")
     for (name, base), device in itertools.product(WILCOXON_PAIRS, ("cpu", "cuda")):
         a_map = validated_seeds.get((name, device), {})
         b_map = validated_seeds.get((base, device), {})

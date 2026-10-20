@@ -1,155 +1,83 @@
 # Continual Learning for Network Security — Adversarial IDS
 
-> **Repair status, 2026-09-28:** Historical per-seed files are executed
-> artifacts, not manifest-validated results. The main aggregate CSVs currently
-> contain headers only; do not cite older numerical claims or figures as
-> current evidence. Six validated seeds in `results/diagnostics/` exercise
-> the duplicate-disjoint and T0-only CICIDS sensitivity arms (three each),
-> not a final paired comparison.
-> Historical E4/E5 discovery outputs were archived on 2026-09-28 because
-> held-out flows affected clustering and clusters never affected classifier
-> training. FWT in new summaries is unavailable until measured.
-> UNSW-NB15 and CICIoT2023 task artifacts retain exact cross-pool content
-> matches (3,723 and 604). They are excluded from final claims until a
-> duplicate-disjoint correction and paired rerun are complete.
-> See `docs/inventory.md`, `docs/invalidation_table.md`, and
-> `docs/task_audit.md` and `docs/cicids_cross_file_audit.md`. This is an
-> offline simulation, not a deployed IDS.
+Research code for studying attacks on continual intrusion detection, including
+single-node learning, simulated federation, and a train-only novelty-discovery
+stage. This is an offline simulation, not a deployed intrusion detector.
 
-Adversarial evaluation of the novelty-discovery stage in continual-learning
-intrusion detection (CIC-IDS-2017, day-based CII sequence).
+**Members:** Saneedullah (23I-2568) and Ahmed Bilal (23I-2581).
 
-| | |
+## Current status (2026-09-28)
+
+The improvement program is in [docs/plan.md](docs/plan.md), with phase gates
+and resumable commands in [docs/roadmap.md](docs/roadmap.md). The working tree
+contains uncommitted repair work. The plan's reference commit is `9e635ae`;
+current `main` is `a4558b5`.
+
+| Area | Status |
 |---|---|
-| **Members** | Saneedullah (23I-2568) · Ahmed Bilal (23I-2581) |
-| **Status** | See Status table below (2026-09-25) |
-| **Write-ups** | [`docs/`](docs/) — proposal, threat model, results overview · [`docs/papers/`](docs/papers/) — papers 1–3 · [`reports/`](reports/) — literature review & phase documents |
-| **Results** | [`results/`](results/) — tables, Wilcoxon stats, figures |
+| Result integrity | New runs use completion manifests; version 3 fingerprints the runtime `src/*.py` tree. `results/runs/` has zero manifests and the main aggregate CSVs have zero data rows. Historical runs are executed artifacts, not validated paper evidence. |
+| Data | The CICIDS2017 duplicate-disjoint and T0-only v2 task artifacts rebuild bit-identically. The former audits at zero exact train/test content matches. UNSW-NB15 and CICIoT2023 retain 3,723 and 604 cross-pool exact matches and are excluded from final claims. |
+| E1/E2/E3 | Six manifest-v2 finetune diagnostic seeds (three per CICIDS sensitivity arm) are exploratory. No 12-seed paired headline is complete. The E3 trigger and eligible ASR calculation were repaired, but packet-to-flow validation and corrected dataset runs remain pending. Prior E3 ASR claims are invalid. |
+| E4/E5 | E4 now clusters training candidates only and feeds provisional labels into classifier training. Nine three-arm E4 seeds are exploratory; their source-locked copies are archived after a later code change. T1 detection ranking is weak and the clustering cap changes decisions. Historical E4/E5 claims were invalidated; no corrected paired effect exists. |
+| Federation and inference | Per-client accounting and inactive-client exclusion are implemented and synthetically tested. Matched clean aggregator, stable-client, and round controls remain pending. A versioned inference-bundle contract exists, but no trained-bundle benchmark or real federation has been demonstrated. |
+| Inference and release | [docs/analysis_spec.json](docs/analysis_spec.json) prespecifies 27 Holm families and 200 pairs. None is complete. Strict lint, dependency pinning, clean reproduction, and manuscript reconciliation remain open. |
 
-## Status (2026-09-25)
-
-| Item | State |
-|------|--------|
-| CICIDS2017 download + clean + CII sequence | done (2.57M rows) |
-| E1 baselines 1–6 (incl. Joint/Oracle) | done, n=7 seeds (1–6, 42; ER also 123) |
-| E2 label-flip (stream + buffer, 0.5/1/5%) | done — H1 **not** a collapse (drop real but small, p=0.031) |
-| E3 backdoor | prior ASR claim invalidated; 38 legacy seed files archived; corrected trigger/ASR implementation needs reruns |
-| E4 novelty poison + **discovery stage (AE→HDBSCAN)** | train-only causal pipeline implemented; synthetic checks in progress; historical outputs archived; corrected numerical comparison pending |
-| E5 novelty-detector evasion + pollution | historical JSONs archived; rerun under the revised discovery protocol pending |
-| E6 small-loss defence | done n=7 — ACC 0.367 vs 0.317 undefended (**p=0.016**) |
-| E6b kNN-consistency defence (H3) | done n=7 — ACC 0.278, **p=0.047 worse** than undefended; Heartbleed/Infiltration retention **0%** even clean |
-| A1–A3 ablations | done (3 seeds each) |
-| E7 latency/RSS (CPU) | done — real device optional |
-| Wilcoxon vs baselines | done (`results/wilcoxon.csv`) — **9 comparisons significant at n=7** (min p=0.0156) |
-| Search protocol table | filled 2026-09-24 |
-| **Full results write-up** | see `docs/results_overview.md` |
-
-## Scope
-
-| Role | Gap |
-|------|-----|
-| Primary | Gap 2 — attack the open-world discovery stage (autoencoder → clustering → CIL), Option 2-A; secondary Option 2-B (federated aggregation) |
-| Carrier | Gap 1 — CICIDS2017, day-based task sequence, CII scenario |
-| Bonus | Gap 3 — one latency + peak-memory table on one real device |
-
-Headline: an attacker influences *what the continual IDS decides to learn*, not only what it predicts.
+See the [claim ledger](docs/claim_ledger.md), [invalidation table](docs/invalidation_table.md),
+[task audit](docs/task_audit.md), and [results guide](results/README.md) before
+using a number in a report. An undefined ASR or unmeasured FWT is **N/A**,
+never zero. The joint model is a future-data oracle. Twelve paired seeds on
+one capture estimate seed variation, not performance across network sites.
 
 ## Quick start
 
-```bash
+```powershell
 python -m venv .venv
-# Windows: .venv\Scripts\activate
+.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-
-# 1. Prove the harness (no dataset needed)
+python -m pytest -q
+python -m ruff check src scripts tests --select E7,E9,F63,F7,F82
 python scripts/smoke_test.py
-
-# 2. Download CICIDS2017 into data/raw/ (8 CSVs, see data/README.md)
-
-# 3. Build the primary per-class capture-order/offline-init task sequence.
-# Existing task artifacts must first be archived; builders never overwrite them.
-make data-primary
-
-# 4. Run experiments (config-driven; bare names also work: --config e1_clean)
-python -m src.run_experiment --config configs/baselines/e1_clean.yaml
-python -m src.run_experiment --config configs/baselines/e1_joint.yaml
-python -m src.run_experiment --config configs/label_flip/e2_labelflip.yaml
-python -m src.run_experiment --config configs/novelty/e4_novelty.yaml
-python -m src.run_experiment --config configs/novelty/e4_novelty_nopois.yaml
-python -m src.run_experiment --config configs/novelty/e4_novelty_anchor.yaml
-python -m src.run_experiment --config configs/defenses/e6_defense_knnconsist.yaml
-
-# 5. Rebuild tables + stats + Wilcoxon + figures
-python -m src.run_experiment --rebuild-table
-python scripts/stats_summary.py
-python scripts/e7_deployment.py
-python scripts/make_figures.py
-python scripts/e5_evasion.py          # E5: discovery evasion/pollution (3 seeds via --seed)
 ```
 
-Or via Make: `make smoke`, `make data`, `make tables`, `make figures`, `make test`.
-Every number in the report must be regenerable from a config in `configs/`.
-`make data` is the legacy random/per-task protocol, not the primary build.
-The primary T0+T1 scaler sees T1 training rows before T0 training (offline
-initialization). `tasks_chrono_t0.npz` is the strictly future-blind T0-only
-sensitivity arm.
+The tests and smoke test do not require the full dataset. Raw data and derived
+tasks are not committed; see [data/README.md](data/README.md). Configurations
+for the audited CICIDS sensitivity arms use
+`data/processed/tasks_chrono_dedup.npz` and
+`data/processed/tasks_chrono_t0.npz`. Existing task artifacts must be archived
+before rebuilding; builders do not overwrite them. The old `make data-primary`
+target builds `tasks_chrono.npz`, which is a legacy protocol with known test
+exposure, so it is not the current primary evidence path.
 
-## Datasets
+For a single seed after its task artifact is available:
 
-Raw and processed data are **not** committed — see [`data/README.md`](data/README.md).
-
-- **CIC-IDS-2017** (8 CSVs, ~8.8 GB unzipped) — <https://www.unb.ca/cic/datasets/ids-2017.html>, or fetch automatically:
-
-  ```bash
-  python scripts/download_cicids.py          # writes into data/raw/
-  python -m src.data.clean --raw data/raw --out data/processed
-  python -m src.data.sequence --processed data/processed/cicids2017_clean.parquet --out data/processed/tasks_chrono.npz --scenario cii --split chrono --scaler frozen
-  ```
-
-## Layout
-
-```
-configs/       one YAML per experiment, grouped by family (see configs/README.md)
-src/
-  data/        cleaning + day-based task sequence (+ UNSW-NB15 / IoT mirrors)
-  attacks/     label flip, backdoor, novelty poisoning, Byzantine
-  cl/          FineTune, EWC, LwF, ER, DER++, Joint (oracle)
-  defenses/    small-loss purification, kNN label-consistency filter
-  discovery/   AE recon threshold + HDBSCAN discovery metrics (Option 2-A)
-  federated/   FedAvg + robust aggregators (Krum, median, trimmed-mean)
-  models/      tabular MLP, autoencoder, tabular transformer
-  metrics.py   ACC, BWT, FWT, Forgetting, ASR
-  methods.py   CL-method registry · tasks.py task loading · paths.py path helpers
-  runner.py    training loop · reporting.py tables · run_experiment.py CLI
-scripts/       smoke_test, run_grid/run_groups, stats_summary, make_figures,
-               e5_evasion, e7/e8_deployment, download_cicids, reproduce.sh
-               (see scripts/README.md)
-notebooks/     architecture_colab.ipynb (+ artifacts bundle)
-docs/          proposal, threat model, search protocol, results overview,
-               decisions log, handover, papers/ (paper-1..3)
-reports/       literature/ + phases/ (university phase documents)
-data/          raw / processed / external (see data/README.md, not committed)
-results/       baseline_table, stats_summary, wilcoxon, e5_evasion,
-               figures/, per-run R matrices, _archive/prefix0 (invalid, kept for provenance)
-tests/         pytest regression suite (no dataset needed)
-models/        checkpoints (gitignored, .gitkeep skeleton)
+```powershell
+$env:CL_THREADS = "2"
+python -m src.run_experiment --config configs/baselines/e1_finetune_dedup.yaml --seed 1 --results-dir results/diagnostics --resume
 ```
 
-## Reproducibility rule
+`--resume` checks the manifest and provenance rather than a summary file's
+existence. On the CPU laptop, run one seed at a time. The prepared 12-seed
+loops and their prerequisites are in [docs/roadmap.md](docs/roadmap.md); they
+have not been launched as a final comparison. Rebuild tables and statistics
+only from validated runs:
 
-Fix seeds (≥3), report mean ± std, full task-accuracy matrix, and Wilcoxon signed-rank vs baselines. Never report average accuracy alone.
-
-```bash
-bash scripts/reproduce.sh <group>   # one-command reproduction per group
+```powershell
+python -m src.run_experiment --rebuild-table --results-dir results
+python scripts/stats_summary.py --results-dir results
 ```
 
-Pinned CPU environment: see `Dockerfile` (`CL_THREADS=2` thread pinning).
+## Project map
 
-## Division of labour
+| Path | Contents |
+|---|---|
+| [configs/](configs/) | Experiment configurations and protocol variants |
+| [src/](src/) | Data, attacks, continual-learning and federated runners, reporting, and inference contract |
+| [scripts/](scripts/) | Audits, experiment orchestration, statistics, and figures |
+| [tests/](tests/) | Synthetic and integration checks |
+| [docs/](docs/) | Plan, roadmap, methods, audits, claim ledger, and paper drafts |
+| [results/](results/) | Manifest-checked run outputs, exploratory diagnostics, and preserved archives |
 
-| Owner | Experiments |
-|-------|-------------|
-| Data / protocol / baselines | E1, E2, E7, statistics, cleaning |
-| Attacks / defences | E3, E4, E5, E6 |
-
-Both write. Do not split as "one codes, one writes".
+Git-ignored archives and source snapshots must be included explicitly in a
+release bundle; [docs/release_bundle_contents.md](docs/release_bundle_contents.md)
+lists them. Figures and historical numeric prose must be regenerated from
+compatible validated runs before they can support a new claim.

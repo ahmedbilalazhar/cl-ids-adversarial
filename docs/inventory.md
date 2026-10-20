@@ -6,7 +6,7 @@
 > added, giving 214 parseable YAMLs.
 > The active `results/runs/` tree now has 1,122 historical summary files
 > across 114 config prefixes and **zero validated manifests**. The main
-> aggregate CSVs have zero result rows. Six validated seeds across
+> aggregate CSVs have zero result rows. Six manifest-v2 checked exploratory seeds across
 > `e1_finetune_dedup` and `e1_finetune_t0` are isolated in
 > `results/diagnostics/` and are not paper evidence. UNSW/IoT label-affected
 > runs, class-IL filter runs, and
@@ -26,8 +26,9 @@
 > Chronological E4 configs now use `tasks_chrono_dedup.npz`, and
 > `e4_novelty_label_control_c` is the 214th config. No historical E4 row
 > below counts toward the current protocol. The initial no-poison diagnostic
-> was archived separately before source-tree fingerprinting; one v3 no-poison
-> seed is isolated in `results/diagnostics/`, not final evidence.
+> was archived separately before source-tree fingerprinting; nine final-code
+> v3 E4 seeds (three per arm) are isolated in `results/diagnostics/`, not
+> final evidence.
 
 Audited-commit source: `configs/**/*.yaml` x 211; seed artifacts:
 `results/runs/*_summary_seed*.json` (1340 files, 135 distinct prefixes before

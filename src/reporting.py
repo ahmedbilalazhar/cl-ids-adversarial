@@ -129,7 +129,7 @@ def model_for(cfg: dict) -> str:
     if cfg.get("arch"):
         parts.append(str(cfg.get("arch")))
     elif cfg.get("hidden"):
-        parts.append("wide-%s" % (cfg.get("hidden"),))
+        parts.append(f"wide-{cfg.get('hidden')}")
     if cfg.get("grow_head"):
         parts.append("grow_head")
     return "+".join(parts)

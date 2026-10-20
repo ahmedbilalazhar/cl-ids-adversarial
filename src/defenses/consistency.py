@@ -32,7 +32,7 @@ def knn_consistency_filter(
     ind = nn.kneighbors(return_distance=False)
     nb = y[ind[:, 1:]]
     cons = (nb == y[:, None]).mean(axis=1)
-    keep_n = max(1, int(round(n * keep_ratio)))
+    keep_n = max(1, round(n * keep_ratio))
     order = np.argsort(-cons, kind="stable")
     mask = np.zeros(n, dtype=bool)
     mask[order[:keep_n]] = True

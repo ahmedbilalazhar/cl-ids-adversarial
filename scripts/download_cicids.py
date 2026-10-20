@@ -24,7 +24,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.paths import artifact_root
 
 OUT = artifact_root() / "data" / "raw"
-OUT.mkdir(parents=True, exist_ok=True)
 SUMS = OUT / "SHA256SUMS"
 
 FILES = [
@@ -129,6 +128,7 @@ def download(url: str, dest: Path) -> bool:
 
 
 def main():
+    OUT.mkdir(parents=True, exist_ok=True)
     failed = []
     for name in FILES:
         dest = OUT / name

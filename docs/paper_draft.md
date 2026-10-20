@@ -158,10 +158,12 @@ inherit stream class imbalance (disclosed in every table). Classification head
 is pre-sized over the full label space, uniform across methods; a growing-head
 variant is reported as a named ablation rather than a silent choice.
 
-**4.2 Federation.** 5 clients; per-task Dirichlet(0.5) label-skew shards; 1
-round per task; FedAvg weighted by shard size; per-client CL state persists
-across tasks. The clean FedAvg path is byte-identical to the earlier locked
-implementation; robust aggregators operate on client *deltas*.
+**4.2 Federation.** 5 resampled simulated clients; per-task Dirichlet(0.5)
+label-skew shards are redrawn each task while per-client CL and Adam state
+persists by client index. There is 1 round per task; FedAvg is weighted by
+shard size. These clients are not observed network sites. The clean FedAvg
+path is byte-identical to the earlier locked implementation; robust
+aggregators operate on client *deltas*.
 
 **4.3 Attacks.** Data: targeted and random label flipping at shard-relative
 budgets; a persistent multi-task variant (each task's own majority attack

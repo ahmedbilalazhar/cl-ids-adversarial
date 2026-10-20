@@ -9,6 +9,9 @@ from pathlib import Path
 
 import yaml
 
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
 from src.reporting import check_artifact
 
 CONFIGS = (
@@ -25,12 +28,14 @@ def main() -> None:
     args = parser.parse_args()
     if os.environ.get("CL_THREADS") != "2":
         raise ValueError("set CL_THREADS=2 before comparing these diagnostic seeds")
-    results_dir = args.results_dir.resolve()
+    results_dir = args.results_dir
+    if not results_dir.is_absolute():
+        results_dir = (ROOT / results_dir).resolve()
     logs = results_dir / "logs"
     logs.mkdir(parents=True, exist_ok=True)
     for seed in args.seeds:
         for name in CONFIGS:
-            config_path = Path("configs/novelty") / f"{name}.yaml"
+            config_path = ROOT / "configs" / "novelty" / f"{name}.yaml"
             cfg = yaml.safe_load(config_path.read_text(encoding="utf-8"))
             cfg["seed"] = seed
             command = [
@@ -39,7 +44,8 @@ def main() -> None:
             ]
             log_path = logs / f"{name}_seed{seed}.log"
             with log_path.open("w", encoding="utf-8") as log:
-                result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, check=False)
+                result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT,
+                                        check=False, cwd=str(ROOT))
             if result.returncode:
                 raise RuntimeError(f"{name} seed {seed} failed; see {log_path}")
             state = check_artifact(results_dir / "runs", name, seed, cfg)

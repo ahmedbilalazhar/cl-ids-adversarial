@@ -13,20 +13,19 @@ Usage: python scripts/e8_deployment.py  (fast, CPU-only)
 """
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import platform
-import statistics
 import sys
 import time
 from pathlib import Path
 
-import numpy as np
 import torch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from src.models import build_model  # noqa: E402
+from src.models import build_model
 
 
 def platform_info() -> dict:
@@ -98,8 +97,29 @@ def bench_arch(cfg: dict, in_dim: int, n_classes: int, reps: int = 200) -> dict:
     }
 
 
+def primary_dims(default_tasks: str = "data/processed/tasks_chrono_dedup.npz") -> tuple[int, int]:
+    """Read model dims from the primary task artifact instead of hardcoding.
+
+    The old hardcoded (78, 15) described a 78-input model while the audited
+    artifacts carry 76 features, so published param/FLOP counts did not match
+    any real model. n_classes falls back to 15 when the sidecar is absent.
+    """
+    in_dim, n_classes = 78, 15
+    try:
+        meta = json.loads((ROOT / default_tasks).with_suffix(".json").read_text(encoding="utf-8"))
+        in_dim = len(meta["feature_cols"])
+        n_classes = len(meta["label_map"])
+    except (OSError, ValueError, KeyError):
+        pass
+    return in_dim, n_classes
+
+
 def main() -> None:
-    in_dim, n_classes = 78, 15  # CICIDS2017 primary (UNSW/IoT dims reported at replication)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--output", type=Path, default=ROOT / "results" / "e8_deployment.json")
+    ap.add_argument("--tasks", default="data/processed/tasks_chrono_dedup.npz")
+    args = ap.parse_args()
+    in_dim, n_classes = primary_dims(args.tasks)
     out = {
         "platform": platform_info(),
         "archs": {
@@ -108,7 +128,8 @@ def main() -> None:
             "transformer": bench_arch({"arch": "transformer"}, in_dim, n_classes),
         },
     }
-    p = ROOT / "results" / "e8_deployment.json"
+    p = Path(args.output)
+    p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(out, indent=2))
     print(json.dumps(out, indent=2))
 

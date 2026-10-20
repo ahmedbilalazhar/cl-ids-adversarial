@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import torch
-import torch.nn as nn
+from torch import nn
 from torch.utils.data import DataLoader
 
 from src.cl.base import BaseCLMethod
@@ -17,7 +17,34 @@ class EWC(BaseCLMethod):
         self.fisher: dict[str, torch.Tensor] = {}
         self.anchor: dict[str, torch.Tensor] = {}
 
+    def _maybe_expand(self, n: int) -> None:
+        super()._maybe_expand(n)
+        self._align_head_state()
+
+    def _align_head_state(self) -> None:
+        """Protect old classifier rows; newly added rows have zero importance."""
+        for name, parameter in self.model.named_parameters():
+            if name not in self.fisher or name not in self.anchor:
+                continue
+            fisher, anchor = self.fisher[name], self.anchor[name]
+            if fisher.shape == parameter.shape == anchor.shape:
+                continue
+            if not (
+                name.startswith("classifier.") and fisher.shape == anchor.shape
+                and fisher.ndim == parameter.ndim
+                and fisher.shape[1:] == parameter.shape[1:]
+                and fisher.shape[0] <= parameter.shape[0]
+            ):
+                raise ValueError(f"EWC state shape mismatch for {name}")
+            expanded_fisher = torch.zeros_like(parameter)
+            expanded_anchor = parameter.detach().clone()
+            expanded_fisher[:fisher.shape[0]] = fisher
+            expanded_anchor[:anchor.shape[0]] = anchor
+            self.fisher[name] = expanded_fisher
+            self.anchor[name] = expanded_anchor
+
     def after_task(self, task_id: int, train_loader: DataLoader) -> None:
+        self._align_head_state()
         self.model.eval()
         fisher = {n: torch.zeros_like(p) for n, p in self.model.named_parameters() if p.requires_grad}
         n = 0
@@ -33,15 +60,14 @@ class EWC(BaseCLMethod):
             n += 1
             if n >= self.fisher_batches:
                 break
-        for k in fisher:
-            fisher[k] = fisher[k] / max(n, 1)
+        for k, v in fisher.items():
+            fisher[k] = v / max(n, 1)
         if not self.fisher:
             self.fisher = fisher
         else:
-            # Phase 0 fix: accumulate across tasks (Kirkpatrick et al. sum
-            # over previous tasks). Old code overwrote, regularising only
-            # toward the immediately previous task. Keys with changed shapes
-            # (head expansion) are re-initialised to the new shape.
+            # Accumulated batch-gradient importance around the latest anchor:
+            # an online approximation, not the exact sum of per-task penalties.
+            # Head state was aligned above, preserving old-row importance.
             merged: dict[str, torch.Tensor] = {}
             for k, v in fisher.items():
                 if k in self.fisher and self.fisher[k].shape == v.shape:
@@ -58,15 +84,12 @@ class EWC(BaseCLMethod):
     def extra_loss(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         if not self.fisher:
             return torch.tensor(0.0, device=self.device)
+        self._align_head_state()
         loss = torch.tensor(0.0, device=self.device)
         for n, p in self.model.named_parameters():
             if n in self.fisher and n in self.anchor:
                 f = self.fisher[n]
                 a = self.anchor[n]
-                # Phase 0 fix: skip stale entries whose shapes predate a
-                # head expansion instead of crashing on broadcast.
-                if f.shape != p.shape or a.shape != p.shape:
-                    continue
                 loss = loss + (f * (p - a) ** 2).sum()
         # Published EWC (Kirkpatrick et al. 2017, eq. 3) carries a 1/2
         # factor: (lambda/2) * sum F*(theta-theta*)^2. Previous code used

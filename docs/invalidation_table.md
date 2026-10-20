@@ -40,14 +40,33 @@ bit-identical unless a parity test + versioned replacement justifies change
   files, E5 JSONs, and related figures. E4 fitted clusters on training plus
   held-out test flows after classifier training, so neither its cluster
   endpoint nor an attributed classifier effect is valid. Corrected E4/E5
-  seed count is zero. The new E4 chronology configs use the duplicate-disjoint
-  task artifact and require new manifests.
+  final seed count is zero. The new E4 chronology configs use the
+  duplicate-disjoint task artifact; nine manifest-v3 exploratory diagnostics
+  were current under `results/diagnostics/` until the Phase-D source change
+  (preserved in `discovery_prefedcontrols_20260928/`).
 - `results/_archive/discovery_pre_code_hash_20260928/` and
   `results/_archive/discovery_pre_asr_null_20260928/`: exploratory E4
   no-poison seed-1 R/summary/manifest/resource sets before runtime-source
   fingerprinting and undefined-ASR repair, respectively. Neither is a
-  current completion manifest or a paired effect. A repeated seed-1
-  diagnostic uses manifest v3 and the final endpoint definition.
+  current completion manifest or a paired effect.
+- `results/_archive/discovery_pre_commit_asr_20260928/`: 37 files from an
+  earlier nine-seed E4 diagnostic whose source hash was superseded by
+  undefined-ASR and buffer-poison fixes. All nine arms/seeds were rerun under
+  source hash `94abb157…` and passed live manifest checks. They remain
+  exploratory, with no final paired effect.
+- `results/_archive/discovery_prefedcontrols_20260928/`: copy-preservation
+  (39 files + SHA-256 manifest) of the nine live E4 diagnostics above, taken
+  before the Phase-D federated-controls source change. The Phase-D change
+  alters the manifest-v3 source fingerprint, so those nine no longer pass
+  live checks; this archive is their record. The plain-FedAvg aggregation
+  path itself is byte-unchanged (bit-identical), but no F2/F4 result may be
+  cited under the new fingerprint without rerun.
+- `results/_archive/order_rev_benign_dup_20260928/`: 24 `a3_order_rev_c`
+  R/summary files. The task builder sampled the shared Monday-benign pool
+  with one seed, duplicating identical benign rows across tasks whenever
+  Monday was not first (reverse order). The builder now tracks consumed ids;
+  the alt-order arm verified clean. Order-invariance claims await a rebuilt
+  rev artifact and rerun.
 
 These archives contain SHA-256 manifests with `superseded_by` reasons.
 The duplicate-disjoint arm has a distinct protocol and config; it does not

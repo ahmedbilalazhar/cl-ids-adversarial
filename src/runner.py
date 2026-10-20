@@ -28,7 +28,7 @@ from src.discovery.pipeline import (
     provisional_labels,
     recon_scores,
 )
-from src.methods import METHODS
+from src.methods import METHODS, learner_kwargs
 from src.metrics import summarize
 from src.models.mlp import Autoencoder
 from src.paths import resolve_repo_path
@@ -71,6 +71,12 @@ def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, d
         src_name = attack.get("source_class")
         src = resolve_class_id(src_name, label_map, role="source") if src_name is not None else None
         tgt = resolve_attack_target(attack, label_map)
+        if src is None and mode in {"persistent", "adaptive", "knn_adaptive"}:
+            source = majority_attack_class(y, tgt)
+        elif mode == "random":
+            source = None
+        else:
+            source = src
         if mode == "adaptive":
             # Phase-3 step 15: white-box vs the carried-over (defended) model.
             from src.attacks.flip import adaptive_loss_preserving_flip
@@ -93,6 +99,10 @@ def apply_attack(cfg: dict, task, task_idx: int, feature_names: list[str], ae, d
             y, flipped = label_flip(y, budget=budget, mode=mode, source_class=src, target_class=tgt, seed=seed)
         asr_meta["triggered"] = flipped
         asr_meta["target_label"] = tgt
+        # Train-time flip source. Eval must reuse it: the test split's own
+        # majority can differ, and scoring a different class than the one
+        # flipped would misattribute the effect.
+        asr_meta["source_class"] = source
 
     elif name == "backdoor":
         atk_name = attack.get("attack_class", "PortScan")
@@ -281,12 +291,7 @@ def run(cfg: dict) -> dict:
         model = build_model(cfg, in_dim, n_classes)
     method_name = cfg.get("cl_method", "er")
     method_cls = METHODS[method_name]
-    method_kwargs = {
-        k: cfg[k]
-        for k in ("buffer_size", "ewc_lambda", "alpha", "temperature", "lr")
-        if k in cfg
-    }
-    method_kwargs.setdefault("lr", float(cfg.get("lr", 1e-3)))
+    method_kwargs = learner_kwargs(cfg)
     method = method_cls(model, device=device, **method_kwargs)
 
     epochs = int(cfg.get("epochs_per_task", 3))
@@ -316,6 +321,7 @@ def run(cfg: dict) -> dict:
             R[j, : j + 1] = row[: j + 1]
         summary = summarize(R)
         summary["asr_mean"] = None
+        summary["joint_oracle"] = True  # trains on all tasks at once: future-data oracle, not a CL method
         summary["wall_sec"] = time.time() - t0
         summary["cl_method"] = method_name
         summary["attack"] = atk_type
@@ -433,28 +439,37 @@ def run(cfg: dict) -> dict:
             if attack_target == "buffer":
                 src_name = atk.get("source_class")
                 tgt = resolve_attack_target(atk, label_map)
-                if src_name and src_name in label_map:
-                    mask = y_te == label_map[src_name]
+                if src_name is not None:
+                    src = resolve_class_id(src_name, label_map, role="source")
+                    mask = y_te == src
                     asr = float(np.mean(pred[mask] == tgt)) if mask.any() else None
             else:
                 src_name = atk.get("source_class")
                 tgt = resolve_attack_target(atk, label_map)
                 if atk.get("mode") == "persistent":
-                    # Resolve the same per-task majority class the attack used.
-                    from src.attacks.flip import majority_attack_class
+                    # Score the class actually flipped at train time, not the
+                    # test split's possibly different majority.
+                    src = asr_meta.get("source_class")
+                    if src is None:
+                        from src.attacks.flip import majority_attack_class
 
-                    src = majority_attack_class(y_te, tgt)
+                        src = majority_attack_class(tasks[t]["y_train"], tgt)
                     mask = y_te == src if src is not None else np.zeros(len(y_te), dtype=bool)
                     asr = float(np.mean(pred[mask] == tgt)) if mask.any() else None
-                elif src_name and src_name in label_map and atk.get("mode") in ("targeted", "adaptive", "knn_adaptive"):
-                    mask = y_te == label_map[src_name]
+                elif src_name is not None and atk.get("mode") in ("targeted", "adaptive", "knn_adaptive"):
+                    src = resolve_class_id(src_name, label_map, role="source")
+                    mask = y_te == src
                     asr = float(np.mean(pred[mask] == tgt)) if mask.any() else None
+            # Label-flip rows carry the train-time source so the claim ledger
+            # can check the scored class is the flipped class.
+            asr_rows.append({"task": t, "asr": asr,
+                             "source_class": asr_meta.get("source_class")})
         elif atk_type == "novelty":
             # There is no single attack-success target across provisional
             # clusters. Discovery endpoints below carry their own denominators.
-            asr = None
-        if atk_type != "backdoor":
-            asr_rows.append({"task": t, "asr": asr})
+            asr_rows.append({"task": t, "asr": None})
+        elif atk_type is None:
+            asr_rows.append({"task": t, "asr": None})
 
         if atk_type == "novelty" and fitted_discovery is not None:
             disc = evaluate_discovery(
@@ -506,6 +521,7 @@ def run(cfg: dict) -> dict:
         summary["asr_mean"] = float(np.mean(asr_values)) if asr_values else None
     summary["wall_sec"] = time.time() - t0
     summary["cl_method"] = method_name
+    summary["joint_oracle"] = False
     summary["attack"] = (cfg.get("attack") or {}).get("type")
     summary["seed"] = seed
     summary["scenario"] = cfg.get("data", {}).get("scenario", "cii")

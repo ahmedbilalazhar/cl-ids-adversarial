@@ -33,6 +33,7 @@ ROW_ID_COL = "_source_row_id"
 
 
 BATCH = 100_000  # streaming batch: ~100k rows transient, never full pools
+CONSOLIDATE_EVERY = 20  # merge retained per-group chunks this often; bounds live-chunk overhead
 BENIGN_TRAIN_CAP = 8000
 BENIGN_TEST_CAP = 4000
 
@@ -93,7 +94,7 @@ def _pool_sample(
     pos = 0
     cols = feat + ["attack_class", "Label", ROW_ID_COL]
     pf = pq.ParquetFile(pool_path)
-    for batch in pf.iter_batches(batch_size=BATCH, columns=cols[:-1]):
+    for n_batches, batch in enumerate(pf.iter_batches(batch_size=BATCH, columns=cols[:-1]), start=1):
         df = batch.to_pandas()
         df["attack_class"] = df["attack_class"].astype(str)
         df["Label"] = df["Label"].astype(str)
@@ -124,6 +125,17 @@ def _pool_sample(
                 parts[key].append(group.iloc[target[first:last] - start])
             seen[key] = start + len(group)
         pos += len(df)
+        if n_batches % CONSOLIDATE_EVERY == 0:
+            # Thousands of few-row chunks would accumulate ~1MB of
+            # per-DataFrame overhead each (measured 11GB over 308 batches).
+            # Periodic consolidation keeps live chunks bounded with
+            # identical row content and order.
+            for key, chunks in parts.items():
+                if len(chunks) > 1:
+                    parts[key] = [pd.concat(chunks, ignore_index=True)]
+            for q in range(4):
+                if len(benign_parts[q]) > 1:
+                    benign_parts[q] = [pd.concat(benign_parts[q], ignore_index=True)]
     if pos != total or benign_seen != benign_total or seen != {
         key: count for key, count in counts.items() if key[0] != "Benign"
     }:

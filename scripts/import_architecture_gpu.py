@@ -22,10 +22,11 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from src.reporting import (  # noqa: E402
+from src.reporting import (
     _atomic_write_bytes,
     check_artifact,
     config_hash,
+    source_tree_hash,
     validate_R,
     validate_summary,
 )
@@ -35,6 +36,38 @@ SEEDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 42]
 
 def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+def check_completion_manifest(completion: dict, *, cfg: dict, task_hash: str,
+                              source_commit: str | None) -> None:
+    """Validate one GPU completion manifest against the local run context.
+
+    Version 2 is the cross-machine format (no source-tree pin, hence
+    `pre-code-hash` provenance on import). Version 3 additionally requires
+    the recorded tree to match THIS machine, i.e. same-machine CUDA runs;
+    a foreign v3 tree is rejected rather than silently downgraded, because
+    cross-machine v3 provenance cannot be verified from this bundle format.
+    """
+    version = completion.get("manifest_version")
+    if version not in (2, 3):
+        raise ValueError(f"unsupported GPU manifest version: {version!r}")
+    required = {
+        "name": cfg.get("name"), "config_name": cfg.get("name"), "seed": cfg.get("seed"),
+        "config_hash": config_hash(cfg), "task_file_hash": task_hash,
+        "source_commit": source_commit,
+        "runner": "single-node", "device": "cuda",
+        "summary_sha256": completion.get("summary_sha256"),
+        "r_sha256": completion.get("r_sha256"),
+    }
+    # Self-consistency of the payload hashes is checked by the caller against
+    # the actual bundle bytes; here we check identity fields.
+    for key, value in required.items():
+        if key in ("summary_sha256", "r_sha256"):
+            continue
+        if completion.get(key) != value:
+            raise ValueError(f"invalid GPU completion manifest field: {key}")
+    if version == 3 and completion.get("source_tree_hash") != source_tree_hash():
+        raise ValueError("v3 GPU manifest is not from this machine's source tree")
 
 
 def _validate_bundle(zf: zipfile.ZipFile) -> tuple[dict, dict[str, bytes], dict[str, dict]]:
@@ -71,16 +104,12 @@ def _validate_bundle(zf: zipfile.ZipFile) -> tuple[dict, dict[str, bytes], dict[
                 raise ValueError(f"non-GPU or wrong-seed summary: {name}/{seed}")
             matrix = np.array(list(csv.reader(io.StringIO(payloads[paths["R"]].decode()))), dtype=float)
             validate_R(matrix)
-            required = {
-                "manifest_version": 2, "name": name, "config_name": name, "seed": seed,
-                "config_hash": config_hash(cfg), "task_file_hash": task_hash,
-                "source_commit": run_manifest.get("source_commit"),
-                "runner": "single-node", "device": "cuda",
-                "summary_sha256": digest(payloads[paths["summary"]]),
-                "r_sha256": digest(payloads[paths["R"]]),
-            }
-            if any(completion.get(key) != value for key, value in required.items()):
-                raise ValueError(f"invalid completion manifest: {name}/{seed}")
+            check_completion_manifest(
+                completion, cfg=cfg, task_hash=task_hash,
+                source_commit=run_manifest.get("source_commit"))
+            if (completion.get("summary_sha256") != digest(payloads[paths["summary"]])
+                    or completion.get("r_sha256") != digest(payloads[paths["R"]])):
+                raise ValueError(f"GPU payload hash mismatch: {name}/{seed}")
     actual = {p for p in zf.namelist() if p.startswith("results/") and not p.endswith("/")}
     if actual != expected:
         raise ValueError(f"unexpected or missing result members: {sorted(actual ^ expected)[:5]}")
@@ -96,7 +125,7 @@ def main() -> None:
     if not target_dir.is_relative_to(ROOT.resolve()) or not archive_root.is_relative_to(ROOT.resolve()):
         raise ValueError("result paths escaped the repository")
     with zipfile.ZipFile(args.archive) as zf:
-        run_manifest, payloads, cfgs = _validate_bundle(zf)
+        _, payloads, cfgs = _validate_bundle(zf)
         run_manifest_bytes = zf.read("run_manifest.json")
     bundle_id = digest(run_manifest_bytes)[:12]
     cpu_archive = archive_root / f"architecture_cpu_pre_gpu_{bundle_id}"

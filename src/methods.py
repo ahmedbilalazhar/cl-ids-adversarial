@@ -22,3 +22,14 @@ METHODS = {
     "derpp": DERpp,
     "joint": FineTune,
 }
+
+
+def learner_kwargs(cfg: dict) -> dict:
+    """One parameter contract for single-node and federated construction."""
+    parameters = {
+        key: cfg[key]
+        for key in ("buffer_size", "ewc_lambda", "alpha", "beta", "temperature", "lr")
+        if key in cfg
+    }
+    parameters.setdefault("lr", float(cfg.get("lr", 1e-3)))
+    return parameters

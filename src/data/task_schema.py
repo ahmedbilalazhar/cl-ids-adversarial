@@ -159,7 +159,7 @@ def write_taskset(
         "n_tasks": len(tasks),
         "days": [str(t.get("day", f"t{i}")) for i, t in enumerate(tasks)],
         "task_sizes": [
-            {"train": int(len(t["y_train"])), "test": int(len(t["y_test"]))} for t in tasks
+            {"train": len(t["y_train"]), "test": len(t["y_test"])} for t in tasks
         ],
         "feature_cols": list(feature_cols),
         "feature_units": feature_units,

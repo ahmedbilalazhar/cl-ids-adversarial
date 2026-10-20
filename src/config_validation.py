@@ -23,6 +23,19 @@ def validate_config(cfg: dict, *, expected_runner: str | None = None) -> None:
         raise ValueError("config needs a safe nonempty name")
     if cfg.get("cl_method") not in METHODS:
         raise ValueError(f"{name}: unknown CL method")
+    if str(cfg.get("arch", "mlp")) not in {"mlp", "wide", "transformer"}:
+        raise ValueError(f"{name}: unknown arch {cfg.get('arch')!r}")
+    if "hidden" in cfg and (
+        not isinstance(cfg["hidden"], list) or not cfg["hidden"]
+        or any(isinstance(h, bool) or not isinstance(h, int) or h <= 0 for h in cfg["hidden"])
+    ):
+        raise ValueError(f"{name}: hidden must be a nonempty list of positive ints")
+    tcfg = cfg.get("transformer") or {}
+    if not isinstance(tcfg, dict) or any(
+        k in tcfg and (isinstance(tcfg[k], bool) or not isinstance(tcfg[k], int) or tcfg[k] <= 0)
+        for k in ("d_model", "n_layers", "n_heads")
+    ):
+        raise ValueError(f"{name}: transformer params must be positive ints")
     if "fed" in cfg and cfg["fed"] is not None and not isinstance(cfg["fed"], dict):
         raise TypeError(f"{name}: fed must be a mapping")
     if isinstance(cfg.get("fed"), dict) and not cfg["fed"]:
@@ -82,6 +95,20 @@ def validate_config(cfg: dict, *, expected_runner: str | None = None) -> None:
     defense = cfg.get("defense") or {}
     if defense.get("type") not in {None, "small_loss", "knn_consistency"}:
         raise ValueError(f"{name}: unknown defense")
+    if defense.get("type") is not None and kind == "novelty":
+        raise ValueError(
+            f"{name}: defenses filter by current-head loss/labels, but novelty "
+            "provisional IDs exceed the head width before expansion — combine them "
+            "only with an explicit protocol, never by accident"
+        )
+    if defense.get("type") in {"small_loss", "knn_consistency"}:
+        ratio = defense.get("keep_ratio", 0.75)
+        if isinstance(ratio, bool) or not isinstance(ratio, (int, float)) or not 0 < ratio <= 1:
+            raise ValueError(f"{name}: defense keep_ratio must be in (0, 1]")
+    if defense.get("type") == "knn_consistency":
+        kval = defense.get("k", 10)
+        if isinstance(kval, bool) or not isinstance(kval, int) or kval < 1:
+            raise ValueError(f"{name}: knn defense k must be a positive int")
 
     if runner == "federated":
         fed = cfg["fed"]
@@ -96,6 +123,12 @@ def validate_config(cfg: dict, *, expected_runner: str | None = None) -> None:
         aggregator = fed.get("aggregator", "fedavg")
         if aggregator not in AGGREGATORS:
             raise ValueError(f"{name}: unknown aggregator")
+        if str(fed.get("partition", "dirichlet")) not in {"dirichlet", "stable"}:
+            raise ValueError(f"{name}: unknown fed partition")
+        if (isinstance(fed.get("rounds", 1), bool)
+                or not isinstance(fed.get("rounds", 1), int)
+                or fed.get("rounds", 1) < 1):
+            raise ValueError(f"{name}: fed rounds must be a positive int")
         n_mal = fed.get("n_mal", len(ids))
         if isinstance(n_mal, bool) or not isinstance(n_mal, int) or n_mal != len(ids):
             raise ValueError(f"{name}: n_mal must match malicious client count")

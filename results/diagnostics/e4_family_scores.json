@@ -1,0 +1,466 @@
+{
+  "status": "post hoc per-family score audit; primary q0.95 threshold unchanged",
+  "config": "configs\\novelty\\e4_novelty_nopois_c.yaml",
+  "warning": "Exploratory only: no detector selection, no poisoning effect.",
+  "seeds": [
+    {
+      "seed": 1,
+      "tasks": [
+        {
+          "task": 0,
+          "day": "monday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1499,
+              "median": 0.26284822821617126
+            }
+          },
+          "one_vs_benign_auc": {}
+        },
+        {
+          "task": 1,
+          "day": "tuesday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.25954920053482056
+            },
+            "1": {
+              "name": "FTP-Patator",
+              "n": 1779,
+              "median": 0.10597234219312668
+            },
+            "2": {
+              "name": "SSH-Patator",
+              "n": 966,
+              "median": 0.13132359087467194
+            }
+          },
+          "one_vs_benign_auc": {
+            "1": 0.16461083005433766,
+            "2": 0.03759385783298826
+          }
+        },
+        {
+          "task": 2,
+          "day": "wednesday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.25111567974090576
+            },
+            "3": {
+              "name": "DoS Slowloris",
+              "n": 1613,
+              "median": 6.283528804779053
+            },
+            "4": {
+              "name": "DoS Slowhttptest",
+              "n": 1568,
+              "median": 12.119638442993164
+            },
+            "5": {
+              "name": "DoS Hulk",
+              "n": 51852,
+              "median": 12.200380325317383
+            },
+            "6": {
+              "name": "DoS GoldenEye",
+              "n": 3086,
+              "median": 7.7760114669799805
+            },
+            "7": {
+              "name": "Heartbleed",
+              "n": 3,
+              "median": 1732.147216796875
+            }
+          },
+          "one_vs_benign_auc": {
+            "3": 0.775413308534821,
+            "4": 0.9705659013605441,
+            "5": 0.893581636195325,
+            "6": 0.9386655865197666,
+            "7": 0.9988888888888888
+          }
+        },
+        {
+          "task": 3,
+          "day": "thursday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.2776128053665161
+            },
+            "8": {
+              "name": "Web Attack Brute Force",
+              "n": 441,
+              "median": 0.4118393361568451
+            },
+            "9": {
+              "name": "Web Attack XSS",
+              "n": 196,
+              "median": 0.41229334473609924
+            },
+            "10": {
+              "name": "Web Attack Sql Injection",
+              "n": 6,
+              "median": 0.6332199573516846
+            },
+            "11": {
+              "name": "Infiltration",
+              "n": 11,
+              "median": 4.861578464508057
+            }
+          },
+          "one_vs_benign_auc": {
+            "8": 0.6546303854875283,
+            "9": 0.6659761904761904,
+            "10": 0.7974444444444444,
+            "11": 0.9532121212121213
+          }
+        },
+        {
+          "task": 4,
+          "day": "friday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.3341585397720337
+            },
+            "12": {
+              "name": "Bot",
+              "n": 431,
+              "median": 0.1262560486793518
+            },
+            "13": {
+              "name": "PortScan",
+              "n": 587,
+              "median": 0.3865589201450348
+            },
+            "14": {
+              "name": "DDoS",
+              "n": 38404,
+              "median": 9.182318687438965
+            }
+          },
+          "one_vs_benign_auc": {
+            "12": 0.005829853054911025,
+            "13": 0.47291766042021577,
+            "14": 0.6889939416033051
+          }
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "tasks": [
+        {
+          "task": 0,
+          "day": "monday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1499,
+              "median": 0.27460306882858276
+            }
+          },
+          "one_vs_benign_auc": {}
+        },
+        {
+          "task": 1,
+          "day": "tuesday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.24947087466716766
+            },
+            "1": {
+              "name": "FTP-Patator",
+              "n": 1779,
+              "median": 0.11069323122501373
+            },
+            "2": {
+              "name": "SSH-Patator",
+              "n": 966,
+              "median": 0.14979708194732666
+            }
+          },
+          "one_vs_benign_auc": {
+            "1": 0.1643833614390107,
+            "2": 0.05973050379572121
+          }
+        },
+        {
+          "task": 2,
+          "day": "wednesday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.23813295364379883
+            },
+            "3": {
+              "name": "DoS Slowloris",
+              "n": 1613,
+              "median": 6.385739803314209
+            },
+            "4": {
+              "name": "DoS Slowhttptest",
+              "n": 1568,
+              "median": 12.087621688842773
+            },
+            "5": {
+              "name": "DoS Hulk",
+              "n": 51852,
+              "median": 12.438875198364258
+            },
+            "6": {
+              "name": "DoS GoldenEye",
+              "n": 3086,
+              "median": 7.807321548461914
+            },
+            "7": {
+              "name": "Heartbleed",
+              "n": 3,
+              "median": 1675.202392578125
+            }
+          },
+          "one_vs_benign_auc": {
+            "3": 0.8157119239512296,
+            "4": 0.9721789965986394,
+            "5": 0.9092023965645812,
+            "6": 0.9427956362065242,
+            "7": 0.9988888888888889
+          }
+        },
+        {
+          "task": 3,
+          "day": "thursday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.2917449474334717
+            },
+            "8": {
+              "name": "Web Attack Brute Force",
+              "n": 441,
+              "median": 0.37791281938552856
+            },
+            "9": {
+              "name": "Web Attack XSS",
+              "n": 196,
+              "median": 0.3783039450645447
+            },
+            "10": {
+              "name": "Web Attack Sql Injection",
+              "n": 6,
+              "median": 0.6722135543823242
+            },
+            "11": {
+              "name": "Infiltration",
+              "n": 11,
+              "median": 4.800408840179443
+            }
+          },
+          "one_vs_benign_auc": {
+            "8": 0.6299984882842024,
+            "9": 0.6372278911564626,
+            "10": 0.8016666666666666,
+            "11": 0.952969696969697
+          }
+        },
+        {
+          "task": 4,
+          "day": "friday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.3275984525680542
+            },
+            "12": {
+              "name": "Bot",
+              "n": 431,
+              "median": 0.1354224979877472
+            },
+            "13": {
+              "name": "PortScan",
+              "n": 587,
+              "median": 0.41241222620010376
+            },
+            "14": {
+              "name": "DDoS",
+              "n": 38404,
+              "median": 9.153585433959961
+            }
+          },
+          "one_vs_benign_auc": {
+            "12": 0.005896365042536702,
+            "13": 0.49923225440090857,
+            "14": 0.7112670121167934
+          }
+        }
+      ]
+    },
+    {
+      "seed": 3,
+      "tasks": [
+        {
+          "task": 0,
+          "day": "monday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1499,
+              "median": 0.25809815526008606
+            }
+          },
+          "one_vs_benign_auc": {}
+        },
+        {
+          "task": 1,
+          "day": "tuesday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.23718830943107605
+            },
+            "1": {
+              "name": "FTP-Patator",
+              "n": 1779,
+              "median": 0.11283333599567413
+            },
+            "2": {
+              "name": "SSH-Patator",
+              "n": 966,
+              "median": 0.14043498039245605
+            }
+          },
+          "one_vs_benign_auc": {
+            "1": 0.16836537380550876,
+            "2": 0.053208419599723944
+          }
+        },
+        {
+          "task": 2,
+          "day": "wednesday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.24856001138687134
+            },
+            "3": {
+              "name": "DoS Slowloris",
+              "n": 1613,
+              "median": 6.410804271697998
+            },
+            "4": {
+              "name": "DoS Slowhttptest",
+              "n": 1568,
+              "median": 12.056356430053711
+            },
+            "5": {
+              "name": "DoS Hulk",
+              "n": 51852,
+              "median": 12.22849178314209
+            },
+            "6": {
+              "name": "DoS GoldenEye",
+              "n": 3086,
+              "median": 7.69422721862793
+            },
+            "7": {
+              "name": "Heartbleed",
+              "n": 3,
+              "median": 1742.10693359375
+            }
+          },
+          "one_vs_benign_auc": {
+            "3": 0.7707885926844389,
+            "4": 0.9697334183673468,
+            "5": 0.8997989341459025,
+            "6": 0.94050205227911,
+            "7": 0.9988888888888888
+          }
+        },
+        {
+          "task": 3,
+          "day": "thursday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.2729933261871338
+            },
+            "8": {
+              "name": "Web Attack Brute Force",
+              "n": 441,
+              "median": 0.414431631565094
+            },
+            "9": {
+              "name": "Web Attack XSS",
+              "n": 196,
+              "median": 0.41493529081344604
+            },
+            "10": {
+              "name": "Web Attack Sql Injection",
+              "n": 6,
+              "median": 0.6573725342750549
+            },
+            "11": {
+              "name": "Infiltration",
+              "n": 11,
+              "median": 4.655887603759766
+            }
+          },
+          "one_vs_benign_auc": {
+            "8": 0.6583174603174603,
+            "9": 0.6700102040816327,
+            "10": 0.8045555555555556,
+            "11": 0.9521818181818182
+          }
+        },
+        {
+          "task": 4,
+          "day": "friday",
+          "families": {
+            "0": {
+              "name": "Benign",
+              "n": 1500,
+              "median": 0.3286440372467041
+            },
+            "12": {
+              "name": "Bot",
+              "n": 431,
+              "median": 0.13384535908699036
+            },
+            "13": {
+              "name": "PortScan",
+              "n": 587,
+              "median": 0.3922450542449951
+            },
+            "14": {
+              "name": "DDoS",
+              "n": 38404,
+              "median": 9.37193489074707
+            }
+          },
+          "one_vs_benign_auc": {
+            "12": 0.0058654292343387135,
+            "13": 0.4722135150482681,
+            "14": 0.6838808544248863
+          }
+        }
+      ]
+    }
+  ]
+}

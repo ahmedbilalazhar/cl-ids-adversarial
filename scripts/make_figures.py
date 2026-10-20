@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -11,6 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 RESULTS = ROOT / "results"
 RUNS = RESULTS / "runs"
 FIGS = RESULTS / "figures"
@@ -21,6 +23,30 @@ def _run_files(pattern: str) -> list:
     seen = {p.name for p in files}
     files += [p for p in sorted(RESULTS.glob(pattern)) if p.name not in seen]
     return files
+
+
+def _validated_r_files(pattern: str) -> list:
+    """Per-seed R matrices backed by a complete manifest; unvalidated
+    legacy files are never plotted."""
+    import yaml
+
+    from src.paths import find_config
+    from src.reporting import check_artifact
+
+    out = []
+    for f in _run_files(pattern):
+        stem = f.name.removesuffix(".csv")
+        base, separator, raw_seed = stem.rpartition("_R_seed")
+        if not separator or not raw_seed.isdigit():
+            continue
+        try:
+            cfg = yaml.safe_load(find_config(base).read_text(encoding="utf-8"))
+        except FileNotFoundError:
+            continue
+        seed = int(raw_seed)
+        if check_artifact(f.parent, base, seed, dict(cfg, seed=seed))["complete"]:
+            out.append(f)
+    return out
 
 # Gate D labeling rules (mirror scripts/stats_summary.py so figures inherit them):
 ASR_NA_LABEL = "N/A (undefined for random-target mode)"
@@ -45,7 +71,11 @@ def load_stats() -> dict[str, dict]:
     out = {}
     with open(RESULTS / "stats_summary.csv", newline="", encoding="utf-8") as f:
         for r in csv.DictReader(f):
-            out[r["name"]] = r
+            prev = out.get(r["name"])
+            if prev is None or (prev.get("device") != "cpu" and r.get("device") == "cpu"):
+                if prev is not None:
+                    print(f"note: duplicate stats row for {r['name']}; keeping cpu device")
+                out[r["name"]] = r
     return out
 
 
@@ -75,7 +105,9 @@ def fig_baselines(stats: dict) -> None:
 
 
 def fig_r_matrix() -> None:
-    files = _run_files("e1_clean_R_seed*.csv")
+    files = _validated_r_files("e1_clean_R_seed*.csv")
+    if not files:
+        raise ValueError("no manifest-validated e1_clean R matrices; run validated seeds first")
     mats = [np.loadtxt(f, delimiter=",") for f in files]
     R = np.mean(mats, axis=0)
     fig, ax = plt.subplots(figsize=(5, 4))
@@ -182,7 +214,11 @@ def fig_federated(stats: dict) -> None:
 
 def fig_e5() -> None:
     seeds = [1, 2, 42]
-    data = [json.loads((RESULTS / f"e5_evasion_seed{s}.json").read_text()) for s in seeds]
+    paths = [RESULTS / f"e5_evasion_seed{s}.json" for s in seeds]
+    missing = [str(p) for p in paths if not p.is_file()]
+    if missing:
+        raise FileNotFoundError(f"E5 outputs missing (archived E5 has no revised protocol): {missing}")
+    data = [json.loads(p.read_text()) for p in paths]
     tasks = data[0]["per_task"]
     tids = [r["task"] for r in tasks]
     ev = np.mean([[r["evasion_rate"] for r in d["per_task"]] for d in data], axis=0)
@@ -395,15 +431,18 @@ def fig_architecture(stats: dict) -> None:
 
 
 def main() -> None:
+    import time
+
     FIGS.mkdir(exist_ok=True)
+    started = time.time()
     stats = load_stats()
-    fig_baselines(stats)
-    fig_r_matrix()
-    fig_federated(stats)
-    fig_discovery(stats)
-    fig_defences(stats)
-    fig_e5()
     for fn in (
+        fig_baselines,
+        fig_r_matrix,
+        fig_federated,
+        fig_discovery,
+        fig_defences,
+        fig_e5,
         fig_protocol_effects,
         fig_federated_corrected,
         fig_byzantine,
@@ -412,11 +451,16 @@ def main() -> None:
         fig_architecture,
     ):
         try:
-            fn(stats)
+            fn(stats) if fn.__code__.co_varnames[:1] == ("stats",) else fn()
         except Exception as e:  # partial grids: skip, never crash the pipeline
             print(f"skip {fn.__name__}: {type(e).__name__}: {e}")
     for p in sorted(FIGS.glob("*.png")):
-        print(f"wrote {p}")
+        # Only report files this run actually (re)wrote; historical PNGs
+        # already on disk are someone else's evidence, not this run's.
+        if p.stat().st_mtime >= started - 1:
+            print(f"wrote {p}")
+        else:
+            print(f"kept historical {p} (not regenerated)")
 
 
 if __name__ == "__main__":

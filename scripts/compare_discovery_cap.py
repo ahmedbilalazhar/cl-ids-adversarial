@@ -3,12 +3,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import time
 from pathlib import Path
 
 import numpy as np
 import yaml
 from sklearn.metrics import adjusted_rand_score
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 from src.discovery.pipeline import fit_discovery, fit_threshold, recon_scores
 from src.runner import train_autoencoder
@@ -24,6 +28,8 @@ def main() -> None:
     parser.add_argument("--cap", type=int, default=1000)
     parser.add_argument("--output", type=Path, default=Path("results/diagnostics/e4_cluster_cap_sensitivity.json"))
     args = parser.parse_args()
+    args.config = ROOT / args.config
+    args.output = ROOT / args.output
     cfg = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     cfg["seed"] = args.seed
     tasks, _ = load_or_build_tasks(cfg)

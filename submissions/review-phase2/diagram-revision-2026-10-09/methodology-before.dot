@@ -1,0 +1,27 @@
+digraph Phase2 {
+graph [rankdir=TB, bgcolor="white", nodesep=.17, ranksep=.22, pad=.12, splines=polyline];
+node [shape=box, style="rounded,filled", fillcolor="#F0F5F8", color="#38566B", fontname="Arial", fontsize=13, margin=".13,.09", penwidth=1.1];
+edge [color="#405465", arrowsize=.7, penwidth=1.1];
+input [label="Steps 1–2   Research input and data collection\nCICIDS2017 flows + audited PCAP metadata\nCICIoT2023: separately defined exploratory check",width=5.5];
+audit [label="Step 3   Audit, group and isolate\nSession-atomic 60/20/20 train/development/test\nDuplicate quarantine; label/support checks",width=5.5];
+features [label="Step 4   Feature representation\nProposed 76 numeric features; T0-only frozen scaler\nMetadata and reference labels excluded from inference",width=5.5];
+pilot [label="Step 7   Development gates and protocol lock\nChoose synchronization; tune on development only\nAnchor/source feasibility + FT attack viability",width=5.5,fillcolor="#FFF3DB",color="#96713A"];
+train [label="Step 5   Planned final experiments\nFive persistent clients; paired E1 state per learner\nE2: one client, Hulk → benign, doses 0/10/30/50%\nE3–E4: withdraw poison; no fresh Hulk",width=5.5];
+base [label="Step 6   Learner controls\nFT: fine-tuning\nEI: fixed experience anchor\nDR: DER++ replay",width=2.65];
+defense [label="Steps 5–6   Admission controls\nDG: global 75%; DM: matched global\nDC: class-aware quotas\nDR/DG/DM/DC: unique-ID replay",width=2.65];
+federation [label="Step 5   Repeated adaptation and aggregation\nShared expanding head; admitted-count FedAvg\nReplay/importance persist; optimizer resets at broadcast",width=5.5];
+eval [label="Step 8   Fixed-bank evaluation after each experience\nSource recall damage; post-withdrawal targeted error\nNew-family F1; collateral scores; time and bytes",width=5.5];
+stats [label="Step 9   Comparative analysis\n12 paired seeds; C1=18, C2=11\nSigned ranks + within-family Holm\nBootstrap + symmetry-qualified intervals",width=2.65];
+ablate [label="Step 10   Component analysis\nMatched admission, replay eviction\nDER++ terms; keep fraction\nPaired memory diagnostic",width=2.65];
+failure [label="Step 11   Error and failure analysis\nAcquisition harm, persistent poison, honest rejection\nFamily/client confusion; data/head defects",width=5.5];
+output [label="Step 12   Intended research outputs\nRefined gap, locked protocol, paired comparisons\nMechanism evidence and measured resource costs",width=5.5,fillcolor="#EAF3EB",color="#45694B"];
+input -> audit -> features -> pilot -> train;
+train -> base; train -> defense;
+{rank=same;base;defense}
+base -> federation; defense -> federation;
+federation -> eval;
+eval -> stats; eval -> ablate;
+{rank=same;stats;ablate}
+stats -> failure; ablate -> failure;
+failure -> output;
+}

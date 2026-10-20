@@ -335,3 +335,295 @@ One line each: chose / alternative / why. Newest last.
     rewriting diagnostics as validated / they predate manifest v3 and the
     12-seed standard, so `docs/inventory.md` "validated" wording for those
     six seeds is overstated until v3 reruns.
+68. 2026-09-28 E4 provenance reconciliation: live manifest checks found that
+    the nine E4 diagnostics recorded source hash `b8081e8…`, whereas current
+    `src` hashed to `94abb157…` after the ASR-null and buffer-poison fixes.
+    Archived 37 affected run/log/resource/descriptive files under
+    `results/_archive/discovery_pre_commit_asr_20260928/` with SHA-256 hashes.
+    Re-ran all nine seeds under current commit `a4558b5` and source hash
+    `94abb157…`; all nine now pass live `check_artifact`, and the descriptive
+    means match the archived diagnostics. This establishes reproducible
+    exploratory diagnostics, not a final effect or a completed Holm family.
+69. 2026-09-28 E4 detector/cap decision: chose keep q0.95 primary, E4 stays
+    exploratory, no 12-seed headline / alternative was retuning to q0.50 or
+    claiming a poison effect from 3 seeds / T1 AUC is 0.120-0.128 (inverted:
+    5/2,745 flagged per seed) and 5,000-vs-4,000 cap ARI is 0.628-0.728 on
+    all three seeds (`docs/e4_detector_cap_audit.md`); post-hoc retuning
+    after seeing outcomes would manufacture significance against the plan's
+    failed-attack rule. Gates before any headline: family-level T1 analysis,
+    separately specified detector protocol, larger cap reference plus
+    downstream sensitivity.
+70. 2026-09-28 E3 extractor check: chose blocked-locally, trigger stays a
+    feature-space approximation / alternative was claiming groundedness from
+    the header-range check / `data/raw/` holds only two Friday flow CSVs, no
+    pcaps, no CICFlowMeter, and scapy is not installed, so nothing here can
+    prove the extractor emits the three claimed feature values. Resumable
+    extractor commands are documented in `docs/e3_extractor_check.md`; E3
+    diagnostics stay gated on that measurement.
+71. 2026-09-28 pre-Phase-D preservation: chose copy-preserve 39 live E4 files
+    to `results/_archive/discovery_prefedcontrols_20260928/` with SHA-256
+    manifest before any `src/` edit / alternative was moving them / the live
+    set stays checkable against `94abb157...` until the edit lands, and the
+    runtime snapshot zip was hash-verified; the archive is the fallback
+    record once the fingerprint changes.
+72. 2026-09-28 Phase-D federated controls: chose additive per-client logging
+    plus active-only unweighted aggregation / alternative was changing
+    aggregation semantics or the locked FedAvg path / `run_federated` now
+    records pre/post-defense counts, class mix, participation, optimizer
+    steps, buffer occupancy/bytes, and comm bytes per client-task, and
+    excludes inactive (empty-shard) submissions from trimmed/median/krum/
+    multi-krum/dynamic-trust with the exclusion recorded; plain-FedAvg
+    weighted averaging is byte-unchanged. `DynamicTrust.__call__` gained an
+    optional index map (identical behavior when absent). Verified by 4 new
+    synthetic tests in `tests/test_fedcontrols.py`; full suite 28 passed,
+    fatal Ruff selection passes, new code adds zero lint issues. Matched
+    same-aggregator clean controls and multi-round sensitivity are still
+    pending and stay gated in `docs/analysis_spec.json`.
+73. 2026-09-28 Phase-E analysis spec: chose generated
+    `docs/analysis_spec.json` (27 families, 200 pairs) from
+    `WILCOXON_FAMILIES` + group seed protocol / alternative was a hand-written
+    list / generation cannot peek at outcomes and stays consistent with the
+    stats code by construction. Two-sided Wilcoxon, Holm-within-family,
+    prespecified MIDs (0.02 headline, 0.01 ablation, reviewable), gates:
+    105 ready-pending-runs, 42 gated-controls, 46 gated-dedup, 6
+    gated-detector, 1 gated-extractor. No run may be cited against this spec
+    until its gate clears and its 12 (or 7) paired seeds complete.
+74. 2026-09-28 reverse-order benign duplication: chose disjoint Monday-benign
+    draws via consumed-id tracking + archived 24 `a3_order_rev_c` files /
+    alternative was leaving the builder / same-seed sampling of the shared
+    Monday pool handed identical benign rows to every task when Monday was
+    not first (verified: 10/10 shared in reverse, 0 in default/alt), a
+    cross-task train/test contamination in the order-invariance arm. Alt arm
+    verified clean and kept. Builder fix proven disjoint and deterministic
+    on synthetic pools (`tests/test_data_tasks.py`); `a3_order_rev_c` gated
+    as `gated-rev-rebuild` in the regenerated spec. Also hardened the
+    empty-task skip (an emptied Monday task crashed the splitter).
+75. 2026-09-28 flip-ASR eval consistency: chose score the train-time flipped
+    class and carry it in ASR rows / alternative was test-majority scoring /
+    persistent-mode eval re-resolved the majority on TEST, which can differ
+    from the TRAIN majority actually flipped, and numeric source ids passed
+    validation yet scored silent N/A. Single-node reuses `asr_meta`
+    source (fallback: pooled train majority); federated uses pooled task
+    train majority with per-shard sources already in poison rows; all
+    targeted branches resolve names and ids identically to poison time.
+    Proven by `tests/test_flip_asr.py` (train/test-majority mismatch,
+    numeric source). Joint summaries now carry machine-readable
+    `joint_oracle` (True only for the single-node all-at-once path).
+76. 2026-09-28 notebook bundle-name restore + aggregation testability: chose
+    to restore `architecture_colab_bundle_v2.zip` in the notebook /
+    alternative was amending the test / the producer script still writes the
+    v2 name, so the notebook dirt (not the test) was inconsistent; the
+    removed unused import was left out. Also extracted federated aggregation
+    into testable `_aggregate_updates` (locked path byte-identical) with
+    direct unit tests for degenerate/inactive-exclusion behavior that no
+    public run can reach (dirichlet covers the pool; filters keep >=1 row),
+    plus a buffer-target persist-and-validate test proving new summary shapes
+    survive `save_results` JSON. Suite now 36 collected, all passing.
+77. 2026-09-28 claim ledger + plan typo: chose `docs/claim_ledger.md`
+    tracing every README/proposal/overview/memo/draft statement to evidence /
+    alternative was leaving prose claims unlinked / plan §10 requires it.
+    Findings: aggregates are 0-row and `results/runs/` has 0 manifests, so
+    all numeric results (including the PHASE-2 n=12 tables) are
+    executed-only; README status (2026-09-25) is stale on E2/E6/Wilcoxon/E4;
+    abstract PENDING slots are correct as-is. Also removed a stray "ss" typo
+    in `docs/plan.md` (restored to HEAD text).
+78. 2026-09-28 v2 artifact reproduction: chose temp rebuild + array compare /
+    alternative was trusting builder-version notes / both checked-in v2
+    artifacts (`tasks_chrono_dedup`, `tasks_chrono_t0`) reproduce
+    bit-identically (all 30 + 30 arrays incl. ids) under the fixed builder,
+    proving the Monday-disjoint fix changed nothing for monday-first orders
+    and reproducing the 339,476/6 dedup counts. Rebuild outputs stayed in
+    system temp, never in `data/processed/`.
+79. 2026-09-28 round-sensitivity probe (synthetic, ER, 5 clients): steps 11
+    vs 33 (exact 3x), comm 381,520 bytes both arms, buffer capped at 64,
+    participation 1.00 / reported as accounting validation, never paper
+    evidence / a same-seed 12-run study with work-matched multi-round arms
+    remains the gated Phase-D experiment.
+80. 2026-09-28 inference contract: chose `src/inference.py` (versioned
+    bundle + per-tensor weight hashes, strict schema, median imputation with
+    counts, batch bound, explicit abstain threshold, latency metrics) /
+    alternative was extending the random-model E8 proxy / E8 never loads a
+    trained checkpoint, so no inference claim could attach to it. Corrupt
+    files fail closed as ValueError; tampered weights trip the hash gate
+    (both observed in tests). 4 tests in `tests/test_inference.py`; suite
+    40 passing. Trained-bundle benchmark on real dims still pending.
+81. 2026-09-28 IoT chunk-accumulation fix: chose periodic per-group
+    consolidation every 20 batches / alternative was accepting 11.3 GB peak /
+    per-batch RSS bisect proved ~10k few-row chunks (~1 MB overhead each)
+    accumulated monotonically; fix bounds live chunks with identical row
+    content and order. Measured: 11,340 → 3,108 MB peak, 122.7 → 107.1 s,
+    rebuilt artifact bit-identical (all arrays). Corrected four
+    "parquets absent" notes (both IoT pools were present all along).
+    Proven by `test_pool_sample_consolidation_preserves_content`.
+82. 2026-09-28 T1 family audit: per-family medians + one-vs-benign AUCs,
+    seeds 1–3 (`docs/e4_family_analysis.md`, `scripts/audit_family_scores.py`).
+    Both T1 families invert every seed (SSH-Patator AUC 0.038–0.060,
+    FTP-Patator 0.164–0.168); Bot inverts harder (0.006 all seeds);
+    PortScan is chance; T2 detects well. Small-n AUCs (3/6/11) reported
+    but barred from citation. Post hoc, exploratory; q0.95 unchanged.
+83. 2026-09-28 E8 dims fix: hardcoded `(78, 15)` described a model matching
+    no artifact (real: 76 features) / dims now read from the primary task
+    sidecar with fallback; added `--output`/`--tasks` args. Temp run gives
+    mlp 19,087 params — exactly the documented E7 figure — confirming the
+    hardcode was drift. Latency remains host-specific proxy.
+84. 2026-09-28 lint safe pass: 79 → 30 errors via behavior-preserving fixes
+    only (`int(round())` identity, unused imports/vars, f-strings, import
+    sort, `ewc` items loop, sequence single-if); untouched: exception-type
+    changes (would break tests), blind-except style (repo convention),
+    subprocess-check semantics, structural shadowing. Suite re-verified
+    green after. Generator-determinism tests added (`test_determinism.py`):
+    spec and bundle inventory regenerate byte-identically modulo timestamps.
+85. 2026-09-28 cleaner wipe-guard: string metadata in DROP_COLS now raises
+    instead of coercing to NaN and emptying the file (proven: synthetic
+    hostile frame raised, numeric frame 2/2 survived); empty output raises.
+    First attempt (drop-metadata-first) was REVERTED after a temp rebuild
+    showed 2.31M vs 2.57M rows — dedup ran before the metadata drop in the
+    audited build, so reordering silently redefined duplicates. Final guards
+    proven byte-identical on the full 2.57M-row rebuild (report + parquet).
+86. 2026-09-28 fail-closed contracts (SUPERSEDED same day by #87–#88 —
+    kept as a pointer, not evidence): this entry's CI-guard, arch-validation,
+    and figure-gating claims were re-landed with extensions (novelty+defense
+    and keep_ratio/k rules, grid failure accounting, CWD fixes, skipped-seed
+    reporting) in #87 and #88. Cite #87/#88, never this entry.
+87. 2026-09-28 fail-closed contracts round 2: `load_or_build_tasks` rejects
+    benign-after-T0 under scenario "ci" (the exact A2 silent-identical
+    class); `validate_config` checks arch/hidden/transformer,
+    novelty+defense incompatibility, defense keep_ratio/k ranges (214/214
+    still pass). `run_grid` records per-seed failures with tracebacks and
+    exits nonzero instead of aborting unattended grids. Proven by new tests
+    in `test_data_tasks.py`, `test_backdoor.py`, `test_run_grid.py`.
+88. 2026-09-28 figure + script-CWD hardening: `make_figures.py` plots only
+    manifest-validated R matrices, fails loudly on missing E5 outputs,
+    prefers cpu on device-duplicate stats rows, reports only files it
+    actually rewrote (12/12 skip cleanly on empty aggregates), and imports
+    off-root. `summarize/compare/audit/run` E4 scripts fixed for the same
+    CWD-dependence class (proven by `tests/test_script_cwd.py` from a
+    foreign directory); E4 summarizer additionally reports skipped seeds
+    instead of silently omitting them.
+89. 2026-09-28 GPU import version gate: `import_architecture_gpu` demanded
+    manifest v2 while the pipeline now emits v3, so the next Colab export
+    would have been unimportable / v2 stays the cross-machine format
+    (`pre-code-hash` on import, honestly labeled); v3 additionally accepted
+    only when its tree matches this machine (same-machine CUDA), foreign v3
+    rejected rather than silently downgraded. Factored into tested
+    `check_completion_manifest` (`tests/test_gpu_import.py`, 3 tests).
+    Full v3 cross-machine provenance awaits the GPU-protocol redesign.
+90. 2026-09-28 minor hardening without behavior change: downloader creates
+    `data/raw` in `main()`, not at import (proven by
+    `tests/test_download.py` under a fake root); removed stray untracked
+    `cl-ids-adversarial/docs/threat_model.md` (old Gap-2 framing, fully
+    superseded by locked root `docs/threat_model.md`, nothing unique);
+    transformer docstring corrected (squeeze, not mean pool — single-token
+    claim verified in code); UNSW `seed` documented as provenance-only.
+    Reviewed clean: LwF slicing, EWC, replay determinism, byzantine math,
+    run_experiment wiring, paths/models, defenses, grid dispatch.
+91. 2026-09-28 comparison-name resolution hardening: a renamed config would
+    have silently dropped its prespecified pairs (empty seed maps hit
+    `continue`; the spec generator defaulted unknown names to 7 seeds) /
+    `write_analysis_spec.py` now raises on unknown pair names and duplicate
+    display names (verified: 214 unique, all 200 pairs resolve); `stats_summary.py`
+    prints an explicit WARNING per orphaned comparison name (verified: none
+    on empty aggregates).
+92. 2026-09-28 EWC analytic characterization (no behavior change):
+    `tests/test_ewc_semantics.py` proves anchor==post-task weights, Fisher
+    non-negative and accumulating across tasks, extra_loss == closed-form
+    (λ/2)ΣF(θ−θ*)² (zero at anchor, positive after perturbation), and no
+    crash across head growth. Federated anchor-reset semantics and prose
+    single-token rename stay pending; paper prose contains no attention
+    claims needing the qualifier yet.
+93. 2026-09-28 stats-math audit (no behavior change): Holm step-down with
+    monotonicity, Kerby rank-biserial, percentile bootstrap, and sample-std
+    formulas verified by reading against definitions; dead duplicate
+    `wilcoxon_pair` removed (unreferenced; divergent zero-handling was a
+    trap for future callers). n=1 std renders ±0.0000 with visible n and
+    blank CI — left as-is, documented here.
+94. 2026-09-28 build/CI reproducibility: `pytest==9.1.1`/`ruff==0.16.9`
+    pinned (tested versions); Makefile `lint` aligned to the gated fatal
+    selection with `lint-strict` kept informational (was red); CI runs the
+    lint gate (previously absent). `run_groups.py` records group failures
+    and continues the queue with nonzero exit instead of aborting
+    unattended runs; `snapshot_runtime.py` fixed for off-root invocation.
+    Proven by `tests/test_run_groups.py` and the extended CWD entry-point
+    test.
+95. 2026-09-28 stale-figure archival + quarantine hygiene: 7 tracked
+    `results/figures/*.png` renders from unmanifested n=7-era runs archived
+    to `results/_archive/figures_prevalidation_20260928/` with manifest
+    (E4/E5-figure precedent); `make_figures.py` re-verified 12/12 skip on
+    empty aggregates. Reverted `ruff --fix` churn on frozen
+    `scripts/archive/run_remaining.py` and excluded `scripts/archive/` from
+    lint so future rule changes can't rewrite provenance. Aligned
+    `pyproject` dev pins with `requirements.txt` (`pytest==9.1.1`,
+    `ruff==0.16.9`).
+96. 2026-09-28 stable-partition variant: `stable_partition` assigns by
+    splitmix64 of source ids (same row, same client, every task/rerun;
+    approximately IID by design, never a non-IID control) / alternative was
+    seed-fixed Dirichlet reuse (fragile across label sets) / wired as
+    `fed.partition` (default dirichlet, zero behavior change) with
+    validation, `fed.partition` in summaries, and an explicit error on
+    id-less legacy tasks. Proven by 4 tests (coverage/disjoint/determinism,
+    shared-id stability, end-to-end, rejection).
+97. 2026-09-28 multi-round federation: `fed.rounds` (default 1) repeats
+    broadcast→train→aggregate with poison/defense applied once per task /
+    alternative was restructuring the shared loop (would reorder RNG draws
+    and shift legacy numbers) / rounds==1 runs the legacy inline path
+    untouched (move proven whitespace-only vs HEAD by script); rounds>1
+    records per-round work in `fed_round_rows` with dose rows unchanged in
+    schema. Caught in testing: per-submission comm is constant, so totals
+    scale by participation, not blindly by R — dose rows now sum round rows.
+    Proven by matched-work tests (steps/comm exactly 2x on 2 rounds).
+98. 2026-09-28 trained-bundle benchmark + rollback: `scripts/bench_trained_bundle.py`
+    trains T0 MLP (76 feats, 19,087 params — matches E7), exports via the
+    inference contract, and records host latency/throughput/RSS to
+    `results/diagnostics/` (exploratory); `save_versioned_bundle` /
+    `rollback` add hash-chained versioning with fail-closed restores. The
+    T0 sanity ACC 1.0 is vacuous (benign-only task) and labeled as such.
+99. 2026-09-28 audit-rendering honesty + archive crash-safety: the task
+    audit rendered separate-pool source overlap as 0 ("verified disjoint"
+    misreading) — now `n/a (separate pools)` with content matches kept
+    visible (re-ran: 0 hard failures, UNSW/IoT counts unchanged).
+    `archive_artifacts.py` factored into testable `move_verified` /
+    `write_manifest`; a mid-move crash now leaves a `complete: false`
+    manifest describing exactly what landed (proven by flaky-move test),
+    and the bundle inventory surfaces incomplete archives.
+100. 2026-09-28 Colab notebook output completeness: the GPU notebook copied
+    only R/summary to Drive (no per-seed manifests), resumed on an
+    unchecked `runtime_device` flag, and omitted the `source_commit` its
+    importer requires — the next Colab export would have been unimportable /
+    cells now copy manifests, resume through manifest validation, and record
+    `source_commit` in `run_manifest.json`. All code cells compile; extended
+    the notebook regression test. v3 cross-machine tree mismatch stays an
+    honest documented limit, not a silent one.
+101. 2026-09-28 reproducibility + anchor characterization: rerun-identity
+    tests prove same code+seed+process gives bit-identical R and summaries
+    (federated + single-node). A federated EWC smoke run exercises the
+    post-aggregation anchor-reset lines; anchor==local solution and Fisher
+    estimated on it is coherent (matches single-node semantics), so no
+    behavior change — the open item stays the cross-condition comparison,
+    not the mechanism.
+102. 2026-09-28 cross-process determinism: same config+seed in two CLI
+    processes and result dirs gives byte-identical R files, equal summaries
+    modulo wall time, and equal matrix hashes / proven by
+    `test_cli_rerun_across_processes_is_bit_identical`, which also pins
+    JSON type stability across runs (int-vs-float would diverge in bytes
+    while comparing equal as values). Manifest summary hashes legitimately
+    differ by embedded wall time — asserted, not hidden.
+103. 2026-09-28 verification sweep (no behavior change): every cited number
+    re-checked against its source JSON (descriptive means, cap ARIs,
+    score AUCs, resource probes — all match); tracked-file secret scan
+    (AWS/key/bearer/connection patterns) finds nothing; randomized
+    invariant tests added for both partitioners, overlap counting, and
+    dedup idempotence (`tests/test_invariants.py`).
+104. 2026-09-28 replay/kNN profiling verdict (no code change): cProfile
+    shows buffer ops at ~3 ms/observe at buffer 4000 (~10% of observe;
+    model compute dominates), so the planned reservoir rewrite is
+    declined — the premise fails measurement. kNN is time-quadratic
+    (~190 s projected at 139k rows) but memory-flat (few MB). Fixed two
+    stale `results/README.md` lines instead (E4 live-hash claim expired
+    with later `src/` edits; layout listed a nonexistent e7 file).
+105. 2026-09-28 matched sensitivity configs (unrun): new group `c_f2x`
+    (12 seeds) with `f2_fed_finetune_p0_dedup_c` (resampled baseline),
+    `f2_fed_finetune_p0_stable_c` (stable partition), and
+    `f2_fed_finetune_p0_r2_c` (2 rounds) — all on the v2 dedup artifact,
+    since stable partitioning needs source ids that legacy tasks lack.
+    All 217 configs validate; `grid_status c_f2x` reads 0/36 TODO. No
+    spec family yet (prespecified-comparison step) and no runs launched.

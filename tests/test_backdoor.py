@@ -83,3 +83,28 @@ def test_config_preflight_rejects_wrong_runner_krum_and_budget():
                                    "source_class": "unknown", "target_class": "Benign"}}
     with pytest.raises(KeyError, match="source"):
         validate_config(bad_target)
+    with pytest.raises(ValueError, match="arch"):
+        validate_config({**cfg, "arch": "convnet"})
+    with pytest.raises(ValueError, match="hidden"):
+        validate_config({**cfg, "arch": "wide", "hidden": "256"})
+    with pytest.raises(ValueError, match="hidden"):
+        validate_config({**cfg, "hidden": [128, -4]})
+    with pytest.raises(ValueError, match="transformer"):
+        validate_config({**cfg, "arch": "transformer",
+                         "transformer": {"d_model": 64, "n_heads": 0}})
+    validate_config({**cfg, "arch": "wide", "hidden": [256, 128]})
+    validate_config({**cfg, "arch": "transformer",
+                     "transformer": {"d_model": 64, "n_layers": 2, "n_heads": 4}})
+    with pytest.raises(ValueError, match="novelty"):
+        validate_config({**cfg, "attack": {"type": "novelty", "budget": 0.01},
+                         "defense": {"type": "small_loss"}})
+    with pytest.raises(ValueError, match="keep_ratio"):
+        validate_config({**cfg, "attack": {"type": "label_flip", "budget": 0.1,
+                                           "source_class": "DoS Hulk",
+                                           "target_class": "Benign"},
+                         "defense": {"type": "small_loss", "keep_ratio": 0.0}})
+    with pytest.raises(ValueError, match="positive int"):
+        validate_config({**cfg, "attack": {"type": "label_flip", "budget": 0.1,
+                                           "source_class": "DoS Hulk",
+                                           "target_class": "Benign"},
+                         "defense": {"type": "knn_consistency", "k": -3}})

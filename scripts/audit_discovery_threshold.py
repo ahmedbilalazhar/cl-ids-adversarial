@@ -3,10 +3,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 import yaml
+from sklearn.metrics import roc_auc_score
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 from src.discovery.pipeline import fit_threshold, recon_scores
 from src.runner import train_autoencoder
@@ -21,10 +26,13 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=1)
     parser.add_argument("--output", type=Path, default=Path("results/diagnostics/e4_threshold_sensitivity.json"))
     args = parser.parse_args()
+    args.config = ROOT / args.config
+    args.output = ROOT / args.output
     cfg = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     cfg["seed"] = args.seed
     tasks, _ = load_or_build_tasks(cfg)
     rows = []
+    score_diagnostics = []
     for task_id, task in enumerate(tasks):
         X_train, y_train = task["X_train"], task["y_train"]
         benign = np.flatnonzero(y_train == 0)
@@ -38,6 +46,15 @@ def main() -> None:
         y_test = task["y_test"]
         attack = y_test != 0
         benign_test = ~attack
+        score_diagnostics.append({
+            "task": task_id,
+            "n_attack_test": int(attack.sum()),
+            "n_benign_test": int(benign_test.sum()),
+            "attack_score_median": float(np.median(test_scores[attack])) if attack.any() else None,
+            "benign_score_median": float(np.median(test_scores[benign_test])) if benign_test.any() else None,
+            "score_auc": float(roc_auc_score(attack, test_scores))
+            if attack.any() and benign_test.any() else None,
+        })
         for quantile in QUANTILES:
             threshold = fit_threshold(calibration, quantile)
             flagged = test_scores >= threshold
@@ -50,7 +67,8 @@ def main() -> None:
             })
     output = {
         "status": "post hoc descriptive threshold sensitivity; primary 0.95 threshold unchanged",
-        "config": str(args.config), "seed": args.seed, "rows": rows,
+        "config": str(args.config), "seed": args.seed,
+        "score_diagnostics": score_diagnostics, "rows": rows,
         "warning": "Do not choose a new headline threshold using held-out outcomes from this audit.",
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)

@@ -1,7 +1,9 @@
 """Tiny tabular Transformer (Phase-3 step 18, architecture sweep #3).
 
 FT-Transformer-lite: shared linear feature projection -> 2-layer
-TransformerEncoder -> mean pool -> linear head. Implements the SAME
+TransformerEncoder -> squeeze -> linear head. Single token per flow: the
+attention layer has sequence length 1, so this is a single-token
+transformer block, NOT feature-to-feature attention. Implements the SAME
 interface as TabularMLP (classifier attr, expand_head with old-weight copy,
 clone) so run_experiment / fedavg.py work unchanged (deepcopy +
 load_state_dict). Deliberately small (d=64) for CPU parity with the MLP.
@@ -11,7 +13,7 @@ from __future__ import annotations
 import copy
 
 import torch
-import torch.nn as nn
+from torch import nn
 
 
 class TabularTransformer(nn.Module):
@@ -45,13 +47,19 @@ class TabularTransformer(nn.Module):
         if new_num_classes <= self.classifier.out_features:
             return
         old = self.classifier
-        new = nn.Linear(old.in_features, new_num_classes)
+        new = nn.Linear(
+            old.in_features, new_num_classes,
+            device=old.weight.device, dtype=old.weight.dtype,
+        )
         with torch.no_grad():
             new.weight[: old.out_features] = old.weight
             new.bias[: old.out_features] = old.bias
             nn.init.xavier_uniform_(new.weight[old.out_features :])
             new.bias[old.out_features :].zero_()
+        new.train(old.training)
+        new.weight.requires_grad_(old.weight.requires_grad)
+        new.bias.requires_grad_(old.bias.requires_grad)
         self.classifier = new
 
-    def clone(self) -> "TabularTransformer":
+    def clone(self) -> TabularTransformer:
         return copy.deepcopy(self)

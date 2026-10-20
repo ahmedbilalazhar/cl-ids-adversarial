@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import numpy as np
 
-
 # Benign-class names across datasets (CICIDS/IoT use "Benign", UNSW uses
 # "Normal"). New task artifacts guarantee the benign class has id 0, but
 # attack configs must name their target — never assume a numeric id.
@@ -87,7 +86,7 @@ def knn_preserving_flip(
     ind = nn.kneighbors(return_distance=False)
     frac_tgt = (y[ind[:, 1:]] == target_class).mean(axis=1)
     order = candidates[np.argsort(-frac_tgt[candidates], kind="stable")]
-    take = order[: min(int(round(n * budget)), len(order))]
+    take = order[: min(round(n * budget), len(order))]
     y[take] = target_class
     flipped[take] = True
     return y, flipped
@@ -117,7 +116,7 @@ def adaptive_loss_preserving_flip(
     if source_class is None:
         source_class = majority_attack_class(y, target_class)
     candidates = np.where(y == source_class)[0] if source_class is not None else np.array([], dtype=int)
-    k = min(int(round(n * budget)), len(candidates))
+    k = min(round(n * budget), len(candidates))
     flipped = np.zeros(n, dtype=bool)
     if k <= 0 or len(candidates) == 0:
         return y, flipped
@@ -146,7 +145,7 @@ def label_flip(
     rng = np.random.RandomState(seed)
     y = y.copy()
     n = len(y)
-    k = int(round(n * budget))
+    k = round(n * budget)
     if k <= 0:
         return y, np.zeros(n, dtype=bool)
 

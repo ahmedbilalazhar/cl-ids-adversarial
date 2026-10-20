@@ -5,6 +5,7 @@ Usage: python scripts/run_grid.py <group>  (groups: e1, e2e3, e4, e6a2,
   (src/federated/fedavg.py); all others run single-node src/runner.py.
 """
 import sys
+import traceback
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,7 +25,7 @@ def main() -> None:
     group = sys.argv[1]
 
     seeds = seeds_for_group(group)
-    done, skipped = 0, 0
+    done, skipped, failed = 0, 0, []
     t0 = time.time()
     configs = []
     for key in GROUPS[group]:
@@ -38,7 +39,17 @@ def main() -> None:
             if check_artifact(RUNS_DIR, name, sd, cfg_seed)["complete"]:
                 skipped += 1
                 continue
-            r = execute_config(cfg_seed, RUNS_DIR, resume=True)
+            # One bad seed must not abort an unattended grid: record the
+            # failure with its traceback, continue, and exit nonzero at the
+            # end. Completed seeds stay committed; rerunning retries only the
+            # failed slots.
+            try:
+                r = execute_config(cfg_seed, RUNS_DIR, resume=True)
+            except Exception as e:  # noqa: BLE001 - reported, counted, reraised via exit code
+                failed.append(f"{name}/seed{sd}: {type(e).__name__}: {e}")
+                print(f"FAIL {name} seed {sd}: {type(e).__name__}: {e}", flush=True)
+                traceback.print_exc()
+                continue
             if r is None:
                 skipped += 1
                 continue
@@ -48,7 +59,12 @@ def main() -> None:
                 f"wall={r['summary']['wall_sec']:.0f}s",
                 flush=True,
             )
-    print(f"group {group}: ran {done}, skipped {skipped}, elapsed {(time.time()-t0)/60:.1f} min")
+    print(f"group {group}: ran {done}, skipped {skipped}, failed {len(failed)}, "
+          f"elapsed {(time.time()-t0)/60:.1f} min")
+    for entry in failed:
+        print(f"FAILED: {entry}")
+    if failed:
+        raise SystemExit(f"{len(failed)} seed(s) failed; see log above")
 
 
 if __name__ == "__main__":

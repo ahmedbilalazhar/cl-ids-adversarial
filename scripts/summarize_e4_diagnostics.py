@@ -3,10 +3,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 from src.reporting import check_artifact
 
@@ -25,12 +29,15 @@ def main() -> None:
     args = parser.parse_args()
     runs = args.results_dir / "runs"
     rows = []
+    skipped = []
     for seed in args.seeds:
         for name in CONFIGS:
-            cfg = yaml.safe_load((Path("configs/novelty") / f"{name}.yaml").read_text(encoding="utf-8"))
+            cfg = yaml.safe_load((ROOT / "configs" / "novelty" / f"{name}.yaml").read_text(encoding="utf-8"))
             cfg["seed"] = seed
             state = check_artifact(runs, name, seed, cfg)
             if not state["complete"] or state.get("provenance_level") != "code-hashed":
+                skipped.append({"config": name, "seed": seed,
+                                "reason": state.get("reason", "missing")})
                 continue
             summary = json.loads((runs / f"{name}_summary_seed{seed}.json").read_text(encoding="utf-8"))
             discovery = summary["discovery_rows"]
@@ -71,6 +78,7 @@ def main() -> None:
         "status": "exploratory diagnostics; no final paired inference or Holm family",
         "paired_seeds": paired,
         "rows": rows,
+        "skipped": skipped,
         "descriptive": descriptive,
         "limitations": [
             "The detector's no-poison miss rate is high.",

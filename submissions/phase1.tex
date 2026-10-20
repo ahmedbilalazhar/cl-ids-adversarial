@@ -1,0 +1,237 @@
+\documentclass[10pt]{article}
+
+\usepackage[a4paper,margin=0.85in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+\titlespacing*{\subsection}{0pt}{8pt}{4pt}
+\titlespacing*{\subsubsection}{0pt}{6pt}{3pt}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{csquotes}
+\usepackage[expansion=false]{microtype}
+\usepackage{pdflscape}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{headergray}{HTML}{E7E7E7}
+
+% Bold run-in label used throughout the critical summaries, e.g. "Overview: ..."
+\newcommand{\sumitem}[2]{\noindent\textbf{#1:} #2\par}
+
+% Column type that wraps and left-aligns text inside a fixed width, for use in tables
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+
+\begin{document}
+\pagestyle{plain}
+
+\begin{center}
+	{\small \textsc{Computer Networks --- Research Project}}\\[4pt]
+	{\LARGE \textbf{Phase 1: Literature Review and Research Gap Identification}}\\[6pt]
+	{\large Proposed Topic: Continual Learning for Network Security}\\[10pt]
+	{\normalsize Saneedullah (23I-2568) \quad\textbar\quad Ahmed Bilal (23I-2581)}
+\end{center}
+
+\vspace{4mm}
+
+\section{Introduction}
+
+This report is the Phase 1 literature review for our project on Continual Learning for Network Security. We picked three Q1 journal papers, all published in 2026, each using continual or incremental learning for a different network security problem: catching unknown DoS attacks, federated intrusion detection at the IoT edge, and continuous authentication of power equipment using RF (radio) fingerprints. For each paper we give a one-page critical summary. After that we give a comparison table and a table of research gaps we found across the three papers together.
+
+Note on how we checked journal rankings: we used SCImago Journal Rank (SJR) 2025 data, the latest full year available, to confirm each journal is Q1 in its subject category. All three papers are original research articles with a clear method, dataset, and set of experiments --- none of them are surveys, editorials, conference papers, or book chapters. All three are also fully open access, so every summary below is based on the complete text of the paper, not just the abstract.
+
+\section{Selected Papers}
+
+\subsection*{Paper 1}
+Ge, J.; Feng, Y.; Sakurai, K. (2026). \enquote{A Stage-Wise Framework Using Class-Incremental Learning for Unknown DoS Attack Detection.} \textit{Future Internet}, 18(3), 145. \url{https://doi.org/10.3390/fi18030145}
+
+\noindent\textbf{Journal quartile:} Q1 --- Computer Networks and Communications (SJR 2025, 0.845). Published 12 March 2026.
+
+\subsection*{Paper 2}
+Wu, Z.; He, B.; Si, Z.; Qiu, C.; Liao, X.; Su, C. (2026). \enquote{Communication-Efficient Federated Class-Incremental Intrusion Detection for Edge IoT Networks.} \textit{Sensors}, 26(14), 4630. \url{https://doi.org/10.3390/s26144630}
+
+\noindent\textbf{Journal quartile:} Q1 --- Electrical and Electronic Engineering \& Instrumentation (SJR 2025, 0.802 overall). Published 21 July 2026.
+
+\subsection*{Paper 3}
+Luo, F.; Fan, S.; Li, X.; Xu, W. (2026). \enquote{Adaptive Feature Distillation-Based Continuous Authentication Against RF Fingerprint Drift for Power Equipment.} \textit{Future Internet}, 18(9), 457. \url{https://doi.org/10.3390/fi18090457}
+
+\noindent\textbf{Journal quartile:} Q1 --- Computer Networks and Communications (SJR 2025, 0.845). Published 27 August 2026.
+
+\medskip
+\noindent\textbf{Why Paper 3 still counts as network security:} Papers 1 and 2 use continual learning to detect attacks. Paper 3 uses the same continual-learning idea --- updating a model over time without forgetting what it already knows --- for a different network security task: deciding whether a device is still who it claims to be as its RF fingerprint drifts. Authentication is a core network security function, since it controls what is allowed to communicate on the network, so all three papers sit inside the same proposed topic even though Paper 3's specific task differs from Papers 1 and 2.
+
+\section{Critical Summaries of Selected Papers}
+
+Sections 3.1 to 3.3 below each give a one-page critical summary of one paper. Every summary covers the same eight points: limitations the authors state themselves, limitations we identified on our own, dataset limitations, methodological limitations, evaluation limitations, generalizability issues, missing experiments, and potential directions for future research.
+
+\subsection{A Stage-Wise Framework Using Class-Incremental Learning for Unknown DoS Attack Detection (Ge, Feng \& Sakurai, 2026)}
+
+\sumitem{Overview}{This paper builds a three-step pipeline to catch DoS attacks that a model has never seen before. First, an autoencoder flags traffic that doesn't look like any known attack pattern. Second, a clustering method (HDBSCAN) groups this flagged traffic into new attack clusters --- this is how the system \enquote{discovers} new attack types. Third, the model learns these new clusters as new attack classes, without being fully retrained from scratch.}
+
+\sumitem{Author-stated limitations}{The authors only tested one attack category, DoS, because mixing in other attack types would make it harder to tell what's actually causing good or bad results. They also point out that real-world attacks today are usually DDoS rather than plain DoS, so their setup doesn't fully match current threats.}
+
+\sumitem{Limitations we identified}{The split between \enquote{known} and \enquote{unknown} DoS types (neptune and back picked as known, the rest as unknown) was chosen once, with no test of what happens with a different split or different random seeds. The three steps run one after another, so a mistake early on (like bad clustering) could hurt every step after it --- but the paper never measures how much each step contributes to errors on its own. The clustering step also has settings that need tuning, and the paper doesn't say how sensitive the results are to those settings, or how well the approach would scale to much larger amounts of data.}
+
+\sumitem{Dataset limitations}{NSL-KDD is a well-known benchmark, but it comes from 1999-era traffic and doesn't reflect modern network traffic (no encryption, no IoT devices, nothing recent). The paper also narrows this already-old dataset down to one attack category (DoS) with six subtypes, which is a small slice of real attack behaviour.}
+
+\sumitem{Methodological limitations}{The whole pipeline depends on the clustering step correctly grouping unknown traffic into sensible new attack types. If clustering goes wrong, every later step is affected, but the paper doesn't test how well the system holds up when clustering makes mistakes.}
+
+\sumitem{Evaluation limitations}{The paper reports Known Detection Rate, Unknown Detection Rate, cluster purity, and per-class recall. While the authors explicitly discuss false alarms in the context of KDR (noting normal samples incorrectly rejected as unknown) and compare their method against an \enquote{offline upper-bound model} trained on all available data, the critique remains that this offline baseline still outperformed the incremental model on specific attack classes. There is also no statistical testing across repeated runs, making consistency hard to verify.}
+
+\sumitem{Generalizability issues}{Because the paper only tests one dataset and one attack family, it's unclear whether this approach would work on other attack types (like probing or privilege escalation), or on attacks that are genuinely novel rather than just held-out subtypes from the same dataset.}
+
+\sumitem{Missing experiments}{There's no test of how the system holds up against someone deliberately trying to evade it. Furthermore, while the authors justify focusing on standard DoS to maintain a \enquote{dataset-compatible and controlled setting}[cite: 1], failing to test DDoS ultimately limits the framework's immediate real-world applicability.}
+
+\sumitem{Potential directions for future research}{The authors explicitly identify testing on contemporary large-scale datasets (such as CIC-IDS2017, CSE-CIC-IDS2018, and UNSW-NB15) as their immediate next step[cite: 1]. Other directions include testing on DDoS and a wider range of attack types, trying the approach on modern or encrypted traffic, and measuring the runtime and memory cost of running it in a real deployment.}
+
+\clearpage
+\subsection{Communication-Efficient Federated Class-Incremental Intrusion Detection for Edge IoT Networks --- \enquote{EdgeFedCIL} (Wu et al., 2026)}
+
+\sumitem{Overview}{EdgeFedCIL combines federated learning --- many IoT devices training together without sharing raw data --- with continual learning, so the shared model can pick up new attack classes over time. To stop the model from forgetting old attacks, it replays stored examples and uses knowledge distillation. To cut down how much data is sent between devices and the server, it compresses updates with low-rank compression and low-bit quantization, and it protects the final classifier layer from being damaged by that compression.}
+
+\sumitem{Author-stated limitations}{The authors say plainly that they assume the coordinating server and all clients are honest. Malicious clients, model poisoning, backdoor attacks, and a compromised server are explicitly left out of the study. They also admit that keeping data local doesn't actually guarantee privacy for the model updates that get shared.}
+
+\sumitem{Limitations we identified}{It's a bit of a contradiction to build a federated intrusion-detection system but leave out the exact kind of attack --- malicious or poisoned clients --- that federated systems are known to be vulnerable to. The \enquote{uneven client data} setup used in testing is created artificially by splitting one dataset unevenly, rather than coming from real, separate organizations. Furthermore, the use of SMOTE for local class balancing is mathematically questionable; while the synthetic samples are safely isolated inside the client-local optimization loop and never shared[cite: 2], simple linear interpolation (SMOTE) may fail to capture the complex, non-linear feature manifolds of realistic network attacks in a highly non-IID environment.}
+
+\sumitem{Dataset limitations}{The method is evaluated on two standard datasets (ToN-IoT and X-IIOTID), but the \enquote{multiple clients} setup is built artificially by partitioning these static datasets rather than sourcing data from genuinely different live networks or organizations.}
+
+\sumitem{Methodological limitations}{The system stacks several techniques together --- replay, distillation, compression, quantization, classifier protection --- but there's no experiment isolating how much each one individually contributes to the final result.}
+
+\sumitem{Evaluation limitations}{There's no test against poisoning or backdoor attacks, even though this is a federated system. While the headline number --- an approximately 10.5$\times$ reduction in data sent --- is a cumulative metric appropriately aggregating all communication rounds and clients, and the authors do provide a sensitivity analysis mapping the trade-off between communication reduction and Accuracy/Macro-F1, the testing environment remains a limitation. There is no test on real, resource-limited hardware; the \enquote{edge devices} are entirely simulated.}
+
+\sumitem{Generalizability issues}{All results come from standard IIoT traffic datasets, so it's unclear whether the approach works as well on other kinds of networks, like everyday consumer IoT or 5G traffic, which look statistically different.}
+
+\sumitem{Missing experiments}{No comparison to an ordinary, non-federated model trained on all the data at once, to see how much accuracy is lost or gained by going federated. No poisoning or backdoor stress test. No test on physical edge hardware.}
+
+\sumitem{Potential directions for future research}{The authors mention adding protection against malicious participants and stronger privacy guarantees, such as secure aggregation, as next steps. Testing on real, varied, multi-organization data and on real edge hardware would also help show the approach holds up outside simulation.}
+
+\clearpage
+\subsection{Adaptive Feature Distillation-Based Continuous Authentication Against RF Fingerprint Drift for Power Equipment (Luo, Fan, Li \& Xu, 2026)}
+
+\sumitem{Overview}{This paper looks at a different security problem from Papers 1 and 2: instead of detecting new attacks, it keeps re-authenticating a fixed set of known devices (power equipment) whose RF fingerprint slowly drifts over time because of aging and changing environmental conditions. The list of devices never changes --- it's the same 10 devices throughout --- but what a \enquote{normal} fingerprint looks like for each device keeps shifting. The method uses a small CNN to extract features at two levels of detail, works out which feature channels matter most for classification, and adds three ways of keeping old and new features aligned (channel-level, covariance-level, and attention-level) so the model doesn't forget older fingerprints while still adapting to drift. It also gradually loosens how strongly it enforces the old-knowledge constraint over time, and keeps a small buffer of old samples to replay during training. Crucially, it evaluates both classification accuracy for known devices and Equal Error Rate (EER) to measure the system's ability to reject completely unknown, unauthorized devices[cite: 3].}
+
+\sumitem{Author-stated limitations}{The authors are upfront that every experiment is run on a synthetic, self-generated dataset, and they say directly that how well the method works on real signals from real power equipment \enquote{remains to be established.}}
+
+\sumitem{Limitations we identified}{Even the best-performing method (their own proposed one) only reaches 58.4\% historical accuracy by the last of 20 simulated drift stages --- a large drop from the near-100\% it starts at, even though it still beats every baseline. The paper's headline average score (0.884 average historical accuracy) hides this late-stage drop, since averaging over all 20 stages makes the result look better than what's actually happening near the end. The drift itself is generated from one fixed mathematical formula, with fixed settings for how fast devices age and how much they wobble --- the paper never tests what happens if drift is faster, slower, or shaped differently. The device list is also fixed at 10 and never grows, so the results don't say anything about what happens if a brand-new device needs to be enrolled at the same time drift is happening.}
+
+\sumitem{Dataset limitations}{The dataset is entirely synthetic --- fingerprints are generated from a mathematical drift model plus random noise, not recorded from real hardware. There is no real RF fingerprint data anywhere in the paper.}
+
+\sumitem{Methodological limitations}{The whole evaluation depends on the synthetic drift model being a realistic stand-in for how real power equipment actually drifts. If real drift patterns don't match the paper's warm-up-plus-periodic-plus-aging formula, the reported gains may not carry over to real devices.}
+
+\sumitem{Evaluation limitations}{While the authors rightly introduce Equal Error Rate (EER) to evaluate False Acceptance Rate (FAR) and False Rejection Rate (FRR) against open-set unauthorized devices[cite: 3], there is no test of whether an active attacker could intentionally spoof or mimic a legitimate device's drifting fingerprint to bypass this EER threshold. There is also no measurement of how much compute or time the method needs, even though \enquote{continuous} authentication implies it has to run regularly, and possibly close to real time.}
+
+\sumitem{Generalizability issues}{Because everything is synthetic and specific to RF fingerprints of power equipment, it's unclear whether this would transfer to other authentication problems, such as fingerprinting other types of IoT devices, or to the noise, interference, and hardware variation seen in real RF signals.}
+
+\sumitem{Missing experiments}{No real-hardware validation (the authors say this themselves), no test with different drift-parameter settings, no adversarial spoofing test, no combined scenario where new devices are added while drift is also happening, and no runtime or resource benchmarking.}
+
+\sumitem{Potential directions for future research}{The authors say the clear next step is collecting real, long-term RF measurements from actual power equipment across different environments and time periods, to check whether the method still works outside simulation.}
+
+\clearpage
+\newgeometry{margin=0.6in}
+\begin{landscape}
+\section{Cross-Paper Comparison Table}
+
+The table below is our own synthesis of how the three papers differ in dataset, preprocessing, technique, evaluation, and open limitations --- it is not copied from the papers.
+
+\begin{longtable}{
+	>{\raggedright\arraybackslash}p{0.6cm}
+	L{2.5cm} >{\raggedright\arraybackslash}p{1.6cm}
+	L{2.0cm} L{2.9cm} L{2.7cm} L{2.4cm} L{2.5cm} L{2.7cm}
+}
+\toprule
+\rowcolor{headergray}
+\textbf{\#} & \textbf{Title} & \textbf{Year of Publication} & \textbf{Dataset Used} & \textbf{Preprocessing Techniques} & \textbf{Models / Techniques Used} & \textbf{Evaluation Metrics Used} & \textbf{Results} & \textbf{Limitations / Research Gap} \\
+\midrule
+\endfirsthead
+\rowcolor{headergray}
+\textbf{\#} & \textbf{Title} & \textbf{Year of Publication} & \textbf{Dataset Used} & \textbf{Preprocessing Techniques} & \textbf{Models / Techniques Used} & \textbf{Evaluation Metrics Used} & \textbf{Results} & \textbf{Limitations / Research Gap} \\
+\midrule
+\endhead
+\midrule
+\endfoot
+\bottomrule
+\endlastfoot
+
+1 & Stage-Wise CIL for Unknown DoS Attack Detection & 2026 &
+NSL-KDD (DoS subset; 6 subclasses: neptune, back, teardrop, land, pod, smurf) &
+Integer-encoded categorical features; z-score standardization (train-fit, applied to test); functional grouping of service types; 2 of 6 subclasses fixed as \enquote{known}, remainder held out as \enquote{unknown} for discovery. &
+3-layer hierarchical autoencoder (unknown-attack detection) $\rightarrow$ progressive HDBSCAN clustering + 2-stage merging (attack discovery) $\rightarrow$ selective feature activation + distillation-weighted class-incremental learning. &
+Known Detection Rate (KDR); Unknown Detection Rate (UDR); cluster purity; per-class recall. &
+Isolates unknown DoS samples, groups them into emerging clusters, and adds new classes to the model \enquote{without significantly degrading} prior recognition performance. &
+Single dataset/attack family; authors justify standard DoS for a controlled setting[cite: 1], but lack of DDoS limits real-world applicability; no adversarial tests. \\[4pt]
+
+2 & EdgeFedCIL: Federated Class-Incremental IDS for Edge IoT & 2026 &
+ToN-IoT and X-IIOTID intrusion traffic &
+Flow $\rightarrow$ feature-vector/label pairs; decay-weighted ($\gamma$) sample retention across phases; class-wise Dirichlet($\alpha$) partitioning across clients for non-IID simulation; SMOTE oversampling for local class imbalance. &
+Client-local exemplar replay + knowledge distillation; adaptive low-rank compression + low-bit quantization + error feedback; classifier-head protection; feature-space herding for exemplar selection. &
+Validation accuracy across phases; forgetting / backward transfer (BWT); task-accuracy matrices; cumulative transmission reduction; confusion matrices. &
+Up to $\sim$10.5$\times$ reduction in cumulative client-to-server transmission vs. full-precision models while maintaining competitive accuracy under non-IID clients. &
+Assumes honest server and benign clients (poisoning/backdoors explicitly out of scope); no formal privacy guarantee; uses static benchmark datasets rather than live multi-organization data; no end-to-end real-hardware benchmarking. \\[4pt]
+
+3 & Continuous Authentication Against RF Fingerprint Drift & 2026 &
+Self-constructed synthetic 64-dim RF fingerprint dataset; 10 fixed device classes; drift simulated over 20 stages via a warm-up + periodic + aging formula. &
+64-dim vectors reshaped to 8$\times$8 feature maps; two-branch CNN extracts fine-grained (16-channel) and abstract (32-channel) features; gradient-based channel-importance weighting with momentum smoothing. &
+Three-term feature distillation (channel MSE, covariance alignment, spatial attention) + exponentially decaying distillation strength + replay buffer of historical samples. &
+Historical accuracy; current accuracy; Stability-Adaptability score $S$; EER. &
+Best trade-off of all methods tested --- average historical accuracy 0.884, current accuracy 0.999, $S = 0.939$ (next-best, LwF+Replay, scores $S = 0.871$) --- but historical accuracy still falls to 58.4\% by the final drift stage. &
+Fully synthetic dataset, no real-hardware validation; fixed closed device set (no new-device/class-incremental test); no adversarial spoofing or runtime/latency evaluation. \\
+
+\end{longtable}
+\end{landscape}
+\restoregeometry
+
+\clearpage
+\newgeometry{margin=0.6in}
+\begin{landscape}
+\section{Research Gap Synthesis}
+
+Comparing all three papers, we found three research gaps that show up consistently, each backed by specific evidence from all three.
+
+\begin{longtable}{
+	L{3.2cm} L{4.2cm} L{4.2cm} L{4.2cm} L{4.6cm}
+}
+\toprule
+\rowcolor{headergray}
+\textbf{Research Gap} & \textbf{Evidence from Paper 1} & \textbf{Evidence from Paper 2} & \textbf{Evidence from Paper 3} & \textbf{Proposed Research Opportunity} \\
+\midrule
+\endfirsthead
+\rowcolor{headergray}
+\textbf{Research Gap} & \textbf{Evidence from Paper 1} & \textbf{Evidence from Paper 2} & \textbf{Evidence from Paper 3} & \textbf{Proposed Research Opportunity} \\
+\midrule
+\endhead
+\midrule
+\endfoot
+\bottomrule
+\endlastfoot
+
+\textbf{Gap 1:} Continual-learning security methods are validated on old, narrow, or entirely synthetic data instead of realistic current-day traffic or signals &
+Uses NSL-KDD, a dataset built from 1999 traffic, narrowed to just one attack family (DoS) and six subclasses. &
+Evaluated on static, standard benchmark datasets (ToN-IoT and X-IIOTID) where multi-client diversity is created artificially (Dirichlet partitioning) rather than sourced from live, distinct organizations. &
+Uses a fully synthetic dataset generated from a fixed mathematical drift formula --- no real RF fingerprint signals from real hardware are used anywhere. &
+Benchmark continual-learning security methods on more recent, more diverse, and where possible real-world data (live captures, genuine multi-organization federated data, or real RF hardware measurements) to see whether reported gains survive outside controlled synthetic or legacy benchmarks. \\[6pt]
+
+\textbf{Gap 2:} These methods are tested for detection or authentication accuracy, but not for how well they resist an attacker who specifically targets the continual-learning mechanism &
+No adversarial-evasion testing of the autoencoder-based unknown-attack detector or the clustering-based discovery stage. &
+Authors explicitly place malicious clients, model poisoning, and backdoor injection outside scope, despite the federated setup being a natural target for exactly this kind of attack. &
+No test of whether an attacker could spoof or mimic a device's drifting RF fingerprint to fool the authentication system --- a direct security gap for a method whose whole purpose is authentication. &
+Design evaluation protocols and defenses that test continual-learning security systems against attackers who specifically target the adaptation mechanism itself --- for example, poisoned federated updates, adversarial evasion of drift detection, or spoofed drift patterns aimed at fooling re-authentication. \\[6pt]
+
+\textbf{Gap 3:} Papers claim efficiency or real-time suitability but don't actually measure runtime, memory, or deployment cost on real hardware &
+No runtime, throughput, or memory-footprint benchmarking of the three-stage detection-clustering-distillation pipeline, despite targeting practical, evolving-threat deployment. &
+While encoding latency is measured at the client side (134.03 ms), the authors fail to measure end-to-end inference latency or energy consumption on physical edge hardware --- clients remain entirely simulated. &
+No inference-latency or compute-cost figures reported despite the stated \enquote{continuous} authentication use case, which implies the method needs to run regularly, and possibly near real time. &
+Establish standard, deployment-aware evaluation protocols for continual-learning security methods that report inference latency and memory/energy footprint on representative edge/gateway hardware, alongside full accuracy-vs-efficiency trade-off curves. \\
+
+\end{longtable}
+\end{landscape}
+\restoregeometry
+
+\end{document}

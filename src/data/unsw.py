@@ -72,8 +72,11 @@ def encode(df_tr: pd.DataFrame, df_te: pd.DataFrame):
 
 
 def build(raw_dir: Path, seed: int = 42):
+    """Assemble the 4 UNSW tasks. Splits are id-ordered and deterministic;
+    ``seed`` is recorded in the sidecar for provenance but does not affect
+    sampling (there is none)."""
     df_tr, df_te = load_pools(raw_dir)
-    df_tr, df_te, feat, num_cols, nanrep, cat_maps = encode(df_tr, df_te)
+    df_tr, df_te, feat, num_cols, nanrep, _cat_maps = encode(df_tr, df_te)
     print("NaN prevalence (train pool):", {k: round(v, 4) for k, v in nanrep.items()})
     # NOTE: the union MUST be parenthesized before subtracting the benign
     # label. `|` binds looser than `-`, so an unparenthesized

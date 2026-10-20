@@ -19,6 +19,16 @@ def load_or_build_tasks(cfg: dict):
         tasks, label_map = load_tasks(tasks_path)
         if scenario == "ci":
             tasks = filter_ci(tasks, label_map)
+            # Fail-closed class-IL contract (Phase-0 A2 lesson): benign must
+            # be absent from every task after T0. A CII file passed with
+            # scenario "ci" would otherwise filter to a no-op and reproduce
+            # the silently-identical-to-CII bug instead of raising.
+            for i, t in enumerate(tasks[1:], start=1):
+                if int((np.asarray(t["y_train"]) == 0).sum()) or int((np.asarray(t["y_test"]) == 0).sum()):
+                    raise ValueError(
+                        f"scenario 'ci' requires benign absent after T0: task {i} "
+                        f"of {tasks_path.name} still contains benign flows"
+                    )
         return tasks, label_map
 
     clean_path = _resolve_repo_path(Path(data_cfg.get("clean", "data/processed/cicids2017_clean.parquet")))

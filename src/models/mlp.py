@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 
 import torch
-import torch.nn as nn
+from torch import nn
 
 
 class TabularMLP(nn.Module):
@@ -26,15 +26,21 @@ class TabularMLP(nn.Module):
         if new_num_classes <= self.classifier.out_features:
             return
         old = self.classifier
-        new = nn.Linear(old.in_features, new_num_classes)
+        new = nn.Linear(
+            old.in_features, new_num_classes,
+            device=old.weight.device, dtype=old.weight.dtype,
+        )
         with torch.no_grad():
             new.weight[: old.out_features] = old.weight
             new.bias[: old.out_features] = old.bias
             nn.init.xavier_uniform_(new.weight[old.out_features :])
             new.bias[old.out_features :].zero_()
+        new.train(old.training)
+        new.weight.requires_grad_(old.weight.requires_grad)
+        new.bias.requires_grad_(old.bias.requires_grad)
         self.classifier = new
 
-    def clone(self) -> "TabularMLP":
+    def clone(self) -> TabularMLP:
         return copy.deepcopy(self)
 
 

@@ -1,0 +1,741 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,booktabs,array,enumitem}
+\usepackage[expansion=false]{microtype}
+\usepackage{xurl,hyperref,pdflscape,tabularx,algorithm,algpseudocode}
+\hypersetup{hidelinks}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\NA}{\mathrm{N/A}}
+\newcommand{\CE}{\operatorname{CE}}
+\newcommand{\meas}{\textnormal{[MEASURE]}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\title{\textbf{Computer Networks: Phase 2}\\[5pt]
+Poisoning, Retention and Legitimate Adaptation\\
+in Federated Continual Intrusion Detection}
+\author{Saneedullah (23I-2568) \qquad Ahmed Bilal (23I-2581)}
+\date{8 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Federated intrusion detectors must learn emerging attack families while retaining useful discrimination. Poisoned training labels can distort both acquisition and the memory used during subsequent adaptation. Existing studies establish clean federated class-incremental learning, client label-flipping susceptibility and uncertainty-driven memory selection, but provide limited joint evidence on source-specific damage after attacker withdrawal and the acquisition cost of admission defenses. We propose a controlled study using CICIDS2017, with CICIoT2023 as an external check. Five persistent clients train a common 128/64 multilayer perceptron using fine-tuning, EWC-style accumulated importance or DER++. An oblivious source-to-benign labeling intervention affects one client during the second supervised experience. Eligible-source doses, development pilots and paired clean controls determine whether the intervention is informative. We compare class-aware admission with global selection at matched client quotas, using unique-ID reservoir replay. Source recall and clean-matched targeted error test poisoning damage; new-family F1 measures adaptation; previously learned-family scores quantify collateral change. Twelve paired seeds, two declared Holm families, signed-rank tests and symmetry-qualified permutation intervals support analysis. The intended contribution is a reproducible security--adaptation protocol and a falsifiable admission heuristic. This proposal reports a design; experimental outcomes and deployment performance remain to be measured.
+\end{abstract}
+\noindent\textbf{Keywords:} continual learning; federated IDS; label poisoning; replay memory; legitimate adaptation.
+% Deliverable 4 placeholder
+
+\section{Introduction and Scope}
+Attack families change. Learning incoming families can erase earlier discrimination, while replay preserves possibly corrupted examples. A federated detector inherits information from clients with different class support. We study client label corruption, continual memory and admission decisions.
+
+Phase 1 identifies ``Continual Learning for Network Security,'' warns that ``If clustering goes wrong, every later step is affected,'' and records an assumption that ``the coordinating server and all clients are honest.'' Its adaptation-security gap concerns attackers who ``specifically target the adaptation mechanism itself'' \cite{phase1}. Ge et al. investigate staged unknown-DoS discovery, Wu et al. combine federated class acquisition with compressed communication, and Luo et al. address RF authentication drift \cite{ge,wu,luo}. We retain the federated poisoning question, narrow resource evaluation to measured host and transmission costs, and defer drift-detector evasion and RF spoofing. Phase 1 remains unchanged.
+
+Our questions are explicit. \textbf{RQ1:} how do fine-tuning, EWC-style importance and DER++ differ in immediate source-family recall damage and targeted error after poison withdrawal? \textbf{RQ2:} does class-aware admission change those security outcomes and legitimate new-family acquisition compared with equally sized global admission? \textbf{RQ3:} which memory and selection mechanisms explain the observed differences, and what measured computation and communication do they require?
+
+Five simulated flow clients support paired source evaluation and class-protected admission with matched volumes. Appendix~\ref{app:implementation} records implementation status.
+
+\section{Deliverable 1: Extended Literature Review}
+\subsection{Corpus and Selection Criteria}
+Seven additional original experimental papers from 2025--2026 have free manuscripts and verified publication records (Table~\ref{tab:corpus}). Older references supply methods only.
+
+Clarivate released the 2025 JCR update on 18 June 2025 \cite{clarivate}. Journal quartiles below refer to the 2024 JIF category edition. Archived rows support these values; primary journal profiles remain unverified. DAC qualifies as peer-reviewed ACM/IEEE proceedings, without a journal quartile.
+% VERIFY: confirm the six category-specific journal quartiles in primary Clarivate profiles for the 2025 JCR/2024 JIF edition.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Seven-paper corpus. IS means Computer Science, Information Systems; EM means Engineering, Multidisciplinary. Quartiles require the primary-profile check noted above.}
+\label{tab:corpus}
+\begin{tabularx}{\linewidth}{L{2.5cm}Y L{2.1cm}L{1.9cm}L{2.0cm}}
+\toprule
+Study & Venue / publisher & Year; access version & Category; quartile; edition & Protocol role\\
+\midrule
+Carillo et al. \cite{carillo} & IEEE Transactions on Network and Service Management & 2026; author & IS; Q1; JCR 2025 & Clean federated CIL\\
+Lavaur et al. \cite{lavaur} & Computers \& Security; Elsevier & 2025; institutional author & IS; Q1; JCR 2025 & Label-flip controls\\
+Fuhrman et al. \cite{cnd} & 62nd ACM/IEEE DAC & 2025; arXiv author & Proceedings; quartile $\NA$ & Novelty detection\\
+Sameera et al. \cite{wei} & Journal of Information Security and Applications; Elsevier & 2025; arXiv v2 & IS; Q2; JCR 2025 & Server validation gate\\
+Cerasuolo et al. \cite{cerasuolo} & Computer Networks; Elsevier & 2025; author & IS; Q1; JCR 2025 & CIL/memory reference\\
+Guo et al. \cite{guo} & Future Internet; MDPI & 2025; publisher & IS; Q2; JCR 2025 & Memory selection\\
+Prasad et al. \cite{ensemble} & Computer Modeling in Engineering \& Sciences; Tech Science Press & 2026; publisher & EM; Q2; JCR 2025 & Streaming gate comparator\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Thematic Synthesis}
+Table~\ref{tab:taxonomy} classifies all ten studies.
+
+\begin{landscape}
+\begin{table}[p]
+\centering\footnotesize
+\caption{Taxonomy of the seven additions and three Phase 1 sources. CIL means class-incremental learning; FL means federated learning.}
+\label{tab:taxonomy}
+\begin{tabularx}{\linewidth}{L{2.4cm}Y Y Y Y Y Y}
+\toprule
+Study & Learning setting & Threat model tested & Defense type & Memory mechanism & Modality & Poisoning with continual learning evidence\\
+\midrule
+Ge 2026 \cite{ge} & Central unknown-DoS discovery/CIL & Held-out DoS; clean training & AE, HDBSCAN, distillation & Historical knowledge transfer & NSL-KDD flows & Discovery security motivates extension\\
+Wu 2026 \cite{wu} & Federated CIL & Honest participants & Head-protected compression & Exemplars/distillation & IoT/IIoT flow vectors & Malicious participants excluded\\
+Luo 2026 \cite{luo} & Fixed-device drift adaptation & Synthetic RF drift & Feature distillation & Small replay buffer & Simulated RF features & Spoofing excluded\\
+Carillo 2026 \cite{carillo} & Federated CIL & Clean non-IID emergence & Bias correction & Replay/distillation & Packet-field matrices & Clean acquisition reference\\
+Lavaur 2025 \cite{lavaur} & Fixed binary FL & Targeted/untargeted flips & Similarity-based mitigation analysis & No continual replay experiment & NF-V2 NetFlow & Timing/withdrawal in fixed-label FL\\
+Fuhrman 2025 \cite{cnd} & Continual novelty detection & Emerging unknown attacks & Representation/PCA score & Past-encoder distillation & Numeric IDS features & No training poison test\\
+Sameera 2025 \cite{wei} & Fixed-label FL & Poisoned clients & Weibull validation gate & No expanding-memory study & Encoded flow features & Poisoning; expanding classes untested\\
+Cerasuolo 2025 \cite{cerasuolo} & Central CIL/few-shot CIL & Packet perturbations & Rebalancing/distillation & Exemplars; capacity sweeps & Packet-field matrices & Input perturbation; separate from label poison\\
+Guo 2025 \cite{guo} & Semi-supervised continual IDS & Clean imbalance/label scarcity & Meta-weighting/distillation & DP-Means/entropy selection & Numeric/encoded flows & Adversarial memory admission untested\\
+Prasad 2026 \cite{ensemble} & Binary streaming FL & Label inversion/FGSM & Client/server accuracy gates & Incremental ensemble state & CICIoT2023 flows & Streaming poison evidence; family expansion untested\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{landscape}
+
+Retention studies agree that historical constraints help clean adaptation, but allocate resources differently. Carillo et al. combine federated optimization with rehearsal and bias correction; Cerasuolo et al. isolate exemplar capacity, packet count and few-shot acquisition. Guo et al. emphasize diversity and uncertain samples under limited labels. We therefore hold the flow backbone constant and separate admission from eviction. Their published scores cannot be ranked across representations and supervision budgets.
+
+Poisoning evidence is conditional. Lavaur et al.'s Section 5.4 and Figure 10 show relative attack success well below 0.1 for one attacker among ten, even at complete local corruption; at 50\% attacker participation the effects rise sharply. Targeted attacks on their NF-V2 CSE-CIC-IDS2018 variant approach relative success 1.0 at sufficiently large IID overall corruption, while their UNSW setting remains less susceptible \cite{lavaur}. Prasad et al. reject complete inversion using gates and obtain accuracy 0.979596 and FMI 0.979392 for their selected initialization (Table 6) \cite{ensemble}. These findings concern different attack strengths, initialization, trusted scoring and labels. Together they require an attack-viability pilot before a small-client experiment is interpreted.
+
+Admission creates a tension. Guo et al.'s uncertainty/diversity memory improves clean retention, whereas local small-loss selection favors examples the current detector already explains. An emerging attack can satisfy either criterion. Sameera et al.'s server validation supplies an independent signal, but its utility depends on class coverage \cite{wei}. Our experiment records legitimate admissions and source poison separately, while held-out acquisition determines whether admitted evidence becomes useful discrimination.
+
+Evaluation also changes conclusions. Fuhrman et al. report CICIDS2017 AVG/FwdTrans ratios 1.93/2.64 against LwF in Table II; their Best-F threshold uses labeled test batches \cite{cnd}. Cerasuolo et al.'s Table 7 obtains TON-IoT all/old/new F1 $95.30\pm1.46$/$96.47\pm1.18$/$85.89\pm7.76$\% using 50 exemplars/class and nine packets, with all-class PAUC $96.79\pm2.64$\% \cite{cerasuolo}. We adopt development-only thresholds, support-qualified metrics and explicit budgets to avoid treating these outcomes as directly comparable flow-model targets.
+
+\subsection{Three Representative Papers}
+Carillo 2026, Lavaur 2025 and Guo 2025 jointly cover federation, poisoning and memory selection. Table~\ref{tab:comparison} uses author-year identifiers; its number column is only a row index. Guo's average accuracy/F1 83.4/82.1\% appears in Table 6; removing DP-Means gives F1 76.4\% in Table 12. Table 5 describes method applicability. Lavaur's clean central F1 values 0.966/0.945 come from Section 4.2 and supplement its poisoning findings.
+
+\begin{landscape}
+\begin{table}[p]
+\centering\footnotesize
+\caption{Cross-paper comparison grounded in the complete manuscripts. Published outcomes are author reports.}
+\label{tab:comparison}
+\begin{tabularx}{\linewidth}{L{0.35cm}L{3.0cm}L{0.7cm}Y Y Y Y Y Y}
+\toprule
+\# & Title & Year & Dataset & Preprocessing & Models/Techniques & Metrics & Results & Limitations/Gap\\
+\midrule
+1 & A Federated and Incremental Network Intrusion Detection System for IoT Emerging Threats \cite{carillo}
+& 2026 & TON\_IoT; IoT-NID; Edge-IIoTset
+& Attack hierarchy, undersampling, ten-packet matrices, padding; IP/ports removed.
+& CNN; FedAvg/FedProx/FedDyn; BiC+/MEMENTO+; rehearsal and bias correction.
+& Old/new/all F1; resource comparisons.
+& Table IV, TON\_IoT S2: FedProx--MEMENTO+, 100 rounds, old/new/all F1 79.05/68.10/74.49\%.
+& Clean FCIL, without poisoned replay withdrawal; packet extraction differs from flow vectors.\\[4pt]
+2 & Investigating the Impact of Label-flipping Attacks against Federated Learning for Collaborative Intrusion Detection \cite{lavaur}
+& 2025 & NF-V2 CSE-CIC-IDS2018; UNSW-NB15
+& nProbe schema; sampled populations; IID/cluster heterogeneity; ten clients.
+& Binary MLP/FedAvg; targeted and random flips; timing and collusion sweeps.
+& F1, recall, accuracy; absolute/relative attack success.
+& 10,670 runs. Section 5.4/Fig. 10: one-attacker relative success below 0.1 even at complete local flips; strong effects depend on participation and dataset.
+& Fixed binary head and no continual-memory comparison. Their normalized relative success differs from our additive clean-matched error.\\[4pt]
+3 & Continual Learning for Intrusion Detection Under Evolving Network Threats \cite{guo}
+& 2025 & UNSW-NB15; CICIDS2017; TON\_IoT
+& Numerical/categorical encoding; incremental low-label settings; 5,000-sample nominal memory.
+& DP-Means/entropy memory; multilevel distillation; meta-weighted semi-supervision.
+& Average accuracy, F1, forgetting, BWT; ablations.
+& Table 6: CICIDS2017 average accuracy/F1 83.4/82.1\%; Table 12: F1 76.4\% without DP-Means.
+& Clean selection; malicious informative samples untested. Capacity and labeling budgets exceed/differ from our primary setting.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{landscape}
+
+\subsection{Positioning and Methodological Foundations}
+Fuhrman informs calibration, Sameera validation, Cerasuolo memory controls, and Prasad streaming counterevidence. The Phase 1 studies connect discovery, honest-client FCIL and RF drift \cite{ge,wu,luo}.
+
+Co-teaching exchanges low-loss minibatches between two networks; MentorNet learns a weighting curriculum \cite{coteach,mentornet}. Our frozen-checkpoint quotas use one network. We contribute a controlled security--adaptation comparison and heuristic, with different selection timing.
+
+FedAvg supplies model averaging \cite{fedavg}; EWC supplies a parameter-importance penalty \cite{ewc}; LwF preserves teacher responses \cite{lwf}; episodic replay and DER++ supply memory-based comparisons \cite{tiny,der}. Adam defines optimization \cite{adam}, Vitter defines reservoir sampling \cite{vitter}, and Hsu et al. motivate controlled non-identical partitions \cite{hsu}. Tolpegin et al. already study targeted federated poisoning and longevity \cite{tolpegin}. Krum, median and trimmed mean address Byzantine-update threats \cite{krum,yin}; we treat them as separately scoped references.
+
+\section{Deliverable 2: Research Gap Synthesis}
+\subsection{Gap Matrix}
+Table~\ref{tab:gaps} links G1--G3 to the frozen Phase 1 concerns.
+
+\begin{landscape}
+\begin{table}[p]
+\centering\footnotesize
+\caption{Gap synthesis. Evidence describes the selected studies' experimental scope.}
+\label{tab:gaps}
+\begin{tabularx}{\linewidth}{L{2.3cm}Y Y Y Y L{2.4cm}}
+\toprule
+Gap & Carillo 2026 & Lavaur 2025 & Guo 2025 & Proposed opportunity & Phase 1 link\\
+\midrule
+G1: Source acquisition and poison persistence
+& Clean old/new FCIL scores, without label poison \cite{carillo}.
+& Fixed-label poison timing, participation and dataset dependence \cite{lavaur}.
+& Clean historical-memory preservation \cite{guo}.
+& Measure E2 source recall damage and E3/E4 clean-matched targeted error; keep E1 retention as collateral change.
+& Retains poisoned-client adaptation; narrows arbitrary updates to data poisoning.\\[5pt]
+G2: Legitimate adaptation under admission
+& New-family discrimination remains difficult in the cited setting.
+& Heterogeneity changes attack/mitigation behavior.
+& Uncertainty/diversity preserves scarce examples; adversarial admission untested.
+& Compare class-aware versus matched-volume global selection; report new-family F1 and source damage with equal client quotas.
+& Retains adaptation security; discovery evasion and RF spoofing deferred.\\[5pt]
+G3: Identifiable memory/information cost
+& Packet modality and round count condition results.
+& Extensive fixed-binary sweeps omit replay-policy identification.
+& Large nominal memory and limited-label supervision differ from our budget.
+& Unique-ID memory, common representation and trusted-data accounting; measure state bytes, update bytes and wall time.
+& Partly covers deployment cost; physical edge energy remains deferred.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{landscape}
+
+\subsection{Formal Justification and Traceability}
+The intersection matters because retention can preserve corrupted evidence while rejection can suppress legitimate acquisition. We test the actual targeted family. The Tuesday anchors, FTP-Patator and SSH-Patator, are different from Wednesday's DoS-Hulk source. A possible indirect pathway is a shifted shared benign decision region plus repeated benign-labeled source replay. Anchor degradation measures this collateral pathway; it cannot substitute for source-specific poisoning evidence.
+
+We make the admission mechanism falsifiable. Honest Hulk rows are protected as a new supplied class. Benign-labeled Hulk rows compete within the established benign quota. If their frozen-checkpoint benign loss is high, class-aware admission may remove some while preserving honest acquisition; if it is low, they survive and source error can persist. Protection may also increase malicious retention. DC admits honest supplied-new rows entirely by construction; held-out F1 tests acquisition. Security improvement is conditional; null/adverse effects remain admissible.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Gap-to-test traceability. C1/C2 denote the two confirmatory families defined in Table~\ref{tab:hypotheses}.}
+\label{tab:trace}
+\begin{tabularx}{\linewidth}{L{0.7cm}L{0.8cm}L{1.2cm}Y Y Y}
+\toprule
+Gap & RQ & Hypothesis & Method component & Primary endpoint & Test\\
+\midrule
+G1 & RQ1 & C1 & Three learners; E2 poison; E3/E4 withdrawal & Source recall damage; post-withdrawal $\Delta\mathrm{ASR}$ & Paired signed ranks; Holm C1\\
+G2 & RQ2 & C2 & Class quotas versus matched client volumes & Acquisition F1; source damage; clean benign alarms & Paired signed ranks; Holm C2\\
+G3 & RQ3 & Exploratory & Eviction/loss ablations; state accounting & Contamination, family scores, time/bytes & Paired effect estimates; declared exploratory\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Deliverable 3: Proposed Research Methodology}
+Unobserved protocol quantities are proposed. Tables~\ref{tab:notation}--\ref{tab:threat} define notation/access.
+
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Notation, shapes and domains. Indexed forms retain the meanings shown.}
+\label{tab:notation}
+\begin{tabularx}{\linewidth}{L{3.3cm}Y L{4.4cm}}
+\toprule
+Symbol & Meaning & Shape/domain\\
+\midrule
+$i,k,t,j,r,a,\ell$\newline $s,h,\beta,\kappa,\vartheta$ & Example, client, experience/bank, optimizer step, parameter, logit coordinate, seed, Holm rank, importance-batch, bootstrap-draw, threshold indices & Finite index sets; $t,j\le T=4$\\
+$D_{k,t},x_i,\widetilde y_i,y_i,\widehat y_i$ & Data, input, supplied/reference/predicted labels & Set; $\mathbb R^d$; class identities\\
+$u_i,\sigma_i,\tau_i,\chi_i$ & Immutable ID, session ID, timestamp, evaluator poison indicator & int64; identifier; time; $\{0,1\}$\\
+$\mathcal C_t,\mathcal C_t^{\rm new},C_t,c,c_\star,c_B$ & Observed/new sets, size, class, Hulk source, benign target & Sets; integer; identities\\
+$W_1,W_2,W_t$\newline $b_1,b_2,b_t;e_1,e_2$ & Layer weights, biases, hidden vectors & $128\!\times\!d,64\!\times\!128,C_t\!\times\!64$; $128,64,C_t$; $128,64$\\
+$\theta,\theta^{\rm anchor}$\newline $f_{\theta,t},p_{\theta,t},N_\theta$ & Parameters/anchor, logits, probabilities, parameter count & Vectors; $\mathbb R^{C_t}$; simplex; integer\\
+$\mathcal B_{k,t},m,\omega_i,z_i,S_i$ & Replay set, capacity, teacher width, logits, selector & Features: $m\!\times\!d$; $z_i\in\mathbb R^{\omega_i}$; $S_i:\omega_i\!\times\!C_t$\\
+$\mathcal L_{\rm cur},\mathcal L_{\rm E},\mathcal L_{\rm D}$\newline $\mathcal L_r,\CE$ & Current, importance, replay, step objectives; cross-entropy & Scalars/functions\\
+$\lambda_E,\lambda_z,\lambda_y,I_a,J_E$ & Loss weights, accumulated importance, importance-batch count & Nonnegative scalars; vector; $J_E\le32$\\
+$\xi_r,\mu_r,\nu_r$\newline $\gamma_1,\gamma_2,\eta,\epsilon$ & Gradient, Adam moments/decays, learning rate, stabilizer & Parameter-shaped vectors; scalars\\
+$n_{k,t},n_{k,c,t},K_{k,c,t}$\newline $N^{\rm adm}_{k,t},q,n_{\min}$ & Row/class counts, quotas, admitted size, keep fraction, small-support boundary & Nonnegative integers; $q=.75$; $n_{\min}=20$\\
+$V,L_V,\mathcal A_{k,t},\mathcal K_t$\newline $w_{k,t},N_{\rm rnd},N_{\rm ep}$\newline $b_{\rm cur},b_{\rm rep}$ & Encounter counter, reservoir draw, admitted set, active clients, weights, rounds, epochs, actual batch sizes & Integers/sets; simplex weights; $b_{\rm cur}\le256$\\
+$\rho,Q_{k,t},n^{\rm elig}_{k,t},G_t,\pi_c$ & Eligible-source dose, poison count, eligibility, global corruption, ownership probabilities & $[0,1]$; counts; fraction; five-client simplex\\
+$H_{\rm sha},\mathcal S_{\rm tr/dev/te}$\newline $\mathcal G_{\rm tr/dev/te},\Psi_0$ & Feature hash, partitions, their sessions, frozen scaler & Hash/function; sets; sets; fitted transform\\
+$TP_c,FP_c,FN_c,N_B,N_\star$ & Confusion counts and fixed benign/source support & Nonnegative counts\\
+$\mathrm{Prec},\mathrm{Rec},F1,\mathrm{FAR}_B$\newline $\mathrm{ASR},\Delta\mathrm{ASR},A,H$ & Scores; acquisition $A$ and mean post-withdrawal error $H$ & $[0,1]$; differences in $[-1,1]$\\
+$\mathcal C_{\rm eval},\mathcal C_{\rm anchor}$\newline $R^{\rm acc},R^{F1},\upsilon_j$ & Scoring/anchor labels, score matrices, pre-learning reference & Sets; $T\!\times\!T$; scalar reference\\
+$\delta_s,\delta_0,\bar\delta,\delta^*_b$\newline $\mathcal I_\kappa,\mathcal T,\varepsilon_s$\newline $\mathfrak p_{\delta_0},\zeta_h,\alpha$ & Paired effect, candidate location, mean, bootstrap mean/draw, permutation statistic/signs/p-value, ordered p-value, level & Scalars; indices; $\{\pm1\}$; $\alpha=.05$\\
+$U,\mathsf A,\mathsf B,n,L,b$\newline $\operatorname{Quant},\mathrm{CI}_{\rm boot/perm}$ & Endpoint, learner codes, seed count, family size, replicate, quantile, intervals & Scalars/codes; $n=12$; $L=18$ or 11; $b\le10{,}000$\\
+$\Delta_{\rm rec},\mathcal J^{\mathsf A,\mathsf B}$\newline $\mathrm{ACC},\mathrm{BWT},F,\mathrm{FWT}$\newline $B_{\rm model},B_{\rm replay}$ & Recall damage, learner interaction, continual summaries, numeric byte budgets & Scalars; nonnegative byte counts\\
+$N^{\rm adm,hon,new},N^{\rm elig,hon,new}$\newline $N^{\rm poison,replay},\mathrm{Ret}_{\rm hon,new}$\newline $\mathrm{Cont},\mathrm{AP}$ & Diagnostic counts, honest-new retention, contamination, average precision & Counts; fractions; $\NA$ for empty denominators\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Primary threat model and information boundary.}
+\label{tab:threat}
+\begin{tabularx}{\linewidth}{L{2.0cm}Y}
+\toprule
+Field & Specification\\
+\midrule
+Goal & Make held-out DoS-Hulk appear benign during/after E2 adaptation.\\
+Knowledge & Source/target identities, local eligible records, schedule and budget; no model gradients, filter scores or test labels.\\
+Capability & Corrupt labels of selected existing Hulk training IDs at one source-containing client during E2; no invented classes/features/rows.\\
+Constraints & Oblivious ID-ranked selection; audited local agent executes declared learning/admission; server and evaluation banks trusted.\\
+Scenario & An attacker fools an automated traffic-labeling feed at one organization; the organization retains control of its training software.\\
+Out of scope & Bypassing filtering, forging updates, server compromise, filter-aware selection, RF spoofing. Adaptive attackers require a separate extension.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Define the Research Input}
+We use numeric flows with metadata in a protected sidecar:
+\begin{equation}
+D_{k,t}=\{(x_i,\widetilde y_i,u_i,\sigma_i,\tau_i)\}_{i=1}^{n_{k,t}},\quad
+x_i\in\mathbb R^d,\quad\mathcal C_t=\mathcal C_{t-1}\cup\mathcal C_t^{\rm new},\quad C_t=|\mathcal C_t|.
+\label{eq:input}
+\end{equation}
+The artifact has $d=76$ and fifteen labels. Proposed heads have $C_t=3,8,12,15$ if all identities appear; sparse outputs can be excluded from scoring. Inputs exclude ports, addresses, times and IDs.
+
+\subsection{Data Collection}
+We use the eight checksummed MachineLearningCSV files in Appendix~\ref{app:sources}. Headers lack flow IDs, IP addresses and timestamps. Dataset sources are CICIDS2017 \cite{dataset} and external CICIoT2023 \cite{iot}. Manifests record release, license, extractor, counts and filtering losses.
+
+Session-aware isolation requires an additional metadata export from original labeled flows/PCAP. We propose a bidirectional key $(\mathrm{capture},\mathrm{protocol},\mathrm{sorted\ endpoint\ pairs})$; a TCP opening SYN after closure starts a session, FIN/RST closes it, and an idle gap exceeding 120 seconds splits either TCP or UDP groups. Timestamps use the capture timezone and flow start/end. We quarantine ambiguous joins between metadata and numeric rows. The required sidecar/adapter remains proposed; CSV order cannot reconstruct these keys.
+
+\subsection{Data Preprocessing}
+We preserve the 76-feature schema, normalize label spelling, remove nonfinite records and duplicate header fields, and log exclusions by family. Engelen et al. identify CICIDS2017 flow-construction and labeling defects \cite{engelen}. Reference labels therefore mean the audited dataset labels. We quarantine schedule-inconsistent or disputed flows, record the affected IDs, and compare against an independently corrected export if an aligned version is available.
+
+We propose session-grouped, within-family chronological 60/20/20 allocation. Atomic sessions enter majority-reference-label strata, sort by start time with deterministic ties, and use nearest cumulative-row boundaries. This trades global chronology for ordered-family support. Required source/anchor support must survive grouping; sessions stay intact.
+
+Canonicalization fixes column order, little-endian float32 and signed-zero normalization. $H_{\rm sha}$ hashes the label-independent canonical input. We check raw retained and final normalized inputs:
+\begin{equation}
+\begin{aligned}
+H_{\rm sha}(\mathcal S_{\rm tr})\cap H_{\rm sha}(\mathcal S_{\rm dev}\cup\mathcal S_{\rm te})&=\varnothing,\quad
+H_{\rm sha}(\mathcal S_{\rm dev})\cap H_{\rm sha}(\mathcal S_{\rm te})=\varnothing,\\
+\mathcal G_{\rm tr}\cap\mathcal G_{\rm dev}=\mathcal G_{\rm tr}\cap\mathcal G_{\rm te}=\mathcal G_{\rm dev}\cap\mathcal G_{\rm te}&=\varnothing,\qquad
+\Psi_0=\operatorname{FitScaler}(\text{T0 benign training inputs}).
+\end{aligned}
+\label{eq:isolation}
+\end{equation}
+Conflicting labels for identical features are quarantined. T0 provides scaling/calibration; E1 starts supervised benign-plus-attack learning. We freeze $\Psi_0$ thereafter and count out-of-range future values. A proposed family must have at least 50 training, 50 development and 50 test rows after isolation to enter confirmatory macro-F1. Required anchors/source failing the floor block protocol lock; Table~\ref{tab:support} records exclusions.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Observed current-artifact support and proposed scoring disposition. Its 70/30 counts precede the proposed development/session split.}
+\label{tab:support}
+\begin{tabularx}{\linewidth}{L{3.0cm}L{1.5cm}L{1.3cm}Y}
+\toprule
+Family & Current train & Current test & Proposed rule\\
+\midrule
+FTP-Patator & 4,152 & 1,779 & Required E1 anchor; verify 50/50/50 after rebuilding.\\
+SSH-Patator & 2,253 & 966 & Required E1 anchor; verify 50/50/50 after rebuilding.\\
+DoS-Hulk & 120,992 & 51,852 & Required E2 source; verify grouped support and local eligibility.\\
+Heartbleed & 8 & 3 & Exclude from confirmatory macro-F1; descriptive counts/intervals only.\\
+Web SQL injection & 15 & 6 & Same exclusion; keep identity and publish support.\\
+Infiltration & 25 & 11 & Same exclusion; no semantic pooling into Hulk/other families.\\
+Other families & Observed separately & Observed separately & Apply the same pre-outcome floor; publish final inclusion table.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Feature Engineering and Representation}
+Numeric features and one MLP isolate memory/selection. Extractor dictionaries supply units/bounds. Poison changes labels only.
+
+Fuhrman's encoder/PCA scorer is exploratory: development calibration and detector viability precede clustering. Packet-CNN adapters require separate budgets. Inference receives no task identity.
+
+\subsection{Proposed Model and Method}
+\textbf{Head and dimensions.} The common network is
+\begin{equation}
+\begin{aligned}
+e_1&=\operatorname{Drop}_{.1}(\operatorname{ReLU}(W_1x+b_1)),\quad
+e_2=\operatorname{Drop}_{.1}(\operatorname{ReLU}(W_2e_1+b_2)),\\
+f_{\theta,t}(x)&=W_te_2+b_t\in\mathbb R^{C_t},\qquad
+p_{\theta,t}(x)=\operatorname{softmax}(f_{\theta,t}(x)),\\
+W_1&\in\mathbb R^{128\times d},\ b_1\in\mathbb R^{128},\quad
+W_2\in\mathbb R^{64\times128},\ b_2\in\mathbb R^{64},\quad
+W_t\in\mathbb R^{C_t\times64},\ b_t\in\mathbb R^{C_t}.
+\end{aligned}
+\label{eq:head}
+\end{equation}
+Dropout is off for scoring/teachers. The server synchronizes currently supplied identities and initialized new rows while preserving old rows. Each broadcast resets Adam; replay/importance persists. Future labels are inaccessible.
+
+\begin{equation}
+\begin{aligned}
+N_\theta&=128d+128+8192+64+65C_t,\qquad B_{\rm model}=4N_\theta,\\
+B_{\rm replay}&=4|\mathcal B|d+4\sum_{i\in\mathcal B}\omega_i+20|\mathcal B|\ \le m(4d+4C_t+20).
+\end{aligned}
+\label{eq:bytes}
+\end{equation}
+Buffers use float32 features/logits, int64 labels/IDs and int32 widths. At $d=76,C_t=15$, there are 19,087 parameters and 76,348 weight bytes; 500 full-width teachers require 192,000 buffer bytes excluding overhead. Adam and EWC-style state each add two parameter-shaped arrays. We measure process/allocated bytes too.
+
+\textbf{Continual objectives.} Fine-tuning minimizes $\mathcal L_{\rm cur}=\mathbb E_{\mathcal A_{k,t}}\CE(f_{\theta,t}(x),\widetilde y)$. EWC-style importance accumulates squared \emph{batch} gradients, distinct from per-example Fisher estimation \cite{ewc}:
+\begin{equation}
+\begin{aligned}
+\mathcal L_{\rm E}&=\mathcal L_{\rm cur}+\frac{\lambda_E}{2}\sum_aI_a(\theta_a-\theta_a^{\rm anchor})^2,\\
+I_a&\leftarrow I_a+\frac1{J_E}\sum_{\beta=1}^{J_E}(\partial_{\theta_a}\mathcal L_{{\rm cur},\beta})^2.
+\end{aligned}
+\label{eq:ewc}
+\end{equation}
+Fix importance batches in evaluation mode and $J_E\le32$. New rows have zero past importance. After the final broadcast, active clients compute admitted-data importance and anchor to the shared model. Development checks calibrate $\lambda_E$.
+
+For DER++, stored teachers have width $\omega_i$ at storage, with $S_i\in\{0,1\}^{\omega_i\times C_t}$ selecting their coordinates:
+\begin{equation}
+\mathcal L_{\rm D}=\mathcal L_{\rm cur}
++\lambda_z\mathbb E_{i\sim\mathcal B}\frac{\|S_if_{\theta,t}(x_i)-z_i\|_2^2}{\omega_i}
++\lambda_y\mathbb E_{i\sim\mathcal B}\CE(f_{\theta,t}(x_i),\widetilde y_i).
+\label{eq:der}
+\end{equation}
+One uniform without-replacement draw supplies both replay terms: $b_{\rm rep}=\min\{b_{\rm cur},|\mathcal B|\}$. Each current minibatch has at most 256 rows and one combined update. Empty replay removes those terms. Evaluation-mode teachers and coordinate masking reuse implemented repairs \cite{der}.
+
+\begin{equation}
+\begin{aligned}
+\xi_r&=\nabla_\theta\mathcal L_r,\quad\mu_r=\gamma_1\mu_{r-1}+(1-\gamma_1)\xi_r,\quad
+\nu_r=\gamma_2\nu_{r-1}+(1-\gamma_2)\xi_r^2,\\
+\theta_{r+1}&=\theta_r-\eta\frac{\mu_r/(1-\gamma_1^r)}{\sqrt{\nu_r/(1-\gamma_2^r)}+\epsilon},\qquad
+\gamma_1=.9,\ \gamma_2=.999,\ \epsilon=10^{-8}.
+\end{aligned}
+\label{eq:adam}
+\end{equation}
+Adam settings are proposed \cite{adam}; its step index resets at broadcast. Log all exposures/updates.
+
+\textbf{Admission.} We freeze the pre-experience checkpoint after common expansion and score once. We propose $q=.75$ to retain the current filter's nominal rate, and $n_{\min}=20$ to protect very small local supplied-label groups; sensitivities test these choices.
+\begin{equation}
+K_{k,c,t}=\begin{cases}
+0,&n_{k,c,t}=0,\\
+n_{k,c,t},&c\notin\mathcal C_{t-1}\ \text{or}\ 0<n_{k,c,t}<n_{\min},\\
+\max\{1,\lceil qn_{k,c,t}\rceil\},&\text{otherwise},
+\end{cases}\qquad N^{\rm adm}_{k,t}=\sum_{c\in\mathcal C_t}K_{k,c,t}.
+\label{eq:quota}
+\end{equation}
+Within each class, accept lowest-loss rows with immutable-ID ties. The matched global control derives the same quota from supplied labels and ranks globally. Accepted IDs remain fixed; locally absent established classes use the support rule.
+
+\emph{Illustrative arithmetic, not data:} with 100 benign, ten established rare and forty new-family rows, the quotas are $75+10+40=125$. Both controls admit 125 of 150 rows; their class composition can differ. A changed label can change its quota category, which we audit using evaluator metadata only after selection.
+
+\textbf{Unique-ID reservoir.} We insert only on an ID's initial admitted processing pass, using post-update teachers. After $V$ such encounters, the capacity-$m$ rule is
+\begin{equation}
+\begin{aligned}
+\mathcal B&\leftarrow\begin{cases}
+\mathcal B\cup\{i\},&V\le m,\\
+\mathcal B\text{ with slot }L_V\text{ replaced by }i,&V>m,\ L_V\le m,\\
+\mathcal B,&V>m,\ L_V>m,
+\end{cases}\quad L_V\sim\operatorname{Uniform}\{1,\ldots,V\},\\
+\Pr(i\in\mathcal B\mid V)&=\min\{1,m/V\}.
+\end{aligned}
+\label{eq:reservoir}
+\end{equation}
+The final invariant concerns every previously encountered unique ID, not its insertion-time probability \cite{vitter}. Experience/client manifests and an initial-pass gate avoid reinsertion across epochs/rounds. Lifetime-uniform replay underrepresents rare families in expectation; the class-balanced eviction ablation probes that tradeoff.
+
+\textbf{Federation.} For active contributing clients $\mathcal K_t$ at each round,
+\begin{equation}
+w_{k,t}=\frac{N^{\rm adm}_{k,t}}{\sum_{k'\in\mathcal K_t}N^{\rm adm}_{k',t}},\qquad
+\theta_t=\sum_{k\in\mathcal K_t}w_{k,t}\theta_{k,t}.
+\label{eq:fedavg}
+\end{equation}
+Weights use admitted current rows. With no submissions, keep the server model. Matched arms share weights; Algorithm~\ref{alg:experience} fixes operation order.
+
+\begin{algorithm}[htbp]
+\caption{One proposed supervised experience}
+\label{alg:experience}
+\begin{algorithmic}[1]
+\Require Shared model, persistent client states, current shards, declared round/epoch budget
+\State Apply training-only E2 corruption; collect current supplied identities
+\State Expand all heads identically; freeze admission checkpoint in evaluation mode
+\State Compute class-aware or control quotas and accepted ID sets
+\For{each synchronization round}
+\State Broadcast shared parameters; reset each active client's Adam state
+\For{each active client and current-data minibatch}
+\State Draw resident replay uniformly; update using the selected continual objective
+\State Capture evaluation-mode teacher; update reservoir only on initial ID pass
+\EndFor
+\State Aggregate submissions by Equation~\eqref{eq:fedavg}; retain persistent memories
+\EndFor
+\State Broadcast final model; update EWC-style importance once on admitted rows if applicable
+\State Evaluate fixed banks; save source, acquisition, collateral and cost accounting
+\end{algorithmic}
+\end{algorithm}
+\subsection{Baseline Methods}
+FT/EI/DR compare learners; DR fixes the defense backbone (Table~\ref{tab:arms}). Optional ER/LwF, balanced memory and validation/ensemble gates need declared information and exploratory budgets.
+
+\subsection{Experimental Design}
+We propose five persistent clients with one source-access-conditioned poisoned client. Draw $\pi_c\sim\operatorname{Dirichlet}(.5,.5,.5,.5,.5)$ once per training-family stratum; assign whole training sessions using their majority label and retain ownership across experiences. Publish realized counts. A dedicated RNG selects the attacked client uniformly among those with eligible E2 Hulk rows. It remains the same across methods/doses. Allocation uses benchmark labels offline; learners receive only currently supplied labels.
+
+\begin{equation}
+\begin{aligned}
+Q_{k,2}&=\lfloor\rho n^{\rm elig}_{k,2}\rfloor,\quad \rho\in\{0,.10,.30,.50\},\\
+G_2&=\frac{Q_{k,2}}{\sum_{k'} n_{k',2}},\quad
+\mathbb E[G_2\mid D]=\frac{\mathbb E_k[\lfloor\rho n^{\rm elig}_{k,2}\rfloor]}{\sum_{k'} n_{k',2}}.
+\end{aligned}
+\label{eq:dose}
+\end{equation}
+This eligible-source amendment avoids saturation of a shard-relative cap. For equal client volumes, $G_2\le\rho/5$, so maximum proposed dose is at most 10\% globally; unequal source-conditioned ownership requires the actual formula. The former balanced 10\% shard dose gave about 2\% globally. Flip nested ID-ranked subsets in E2; withdraw in E3/E4. We log raw, admitted and resident-memory poison fractions.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Primary arms. All admission filters are disabled in E1.}
+\label{tab:arms}
+\begin{tabularx}{\linewidth}{L{1.0cm}L{1.2cm}Y Y Y}
+\toprule
+Code & Learner & Admission & Replay & Role\\
+\midrule
+FT & Fine-tuning & None & None & Learner interaction\\
+EI & EWC-style & None & Importance/anchor only & Learner interaction\\
+DR & DER++ & None & Unique-ID reservoir & Shared learner/defense reference\\
+DG & DER++ & Global nominal 75\% & Same reservoir & Current-rule reference\\
+DM & DER++ & Global ranking, matched quota & Same reservoir & Defense control\\
+DC & DER++ & Class-aware quota & Same reservoir & Proposed heuristic\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Pilots.} Development seeds 101--103 compare $(N_{\rm rnd},N_{\rm ep})=(1,3)$ and $(3,1)$, giving three current-data passes with different synchronization. Proposed default is $(3,1)$; choose the smaller-cost setting meeting clean gates before protocol lock. Require E1 recall at least .50 for each anchor/learner on each seed, and clean E2 Hulk recall at least .70. The .50 gate establishes measurable anchor knowledge and leaves headroom; it does not certify deployment. Compare maximum-dose FT with its clean pair: require mean E2 $\Delta\mathrm{ASR}\ge.10$ and nonnegative damage on each development seed. This proposed margin demands a measurable attack before testing defenses. Failure requires a new development protocol before any stronger attack is tested.
+% VERIFY: validate pilot-dependent recall gates, viability margin and synchronization choice before final protocol registration.
+
+Rates are $10^{-4},10^{-3}$. FT tests two configurations; EI tests six with $\lambda_E\in\{1,10,100\}$; DR tests twelve by crossing rates with $(\lambda_z,\lambda_y)\in\{(.1,.1),(.1,.5),(.5,.1),(.5,.5),(1,.5),(.5,1)\}$. Calibrate EI gradients on development data. Select mean seen-class development F1 with lexicographic ties; recheck gates after tuning. E1 uses that budget without filters. Final seeds are 1--11 and 42.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Proposed upper run budgets; repeated identical controls are reused. One run spans all four supervised experiences.}
+\label{tab:budget}
+\begin{tabularx}{\linewidth}{Y L{4.8cm}L{1.1cm}L{2.5cm}}
+\toprule
+Tier & Formula & Runs & Wall time/run\\
+\midrule
+Synchronization pilot & $3$ learners$\times2$ budgets$\times3$ development seeds & 18 & $\meas$\\
+Extra viability poison pairs & $1$ FT$\times1$ maximum dose$\times3$ seeds & 3 & $\meas$\\
+Clean hyperparameter search & $(2+6+12)\times3$ development seeds & 60 & $\meas$\\
+Primary learners & $3\times4$ doses$\times12$ seeds & 144 & $\meas$\\
+Additional defense arms & $3$ (DG/DM/DC)$\times4\times12$ & 144 & $\meas$\\
+External check & $3$ (DR/DM/DC)$\times2$ doses$\times12$ & 72 & $\meas$\\
+Optional ablations & $6$ changed settings$\times2$ doses$\times12$ & 144 & $\meas$\\
+\bottomrule
+\end{tabularx}
+\end{table}
+The upper total is 585 runs, including 81 development runs; main final testing is 288. The fallback retains twelve seeds and drops DG, external testing and optional ablations: 240 final plus 81 development runs, before reuse. An infeasible budget leaves scope incomplete; all twelve seeds remain required. Record CPU/GPU, RAM, versions, two-thread CPU settings and interruptions. Sum measured tier costs; GPU availability is unknown.
+% VERIFY: measure tier wall times and confirm available host/Colab resources; all run counts are planned budgets.
+
+Seeds randomize ownership, attack selection, row order, initialization, replay and dropout. Substreams index seed/client/stage/round/minibatch/purpose; fixed files, sessions, exclusions and banks do not change. Amend the analysis specification before final runs.
+
+\subsection{Evaluation Metrics}
+All scoring uses fixed reference banks and support-qualified class sets. Define
+\begin{equation}
+\begin{aligned}
+\mathrm{Prec}_c&=\frac{TP_c}{TP_c+FP_c},\quad\mathrm{Rec}_c=\frac{TP_c}{TP_c+FN_c},\quad
+F1_c=\frac{2TP_c}{2TP_c+FP_c+FN_c},\\
+F1_{\rm macro}&=\frac1{|\mathcal C_{\rm eval}|}\sum_{c\in\mathcal C_{\rm eval}}F1_c,\qquad
+\mathrm{FAR}_B=\frac{\#\{i:y_i=c_B,\widehat y_i\ne c_B\}}{N_B}.
+\end{aligned}
+\label{eq:metrics}
+\end{equation}
+Absent support gives $\NA$; a supported unpredicted class scores zero. Confusion counts use cumulative seen banks. Acquisition uses immediate new-family F1:
+\begin{equation}
+A=\tfrac13\sum_{t=2}^4\frac{\sum_{c\in\mathcal C_t^{\rm new}\cap\mathcal C_{\rm eval}}F1_{c,t}}{|\mathcal C_t^{\rm new}\cap\mathcal C_{\rm eval}|}.
+\label{eq:acquisition}
+\end{equation}
+Missing true-family head outputs score zero; empty scoring sets give $\NA$.
+
+\begin{equation}
+\begin{aligned}
+\mathrm{ASR}_t&=\frac{\#\{i:y_i=c_\star,\widehat y_i=c_B\}}{N_\star},\quad
+\Delta\mathrm{ASR}_t=\mathrm{ASR}^{\rho}_t-\mathrm{ASR}^{0}_t,\\
+H&=\tfrac12(\Delta\mathrm{ASR}_3+\Delta\mathrm{ASR}_4),\quad
+\Delta_{\rm rec}=\mathrm{Rec}^{\rho}_{c_\star,2}-\mathrm{Rec}^{0}_{c_\star,2}.
+\end{aligned}
+\label{eq:asr}
+\end{equation}
+$H$ tests persistent source-to-benign damage after withdrawal; $\Delta_{\rm rec}$ tests initial source acquisition damage. Source recall also exposes errors to other attack classes, so it is not the complement of ASR. Clean matching uses each arm's own clean run.
+
+Anchor F1/recall are secondary collateral endpoints on the fixed E1 bank. Later-family predictions into anchors are absent from its precision denominator; we additionally report cumulative-bank anchor precision/F1. Two anchor families yield a coarse, potentially ceiling-prone mean. Per-family trajectories remain visible.
+
+For accuracy matrix $R^{\rm acc}_{t,j}$, and separately named macro-F1 matrix $R^{F1}_{t,j}$, we follow ACC/BWT conventions \cite{gem,clmetrics}:
+\begin{equation}
+\begin{aligned}
+\mathrm{ACC}&=\tfrac1T\sum_{j=1}^TR^{\rm acc}_{T,j},\quad
+\mathrm{BWT}=\tfrac1{T-1}\sum_{j<T}(R^{\rm acc}_{T,j}-R^{\rm acc}_{j,j}),\\
+F&=\tfrac1{T-1}\sum_{j<T}\left(\max_{t'=j,\ldots,T}R^{\rm acc}_{t',j}-R^{\rm acc}_{T,j}\right),\quad
+\mathrm{FWT}=\tfrac1{T-1}\sum_{j=2}^T(R^{\rm acc}_{j-1,j}-\upsilon_j).
+\end{aligned}
+\label{eq:continual}
+\end{equation}
+Forgetting averages old stages with an inclusive maximum through $T$. FWT requires measured pre-learning scores and reference $\upsilon_j$. Sparse-family, admission, memory and cost endpoints are exploratory; Table~\ref{tab:hypotheses} contains all confirmatory tests.
+\begin{equation}
+\mathrm{Ret}_{\rm hon,new}=\frac{N^{\rm adm,hon,new}}{N^{\rm elig,hon,new}},\quad
+\mathrm{Cont}=\frac{N^{\rm poison,replay}}{|\mathcal B|},\quad
+\mathrm{AP}=\sum_\vartheta(\mathrm{Rec}_\vartheta-\mathrm{Rec}_{\vartheta-1})\mathrm{Prec}_\vartheta.
+\label{eq:diagnostics}
+\end{equation}
+For AP only, $\vartheta$ indexes ranked detection thresholds and precision/recall are binary, using score $1-p(c_B)$; AP differs from trapezoidal PR-AUC. Hidden evaluator masks supply retention/contamination after decisions. Empty denominators give $\NA$. We measure trained batch-1/256 latency, throughput, process bytes and serialized updates.
+
+\subsection{Statistical and Comparative Analysis}
+The experimental unit is a complete seeded run. For a declared endpoint $U$, let $\delta_s$ be its paired arm difference. Learner interaction is
+\begin{equation}
+\begin{aligned}
+\mathcal J_s^{\mathsf A,\mathsf B}(\rho;U)&=[U_s^{\mathsf A,\rho}-U_s^{\mathsf A,0}]-[U_s^{\mathsf B,\rho}-U_s^{\mathsf B,0}],\\
+\bar\delta&=\tfrac1n\sum_{s=1}^n\delta_s.
+\end{aligned}
+\label{eq:interaction}
+\end{equation}
+For $U=H$ or recall damage, use the corresponding already-clean-matched endpoint consistently; its zero-dose value is zero. We test symmetric paired-location effects, not independent-flow accuracy. Table~\ref{tab:hypotheses} is a proposed amendment to the prior endpoint families.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Confirmatory hypotheses. All tests are two-sided at $\alpha=.05$; Holm acts within each named family. $\delta_0$ denotes paired-location effect.}
+\label{tab:hypotheses}
+\begin{tabularx}{\linewidth}{L{0.8cm}Y Y L{2.4cm}L{2.5cm}}
+\toprule
+Family & Estimand/endpoint & Comparisons & Null / alternative & Count; role\\
+\midrule
+C1 & Location of learner interaction in $H$ and $\Delta_{\rm rec}$ & Three learner pairs at three nonzero doses, for each endpoint & $H_0:\delta_0=0$; $H_1:\delta_0\ne0$ & 18; poisoning susceptibility\\
+C2 & DC minus DM in acquisition $A$ & Four doses & Same $H_0/H_1$ & 4; legitimate adaptation\\
+C2 & DC minus DM in $H$ and $\Delta_{\rm rec}$ & Three nonzero doses for each endpoint & Same $H_0/H_1$ & 6; defense security\\
+C2 & DC minus DM in clean $\mathrm{FAR}_B$ & Zero dose only & Same $H_0/H_1$ & 1; clean collateral alarm\\
+\bottomrule
+\end{tabularx}
+\end{table}
+We apply Wilcoxon signed ranks with zero differences removed and average tied ranks \cite{wilcoxon}. Conditional sign enumeration computes exact p-values when symmetry is tenable. For ordered p-values $\zeta_h$, Holm compares successively with $.05/(L-h+1)$, where $L$ is the family's count \cite{holm}. All-zero differences give $\mathfrak p=1$ and undefined rank effect. We report mean/median effects and rank-biserial values; severe asymmetry restricts interpretation.
+
+\begin{equation}
+\begin{aligned}
+\delta_b^*&=\tfrac1n\sum_{\kappa=1}^n\delta_{\mathcal I_\kappa},\quad\mathcal I_\kappa\sim\operatorname{Uniform}\{1,\ldots,n\},\\
+\mathrm{CI}_{\rm boot}&=[\operatorname{Quant}_{.025}(\delta^*),\operatorname{Quant}_{.975}(\delta^*)].
+\end{aligned}
+\label{eq:bootstrap}
+\end{equation}
+We resample 10,000 whole-seed vectors. Twelve seeds give uncertain percentile coverage; supplementary intervals invert:
+\begin{equation}
+\begin{aligned}
+\mathcal T_{\delta_0}(\varepsilon)&=\left|\tfrac1n\sum_s\varepsilon_s(\delta_s-\delta_0)\right|,\\
+\mathfrak p_{\delta_0}&=2^{-n}\sum_{\varepsilon\in\{\pm1\}^n}
+\mathbf1\{\mathcal T_{\delta_0}(\varepsilon)\ge|\bar\delta-\delta_0|\},\\
+\mathrm{CI}_{\rm perm}&=\{\delta_0:\mathfrak p_{\delta_0}>.05\}.
+\end{aligned}
+\label{eq:permutation}
+\end{equation}
+Its exact enumeration is conditional on independent, symmetric centered effects; algorithmic pairing does not create randomized treatment assignment. We give interval endpoints as the accepted set's range, with conservative outer bounds if disconnected. These ordinary intervals are not simultaneous Holm-adjusted intervals.
+
+\textbf{Resolution.} With twelve nonzero differences, minimum exact two-sided signed-rank $\mathfrak p=2/2^{12}=0.00048828125$. An eleven-test family begins at $.05/11=0.004545\ldots$; eight differences give minimum .0078125 and nine give .00390625. Thus nine can permit a rejection, while eight cannot initiate Holm rejection. Our eighteen-test C1 begins at .002777\ldots and needs at least ten nonzero pairs even in the most extreme configuration. Ties/zeros and smaller effects reduce sensitivity. These are resolution bounds, not power estimates; sign agreement alone omits rank magnitudes. We retain all twelve seeds. Missing complete pairs suppress confirmatory inference until restored; no numerical imputation is used.
+
+\subsection{Ablation and Component Analysis}
+Six changed settings at clean/maximum dose require 144 optional runs (Table~\ref{tab:ablations}); further extensions need added budgets.
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Exploratory ablations, with matched pairing and information access.}
+\label{tab:ablations}
+\begin{tabularx}{\linewidth}{L{2.1cm}Y Y Y}
+\toprule
+Factor & Levels & Held fixed & Endpoint\\
+\midrule
+Admission composition & DC vs DM & Quotas, client weights, head, learner & $A,H,\Delta_{\rm rec}$\\
+Eviction & Reservoir; unique-ID overflow; class-balanced & 500 records, initial-ID insertion, loss & Class coverage, contamination, $H$\\
+DER++ terms & Full; $\lambda_z=0$; $\lambda_y=0$ & Head mask, data, memory, updates & Source damage and collateral scores\\
+Keep fraction & $.50,.75,.90$ & Class protection, matched quotas & Acquisition/security tradeoff\\
+Protection boundary & 10/20/50 (extra budget) & Keep fraction and local support definition & Honest rare admissions and F1\\
+\bottomrule
+\end{tabularx}
+\end{table}
+An evaluator-only purified-buffer diagnostic uses hidden poison masks and matched capacity/exposure. It probes stored poison but is excluded from deployable-defense claims. Contamination--error correlation alone does not identify mediation.
+
+\subsection{Error and Failure Analysis}
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Failure taxonomy and diagnostic evidence.}
+\label{tab:failure}
+\begin{tabularx}{\linewidth}{L{2.3cm}Y Y}
+\toprule
+Failure & Diagnostic & Interpretation/action\\
+\midrule
+Weak intervention & FT maximum-dose pilot overlaps clean & Report attack infeasibility; revise before final testing.\\
+Acquisition loss & Low E2 source recall; preserved E1 recall & Separate learning damage from forgetting.\\
+Replay persistence & E3/E4 error plus resident poison; purification response & Probe memory involvement with exposure controls.\\
+Honest rejection & Low new-family F1 and honest admissions & Quantify adaptation cost, even if ASR falls.\\
+Decision spillover & Anchor recall/F1 versus cumulative precision & Separate source errors from shared-boundary change.\\
+Data/head defect & Overlap, unsupported labels, inconsistent head order & Reject run; fix implementation before interpretation.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+Inspect family/client/stage confusion matrices. Detector misses, clustering noise and identity churn remain exploratory; clean detector failure blocks adversarial interpretation.
+
+\subsection{Final Research Output}
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Research artifacts and their acceptance evidence.}
+\label{tab:artifacts}
+\begin{tabularx}{\linewidth}{L{3.2cm}Y}
+\toprule
+Artifact & Required evidence\\
+\midrule
+Literature/gap report & Seven sources, verified findings, comparison/taxonomy and traceability.\\
+Data/protocol package & Checksums, sidecar/session rule, feature dictionary, support/exclusion and ownership manifests.\\
+Experiment outputs & Complete paired seeds; configuration/code hashes; source/acquisition/collateral trajectories.\\
+Statistical/cost package & Declared Holm families, effect intervals, failure cases, trained-model time/bytes.\\
+Reproducible manuscript & Every measured claim linked to validated outputs; proposed quantities remain distinguished.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+Report null effects and adaptation harm with acquisition, alarms and measured cost. Incomplete scope stays explicit.
+
+\section{Scope and Validity Threats}
+\textbf{Internal validity.} Group reconstruction, reference-label defects, duplicate content and shared optimizer/head policies can confound comparisons. We require the isolation equations, source support and both pilots before final testing. The proposed admission rule can retain low-loss mislabeled source rows.
+
+\textbf{External validity.} Historical captures and simulated ownership cover conditional benchmark shifts. They do not sample independent organizations. CICIoT2023 supplies a separate audited check; CPU timings and update bytes do not measure physical edge energy or network delay.
+
+\textbf{Construct validity.} Source recall, benign-target error, acquisition and anchor scores measure different outcomes. The local agent follows filtering despite corrupt labels; a fully compromised client has wider capability. Teacher and feature versions affect replay semantics.
+
+\textbf{Conclusion validity.} Twelve seeds provide limited effect resolution and conditional training variability. Signed-rank and permutation interpretation relies on stated symmetry. Ordinary intervals lack simultaneous family coverage. We disclose failed runs, class exclusions and pilot-based protocol amendments.
+
+\appendix
+\section{Source Verification Record and Folder Mapping}
+\label{app:sources}
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Corpus mapping and verified source locations.}
+\label{tab:mapping}
+\begin{tabularx}{\linewidth}{L{2.4cm}L{1.0cm}Y}
+\toprule
+Study & Folder & Verified numerical/section location\\
+\midrule
+Carillo 2026 & 4 & Table IV: 79.05/68.10/74.49; selected 100-round FedProx setting.\\
+Lavaur 2025 & 5 & Section 4.2 clean F1 .966/.945; Section 5.4/Fig. 10 participation dependence; 10,670 runs.\\
+Fuhrman 2025 & 6 & Table II: CICIDS2017 LwF ratios 1.93/2.64; Best-F threshold procedure.\\
+Sameera 2025 & 7 & Section 5.4.1: clean F1 89.791/94.184\%; abstract improvement ranges are setting-dependent.\\
+Cerasuolo 2025 & 8 & Table 7: TON-IoT F1/PAUC and 50-record/nine-packet configuration.\\
+Guo 2025 & 9 & Table 6: 83.4/82.1; Table 12: 76.4; Table 5 is applicability.\\
+Prasad 2026 & 10 & Table 6: .979596/.979392; additive Section 3.3 versus multiplicative Section 4.7 gate.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+The seven folders under \path{docs/papers/paper-N/} total 158 PDF pages. Metadata records access versions and archived rankings. Carillo's template year differs from registered 2026. Former CTWA files remain archived outside the selection.
+
+The exact local files are \path{Monday-WorkingHours.pcap_ISCX.csv}, \path{Tuesday-WorkingHours.pcap_ISCX.csv}, \path{Wednesday-workingHours.pcap_ISCX.csv}, \path{Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv}, \path{Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv}, \path{Friday-WorkingHours-Morning.pcap_ISCX.csv}, \path{Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv}, and \path{Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv}.
+% VERIFY: confirm upstream archive lineage, PCAP/metadata join, timestamp timezone, TCP closure rules and the proposed 120-second session gap.
+% VERIFY: confirm corrected-export alignment and final 50/50/50 support counts before freezing scored families.
+
+\section{Implementation Status}
+\label{app:implementation}
+Table~\ref{tab:implementation} records source inspection \cite{repo}; final-run extensions remain proposed.
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Implementation status and remaining protocol work.}
+\label{tab:implementation}
+\begin{tabularx}{\linewidth}{L{2.0cm}L{4.1cm}L{1.6cm}Y}
+\toprule
+Component & File & Status & Role in protocol\\
+\midrule
+Flow preparation & \path{src/data/clean.py}, \path{src/data/sequence.py} & Partial & T0+T1 offline scaler; T0-only/grouped split and sidecar proposed.\\
+Content audit & \path{src/data/content.py} & Implemented & Float32 signed-zero canonical keys; SHA-256 record extension proposed.\\
+MLP/head & \path{src/models/mlp.py} & Partial & 128/64, dropout .1, expansion; synchronized federated head proposed.\\
+EWC-style state & \path{src/cl/ewc.py} & Implemented & Latest anchor, batch-gradient importance, cap 32; pilot scaling required.\\
+DER++ mechanics & \path{src/cl/derpp.py} & Partial & Masked logits/evaluation teachers implemented; ID reservoir proposed.\\
+Parameters & \path{src/methods.py} & Implemented & Shared learner argument forwarding reused.\\
+Federation & \path{src/federated/fedavg.py} & Partial & Rounds and state supported; persistent grouped skew/optimizer policy proposed.\\
+Admission & \path{src/defenses/purification.py} & Partial & DG rounds global .75; DC/DM ceiling quotas and $n_{\min}=20$ proposed.\\
+Metrics/analysis & \path{src/metrics.py}, \path{docs/analysis_spec.json} & Partial & Matrices/pairing exist; empty-bank guards and endpoint amendment proposed.\\
+Discovery & \path{src/discovery/pipeline.py} & Partial & AE/HDBSCAN hybrid branch; calibration and identity checks exploratory.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{thebibliography}{99}
+\bibitem{phase1} Saneedullah and A. Bilal, ``Continual learning for network security,'' frozen Computer Networks Phase 1 course report, 2026.
+\bibitem{ge} J. Ge, Y. Feng, and K. Sakurai, ``A stage-wise framework using class-incremental learning for unknown DoS attack detection,'' \emph{Future Internet}, vol. 18, no. 3, Art. 145, 2026. \url{https://doi.org/10.3390/fi18030145}.
+\bibitem{wu} Z. Wu, B. He, Z. Si, C. Qiu, X. Liao, and C. Su, ``Communication-efficient federated class-incremental intrusion detection for edge IoT networks,'' \emph{Sensors}, vol. 26, no. 14, Art. 4630, 2026. \url{https://doi.org/10.3390/s26144630}.
+\bibitem{luo} F. Luo, S. Fan, X. Li, and W. Xu, ``Adaptive feature distillation-based continuous authentication against RF fingerprint drift for power equipment,'' \emph{Future Internet}, vol. 18, no. 9, Art. 457, 2026. \url{https://doi.org/10.3390/fi18090457}.
+\bibitem{clarivate} Clarivate, ``Clarivate unveils the 2025 Journal Citation Reports,'' Jun. 18, 2025. \url{https://clarivate.com/news/clarivate-unveils-the-2025-journal-citation-reports/}. This announcement verifies the edition, not individual category quartiles.
+\bibitem{carillo} R. Carillo, F. Cerasuolo, G. Bovenzi, D. Ciuonzo, and A. Pescap\`e, ``A federated and incremental network intrusion detection system for IoT emerging threats,'' \emph{IEEE Trans. Network and Service Management}, vol. 23, pp. 3865--3880, 2026. \url{https://doi.org/10.1109/TNSM.2026.3675031}. Free author PDF: \url{https://domenicociuonzo.wordpress.com/wp-content/uploads/2026/03/early_access_tnsm26_fedcil_ids.pdf}.
+\bibitem{lavaur} L. Lavaur, Y. Busnel, and F. Autrel, ``Investigating the impact of label-flipping attacks against federated learning for collaborative intrusion detection,'' \emph{Computers \& Security}, vol. 156, Art. 104462, 2025. \url{https://doi.org/10.1016/j.cose.2025.104462}. Free PDF: \url{https://orbilu.uni.lu/bitstream/10993/65906/1/Investigating_the_Impact_of_Label_flipping_Attacks_against_Federated_Learning_for_Collaborative_Intrusion_Detection.pdf}.
+\bibitem{cnd} S. Fuhrman, O. Gungor, and T. Rosing, ``CND-IDS: Continual novelty detection for intrusion detection systems,'' in \emph{Proc. ACM/IEEE DAC}, 2025, pp. 1--7. \url{https://doi.org/10.1109/DAC63849.2025.11132541}. Free author PDF: \url{https://arxiv.org/pdf/2502.14094}.
+\bibitem{wei} Sameera K. M., Vinod P., A. Rocha, Rafidha Rehiman K. A., and M. Conti, ``WeiDetect: Weibull distribution-based defense against poisoning attacks in federated learning for network intrusion detection systems,'' \emph{J. Information Security and Applications}, vol. 95, Art. 104275, 2025. \url{https://doi.org/10.1016/j.jisa.2025.104275}. Free author PDF: \url{https://arxiv.org/pdf/2504.04367v2}.
+\bibitem{cerasuolo} F. Cerasuolo, G. Bovenzi, D. Ciuonzo, and A. Pescap\`e, ``Attack-adaptive network intrusion detection systems for IoT networks through class incremental learning,'' \emph{Computer Networks}, vol. 263, Art. 111228, 2025. \url{https://doi.org/10.1016/j.comnet.2025.111228}. Free author PDF: \url{https://domenicociuonzo.wordpress.com/wp-content/uploads/2025/03/comnet25_cil_ids.pdf}.
+\bibitem{guo} C. Guo, X. Li, J. Cheng, S. Yang, and H. Gong, ``Continual learning for intrusion detection under evolving network threats,'' \emph{Future Internet}, vol. 17, no. 10, Art. 456, 2025. \url{https://doi.org/10.3390/fi17100456}. Free PDF: \url{https://mdpi-res.com/d_attachment/futureinternet/futureinternet-17-00456/article_deploy/futureinternet-17-00456.pdf}.
+\bibitem{ensemble} A. Prasad, I. Aljubayri, M. Z. Khan, and A. Noorwali, ``Resilient federated ensemble learning for IoT intrusion detection in adversarial and imbalanced environments,'' \emph{Computer Modeling in Engineering \& Sciences}, vol. 147, no. 3, Art. 48, 2026. \url{https://doi.org/10.32604/cmes.2026.082021}. Free PDF: \url{https://cdn.techscience.cn/files/CMES/2026/TSP_CMES-147-3/TSP_CMES_82021/TSP_CMES_82021.pdf}.
+\bibitem{coteach} B. Han et al., ``Co-teaching: Robust training of deep neural networks with extremely noisy labels,'' in \emph{Advances in Neural Information Processing Systems}, vol. 31, 2018. \url{https://arxiv.org/abs/1804.06872}.
+% VERIFY: optional proceedings page range for Han et al.; existence/title/authors/year verified.
+\bibitem{mentornet} L. Jiang, Z. Zhou, T. Leung, L.-J. Li, and L. Fei-Fei, ``MentorNet: Learning data-driven curriculum for very deep neural networks on corrupted labels,'' in \emph{Proc. ICML}, PMLR, vol. 80, pp. 2304--2313, 2018. \url{https://proceedings.mlr.press/v80/jiang18c.html}.
+\bibitem{fedavg} B. McMahan, E. Moore, D. Ramage, S. Hampson, and B. Ag\"uera y Arcas, ``Communication-efficient learning of deep networks from decentralized data,'' in \emph{Proc. AISTATS}, PMLR, vol. 54, pp. 1273--1282, 2017. \url{https://proceedings.mlr.press/v54/mcmahan17a.html}.
+\bibitem{ewc} J. Kirkpatrick et al., ``Overcoming catastrophic forgetting in neural networks,'' \emph{Proc. National Academy of Sciences}, vol. 114, no. 13, pp. 3521--3526, 2017. \url{https://doi.org/10.1073/pnas.1611835114}.
+\bibitem{lwf} Z. Li and D. Hoiem, ``Learning without forgetting,'' \emph{IEEE Trans. Pattern Analysis and Machine Intelligence}, vol. 40, no. 12, pp. 2935--2947, 2018. \url{https://doi.org/10.1109/TPAMI.2017.2773081}.
+\bibitem{tiny} A. Chaudhry et al., ``On tiny episodic memories in continual learning,'' arXiv:1902.10486, 2019. \url{https://arxiv.org/abs/1902.10486}.
+\bibitem{der} P. Buzzega, M. Boschini, A. Porrello, D. Abati, and S. Calderara, ``Dark experience for general continual learning: A strong, simple baseline,'' in \emph{Advances in Neural Information Processing Systems}, vol. 33, pp. 15920--15930, 2020. \url{https://arxiv.org/abs/2004.07211}.
+\bibitem{adam} D. P. Kingma and J. Ba, ``Adam: A method for stochastic optimization,'' in \emph{Proc. ICLR}, 2015. \url{https://arxiv.org/abs/1412.6980}.
+\bibitem{vitter} J. S. Vitter, ``Random sampling with a reservoir,'' \emph{ACM Trans. Mathematical Software}, vol. 11, no. 1, pp. 37--57, 1985. \url{https://doi.org/10.1145/3147.3165}.
+\bibitem{hsu} T.-M. H. Hsu, H. Qi, and M. Brown, ``Measuring the effects of non-identical data distribution for federated visual classification,'' arXiv:1909.06335, 2019. \url{https://arxiv.org/abs/1909.06335}.
+\bibitem{tolpegin} V. Tolpegin, S. Truex, M. E. Gursoy, and L. Liu, ``Data poisoning attacks against federated learning systems,'' in \emph{Proc. ESORICS}, 2020. \url{https://arxiv.org/abs/2007.08432}.
+% VERIFY: ESORICS volume/page range for Tolpegin et al.; title/authors/year verified.
+\bibitem{krum} P. Blanchard, E. M. El Mhamdi, R. Guerraoui, and J. Stainer, ``Machine learning with adversaries: Byzantine tolerant gradient descent,'' in \emph{Advances in Neural Information Processing Systems}, vol. 30, 2017. \url{https://proceedings.neurips.cc/paper_files/paper/2017/file/f4b9ec30ad9f68f89b29639786cb62ef-Paper.pdf}.
+% VERIFY: optional proceedings page range for Blanchard et al.; title/authors/year verified.
+\bibitem{yin} D. Yin, Y. Chen, R. Kannan, and P. Bartlett, ``Byzantine-robust distributed learning,'' in \emph{Proc. ICML}, PMLR, vol. 80, pp. 5650--5659, 2018. \url{https://proceedings.mlr.press/v80/yin18a.html}.
+\bibitem{dataset} I. Sharafaldin, A. H. Lashkari, and A. A. Ghorbani, ``Toward generating a new intrusion detection dataset and intrusion traffic characterization,'' in \emph{Proc. ICISSP}, 2018, pp. 108--116. \url{https://doi.org/10.5220/0006639801080116}.
+\bibitem{iot} Canadian Institute for Cybersecurity, ``CIC IoT Dataset 2023,'' University of New Brunswick, 2023. \url{https://www.unb.ca/cic/datasets/iotdataset-2023.html}.
+\bibitem{engelen} G. Engelen, V. Rimmer, and W. Joosen, ``Troubleshooting an intrusion detection dataset: The CICIDS2017 case study,'' in \emph{Proc. IEEE Security and Privacy Workshops}, 2021, pp. 7--12. \url{https://doi.org/10.1109/SPW53761.2021.00009}.
+\bibitem{gem} D. Lopez-Paz and M. Ranzato, ``Gradient episodic memory for continual learning,'' in \emph{Advances in Neural Information Processing Systems}, vol. 30, 2017. \url{https://arxiv.org/abs/1706.08840}.
+% VERIFY: optional proceedings page range for Lopez-Paz and Ranzato; title/authors/year verified.
+\bibitem{clmetrics} N. D\'iaz-Rodr\'iguez, V. Lomonaco, D. Filliat, and D. Maltoni, ``Don't forget, there is more than forgetting: New metrics for continual learning,'' arXiv:1810.13166, 2018. \url{https://arxiv.org/abs/1810.13166}.
+\bibitem{wilcoxon} F. Wilcoxon, ``Individual comparisons by ranking methods,'' \emph{Biometrics Bulletin}, vol. 1, no. 6, pp. 80--83, 1945. \url{https://doi.org/10.2307/3001968}.
+\bibitem{holm} S. Holm, ``A simple sequentially rejective multiple test procedure,'' \emph{Scandinavian Journal of Statistics}, vol. 6, no. 2, pp. 65--70, 1979.
+\bibitem{repo} Saneedullah and A. Bilal, ``Federated continual IDS repository implementation status,'' internal source inspection, Oct. 8, 2026. Sources: \path{src/}, \path{data/processed/class_counts_by_day.csv}, \path{data/processed/tasks_chrono_dedup_features.npz}, and \path{docs/analysis_spec.json}.
+\end{thebibliography}
+\end{document}

@@ -92,6 +92,20 @@ def _clean_frame(df: pd.DataFrame, day: str) -> pd.DataFrame:
     if label_col != "Label":
         df = df.rename(columns={label_col: "Label"})
 
+    # Wipe guard (Phase-0 class): metadata columns slated for dropping
+    # (Flow ID, IPs, Timestamp) would coerce to all-NaN below and a later
+    # dropna() would then discard the ENTIRE file. Refuse loudly instead.
+    # Numeric-coercible metadata (ports) passes through untouched, so current
+    # data builds byte-identically.
+    for c in df.columns:
+        if c in DROP_COLS and c != "Label":
+            coerced = pd.to_numeric(df[c], errors="coerce")
+            if int(coerced.notna().sum()) < int(df[c].notna().sum()):
+                raise ValueError(
+                    f"{day}: metadata column {c!r} holds non-numeric values; "
+                    "refusing to coerce-and-drop the file"
+                )
+
     for c in df.columns:
         if c == "Label":
             continue
@@ -120,6 +134,9 @@ def _clean_frame(df: pd.DataFrame, day: str) -> pd.DataFrame:
 
     drop_present = [c for c in df.columns if c in DROP_COLS]
     df = df.drop(columns=drop_present)
+
+    if len(df) == 0:
+        raise ValueError(f"cleaner emptied {day}: refusing to write an empty frame")
 
     stats = {
         "day": day,

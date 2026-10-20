@@ -9,6 +9,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+from src.data.content import feature_row_keys
+
 DAY_ORDER = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 
 ORDERS = {
@@ -54,7 +56,7 @@ def _chrono_split_per_class(
             print(f"  [chrono] {day}: singleton class id={lab} -> train only (no test sample)")
             tr_parts.append(idx)
             continue
-        n_te = max(1, int(round(n * test_size)))
+        n_te = max(1, round(n * test_size))
         n_te = min(n_te, n - 1)  # keep >=1 train sample
         tr_parts.append(idx[: n - n_te])
         te_parts.append(idx[n - n_te :])
@@ -121,6 +123,22 @@ def build_tasks(
 
     tasks = []
     seen_labels: list[str] = []
+    # Monday-benign rows are drawn from one shared pool (the Monday task and
+    # the CII Monday top-up). Sampling each draw with the same seed would hand
+    # the IDENTICAL rows to every task whenever Monday is not first (reverse
+    # order), duplicating benign rows across tasks' train AND test splits.
+    # Track consumed source ids so each draw is disjoint from earlier ones.
+    mon_used_ids: set[int] = set()
+
+    def _take_monday_benign(pool: pd.DataFrame, day: str) -> pd.DataFrame:
+        if mon_used_ids:
+            pool = pool[~pool["_source_row_id"].isin(mon_used_ids)]
+        if len(pool) > benign_per_task:
+            pool = pool.sample(n=benign_per_task, random_state=seed)
+        if mon_used_ids and len(pool) == 0:
+            print(f"  [benign] {day}: monday-benign pool exhausted after exclusions")
+        mon_used_ids.update(pool["_source_row_id"].tolist())
+        return pool
 
     for day in day_order:
         day_df = df[df["day"] == day]
@@ -130,7 +148,9 @@ def build_tasks(
         parts = []
         if scenario == "cii" or day == "monday":
             ben = day_df[day_df["Label"] == BENIGN]
-            if len(ben) > benign_per_task:
+            if day == "monday":
+                ben = _take_monday_benign(ben, day)
+            elif len(ben) > benign_per_task:
                 ben = ben.sample(n=benign_per_task, random_state=seed)
             parts.append(ben)
             if scenario == "ci" and day != "monday":
@@ -141,12 +161,9 @@ def build_tasks(
                 ben = ben.sample(n=benign_per_task, random_state=seed)
             parts.append(ben)
 
-        if scenario == "cii" and day != "monday":
-            if BENIGN not in seen_labels:
-                mon = df[(df["day"] == "monday") & (df["Label"] == BENIGN)]
-                if len(mon) > benign_per_task:
-                    mon = mon.sample(n=benign_per_task, random_state=seed)
-                parts.append(mon)
+        if scenario == "cii" and day != "monday" and BENIGN not in seen_labels:
+            mon = df[(df["day"] == "monday") & (df["Label"] == BENIGN)]
+            parts.append(_take_monday_benign(mon, day))
 
         for a in present_attacks:
             parts.append(day_df[day_df["Label"] == a])
@@ -164,6 +181,9 @@ def build_tasks(
         )
         ids_all = task_df["_source_row_id"].to_numpy(dtype=np.int64)
 
+        if len(y) == 0:
+            print(f"  [tasks] {day}: empty after sampling/exclusions -> skipped")
+            continue
         if len(np.unique(y)) < 2 and day != "monday":
             continue
 
@@ -266,18 +286,24 @@ def fit_scaler_t0_only(tasks: list[dict]) -> list[dict]:
 def exclude_test_content_matches(tasks: list[dict]) -> int:
     """Remove test records matching any train record at model precision.
 
+    Matching is on FEATURES alone (with -0.0 normalized away): a test flow
+    with identical measured features but a conflicting label is the sharpest
+    memorization case, and feature+label matching would hide it. A test row
+    matching another task's train rows is removed just the same — leakage
+    does not respect task boundaries.
     This is used only by the explicit duplicate-disjoint sensitivity arm.
     The source-row split remains unchanged; the exclusion operates on the
     final float32 feature representation seen by the model.
     """
-    def rows(x: np.ndarray, y: np.ndarray) -> np.ndarray:
-        arr = np.ascontiguousarray(np.column_stack((x, y)), dtype=np.float64)
-        return arr.view(f"V{arr.dtype.itemsize * arr.shape[1]}").reshape(-1)
 
-    train_rows = np.concatenate([rows(t["X_train"], t["y_train"]) for t in tasks])
+    if not tasks:
+        return 0
+    train_rows = np.concatenate([feature_row_keys(t["X_train"]) for t in tasks])
     removed = 0
     for task in tasks:
-        keep = ~np.isin(rows(task["X_test"], task["y_test"]), train_rows)
+        if not len(task["X_test"]):
+            continue
+        keep = ~np.isin(feature_row_keys(task["X_test"]), train_rows)
         removed += int((~keep).sum())
         for key in ("X_test", "y_test", "id_test"):
             task[key] = task[key][keep]
@@ -457,6 +483,7 @@ def main():
                    "order": args.order, "scenario": args.scenario,
                    "dedup_content": args.dedup_content,
                    "post_scale_test_exclusion": args.dedup_content,
+                   "post_scale_test_match_basis": "float32-features" if args.dedup_content else None,
                    "note": "chrono ordering is per-class by flow_order, not a global stream"},
         scaler_kind=scaler_kind,
         sources=[{"file": str(args.processed), "sha256": _sha(args.processed)}],

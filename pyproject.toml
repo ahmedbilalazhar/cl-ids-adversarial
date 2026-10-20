@@ -1,7 +1,7 @@
 [project]
 name = "cl-ids-adversarial"
 version = "0.1.0"
-description = "Adversarial evaluation of the novelty-discovery stage in continual-learning intrusion detection (CIC-IDS-2017)."
+description = "Adversarial evaluation of federated continual intrusion detection and novelty discovery."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
@@ -21,7 +21,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "ruff>=0.4"]
+dev = ["pytest==9.1.1", "ruff==0.16.9"]
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -38,3 +38,6 @@ addopts = "-q"
 [tool.ruff]
 target-version = "py311"
 line-length = 100
+# scripts/archive/ is a frozen provenance record (see its README.txt);
+# linting it would rewrite history cosmetically with every rule change.
+exclude = ["scripts/archive"]

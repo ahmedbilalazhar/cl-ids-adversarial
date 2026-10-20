@@ -39,6 +39,9 @@ test:
 	python -m pytest tests/ -q
 
 lint:
+	python -m ruff check src scripts tests --select E7,E9,F63,F7,F82
+
+lint-strict:
 	python -m ruff check src scripts tests
 
 clean:

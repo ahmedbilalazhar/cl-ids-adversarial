@@ -31,7 +31,10 @@ def test_bwt_zero_without_forgetting():
 
 def test_configs_parse():
     cfgs = sorted((ROOT / "configs").rglob("*.yaml"))
-    assert len(cfgs) == 214, f"211 audited configs plus T0, dedup, and E4 label control, got {len(cfgs)}"
+    assert len(cfgs) == 217, (
+        "211 audited plus T0, dedup, E4 label control, and the 3 F2 "
+        f"fine-tune controls (dedup/r2/stable), got {len(cfgs)}"
+    )
     from scripts.groups import GROUPS
     from src.config_validation import validate_config
 
@@ -78,6 +81,12 @@ def test_entrypoint_and_notebook_regressions():
     cells = "".join("".join(cell.get("source", [])) for cell in notebook["cells"])
     assert 'Path("configs/arch").glob("ar_*.yaml")' in cells
     assert "architecture_colab_bundle_v2.zip" in cells
+    # GPU outputs must be manifest-complete (importer requires per-seed
+    # manifests) with manifest-validated resume and a source_commit that the
+    # importer checks against completion manifests.
+    assert "check_artifact" in cells
+    assert "_manifest_seed" in cells
+    assert '"source_commit": manifest' in cells
     makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
     assert "lint:\n\tpython -m ruff check src scripts tests" in makefile.replace("\r\n", "\n")
     assert "|| true" not in makefile
@@ -123,7 +132,12 @@ def test_synthetic_end_to_end_single_and_federated(tmp_path):
     output is rejected."""
 
     from src.reporting import (
-        check_artifact, config_hash, is_complete, save_results, sha256_file, source_tree_hash,
+        check_artifact,
+        config_hash,
+        is_complete,
+        save_results,
+        sha256_file,
+        source_tree_hash,
     )
 
     tmp = tmp_path
@@ -208,6 +222,49 @@ def test_synthetic_end_to_end_single_and_federated(tmp_path):
     else:
         raise AssertionError("federated summary from wrong runner was not rejected")
     assert check_artifact(out, "synth_fed", 7, fed_cfg)["complete"]
+
+
+def test_cli_rerun_across_processes_is_bit_identical(tmp_path):
+    """Same config + seed in two processes and result dirs: identical R bytes
+    and identical manifest output hashes (wall time excluded)."""
+    task_file = tmp_path / "tasks_synth.npz"
+    _synthetic_tasks_file(task_file)
+    cfg = {"name": "synth_rerun", "seed": 7, "device": "cpu", "cl_method": "finetune",
+           "epochs_per_task": 1, "batch_size": 16, "lr": 1e-3,
+           "data": {"scenario": "cii", "tasks": str(task_file)},
+           "feature_names": [f"f{i}" for i in range(8)]}
+    config_path = tmp_path / "rerun.yaml"
+    config_path.write_text(yaml.safe_dump(cfg), encoding="utf-8")
+    env = dict(os.environ, CL_THREADS="1")
+    outs = []
+    for tag in ("a", "b"):
+        out = tmp_path / tag
+        subprocess.run(
+            [sys.executable, "-m", "src.run_experiment", "--config", str(config_path),
+             "--results-dir", str(out)], cwd=ROOT, env=env,
+            check=True, capture_output=True, text=True,
+        )
+        outs.append(out / "runs")
+    first = (outs[0] / "synth_rerun_R_seed7.csv").read_bytes()
+    assert first == (outs[1] / "synth_rerun_R_seed7.csv").read_bytes()
+    summaries = [json.loads((o / "synth_rerun_summary_seed7.json").read_text(encoding="utf-8"))
+                 for o in outs]
+    assert {k: v for k, v in summaries[0].items() if k != "wall_sec"} == \
+        {k: v for k, v in summaries[1].items() if k != "wall_sec"}
+    manifests = [json.loads((o / "synth_rerun_manifest_seed7.json").read_text(encoding="utf-8"))
+                 for o in outs]
+    # R bytes are identical, so the matrix hash must match exactly.
+    assert manifests[0]["r_sha256"] == manifests[1]["r_sha256"]
+    # Summary files embed the run's own wall time, so their hashes differ
+    # by construction; normalizing wall time must reproduce identical bytes.
+    import hashlib
+
+    normalized = [
+        json.dumps({**s, "wall_sec": 0.0}, indent=2, sort_keys=True).encode()
+        for s in summaries
+    ]
+    assert hashlib.sha256(normalized[0]).hexdigest() == \
+        hashlib.sha256(normalized[1]).hexdigest()
 
 
 def test_reporting_rejects_unmanifested_federated_without_fed():

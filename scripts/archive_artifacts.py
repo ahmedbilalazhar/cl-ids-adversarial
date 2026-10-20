@@ -33,6 +33,39 @@ def root_path(raw: str) -> Path:
     return (path if path.is_absolute() else ROOT / path).resolve()
 
 
+def move_verified(sources: list[Path], records: list[dict], dest: Path) -> list[dict]:
+    """Move files into an existing archive dir, verifying hashes after move.
+
+    Returns the records that landed. On any failure the caller still knows
+    exactly what moved (no silent partial state).
+    """
+    moved: list[dict] = []
+    for path, rec in zip(sources, records):
+        target = dest / path.name
+        shutil.move(str(path), str(target))
+        if sha256(target) != rec["sha256"]:
+            raise OSError(f"archive copy failed checksum verification: {target}")
+        moved.append(rec)
+    return moved
+
+
+def write_manifest(dest: Path, *, reason: str, commit: str, moved: list[dict],
+                   complete: bool, error: str = "") -> None:
+    manifest = {"superseded_by": reason, "source_commit": commit,
+                "created_utc": datetime.now(UTC).isoformat(),
+                "complete": complete, "error": error,
+                "n_files": len(moved), "files": moved}
+    fd, tmp = tempfile.mkstemp(dir=dest, prefix=".manifest.", suffix=".json")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(manifest, f, indent=2)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, dest / "manifest.json")
+    finally:
+        Path(tmp).unlink(missing_ok=True)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("destination")
@@ -61,23 +94,18 @@ def main() -> None:
                 "file": p.name, "sha256": sha256(p)} for p in sources]
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     dest.mkdir(parents=True)
-    for path, rec in zip(sources, records):
-        target = dest / path.name
-        shutil.move(str(path), str(target))
-        if sha256(target) != rec["sha256"]:
-            raise OSError(f"archive copy failed checksum verification: {target}")
-    manifest = {"superseded_by": args.reason, "source_commit": commit,
-                "created_utc": datetime.now(UTC).isoformat(), "n_files": len(records),
-                "files": records}
-    fd, tmp = tempfile.mkstemp(dir=dest, prefix=".manifest.", suffix=".json")
     try:
-        with os.fdopen(fd, "w", encoding="utf-8") as f:
-            json.dump(manifest, f, indent=2)
-            f.flush()
-            os.fsync(f.fileno())
-        os.replace(tmp, dest / "manifest.json")
-    finally:
-        Path(tmp).unlink(missing_ok=True)
+        moved = move_verified(sources, records, dest)
+    except BaseException as exc:
+        # A mid-move crash must never leave undescribed partial state: record
+        # exactly what landed so recovery is mechanical, then re-raise.
+        moved = [{"source": r["source"], "file": r["file"], "sha256": r["sha256"]}
+                 for r in records
+                 if (dest / r["file"]).is_file() and sha256(dest / r["file"]) == r["sha256"]]
+        write_manifest(dest, reason=args.reason, commit=commit, moved=moved,
+                       complete=False, error=f"{type(exc).__name__}: {exc}")
+        raise
+    write_manifest(dest, reason=args.reason, commit=commit, moved=moved, complete=True)
     print(f"Archived {len(records)} files to {dest}")
 
 

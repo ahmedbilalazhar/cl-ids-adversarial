@@ -6,7 +6,6 @@ from pathlib import Path
 
 import numpy as np
 import torch
-import torch.nn.functional as F
 
 from src.attacks.backdoor import backdoor_outcome, inject_backdoor, scaled_trigger
 from src.attacks.byzantine import (
@@ -16,12 +15,17 @@ from src.attacks.byzantine import (
     sign_flip_delta,
     to_deltas,
 )
-from src.attacks.flip import label_flip, majority_attack_class, resolve_attack_target, resolve_class_id
+from src.attacks.flip import (
+    label_flip,
+    majority_attack_class,
+    resolve_attack_target,
+    resolve_class_id,
+)
 from src.cl.base import set_seed, to_loader
 from src.data.sequence import load_feature_cols
 from src.defenses.consistency import knn_consistency_filter
 from src.defenses.purification import small_loss_filter
-from src.federated.partition import dirichlet_partition
+from src.federated.partition import dirichlet_partition, stable_partition
 from src.federated.robust import (
     DynamicTrust,
     fedavg_deltas,
@@ -30,8 +34,8 @@ from src.federated.robust import (
     multi_krum_deltas,
     trimmed_mean_deltas,
 )
+from src.methods import METHODS, learner_kwargs
 from src.metrics import summarize
-from src.methods import METHODS
 from src.models import build_model
 from src.paths import resolve_repo_path
 from src.tasks import load_or_build_tasks
@@ -42,6 +46,34 @@ def _predict(model: torch.nn.Module, X: np.ndarray, device: str) -> np.ndarray:
     with torch.no_grad():
         logits = model(torch.from_numpy(X).to(device))
         return logits.argmax(dim=1).cpu().numpy()
+
+
+def _class_counts(y: np.ndarray) -> dict:
+    """JSON-able per-class sample counts for one shard."""
+    y = np.asarray(y)
+    if len(y) == 0:
+        return {}
+    unique, counts = np.unique(y, return_counts=True)
+    return {str(int(k)): int(v) for k, v in zip(unique, counts)}
+
+
+def _buffer_report(method, in_dim: int, n_classes: int) -> dict:
+    """Replay buffer occupancy, class mix, and byte estimate (0 when absent)."""
+    buf = getattr(method, "buffer_y", None)
+    if buf is None:
+        return {"buffer_n": 0, "buffer_class_counts": {}, "buffer_bytes_est": 0}
+    n = len(buf)
+    counts = _class_counts(np.asarray(buf, dtype=np.int64))
+    # float32 features + int64 labels per row, plus DER++ stored logits.
+    total = n * (in_dim * 4 + 8)
+    logits = getattr(method, "buffer_logits", None)
+    if logits:
+        total += len(logits) * n_classes * 4
+    return {"buffer_n": n, "buffer_class_counts": counts, "buffer_bytes_est": int(total)}
+
+
+def _comm_bytes(state_dict: dict) -> int:
+    return int(sum(v.numel() * v.element_size() for v in state_dict.values()))
 
 
 def _poison_shard(
@@ -120,11 +152,106 @@ def _poison_shard(
 
 
 def _fedavg(state_dicts: list[dict], weights: list[float]) -> dict:
+    if len(weights) != len(state_dicts) or not state_dicts:
+        raise ValueError("FedAvg weights must match nonempty submissions")
+    if not np.isfinite(weights).all() or any(w < 0 for w in weights):
+        raise ValueError("FedAvg weights must be finite and nonnegative")
     total = float(sum(weights))
+    if not np.isfinite(total) or total <= 0:
+        raise ValueError("FedAvg requires positive total weight")
     out = {}
     for k in state_dicts[0]:
         out[k] = sum(sd[k] * (w / total) for sd, w in zip(state_dicts, weights))
     return out
+
+
+def _aggregate_updates(sds, ws, global_sd, active_idx, *, aggregator, trim_ratio,
+                       n_mal, up_method, up_attack, mal_ids, trust, device):
+    """Aggregate one round of client submissions.
+
+    Returns (agg_state_dict, excluded_clients). The plain-FedAvg path is the
+    locked bit-identical weighted average; unweighted rules aggregate over
+    participating clients only. A fully inactive round keeps global weights.
+    """
+    n_clients = len(sds)
+    excluded = [k for k in range(n_clients) if k not in active_idx]
+    if not active_idx:
+        # There is no update to aggregate, even on the plain weighted path.
+        return {k: v.to(device) for k, v in global_sd.items()}, (
+            [] if aggregator == "fedavg" else excluded
+        )
+    if aggregator == "fedavg" and not up_method:
+        # Locked path: bit-identical weighted model averaging (all F2/F4
+        # results). Robust rules and update-attacks use the delta path.
+        return _fedavg([{k: v.to(device) for k, v in sd.items()} for sd in sds], ws), []
+    # Update-level Byzantine attack: substitute malicious submissions.
+    if up_method in ("sign_flip", "model_replacement"):
+        for k in mal_ids:
+            if k not in active_idx:
+                continue
+            d = to_deltas(
+                {kk: vv.to("cpu") for kk, vv in sds[k].items()},
+                {kk: vv.to("cpu") for kk, vv in global_sd.items()},
+            )
+            if up_method == "sign_flip":
+                d = sign_flip_delta(d, scale=float(up_attack.get("scale", 1.0)))
+            else:
+                d = model_replacement_delta(d, boost=float(up_attack.get("boost", 5.0)))
+            sds[k] = from_deltas(d, {kk: vv.to("cpu") for kk, vv in global_sd.items()})
+    elif up_method == "lie":
+        ben = [
+            to_deltas(
+                {kk: vv.to("cpu") for kk, vv in sds[k].items()},
+                {kk: vv.to("cpu") for kk, vv in global_sd.items()},
+            )
+            for k in active_idx
+            if k not in mal_ids
+        ]
+        if not ben:
+            raise ValueError("LIE attack requires an active honest reference update")
+        crafted = little_is_enough(
+            ben, z=float(up_attack.get("z", 1.5)),
+            direction=str(up_attack.get("direction", "neg")),
+        )
+        for k in mal_ids:
+            if k not in active_idx:
+                continue
+            sds[k] = from_deltas(
+                crafted, {kk: vv.to("cpu") for kk, vv in global_sd.items()}
+            )
+    elif up_method is not None:
+        raise ValueError(f"Unknown update_attack method: {up_method}")
+    deltas = [
+        to_deltas(
+            {kk: vv.to("cpu") for kk, vv in sd.items()},
+            {kk: vv.to("cpu") for kk, vv in global_sd.items()},
+        )
+        for sd in sds
+    ]
+    active_deltas = [deltas[k] for k in active_idx]
+    if aggregator in ("fedavg",):
+        agg_d = fedavg_deltas(deltas, ws)
+    elif aggregator == "trimmed_mean":
+        agg_d = trimmed_mean_deltas(active_deltas, trim_ratio=trim_ratio)
+    elif aggregator == "median":
+        agg_d = median_deltas(active_deltas)
+    elif aggregator == "krum":
+        agg_d = krum_deltas(active_deltas, n_mal=n_mal)
+    elif aggregator == "multi_krum":
+        agg_d = multi_krum_deltas(active_deltas, n_mal=n_mal)
+    elif aggregator == "dynamic_trust":
+        agg_d = trust(active_deltas, index=active_idx)
+    else:
+        raise ValueError(f"Unknown aggregator: {aggregator}")
+    agg = {
+        k: (global_sd[k].float().to(device) + agg_d[k].to(device))
+        for k in agg_d
+    }
+    if aggregator == "fedavg":
+        # Weighted FedAvg neutralizes inactive submissions via weight 0, so
+        # only unweighted rules record exclusions.
+        return agg, []
+    return agg, excluded
 
 
 def run_federated(cfg: dict) -> dict:
@@ -134,7 +261,9 @@ def run_federated(cfg: dict) -> dict:
           malicious_ids (default [malicious_id]; fraction sweep),
           alpha (0.5), local_epochs (default = epochs_per_task),
           aggregator (fedavg|trimmed_mean|median|krum|multi_krum|dynamic_trust),
-          trim_ratio (0.2), n_mal (assumed #malicious for krum)}
+          trim_ratio (0.2), n_mal (assumed #malicious for krum),
+          partition (dirichlet|stable; default dirichlet),
+          rounds (positive int; default 1)}
     attack: same schema as single-node; applied ONLY to malicious clients'
       shards at `budget` fraction of each shard. PLUS optional
       attack.update_attack {method: sign_flip|lie|model_replacement, ...}
@@ -153,6 +282,12 @@ def run_federated(cfg: dict) -> dict:
     trim_ratio = float(fed.get("trim_ratio", 0.2))
     n_mal = int(fed.get("n_mal", len(mal_ids)))
     alpha = float(fed.get("alpha", 0.5))
+    partition = str(fed.get("partition", "dirichlet"))
+    if partition not in {"dirichlet", "stable"}:
+        raise ValueError(f"unknown fed partition: {partition!r}")
+    rounds = fed.get("rounds", 1)
+    if isinstance(rounds, bool) or not isinstance(rounds, int) or rounds < 1:
+        raise ValueError("fed rounds must be a positive int")
     local_epochs = int(fed.get("local_epochs", cfg.get("epochs_per_task", 3)))
     batch_size = int(cfg.get("batch_size", 256))
     attack = cfg.get("attack") or {}
@@ -178,10 +313,8 @@ def run_federated(cfg: dict) -> dict:
 
     method_name = cfg.get("cl_method", "er")
     method_cls = METHODS[method_name]
-    method_kwargs = {k: cfg[k] for k in ("buffer_size", "ewc_lambda", "alpha", "beta", "temperature", "lr") if k in cfg}
-    method_kwargs.setdefault("lr", float(cfg.get("lr", 1e-3)))
+    method_kwargs = learner_kwargs(cfg)
 
-    from src.models import build_model
 
     server = build_model(cfg, in_dim, n_classes)
     server.to(device)
@@ -195,149 +328,278 @@ def run_federated(cfg: dict) -> dict:
     R = np.zeros((len(tasks), len(tasks)))
     asr_rows = []
     poison_frac_rows = []
+    fed_exclusions = []
+    fed_round_rows = []
 
     for t in range(len(tasks)):
         X_pool = tasks[t]["X_train"]
         y_pool = tasks[t]["y_train"]
-        shards = dirichlet_partition(y_pool, n_clients=n_clients, alpha=alpha, seed=seed + 1000 + t)
+        if partition == "stable":
+            # Identity-stable site proxy: same source row -> same client,
+            # every task and rerun. Approximately IID by design (see
+            # stable_partition docstring); never a non-IID control.
+            if "id_train" not in tasks[t]:
+                raise ValueError(
+                    "stable partition needs source row ids (v2 task artifacts); "
+                    f"task {t} has none — regenerate or use dirichlet")
+            shards = stable_partition(tasks[t]["id_train"], n_clients=n_clients)
+        else:
+            shards = dirichlet_partition(y_pool, n_clients=n_clients, alpha=alpha, seed=seed + 1000 + t)
         assert sum(len(s) for s in shards) == len(y_pool)
         # Broadcast current global weights to all clients.
         global_sd = server.state_dict()
         for m in clients:
             m.model.load_state_dict(copy.deepcopy(global_sd), strict=True)
 
-        sds, ws = [], []
-        for k in range(n_clients):
-            idx = shards[k]
-            Xk, yk = X_pool[idx].copy(), y_pool[idx].copy()
-            frac = 0.0
-            eligible = changed = 0
-            if len(yk) == 0:
-                # Dirichlet skew can leave a client with zero samples on small
-                # tasks. It sits out the round: contributes its (broadcast)
-                # weights at aggregation weight 0. No data is moved between
-                # clients, so the non-IID construction is preserved.
+        if rounds == 1:
+            sds, ws = [], []
+            participated = []
+            for k in range(n_clients):
+                idx = shards[k]
+                Xk, yk = X_pool[idx].copy(), y_pool[idx].copy()
+                frac = 0.0
+                eligible = changed = 0
+                pre_n = len(yk)
+                counts_pre = _class_counts(yk)
+                if len(yk) == 0:
+                    # Dirichlet skew can leave a client with zero samples on small
+                    # tasks. It sits out the round: contributes its (broadcast)
+                    # weights at aggregation weight 0. No data is moved between
+                    # clients, so the non-IID construction is preserved.
+                    m = clients[k]
+                    m.model.load_state_dict(copy.deepcopy(global_sd), strict=True)
+                    submitted = {kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()}
+                    sds.append(submitted)
+                    ws.append(0.0)
+                    buf = _buffer_report(m, in_dim, n_classes)
+                    poison_frac_rows.append({"task": t, "client": k, "poison_fraction": 0.0,
+                                             "n": 0, "eligible": 0, "changed": 0,
+                                             "labels_changed": 0, "configured_shard_budget": budget,
+                                             "retained_after_defense": 0,
+                                             "pre_defense_n": 0, "post_defense_n": 0,
+                                             "class_counts_pre": {}, "class_counts_post": {},
+                                             "participated": False, "optimizer_steps": 0,
+                                             "comm_bytes": _comm_bytes(submitted), **buf})
+                    participated.append(False)
+                    continue
+                if k in mal_ids and budget > 0 and len(yk):
+                    Xk, yk, meta = _poison_shard(
+                        Xk, yk, attack, label_map, feature_names, seed=seed + t,
+                        model=clients[k].model, device=device, trigger=trigger,
+                    )
+                    frac = meta["fraction"]
+                    eligible = meta.get("eligible", 0)
+                    changed = meta.get("changed", int(meta["poisoned"].sum()))
+                poison_frac_rows.append({"task": t, "client": k, "poison_fraction": frac,
+                                         "n": len(yk), "eligible": eligible, "changed": changed,
+                                         "labels_changed": meta.get("labels_changed", 0) if k in mal_ids and budget > 0 else 0,
+                                         "configured_shard_budget": budget if k in mal_ids else 0.0,
+                                         "source_class": meta.get("source_class") if k in mal_ids and budget > 0 else None,
+                                         "retained_after_defense": changed,
+                                         "pre_defense_n": pre_n, "class_counts_pre": counts_pre,
+                                         "post_defense_n": len(yk), "class_counts_post": _class_counts(yk),
+                                         "participated": True, "optimizer_steps": 0, "comm_bytes": 0,
+                                         "buffer_n": 0, "buffer_class_counts": {},
+                                         "buffer_bytes_est": 0})
                 m = clients[k]
-                m.model.load_state_dict(copy.deepcopy(global_sd), strict=True)
-                sds.append({kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()})
-                ws.append(0.0)
-                poison_frac_rows.append({"task": t, "client": k, "poison_fraction": 0.0,
-                                         "n": 0, "eligible": 0, "changed": 0,
-                                         "labels_changed": 0, "configured_shard_budget": budget,
-                                         "retained_after_defense": 0})
-                continue
-            if k in mal_ids and budget > 0 and len(yk):
-                Xk, yk, meta = _poison_shard(
-                    Xk, yk, attack, label_map, feature_names, seed=seed + t,
-                    model=clients[k].model, device=device, trigger=trigger,
-                )
-                frac = meta["fraction"]
-                eligible = meta.get("eligible", 0)
-                changed = meta.get("changed", int(meta["poisoned"].sum()))
-            poison_frac_rows.append({"task": t, "client": k, "poison_fraction": frac,
-                                     "n": len(yk), "eligible": eligible, "changed": changed,
-                                     "labels_changed": meta.get("labels_changed", 0) if k in mal_ids and budget > 0 else 0,
-                                     "configured_shard_budget": budget if k in mal_ids else 0.0,
-                                     "source_class": meta.get("source_class") if k in mal_ids and budget > 0 else None,
-                                     "retained_after_defense": changed})
-            m = clients[k]
-            # Per-client pre-training defense filter (mirrors single-node
-            # run_experiment: applied to the shard AFTER poisoning, using the
-            # client's carried-over model, before before_task/train_task).
-            if defense.get("type") == "small_loss" and len(yk):
-                keep = small_loss_filter(
-                    m.model, Xk, yk, keep_ratio=float(defense.get("keep_ratio", 0.75)), device=device
-                )
-                Xk, yk = Xk[keep], yk[keep]
-                if k in mal_ids and budget > 0:
-                    poison_frac_rows[-1]["retained_after_defense"] = int((meta["poisoned"] & keep).sum())
-            elif defense.get("type") == "knn_consistency" and len(yk):
-                keep = knn_consistency_filter(
-                    Xk, yk, k=int(defense.get("k", 10)), keep_ratio=float(defense.get("keep_ratio", 0.75))
-                )
-                Xk, yk = Xk[keep], yk[keep]
-                if k in mal_ids and budget > 0:
-                    poison_frac_rows[-1]["retained_after_defense"] = int((meta["poisoned"] & keep).sum())
-            if len(yk) == 0:
-                m.model.load_state_dict(copy.deepcopy(global_sd), strict=True)
-                sds.append({kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()})
-                ws.append(0.0)
-                continue
-            loader = to_loader(Xk, yk, batch_size=batch_size, shuffle=True)
-            class_bound = int(max(n_classes, int(yk.max()) + 1)) if len(yk) else n_classes
-            m.before_task(t, loader, class_bound=class_bound)
-            m.train_task(loader, epochs=local_epochs)
-            m.after_task(t, loader)
-            sds.append({kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()})
-            ws.append(float(len(yk)))
+                # Per-client pre-training defense filter (mirrors single-node
+                # run_experiment: applied to the shard AFTER poisoning, using the
+                # client's carried-over model, before before_task/train_task).
+                if defense.get("type") == "small_loss" and len(yk):
+                    keep = small_loss_filter(
+                        m.model, Xk, yk, keep_ratio=float(defense.get("keep_ratio", 0.75)), device=device
+                    )
+                    Xk, yk = Xk[keep], yk[keep]
+                    if k in mal_ids and budget > 0:
+                        poison_frac_rows[-1]["retained_after_defense"] = int((meta["poisoned"] & keep).sum())
+                elif defense.get("type") == "knn_consistency" and len(yk):
+                    keep = knn_consistency_filter(
+                        Xk, yk, k=int(defense.get("k", 10)), keep_ratio=float(defense.get("keep_ratio", 0.75))
+                    )
+                    Xk, yk = Xk[keep], yk[keep]
+                    if k in mal_ids and budget > 0:
+                        poison_frac_rows[-1]["retained_after_defense"] = int((meta["poisoned"] & keep).sum())
+                post_n = len(yk)
+                poison_frac_rows[-1]["post_defense_n"] = post_n
+                poison_frac_rows[-1]["class_counts_post"] = _class_counts(yk)
+                if len(yk) == 0:
+                    m.model.load_state_dict(copy.deepcopy(global_sd), strict=True)
+                    submitted = {kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()}
+                    sds.append(submitted)
+                    ws.append(0.0)
+                    poison_frac_rows[-1].update(
+                        {"participated": False, "optimizer_steps": 0,
+                         "comm_bytes": _comm_bytes(submitted), **_buffer_report(m, in_dim, n_classes)})
+                    participated.append(False)
+                    continue
+                loader = to_loader(Xk, yk, batch_size=batch_size, shuffle=True)
+                class_bound = int(max(n_classes, int(yk.max()) + 1)) if len(yk) else n_classes
+                m.before_task(t, loader, class_bound=class_bound)
+                m.train_task(loader, epochs=local_epochs)
+                m.after_task(t, loader)
+                submitted = {kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()}
+                sds.append(submitted)
+                ws.append(float(len(yk)))
+                steps = int(local_epochs * ((post_n + batch_size - 1) // batch_size))
+                poison_frac_rows[-1].update(
+                    {"participated": True, "optimizer_steps": steps,
+                     "comm_bytes": _comm_bytes(submitted), **_buffer_report(m, in_dim, n_classes)})
+                participated.append(True)
 
-        if aggregator == "fedavg" and not up_method:
-            # Locked path: bit-identical weighted model averaging (all F2/F4
-            # results). Robust rules and update-attacks use the delta path.
-            agg = _fedavg([{k: v.to(device) for k, v in sd.items()} for sd in sds], ws)
+            # Inactive clients submit broadcast copies (zero deltas). Weighted
+            # FedAvg already neutralizes them via weight 0. Unweighted rules
+            # would count a zero delta as a real vote, so they aggregate over
+            # participating clients only; the exclusion is recorded below.
+            active_idx = [k for k, part in enumerate(participated) if part]
+            agg, excluded = _aggregate_updates(
+                sds, ws, global_sd, active_idx, aggregator=aggregator,
+                trim_ratio=trim_ratio, n_mal=n_mal, up_method=up_method,
+                up_attack=up_attack, mal_ids=mal_ids, trust=trust, device=device)
+            if excluded:
+                fed_exclusions.append({"task": t, "excluded_clients": excluded,
+                                       "aggregator": aggregator})
+            server.load_state_dict(agg, strict=True)
+            # EWC anchor ~= global solution after broadcast (Fisher stays local).
+            for m in clients:
+                if hasattr(m, "anchor") and m.anchor:
+                    m.anchor = {n: p.detach().clone() for n, p in m.model.named_parameters() if p.requires_grad}
+                    m.model.load_state_dict(copy.deepcopy(agg), strict=True)
+
         else:
-            # Update-level Byzantine attack: substitute malicious submissions.
-            if up_method in ("sign_flip", "model_replacement"):
-                for k in mal_ids:
-                    d = to_deltas(
-                        {kk: vv.to("cpu") for kk, vv in sds[k].items()},
-                        {kk: vv.to("cpu") for kk, vv in global_sd.items()},
+            # Multi-round flow: poison + defend ONCE per task (dose is a
+            # task-level property; re-poisoning would double-count), then
+            # repeat broadcast -> train -> aggregate. before_task runs on
+            # round 0 only; after_task (e.g. EWC Fisher) once after the final
+            # round. Dose rows mirror the legacy schema with final-round
+            # optimizer/buffer figures; per-round work lands in fed_round_rows.
+            prepared: list = []
+            dose_row_idx: list[int] = []
+            for k in range(n_clients):
+                idx = shards[k]
+                Xk, yk = X_pool[idx].copy(), y_pool[idx].copy()
+                frac = 0.0
+                eligible = changed = 0
+                pre_n = len(yk)
+                counts_pre = _class_counts(yk)
+                if len(yk) == 0:
+                    m = clients[k]
+                    m.model.load_state_dict(copy.deepcopy(server.state_dict()), strict=True)
+                    submitted = {kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()}
+                    buf = _buffer_report(m, in_dim, n_classes)
+                    dose_row_idx.append(len(poison_frac_rows))
+                    poison_frac_rows.append({"task": t, "client": k, "poison_fraction": 0.0,
+                                             "n": 0, "eligible": 0, "changed": 0,
+                                             "labels_changed": 0, "configured_shard_budget": budget,
+                                             "retained_after_defense": 0,
+                                             "pre_defense_n": 0, "post_defense_n": 0,
+                                             "class_counts_pre": {}, "class_counts_post": {},
+                                             "participated": False, "optimizer_steps": 0,
+                                             "comm_bytes": _comm_bytes(submitted), **buf})
+                    prepared.append(None)
+                    continue
+                if k in mal_ids and budget > 0 and len(yk):
+                    Xk, yk, meta = _poison_shard(
+                        Xk, yk, attack, label_map, feature_names, seed=seed + t,
+                        model=clients[k].model, device=device, trigger=trigger,
                     )
-                    if up_method == "sign_flip":
-                        d = sign_flip_delta(d, scale=float(up_attack.get("scale", 1.0)))
-                    else:
-                        d = model_replacement_delta(d, boost=float(up_attack.get("boost", 5.0)))
-                    sds[k] = from_deltas(d, {kk: vv.to("cpu") for kk, vv in global_sd.items()})
-            elif up_method == "lie":
-                ben = [
-                    to_deltas(
-                        {kk: vv.to("cpu") for kk, vv in sds[k].items()},
-                        {kk: vv.to("cpu") for kk, vv in global_sd.items()},
+                    frac = meta["fraction"]
+                    eligible = meta.get("eligible", 0)
+                    changed = meta.get("changed", int(meta["poisoned"].sum()))
+                poison_frac_rows.append({"task": t, "client": k, "poison_fraction": frac,
+                                         "n": len(yk), "eligible": eligible, "changed": changed,
+                                         "labels_changed": meta.get("labels_changed", 0) if k in mal_ids and budget > 0 else 0,
+                                         "configured_shard_budget": budget if k in mal_ids else 0.0,
+                                         "source_class": meta.get("source_class") if k in mal_ids and budget > 0 else None,
+                                         "retained_after_defense": changed,
+                                         "pre_defense_n": pre_n, "class_counts_pre": counts_pre,
+                                         "post_defense_n": len(yk), "class_counts_post": _class_counts(yk),
+                                         "participated": True, "optimizer_steps": 0, "comm_bytes": 0,
+                                         "buffer_n": 0, "buffer_class_counts": {},
+                                         "buffer_bytes_est": 0})
+                m = clients[k]
+                if defense.get("type") == "small_loss" and len(yk):
+                    keep = small_loss_filter(
+                        m.model, Xk, yk, keep_ratio=float(defense.get("keep_ratio", 0.75)), device=device
                     )
-                    for k in range(n_clients)
-                    if k not in mal_ids
-                ]
-                crafted = little_is_enough(
-                    ben, z=float(up_attack.get("z", 1.5)),
-                    direction=str(up_attack.get("direction", "neg")),
-                )
-                for k in mal_ids:
-                    sds[k] = from_deltas(
-                        crafted, {kk: vv.to("cpu") for kk, vv in global_sd.items()}
+                    Xk, yk = Xk[keep], yk[keep]
+                    if k in mal_ids and budget > 0:
+                        poison_frac_rows[-1]["retained_after_defense"] = int((meta["poisoned"] & keep).sum())
+                elif defense.get("type") == "knn_consistency" and len(yk):
+                    keep = knn_consistency_filter(
+                        Xk, yk, k=int(defense.get("k", 10)), keep_ratio=float(defense.get("keep_ratio", 0.75))
                     )
-            elif up_method is not None:
-                raise ValueError(f"Unknown update_attack method: {up_method}")
-            deltas = [
-                to_deltas(
-                    {kk: vv.to("cpu") for kk, vv in sd.items()},
-                    {kk: vv.to("cpu") for kk, vv in global_sd.items()},
-                )
-                for sd in sds
-            ]
-            if aggregator in ("fedavg",):
-                agg_d = fedavg_deltas(deltas, ws)
-            elif aggregator == "trimmed_mean":
-                agg_d = trimmed_mean_deltas(deltas, trim_ratio=trim_ratio)
-            elif aggregator == "median":
-                agg_d = median_deltas(deltas)
-            elif aggregator == "krum":
-                agg_d = krum_deltas(deltas, n_mal=n_mal)
-            elif aggregator == "multi_krum":
-                agg_d = multi_krum_deltas(deltas, n_mal=n_mal)
-            elif aggregator == "dynamic_trust":
-                agg_d = trust(deltas, ws)
-            else:
-                raise ValueError(f"Unknown aggregator: {aggregator}")
-            agg = {
-                k: (global_sd[k].float().to(device) + agg_d[k].to(device))
-                for k in agg_d
-            }
-        server.load_state_dict(agg, strict=True)
-        # EWC anchor ~= global solution after broadcast (Fisher stays local).
-        for m in clients:
-            if hasattr(m, "anchor") and m.anchor:
-                m.anchor = {n: p.detach().clone() for n, p in m.model.named_parameters() if p.requires_grad}
-                m.model.load_state_dict(copy.deepcopy(agg), strict=True)
+                    Xk, yk = Xk[keep], yk[keep]
+                    if k in mal_ids and budget > 0:
+                        poison_frac_rows[-1]["retained_after_defense"] = int((meta["poisoned"] & keep).sum())
+                post_n = len(yk)
+                poison_frac_rows[-1]["post_defense_n"] = post_n
+                poison_frac_rows[-1]["class_counts_post"] = _class_counts(yk)
+                dose_row_idx.append(len(poison_frac_rows) - 1)
+                prepared.append((Xk, yk) if post_n else None)
+                if not post_n:
+                    poison_frac_rows[-1]["participated"] = False
+            for r in range(rounds):
+                global_sd = server.state_dict()
+                for m in clients:
+                    m.model.load_state_dict(copy.deepcopy(global_sd), strict=True)
+                sds, ws, participated = [], [], []
+                for k in range(n_clients):
+                    data = prepared[k]
+                    m = clients[k]
+                    if data is None:
+                        m.model.load_state_dict(copy.deepcopy(global_sd), strict=True)
+                        submitted = {kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()}
+                        sds.append(submitted)
+                        ws.append(0.0)
+                        participated.append(False)
+                        fed_round_rows.append({"task": t, "round": r, "client": k,
+                                               "participated": False, "optimizer_steps": 0,
+                                               "comm_bytes": _comm_bytes(submitted), "post_n": 0})
+                        continue
+                    Xk, yk = data
+                    loader = to_loader(Xk, yk, batch_size=batch_size, shuffle=True)
+                    if r == 0:
+                        class_bound = int(max(n_classes, int(yk.max()) + 1)) if len(yk) else n_classes
+                        m.before_task(t, loader, class_bound=class_bound)
+                    m.train_task(loader, epochs=local_epochs)
+                    submitted = {kk: vv.detach().cpu().clone() for kk, vv in m.model.state_dict().items()}
+                    sds.append(submitted)
+                    ws.append(float(len(yk)))
+                    steps = int(local_epochs * ((len(yk) + batch_size - 1) // batch_size))
+                    participated.append(True)
+                    fed_round_rows.append({"task": t, "round": r, "client": k,
+                                           "participated": True, "optimizer_steps": steps,
+                                           "comm_bytes": _comm_bytes(submitted), "post_n": len(yk)})
+                active_idx = [k for k, part in enumerate(participated) if part]
+                agg, excluded = _aggregate_updates(
+                    sds, ws, global_sd, active_idx, aggregator=aggregator,
+                    trim_ratio=trim_ratio, n_mal=n_mal, up_method=up_method,
+                    up_attack=up_attack, mal_ids=mal_ids, trust=trust, device=device)
+                if excluded:
+                    fed_exclusions.append({"task": t, "round": r, "excluded_clients": excluded,
+                                           "aggregator": aggregator})
+                server.load_state_dict(agg, strict=True)
+                for m in clients:
+                    if hasattr(m, "anchor") and m.anchor:
+                        m.anchor = {n: p.detach().clone() for n, p in m.model.named_parameters() if p.requires_grad}
+                        m.model.load_state_dict(copy.deepcopy(agg), strict=True)
+            for k in range(n_clients):
+                if prepared[k] is not None:
+                    Xk, yk = prepared[k]
+                    loader = to_loader(Xk, yk, batch_size=batch_size, shuffle=False)
+                    clients[k].after_task(t, loader)
+                # Task-level dose row: work sums over rounds (round detail in
+                # fed_round_rows); final buffer state for trained clients.
+                row = poison_frac_rows[dose_row_idx[k]]
+                update = {"optimizer_steps": sum(
+                    rr["optimizer_steps"] for rr in fed_round_rows
+                    if rr["task"] == t and rr["client"] == k),
+                    "comm_bytes": sum(
+                    rr["comm_bytes"] for rr in fed_round_rows
+                    if rr["task"] == t and rr["client"] == k)}
+                if prepared[k] is not None:
+                    update.update(_buffer_report(clients[k], in_dim, n_classes))
+                row.update(update)
 
         for j in range(t + 1):
             pred = _predict(server, tasks[j]["X_test"], device)
@@ -345,6 +607,7 @@ def run_federated(cfg: dict) -> dict:
 
         # ASR on the GLOBAL model (same definitions as single-node).
         asr = None
+        src = None
         atk_type = attack.get("type")
         if atk_type == "backdoor":
             outcome = backdoor_outcome(
@@ -357,19 +620,22 @@ def run_federated(cfg: dict) -> dict:
         elif atk_type == "label_flip" and attack.get("mode") in ("targeted", "persistent", "adaptive", "knn_adaptive"):
             src_name = attack.get("source_class")
             tgt = resolve_attack_target(attack, label_map)
+            src = None
             if attack.get("mode") == "persistent":
+                # Task-level analogue of the single-node rule: the majority of
+                # the pooled task train population that shards were drawn from.
+                # (Per-shard majorities are recorded in poison_rows.)
                 from src.attacks.flip import majority_attack_class
 
-                src = majority_attack_class(tasks[t]["y_test"], tgt)
-                mask = tasks[t]["y_test"] == src if src is not None else np.zeros(len(tasks[t]["y_test"]), dtype=bool)
-                if mask.any():
-                    asr = float(np.mean(_predict(server, tasks[t]["X_test"], device)[mask] == tgt))
-            elif src_name and src_name in label_map:
-                mask = tasks[t]["y_test"] == label_map[src_name]
+                src = majority_attack_class(tasks[t]["y_train"], tgt)
+            elif src_name is not None:
+                src = resolve_class_id(src_name, label_map, role="source")
+            if src is not None:
+                mask = tasks[t]["y_test"] == src
                 if mask.any():
                     asr = float(np.mean(_predict(server, tasks[t]["X_test"], device)[mask] == tgt))
         if atk_type != "backdoor":
-            asr_rows.append({"task": t, "asr": asr})
+            asr_rows.append({"task": t, "asr": asr, "source_class": src if atk_type == "label_flip" else None})
 
     summary = summarize(R)
     if attack.get("type") == "backdoor":
@@ -384,6 +650,7 @@ def run_federated(cfg: dict) -> dict:
         summary["asr_mean"] = float(np.mean(asr_values)) if asr_values else None
     summary["wall_sec"] = time.time() - t0
     summary["cl_method"] = method_name
+    summary["joint_oracle"] = False  # federated loop trains task-by-task even for method "joint"
     atk_label = attack.get("type")
     if up_method:
         atk_label = f"{atk_label}+byz_{up_method}" if atk_label else f"byz_{up_method}"
@@ -393,14 +660,22 @@ def run_federated(cfg: dict) -> dict:
     summary["runtime_device"] = device
     summary["fed"] = {
         "n_clients": n_clients, "malicious_id": mal_id, "malicious_ids": mal_ids,
-        "alpha": alpha, "local_epochs": local_epochs, "aggregator": aggregator,
+        "alpha": alpha, "partition": partition, "local_epochs": local_epochs,
+        "rounds": rounds, "aggregator": aggregator,
         "update_attack": up_method,
+        "excluded_inactive_clients": sorted({k for row in fed_exclusions for k in row["excluded_clients"]}),
     }
+    summary["fed_exclusions"] = fed_exclusions
+    summary["fed_round_rows"] = fed_round_rows
     mal_frac = [r["poison_fraction"] for r in poison_frac_rows if r["client"] in mal_ids]
     summary["malicious_shard_poison_mean"] = float(np.mean(mal_frac)) if mal_frac else 0.0
     summary["poison_rows"] = poison_frac_rows
     summary["poison_changed_total"] = sum(r["changed"] for r in poison_frac_rows)
     summary["poison_eligible_total"] = sum(r["eligible"] for r in poison_frac_rows)
+    summary["comm_bytes_total"] = sum(r.get("comm_bytes", 0) for r in poison_frac_rows)
+    summary["fed_participation_rate"] = (
+        sum(1 for r in poison_frac_rows if r.get("participated")) / len(poison_frac_rows)
+        if poison_frac_rows else None)
     n_train_total = sum(r["n"] for r in poison_frac_rows)
     summary["poison_realized_global_dose"] = summary["poison_changed_total"] / n_train_total if n_train_total else None
     return {"R": R, "summary": summary, "asr_rows": asr_rows, "poison_frac_rows": poison_frac_rows}

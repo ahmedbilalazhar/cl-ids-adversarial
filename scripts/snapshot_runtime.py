@@ -5,13 +5,15 @@ import argparse
 import hashlib
 import json
 import os
+import sys
 import tempfile
 import zipfile
 from pathlib import Path
 
-from src.reporting import source_commit, source_tree_hash
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from src.reporting import source_commit, source_tree_hash
 
 
 def sha256(path: Path) -> str:
@@ -27,7 +29,9 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, default=Path("artifacts/source_snapshots"))
     args = parser.parse_args()
     code_hash = source_tree_hash()
-    output_dir = args.output_dir.resolve()
+    output_dir = args.output_dir
+    if not output_dir.is_absolute():
+        output_dir = (ROOT / output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     archive = output_dir / f"runtime_{code_hash}.zip"
     manifest_path = output_dir / f"runtime_{code_hash}.json"

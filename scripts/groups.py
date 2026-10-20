@@ -25,6 +25,7 @@ GROUPS = {
     "c_a1": ["a1_buffer_1000_c"],
     "c_a3": ["a3_order_alt_c","a3_order_rev_c"],
     "c_f2": ["f2_fed_finetune_p0_c","f2_fed_finetune_p1_c","f2_fed_finetune_p5_c","f2_fed_finetune_p10_c","f2_fed_ewc_p0_c","f2_fed_ewc_p1_c","f2_fed_ewc_p5_c","f2_fed_ewc_p10_c","f2_fed_derpp_p0_c","f2_fed_derpp_p1_c","f2_fed_derpp_p5_c","f2_fed_derpp_p10_c","f2_fed_er_p0_c","f2_fed_er_p1_c","f2_fed_er_p5_c","f2_fed_er_p10_c"],
+    "c_f2x": ["f2_fed_finetune_p0_dedup_c","f2_fed_finetune_p0_stable_c","f2_fed_finetune_p0_r2_c"],
     "c_f4": ["f4_fed_finetune_p5_sl_c","f4_fed_finetune_p10_sl_c","f4_fed_ewc_p5_sl_c","f4_fed_ewc_p10_sl_c","f4_fed_derpp_p5_sl_c","f4_fed_derpp_p10_sl_c"],
     "rf_e1": ["e1_clean_rf","e1_derpp_rf","e1_ewc_rf","e1_finetune_rf","e1_joint_rf","e1_lwf_rf"],
     "gh": ["e1_finetune_gh"],
@@ -45,10 +46,10 @@ GROUPS = {
     "i_f2": ["i_f2_fed_finetune_p0","i_f2_fed_finetune_p1","i_f2_fed_finetune_p5","i_f2_fed_finetune_p10","i_f2_fed_ewc_p0","i_f2_fed_ewc_p1","i_f2_fed_ewc_p5","i_f2_fed_ewc_p10","i_f2_fed_derpp_p0","i_f2_fed_derpp_p1","i_f2_fed_derpp_p5","i_f2_fed_derpp_p10"],
     "i_f4": ["i_f4_fed_finetune_p5_sl","i_f4_fed_finetune_p10_sl","i_f4_fed_ewc_p5_sl","i_f4_fed_ewc_p10_sl","i_f4_fed_derpp_p5_sl","i_f4_fed_derpp_p10_sl"],
 }
-FED_GROUPS = {"f2_ft", "f2_ewc", "f2_derpp", "f4_ft", "f4_ewc", "f4_derpp", "f2_b100", "c_f2", "c_f4", "bz", "f2r", "mech", "brk", "perst_fed", "u_f2", "u_f4", "i_f2", "i_f4"}
+FED_GROUPS = {"f2_ft", "f2_ewc", "f2_derpp", "f4_ft", "f4_ewc", "f4_derpp", "f2_b100", "c_f2", "c_f2x", "c_f4", "bz", "f2r", "mech", "brk", "perst_fed", "u_f2", "u_f4", "i_f2", "i_f4"}
 SEEDS7 = [1,2,3,4,5,6,42]
 SEEDS12 = [1,2,3,4,5,6,7,8,9,10,11,42]
-SEEDS12_GROUPS = {"c_e1","c_e2e3","c_e4","c_e6a2","c_a1","c_a3","c_f2","c_f4","gh","t0scaler","bz","f2r","mech","brk","perst_sn","perst_fed","adapt","trig","ar","u_e1","u_f2","u_f4","i_e1","i_f2","i_f4"}
+SEEDS12_GROUPS = {"c_e1","c_e2e3","c_e4","c_e6a2","c_a1","c_a3","c_f2","c_f2x","c_f4","gh","t0scaler","bz","f2r","mech","brk","perst_sn","perst_fed","adapt","trig","ar","u_e1","u_f2","u_f4","i_e1","i_f2","i_f4"}
 
 
 def seeds_for_group(group: str) -> list[int]:

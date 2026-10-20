@@ -1,1715 +1,1241 @@
-# Resilient Federated Ensemble Learning for IoT Intrusion Detection in Adversarial and Imbalanced Environments
-
-**Authors:** Arvind Prasad; Ibrahim Aljubayri; Mohammad Zubair Khan; Abdulfattah Noorwali
-
-**Publication:** Computer Modeling in Engineering & Sciences (2026).
-
-**Publication DOI:** https://doi.org/10.32604/cmes.2026.082021
-
-**Verified free PDF:** https://cdn.techscience.cn/files/CMES/2026/TSP_CMES-147-3/TSP_CMES_82021/TSP_CMES_82021.pdf
-
-**Downloaded version:** Publisher version of record, open access, Creative Commons Attribution 4.0.
-
-**Qualification:** Q2, ENGINEERING, MULTIDISCIPLINARY. Journal rankings use the 2024 JIF category quartile (June 2025 JCR), not an asserted 2026 ranking.
-
-**Integrity:** 29 pages; 11,115,059 bytes; SHA-256 `7cbce88079958757be0ec2e477d6c5cacb6146baf7eb7704d30f41aa5b620014`. Verified 8 October 2026.
-
-## Reading and extraction note
-
-The PDF is the authoritative complete manuscript. Below is automatic page-level text extraction, not a newly authored summary or a verbatim-quality transcription. Two-column order, formulas, ligatures and table spacing can be imperfect. Every page has a rendered PNG in `assets/` for inspecting figures, equations and tables at their original locations. Publication metadata is saved alongside the images. The technical review is in [the selection audit](../phase2-selection-audit.md).
+# Adaptive Multi-Model Hierarchical Federated Learning for Robust IoT Intrusion Detection
 
 ## Full manuscript text
 
-
 ### PDF page 1
 
-[View original page, figures and tables](assets/page-001.png)
+[View original page](assets/page-001.png)
 
 ```text
-C o m  p u ter Mod e l in g i n                                                                                                                            T                                                                                                                                                                                                   PressechScience
-                  Engineering & Sciences
-
-
-https://doi.org/10.32604/cmes.2026.082021
-
-ARTICLE
-
-Resilient     Federated     Ensemble     Learning     for     IoT     Intrusion     Detection     in
-Adversarial      and      Imbalanced      Environments
-
-Arvind    Prasad1, *,IbrahimAljubayri2,         Mohammad    Zubair    Khan3, *     and    Abdulfattah    Noorwali4
-
-
-1Department    of    Computer    Engineering    &    Applications,    GLA    University,    Mathura,    India
-2 Department   of   Computer   Science   and   Information,   Imam   Mohammad   Ibn   Saud   Islamic   University   (IMSIU),   Riyadh,   Saudi   Arabia
-3Faculty    of    Computer    and    Information    Systems,    Islamic    University    of    Madinah,    Medina,    Saudi    Arabia
-4 Electrical    Engineering    Department,    Umm    Al-Qura    University,    Makkah,    Saudi    Arabia
-
-*Corresponding    Authors:    Arvind    Prasad.    Email:    arvind.prasad@gla.ac.in;    Mohammad    Zubair    Khan.    Email:
-zubair.762001@gmail.com
-Received:    11    March    2026;    Accepted:    18    May    2026;    Published:    30    June    2026
-
-ABSTRACT:         Intrusion      detection      in      large-scale      IoT      deployments      becomes      particularly      challenging      during      ongoing
-attack        scenarios,        where        malicious        traffic        may        temporarily        dominate       benign        traffic.        In        such        conditions,       streaming
-network     data     exhibits     severe     class     imbalance     in     favor     of     attack     traffic,     while     device     behavior     remains     heterogeneous,
-non-identically     distributed     (non-IID),     and     temporally     evolving.     Within     federated     learning     environments,     this     imbal-
-ance        can        destabilize        early        aggregation        rounds,        dominant        attack        gradients        bias        the        global        model,        distort        decision
-boundaries,      and      degrade      reliable      discrimination      of      residual      benign      behavior.      Since      the      server      has      no      access      to      raw
-data,      these      effects      can      persist      across      communication      rounds      if      not      addressed      at      initialization.      This      article      addresses
-the      problem      of      distributed      intrusion      detection      in      streaming      IoT      networks      under      severe      class      imbalance      and      partial
-adversarial      behavior.       In      ongoing      attack      scenarios,      malicious      traffic      may      dominate      streaming      observations,      creating
-an       inverted       imbalance       where       benign       behavior       becomes       underrepresented.       To       mitigate       these       issues,       we       propose       a
-resilient    federated    ensemble    framework    with    three    key    components:    a    similarity-guided    balancing    phase    that    selects    a
-structurally    diverse    subset    of    majority-class    samples    to    form    a    balanced    initialization    dataset,    an    incremental    ensemble
-composed    of    Bernoulli    Naïve    Bayes,    Passive–Aggressive,    and    SGD    classifiers    for    pre-training    over    this    data    to    produce
-a   warm-start   global   model,   and   an   accuracy-gating   mechanism   that   accepts   only   performance-preserving   local   updates
-during     online     training.     The     proposed     approach     is     evaluated     on     flow-level     data     from     the     CICIoT2023     benchmark     that
-demonstrated      stable      client-wise      convergence      with      high      accuracy      and      consistent      minority-class      discrimination,      even
-under       skewed       attack-dominant       distributions.       Under       complete       label-flipping       poisoning,       corrupted       updates       are       sys-
-tematically    rejected,    preventing    global    degradation.    Ablation    analysis    confirms    that    removing    structured    initialization
-significantly     increases     early     instability.     The     results     indicate     that     balanced     global     conditioning     and     selective     federation
-are    critical    for    maintaining    detection    reliability    in    streaming    IoT    systems    operating    under    sustained    attack    conditions.
-
-KEYWORDS:   Federated   learning;   IoT   intrusion   detection;   streaming   analytics;   class   imbalance;   adversarial   robustness
-
-
-1Introduction
-         The     Internet     of     Things     (IoT)     is     now     pervasive,     with     billions     of     devices     and     sensors     operating     in     smart
-homes,   industry,   healthcare,   and   cities   [1].   In   the   past   few   years   alone,   the   number   of   IoT   devices   has   increased
-considerably,       resulting       in       a       large       growth       of       cyber       attacks.       Many       IoT       endpoints       are       low-cost       and       under-
-protected,       so       they       enlarge       the       attack       surface       (botnets,       malware,       ransomware,       etc.).       IoT       network       traffic       is
-
-
-
-Copyright    ©    2026    The    Authors.       Published    by    Tech    Science    Press.    This    work    is    licensed    under    a    Creative    Commons    Attribution    4.0    International
-License,   which   permits   unrestricted   use,   distribution,   and   reproduction   in   any   medium,   provided   the   original   work   is   properly   cited.
+Academic Editors: Himanshu
+Agrawal and Neminath Hubballi
+Received: 15 April 2026
+Revised: 14 May 2026
+Accepted: 18 May 2026
+Published: 19 May 2026
+Copyright: © 2026 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license.
+Article
+Adaptive Multi-Model Hierarchical Federated Learning for
+Robust IoT Intrusion Detection
+Shahid Latif *
+and Djamel Djenouri
+School of Computing and Creative Technologies, University of the West of England, Bristol BS16 1QY, UK;
+djamel.djenouri@uwe.ac.uk
+* Correspondence: shahid.latif@uwe.ac.uk
+Abstract
+The rapid growth of the Internet of Things (IoT) has introduced significant cybersecurity
+challenges in highly distributed, heterogeneous, and privacy-sensitive environments. Tra-
+ditional centralized intrusion detection approaches and conventional federated learning
+(FL) frameworks, which rely on single-model aggregation, are often inadequate in the
+presence of extreme non-IID data and adversarial conditions. This study proposes an
+Adaptive Multi-Model Hierarchical Federated Learning (AMM-HFL) framework for robust
+IoT intrusion detection. The framework operates across client, edge, and cloud tiers and
+introduces a unified integration of similarity-aware clustering, multi-model aggregation,
+and dynamic client-side model selection. Unlike existing hierarchical FL approaches, AMM-
+HFL maintains multiple global models, enabling adaptive personalization and improved
+representation of heterogeneous data distributions. At the edge level, model updates are
+clustered to isolate anomalous contributions, while the cloud performs meta-aggregation to
+refine diverse model representations. Experimental evaluation on the IDSIoT2024 dataset
+demonstrates detection accuracy up to 96.83–97.54% under IID and 95.64–97.52% under
+non-IID conditions, while maintaining low computational and cryptographic overhead.
+Keywords: cybersecurity; federated learning; intrusion detection; adversarial robustness
+1. Introduction
+The rapid growth of the Internet of Things (IoT) has led to highly distributed and
+heterogeneous environments, in which resource-constrained devices continuously gener-
+ate sensitive data across diverse applications, including healthcare, smart infrastructure,
+and industrial systems [1–3]. This large-scale connectivity increases IoT networks’ ex-
+posure to cyber threats, including distributed attacks, data manipulation, and stealthy
+intrusions, thereby necessitating advanced intrusion detection mechanisms that operate in
+decentralized, privacy-sensitive settings [4–6]. Federated Learning (FL) has emerged as a
+promising paradigm that enables collaborative model training without sharing raw data,
+preserving privacy while leveraging distributed intelligence [7–9]. However, conventional
+FL architectures rely on centralized aggregation at the cloud, leading to communication
+bottlenecks, scalability limitations, and increased vulnerability to adversarial manipulation
+in large-scale IoT deployments [10,11]. To address these challenges, a two-tier hierarchical
+FL architecture was introduced in our prior work [12]. This study [12] incorporated edge
+servers as intermediate aggregators and lightweight cryptographic mechanisms to ensure
+secure and efficient communication.
+Sensors 2026, 26, 3198
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 2
 
-[View original page, figures and tables](assets/page-002.png)
+[View original page](assets/page-002.png)
 
 ```text
-2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-extremely       imbalanced       [2].       Client       data       are       heterogeneous       and       non-identically       distributed       (non-IID).       One
-smart   camera’s   traffic   (e.g.,   home   surveillance)   can   be   very   different   from   a   temperature   sensor.   Clients   collect
-different      volumes      of      data      and      different      feature      patterns.      In      practice,      this      means      a      single      global      model      must
-reconcile     many     local     distributions.     In     this     context,     intrusion     detection     systems     (IDS)     are     essential.     IDS     has
-acquired     a     key     role     in     defending     IoT     environments     [3].     Monitoring     the     high-volume     streams     of     IoT     data     is
-critical    because    the    continuous    increase    in    cyber    attacks    makes    automated    defense    a    necessity    [4–6].
-          Traditional         IDS         designs         assume         stable         traffic         and         centralized         visibility,         whereas         IoT         environments
-are       highly       heterogeneous       and       continuously       evolving       [7].       Device       behavior       varies       across       deployment       con-
-texts,         firmware         states,         workloads,         and         attack         conditions,         resulting         in         non-IID         and         temporally         drifting
-traffic    distributions.
-          Streaming     IoT     traffic     further     complicates     intrusion     detection     because     data     arrives     continuously     under
-low-latency     constraints     [8].     Models     must     therefore     support     incremental     adaptation     while     remaining     robust
-to    concept    drift,    evolving    device    behavior,    and    emerging    attacks.
-          A         major         challenge         in         sustained         IoT         attack         scenarios         is         inverted         class         imbalance,         where         malicious
-traffic       temporarily       dominates       benign       communication       (attack   >>       benign)       [9].       During       large-scale       attacks,
-streaming       data       becomes       attack-heav y,       causing       optimization       to       be       dominated       by       malicious       gradients       and
-biasing      decision      boundaries      toward      attack      patterns.      In      federated      environments,      these      effects      are      amplified
-because     the     server     aggregates     model     updates     without     direct     visibility    into     class     distributions     [10,11].
-          In    sustained    attack    scenarios,    the    local    class    prior    may    satisfy   P( y   =     1)≫P( y   =     0),where     y   =     1    denotes
-malicious        traffic        and        y   =     0        benign        traffic.        Under        such        skew,        the        learning        objective        becomes        dominated
-by      gradients      from      the      majority      attack      class,      shifting      the      decision      boundary      toward      malicious      regions      and
-weakening   recognition   of   minority   benign   behavior.   In   federated   settings,   this   effect   can   be   amplified   because
-theserverobservesmodelupdatesratherthantheunderlyingclassdistributions.
-          Federated      Learning      (FL)      is      often      suggested      for      IoT      to      save      bandwidth      and      protect      privacy      [12–14].      In
-FL,      the      devices      keep      their      raw      data      and      only      send      model      updates      to      a      central      server.      This      follows      privacy
-laws     and     saves     data.     However,     since     the     server     never     sees     the     raw     data,     it     cannot     see     if     the     data     distribution
-is     wrong.     The     server     just     combines     updates     from     many     different,     and     maybe     even     malicious,     devices.     Also,
-communication    is    limited,    and    some    devices    might    go    offline.
-          In         federated         IoT         intrusion         detection,         global         initialization         strongly         influences         early-round         stability
-and      convergence      behavior      [15,16].     Under     attack-heav y     distributions,     poorly     conditioned     initialization     may
-delay     reliable     discrimination     of     sparse     benign     traffic     and     amplify     instability     across     subsequent     communica-
-tion     rounds.
-          The     interaction     between     streaming     non-IID     traffic,     local     imbalance,     federated     aggregation     constraints,
-and    adversarial    behavior    creates    a    cascading    instability    effect    during    deployment     [17–19].     The     overall     attack
-and    instability    pathway    is    summarized    in     Fig.    1.
-          As        shown        in       Fig.    1,       heterogeneous       IoT       clients       generate       skewed       local       updates       under       class       imbalance
-and      temporal      drift.      These      updates      are      aggregated      without      access      to      raw      data,      which      can      amplify      majority-
-class     dominance     during     early     rounds.     The     resulting     unstable     initialization     suppresses     rare     attack     gradients,
-reinforces        bias        across        clients,        and        delays        detection        of        zero-day        activity,        thereby        expanding        the        security
-exposure     window     during     ramp-up.
+Sensors 2026, 26, 3198
+2 of 20
+Despite these advancements, significant challenges remain in realistic IoT cyberse-
+curity scenarios. IoT data distributions are inherently non-independent and imbalanced,
+where individual devices observe limited subsets of traffic patterns and attack types,
+resulting in extreme non-IID conditions that degrade the performance of single global
+models [13,14]. Furthermore, existing aggregation strategies, including those used in hi-
+erarchical FL, rely primarily on averaging-based mechanisms, which are insufficient to
+defend against sophisticated adversarial behaviors such as stealthy backdoor attacks and
+adaptive model poisoning [15,16]. Moreover, existing clustering-based or hierarchical FL
+methods typically operate within a single global model paradigm, limiting their ability to
+capture heterogeneous data distributions and support client-level adaptation. Although
+lightweight cryptography ensures the secure transmission of updates, it does not guarantee
+the trustworthiness of aggregated models in the presence of malicious clients. In addi-
+tion, prior studies are often evaluated on generic datasets, which limits their applicability
+to IDS characterized by high-dimensional tabular data, class imbalance, and evolving
+attack patterns.
+To overcome these limitations, an adaptive multi-model hierarchical FL (AMM-HFL)
+framework is introduced, which departs from conventional single-model aggregation
+by jointly integrating hierarchical learning, similarity-aware clustering, and multi-model
+representation within a unified architecture. The framework operates across client, edge,
+and cloud tiers. At the client level, local models are trained with a deep neural network,
+and updates are securely transmitted via lightweight cryptography. At the edge level,
+decrypted updates are expressed as deviations from the global model and processed using
+a similarity-aware clustering mechanism, in which consistent updates are grouped, and
+anomalous updates are isolated or excluded based on statistical thresholds. Each cluster
+produces an intermediate model, forming multiple candidate representations. At the cloud
+level, these models undergo meta-aggregation to merge similar clusters while preserving
+diversity, resulting in a refined set of global models. These models are redistributed to
+clients, where each client dynamically selects the most suitable model based on local loss
+evaluation. This integration of hierarchical aggregation, similarity-driven clustering, and
+multi-model learning provides an implicit defense against adversarial manipulation while
+improving performance under extreme non-IID conditions.
+The main contributions of this work are summarized as follows:
+•
+Adaptive hierarchical federated learning framework: An enhanced edge–cloud FL
+architecture is developed by integrating similarity-aware aggregation to improve
+robustness and scalability under extreme non-IID IoT environments.
+•
+Multi-model learning with dynamic client adaptation: A multi-model aggregation
+strategy is introduced, enabling the generation of multiple candidate models and
+dynamic client-side model selection based on local performance.
+•
+Robust and secure aggregation mechanism: A unified approach combining lightweight
+cryptography with clustering-based statistical anomaly isolation is designed to miti-
+gate naive and stealthy poisoning attacks while maintaining low computational and
+communication overhead.
+The remainder of this paper is organized as follows. Section 2 reviews the related
+work on hierarchical federated learning and IoT intrusion detection. Section 3 presents
+the proposed framework, including the system architecture, secure communication mecha-
+nisms, and aggregation strategies. Section 4 describes the experimental setup and evaluates
+the performance of the proposed approach under various data distributions and adversar-
+ial scenarios. Finally, Section 5 concludes the paper and outlines potential directions for
+future research.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 3
 
-[View original page, figures and tables](assets/page-003.png)
+[View original page](assets/page-003.png)
 
 ```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    3
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figure   1:      Detailed  attack  propagation  and  instability  mechanisms  in  federated  IoT  intrusion  detection  under  streaming,
-non-IID,    and    imbalanced    conditions.
-
-           These   challenges   become   more    severe   in   the   presence    of   adversarial   behavior   such   as   poisoning   or   label-
-flipping       attacks.       Existing       defenses       typically       assume       a       reasonably       stable       initial       model       [20].       Consequently,
-poorly       conditioned      initialization      can      amplify      both      natural      non-IID      effects      and      malicious      client      influence
-during    early    federated    rounds    [21–24].
-           In    this    work,    we    propose    a    resilient    federated    ensemble    learning    method    for    IoT.    We    focus    on    cases    with
-attacks      and      imbalanced      data.      We      do      not      try      to      solve      every      problem,      but      we      focus      on      how      streaming      data,
-imbalance,     and     limited     coordination     affect     the     stability     of     the     early     model.     Our     goal     is     to     make     the     system
-work     in    the    real    world,     not    just    in    theory.
-           The     main     contributions     of     this     paper     are     summarized     as     follows:
-•                                  A      similarity-guided      balancing      mechanism      that      selects      structurally      diverse      dominant-class      samples      to
-           construct    a    balanced    and    information-rich    initialization    dataset.
-•                                 A       cold-start-aware       federated       initialization       strategy       that       improves       early-round       stability       under       attack-
-           heav y     IoT     traffic.
-•                                 A         streaming         ensemble         learning         design         based         on         incremental         classifiers         for         continuous         adaptation
-           without    full    retraining.
-•                                 An      accuracy-gated      client      update      mechanism      that      rejects      poisoned,      noisy,      or      performance-degrading
-           local     updates    before     aggregation.
-•                                 A       unified       framework       that       jointly       addresses       imbalance,       non-IID       streaming       learning,       and       adversarial
-           robustness    in    federated     IoT    intrusion    detection.
-•                                 Experimental   validation   through   client-wise   analysis,   sensitivity   studies,   poisoning   experiments,   FGSM
-           rejection     tests,     and     ablation     results.
+Sensors 2026, 26, 3198
+3 of 20
+2. Related Work
+Hierarchical federated learning (HFL) has emerged as a promising paradigm for
+scalable, privacy-preserving, and distributed intrusion detection in IoT environments.
+Existing studies have explored different aspects of HFL, including architectural design,
+communication efficiency, robustness, and anomaly detection capabilities.
+Saadat et al. [17] proposed an HFL framework for IoT intrusion detection, in which
+edge servers perform intermediate aggregation to reduce communication overhead. The
+key contribution of the study is to demonstrate that HFL improves convergence speed
+and detection accuracy over traditional FL, particularly under non-IID data distributions.
+Their work enhances scalability and learning efficiency but does not incorporate advanced
+security or adversarial defense mechanisms. Sun et al. [18] introduced an HFL-based
+intrusion detection system for 5G-enabled smart grids that integrates a transformer-based
+detection model. Their novel contribution is the combination of HFL with advanced deep
+learning architectures to improve detection performance while reducing communication
+cost. The framework improves accuracy and latency; however, reliance on a single global
+model limits robustness against adversarial manipulation. Mohawesh et al. [19] proposed
+an HFL framework that leverages lightweight large language models (LLMs), such as
+TinyLLaMA and DistilBERT, for B5G IoT environments. The key innovation of the study
+is the integration of model compression techniques, including knowledge distillation and
+LoRA, to enable efficient deployment on edge devices. The approach improves scalability
+and contextual learning capability but does not explicitly address security threats such as
+poisoning attacks.
+Malviya et al. [20] developed an HFL-based intrusion detection framework for IoMT
+networks, focusing on feature extraction and ensemble learning techniques. Their main
+contribution is the comparative analysis of linear and non-linear feature extraction methods
+(PCA, DBN, autoencoders) combined with ensemble classifiers. This enhances detection
+accuracy and facilitates computational trade-off analysis but lacks mechanisms to handle
+adversarial behavior and heterogeneous data distributions. Alkulaib et al. [21] proposed
+an adaptive hierarchical anomaly detection system that combines FL with Growing Hi-
+erarchical Self-Organizing Maps (GHSOM). The novel contribution lies in introducing
+context-aware adaptive hierarchical clustering and selective model updates to reduce com-
+munication overhead. The approach improves anomaly-detection efficiency and scalability;
+however, it remains primarily unsupervised and is not specifically tailored to intrusion-
+detection classification tasks. Alharbi [22] introduced the AHFL-DAWA framework, an
+adaptive HFL model with dynamically anomaly-weighted aggregation. The key innovation
+is the integration of anomaly-driven weighting, differential privacy, and Byzantine fault
+tolerance with theoretical guarantees. This significantly enhances robustness, scalability,
+and communication efficiency; however, the framework still depends on a single global
+model and does not support multi-model personalization.
+Elmahfoud et al. [23] investigated the impact of label-flipping attacks on HFL-based
+intrusion detection systems. Their primary contribution is the systematic analysis of
+data poisoning vulnerabilities in HFL and the design of a defense mechanism to identify
+malicious clients. This work enhances understanding of adversarial threats but does not
+propose fundamentally new aggregation paradigms. Rabieinejad et al. [24] proposed
+a two-level privacy-preserving FL framework using partially homomorphic encryption
+for IoT attack detection. The key contribution is the integration of encryption-based
+secure aggregation to protect model updates without significant performance degradation.
+The framework enhances privacy and confidentiality, it does not address hierarchical
+scalability or non-IID learning challenges. In our prior study [12], we proposed a two-tier
+secure HFL framework that integrates lightweight cryptographic mechanisms to enable
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 4
 
-[View original page, figures and tables](assets/page-004.png)
+[View original page](assets/page-004.png)
 
 ```text
-4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-         The      remainder      of      this      paper      is      organized      as      follows.   Section    2     reviews      existing      literature      on      federated
-intrusion         detection,         class         imbalance         mitigation,         streaming         learning,         and         adversarial         robustness         in         IoT
-environments.    Section    3    presents    the    proposed    resilient    federated    intrusion    detection    framework.    Section    4
-describes       the       experimental       setup       and       evaluates       the       proposed       approach       through       client-wise       performance
-analysis,        poisoning        attack        experiments,        and        ablation        studies.        Finally,        Section    5       concludes        the        paper        and
-outlines    directions    for     future    research.
-
-2RelatedWork
-         Recent    research    has    explored    multiple    directions,    including    federated    learning,    class    imbalance    mitiga-
-tion,    streaming    adaptation,   and    adversarial    robustness.    While    several    studies    report    high    detection    accuracy,
-their      assumptions,      optimization      objectives,      and      deployment      settings      vary      significantly.      It      is      therefore      nec-
-essary      to      examine      these      works      in      a      structured      manner      to      understand      the      practical      limitations      that      remain
-unresolved,     particularly     under     streaming     and    attack-dominant    traffic     conditions.     The     following     subsections
-categorize     the     literature     accordingly.
-
-2.1        Federated    Learning    for    IDS    on    CICIoT2023
-         Abid       et       al.       [25]      proposed      a      hybrid      intrusion      detection      system      for      IoT      environments      combining      Grey
-Wolf     Optimization    (GWO),     LightGBM,    and    a     CNN     classifier.    GWO    performs     wrapper-based     feature     selec-
-tion       to       reduce       dimensionality.       LightGBM       generates       leaf-index       representations       through       gradient-boosted
-trees,      which      are      embedded      and      processed      by      a      Conv1D-based      CNN      for      final      classification.      The      system      is
-evaluated    on    the    CICIoT2023    and    CICIoMT2024    datasets.    The    authors    report    improved    detection    accuracy,
-reduced          false          alarm          rates,          and          enhanced          computational          efficiency          compared          to          standalone          RF,          SVM,
-DNN,       LSTM,       CNN,       and       attention-based       models.       The       approach       is       designed       for       deployment       in       fog-layer
-IoT       architectures.       The       authors       achieved       an       average       accuracy       of       87.93%.       A       wrapper-based       dimensionality
-reduction     using     GWO     and     efficient     leaf-wise     boosting     from     LightGBM     was     implemented,     which     achieved
-high   performance   on   a   reduced   feature   space   (18   features   for   CICIoT2023,   5   for   CICIoMT2024)   and   achieved
-improved     computational    efficiency    for    fog-layer    deployment.
-         To  r  r  e           e  t           a  l  .           [26]      proposed      a      federated      learning-based      intrusion      detection      system      (IDS)      for      IoT      envi-
-ronments     implementing     a     1D     CNN,     with     explicit     integration     of     three     privacy-preserving     (PP)     mechanisms:
-Differential     Privacy     (DP),     Diffie–Hellman     (DH)     key     exchange,     and     Fully     Homomorphic     Encryption     (FHE).
-The    proposed     approach    is    evaluated    on    TON-IoT,     IoT-23,     BoT-IoT,     CIC    IoT    2023,     CIC    IoMT    2024,     RT-IoT
-2022,      and      EdgeIIoT.      Empirical      results      indicate      strong      predictive      performance      with      limited      computational
-overhead         when         PP         layers         are         enabled.         The         study         emphasizes         operational         feasibility         rather         than         purely
-theoretical      guarantees,      and      includes      convergence,      timing,      and      comparative      analyses.      The      rich      feature      sets
-used       Network       traffic       features       extracted       from       CSV/PCAP-derived       flow       records,       including       protocol-based,
-behavioral,     telemetry,     and     IoT     device     communication     attributes.     The     main     operational     advantage     is     layered
-privacy      integration      within      FL.      The      simultaneous      use      of      DP,      DH      exchange,      and      FHE      is      uncommon      in      IDS
-literature.        The        approach        reduces        exposure        of        raw        gradients        and        model        parameters        during        aggregation.
-Empirically,      privacy      enforcement      adds      only      10%      computational      overhead,      which      is      relatively      modest      given
-the    cryptographic    operations    involved.    Cross-dataset    validation    improves    external    validity.
-         Okey      et      al.      [27]      presented      RAID-KL,      a      hybrid      KL–JS      knowledge      distillation      framework      for      resource-
-aware   IoT   intrusion   detection   using   1D   CNN   teacher–student   models,   adaptive   temperature   scaling,   SMOTE
-balancing,andSHAPexplanationsonCICIoT2023,CICIoMT2024,and.Theformulationismathematically
-coherent,     and     the     experimental     scope     is     reasonably     broad.     However,     several     core     elements     need     tightening:
+Sensors 2026, 26, 3198
+4 of 20
+secure edge–cloud collaboration. The key contribution is the combination of hierarchical
+aggregation with efficient encryption techniques to ensure confidentiality, integrity, and
+scalability while reducing communication overhead. Despite these enhancements, the
+framework relies on averaging-based aggregation and is tested on a non-IoT dataset
+in an IID distribution, limiting its effectiveness under extreme non-IID conditions and
+sophisticated adversarial.
+Beyond HFL-based intrusion detection, broader research in FL has explored robustness,
+aggregation diversity, and personalization. Robust aggregation methods such as Krum
+and Trimmed Mean aim to mitigate adversarial updates by filtering or clipping outliers,
+while personalized and clustered FL approaches maintain multiple model representations
+to address data heterogeneity. Recent surveys [25,26] provide comprehensive taxonomies
+of these techniques. Unlike these approaches, which typically operate under a single-level
+FL setting, the proposed framework integrates similarity-aware clustering and multi-model
+learning within a hierarchical architecture, enabling both robustness and adaptability under
+extreme non-IID IoT conditions.
+Despite the advancements in HFL for IoT intrusion detection, several limitations
+remain. Most existing approaches rely on single-model aggregation, which is inadequate
+for handling extreme non-IID data distributions. Additionally, many frameworks adopt
+averaging-based aggregation, making them vulnerable to stealthy poisoning and backdoor
+attacks. Although some studies address scalability, privacy, or robustness individually,
+unified solutions that jointly provide adaptive learning, robust aggregation, and model
+diversity remain limited.
+To address these challenges, this work proposes an adaptive multi-model HFL frame-
+work that integrates similarity-aware clustering, multi-model aggregation, and dynamic
+client-side model selection, thereby improving robustness, adaptability, and performance
+in realistic IoT intrusion detection scenarios.
+3. The Proposed AMM-HFL Framework
+This section presents the formal model of the proposed AMM-HFL framework for
+IoT intrusion detection. A high-level workflow of the proposed framework is presented in
+Figure 1. The framework extends conventional hierarchical FL by integrating similarity-
+aware aggregation, multi-model learning, and lightweight cryptographic protection within
+a unified edge–cloud architecture.
+3.1. System Architecture and Notation
+The architecture follows a hierarchical design in which distributed IoT clients collabo-
+rate through intermediate edge servers before interacting with the cloud. This structure
+enables scalable learning while preserving locality and reducing communication overhead.
+Consider a distributed IoT system composed of three types of entities: a set of clients
+C = {C1, C2, . . . , CN}, a set of edge (fog) servers E = {E1, E2, . . . , EK}, and a central cloud
+server S. Each edge server Ek manages a subset of clients Ck ⊂C, such that SK
+k=1 Ck = C
+and Ci ∩Cj = ∅for i ̸= j. Let nk = |Ck| denote the number of clients associated with edge
+server Ek.
+Each client Ci possesses a local dataset Di that follows a highly heterogeneous, non-
+independent distribution. In particular, the system operates under extreme non-IID con-
+ditions, where each client observes only a limited subset of attack classes. Let fθ denote
+the deep neural network used for intrusion detection, parameterized by θ ∈Rd. Un-
+like conventional FL, the global model is represented as a set of candidate models, as
+defined in (1), where multiple model parameters are maintained to capture heterogeneous
+data distributions.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 5
 
-[View original page, figures and tables](assets/page-005.png)
+[View original page](assets/page-005.png)
 
 ```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    5
-
-
-hyperparameter   justification   is   weak,   resource   measurements   lack   methodological   clarity,   and   ablation   depth
-is     insufficient     to     isolate    the     hybrid     loss     contribution.
-
-2.2        Class    Imbalance    in    Intrusion    Detection    on    CICIoT2023
-          Wa  h  a  b            e  t            a  l  .            [28]       proposed       an       optimized       CNN,       DNN,       and       Transformer       architectures       that       mitigate
-class         imbalance         issues         through         SMOTE-based         oversampling         applied         strictly         to         training         folds         to         avoid
-leakage.      Log      normalization      and      Min–Max      scaling      stabilize      feature      variance      before      balancing.      Empirically,
-balancing         significantly         improved         recall         for         minority         classes,         especially         in         the         12-class         setting.         Without
-rebalancing,      preliminary      experiments      showed      biased      decision      boundaries      favoring      high-frequency      DDoS
-floods.   However,   synthetic   oversampling   introduces   risks   of   overfitting,   particularly   in   highly   sparse   minority
-distributions.        Lightweight        CNN/DNN        configurations        adapted        for        IoT        resource        constraints.        The        authors
-selected     feature     categories     such     as     statistical     network     flow     features,     time-based     traffic     features,     and     packet-
-based   characteristics.   The   authors   reduced   the   features   from   the   original   46   features   to   37   meaningful   features
-after    preprocessing.
-          Mallikarjun         and         Patro         [29]        addressed        imbalance        issues        in        the        CICIoT2023        dataset        by        introducing
-ZeroDefense,      focusing      on      detecting      emerging      zero-day      threats.      The      authors      implemented      SMOTE      during
-supervised      training      that      limits      overfitting      to      minority      data      and      preserves      sensitivity      to      minority      behavior,
-which,        in        practice,        often        resembles        zero-day        activity.        The        authors        identified        46        statistical        network        flow
-features    extracted    from    IoT    traffic    (rate,    timing,    and    protocol-level    statistics)    for    detection.    Robust    handling
-of    extreme    class    imbalance    without    collapsing    minority-class    recall,    achieved    through    a    cautious    separation
-of     anomaly     screening     and     SMOTE-balanced     supervised     learning.
-          Wakili       and       Bakkali       [30]       addressed       class       imbalance       in       the       CICIoT2023       dataset       by       proposing       a       SVM
-Weights-based      Synthetic      sampling      (SVWS)      mechanism      that      generates      boundary-aware      synthetic      samples
-rather       than       uniform       oversampling.       This       approach       concentrates       on       minority       augmentation       near       decision
-margins,   reducing   overfitting   risks   observed   with   SMOTE-like   methods.   Combined   with   an   MLP   probability
-feature   extractor   and   categorical   boosting   classifier,   the   framework   stabilizes   learning   under   skewed   distribu-
-tions.    Integrated    probabilistic    feature    transformation     (MLPP)    improves    categorical    boosting    discrimination.
-The      statistically     significant     improvements      were      validated      via      a      paired      t-test      and      the      Wilcoxon      signed-rank
-test.     The     authors     used     features     categories     such     as     Flow-based     features     (flow     duration,     rate,     srate,     drate),     TCP
-flag     statistics     (syn,     ack,     fin,     rst,     urg     counts),     Protocol     indicators     (HTTP,     HTTPS,     DNS,     TCP,     UDP,     etc.),     and
-Statistical     features     (mean,     variance,     covariance,     IAT,     magnitude,     total     size,     total     sum).
-
-2.3        Streaming    and    Incremental    Learning    for    Network    Security    on    CICIoT2023
-          Wa  n  g            e  t            a  l  .            [31]        proposed        CTWA,        an        incremental        learning        framework        integrating        a        Convolutional
-Autoencoder        (CAE)        and        a        Temporal        Convolutional        Network        (TCN)        for        IoT        intrusion        detection        under
-streaming    conditions.    On    CICIoT2023,    initial    classes    (Benign,    DDoS-ACK,    DNS,    DDoS-ICMP)    are    trained
-first,         followed         by         incremental         addition         of         new         DDoS         categories.         A         Gaussian-based         task         discriminator
-and      Weight      Alignment      (WA)      mitigate      catastrophic      forgetting.      Feature      fusion      combines      spatial      (CAE)      and
-temporal        (TCN)        representations.        Label        smoothing        is        integrated        with        cross-entropy        to        stabilize        updates.
-Empirically,     CTWA    achieves    0.9643     accuracy    after    100     epochs     while    maintaining    the     old     task    performance,
-though       with       non-trivial       runtime       overhead       (789.58       s)       The       integration       of       CAE       (spatial       compression)       with
-TCN     (causal     dilated     temporal     modeling)     allows     simultaneous     structural     and     sequential     feature     extraction.
-Residual      connections      reduce      gradient      degradation      in      deeper      CAE      layers.      The      Gaussian      task      discriminator
-provides          a          probabilistic          routing          mechanism,          which          in          practice          reduces          interference          between          old          and
-new        classes.        WA        partially        corrects        classifier        bias        across        task        heads.        Empirically,        forgetting        is        controlled
+Sensors 2026, 26, 3198
+5 of 20
+Θ(t) =
+n
+θ(t)
+1 , θ(t)
+2 , . . . , θ(t)
+M
+o
+,
+(1)
+where M evolves dynamically across communication rounds.
+Client Layer
+Edge Devices
+Model 
+Selection
+Local 
+Training
+Client 1
+Encrypted 
+Updates
+Model 
+Selection
+Local 
+Training
+Client 2
+Encrypted 
+Updates
+Model 
+Selection
+Local 
+Training
+Client N
+Encrypted 
+Updates
+Edge Layer
+Edge Servers
+Receive Local 
+updates
+Similarity-based 
+Clustering
+Edge 1
+Cluster 
+Aggregation
+Intermediate 
+Models
+Receive Local 
+updates
+Similarity-based 
+Clustering
+Edge 2
+Cluster 
+Aggregation
+Intermediate 
+Models
+Receive Local 
+updates
+Similarity-based 
+Clustering
+Edge N
+Cluster 
+Aggregation
+Intermediate 
+Models
+Encrypted Local Updates 
+(Uplink)
+Encrypted Local Updates 
+(Uplink)
+Cloud Layer
+(Global Server)
+𝑀1
+1. Global Multi-Model Pool
+𝑀2
+𝑀𝑘
+2. Meta Aggregation at Cloud
+Aggregate Intermediate 
+Models form Edges
+3. Global Model Distribution
+Distribute Updated Global 
+Multi-model Pools to Edges
+Encrypted Intermediate 
+Updates (Uplink)
+Encrypted Model 
+Distribution (Downlink)
+Encrypted Model 
+Distribution (Downlink)
+Figure 1. A high-level architectural diagram of the proposed framework.
+3.2. Secure Key Establishment and Model Protection
+This stage ensures secure communication between clients and edge servers, forming
+the foundation for privacy-preserving collaboration. The objective is to protect model up-
+dates during transmission while maintaining computational efficiency suitable for resource-
+constrained IoT environments.
+Secure communication between clients and edge servers is established using elliptic-
+curve Diffie–Hellman key exchange. Each client–edge pair (Ci, Ek) generates public–private
+key pairs and computes a shared secret as shown in (2):
+sik = ECDH(ski, pkk) = ECDH(skk, pki).
+(2)
+A symmetric encryption key is derived using a hash-based key derivation function using (3):
+Kik = HKDF(sik, info ),
+(3)
+where BLAKE2b is used as the underlying hash function. The local model parameters are
+serialized and encrypted using ChaCha20-Poly1305 as shown in (4):
+˜θ(t)
+i
+= EncKik
+
+θ(t)
+i
+
+.
+(4)
+This mechanism ensures the confidentiality and integrity of model updates during
+transmission from clients to edge servers. The secure key establishment and model protec-
+tion process is illustrated in Figure 2.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 6
 
-[View original page, figures and tables](assets/page-006.png)
+[View original page](assets/page-006.png)
 
 ```text
-6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-without       explicit       exemplar       replay.       The       types       of       features       used       for       detection       are       46-dimensional       flow-level
-statistical     features.
-          Mahdi      et      al.      [32]     proposed     an     end-to-end     intrusion     detection     framework     integrating     streaming     incre-
-mental       learning       with       secure       data       lifecycle       management.       An       SGD-based       incremental       classifier       is       initially
-trained      on      CICIoT2023      and      subsequently      updated      using      traffic      data      extracted      from      a      blockchain-secured
-storage         layer.         The         model         supports         partial_fit         retraining,         avoiding         full         retraining         cycles.         Data         collected
-from       live       traffic       is       encrypted       (hybrid       AES/RSA   +       signature),       stored       via       Proof-of-Work       blockchain,       then
-periodically       retrieved       for       incremental       updates       on       a       central       server.       Retraining       occurs       in       multiple       rounds,
-improving     cross-validation     accuracy     from     97.9%     to     99.8%.     The     approach     addresses     resource     constraints     in
-IoT    devices    while    maintaining    model    adaptability    to    evolving    attack    distributions.
-
-2.4        Adversarial    Robustness    in    Federated    Learning    on    CICIoT2023
-          Doménech      et      al.      [33]      evaluated      adversarial      robustness      through      cross-domain      generalization      between
-CICIoT2023   and   CICIoMT2024.   Models   trained   on   CICIoT2023   show   strong   baseline   performance,   but   sub-
-stantial    degradation    when    evaluated    on    IoMT    traffic,    even    under    equivalent    attack    categories.    The    proposed
-approach      demonstrates      systematic      cross-domain      generalization      analysis      between       IoT      and      IoMT      datasets.
-The   experimental   result   shows   that   minor   IoMT   augmentation   significantly   restores   detection   capability.   The
-authors    achieved    99.85%    accuracy    after    a    controlled    optimization    pipeline.    The    results    suggest    CICIoT2023-
-trained     models     are     not     inherently     adversarially     robust     to     domain     shifts    in     healthcare     environments.
-          Saxena       et       al.       [34]       proposed       GNN-IDS,       a       Graph       Neural       Network-based       IDS       that       was       experimented
-on           the           CICIoT2023           dataset.           The           proposed           approach           emphasizes           on           structural           modeling           of           network
-traffic.       Unlike       traditional       ML       approaches       that       operate       on       independent       flows,       the       proposed       method       con-
-structs         a         graph         using         node         and         edge         attributes,         allowing         relational         reasoning         across         IoT         entities.         The
-proposed        approach’s        advantage        lies        in        explicit        graph        construction        using        both        node        and        edge        attributes.
-The       GraphSAGE-based       architecture       leverages       relational       dependencies       across       IoT       entities,       mitigating       the
-independence       assumption       common       in       flow-based       classifiers.       Binary       accuracy       (99.95%)       exceeds       baseline
-models      (FedFK,      RF,      MLP-Mimic).      The      model      demonstrates      high      precision      across      most      attack      categories,
-particularly     DoS     and     DDoS     subclasses.
-          To       better       understand       how       existing       studies       address       intrusion       detection       in       IoT       environments,        Ta  b  l  e        1
-provides     a     structured     comparison     of     recent     works     evaluated     on     CICIoT2023     and     related     datasets.     The     table
-summarizes    their    feature    selection    strategies,    learning    paradigms,    key    strengths,    and    practical    limitations—
-particularly     in     terms     of     federated     learning,     streaming     capability,     class     imbalance     handling,     and     robustness.
-This     comparison     helps     highlight    the     gaps     that     motivate    the     proposed     framework.
-
-                                             Ta  b  l  e       1  : Comparative    analysis    of    recent    IDS    research    on    CICIoT2023.
-
-       Authors                          Feature                    Model/Learning                                                                                        Critical    Limitations
-         (Year)                       Selection                          Paradigm                                                                                       Key    Advantages(W.r.t.    FL,    Streaming,
-                                                                                                                                                                     Imbalance,    Robustness)
-                                                                                                                         Significant                                   No    federated     learning;
-                                          GWO                               Hy brid                      dimensionality    reduction                                   offline    evaluation    only;
-           Abid                      (Wrapper-                        LightGBM  +                        (43  →18);    low    false    alarm                        degraded     minority    attack
-      et     al.    [25]                 based)                               CNN                         rate;    strong    detection    for                         detection;     no    streaming
-                                                                                                                  dominant     attacks                               capability;    no    adversarial
-                                                                                                                                                                           robustness     analysis
-                                                                                                                                                                                                  (Continued)
+Sensors 2026, 26, 3198
+6 of 20
+Client 𝐶𝑖
+Edge Server 𝐸𝑘 
+Generate (𝑠𝑘𝑖, 𝑝𝑘𝑖)
+Client 𝐶𝑖
+Edge Server 𝐸𝑘 
+Generate (𝑠𝑘𝑘, 𝑝𝑘𝑘)
+Send public key (𝑝𝑘𝑖)
+Send public key (𝑝𝑘𝑘)
+𝑠𝑖𝑘 =ECDH(𝑠𝑘𝑖, 𝑝𝑘𝑘)
+𝑠𝑖𝑘 =ECDH(𝑠𝑘𝑘, 𝑝𝑘𝑖)
+𝐾𝑖𝑘 =HKDF(𝑠𝑖𝑘, 𝑖𝑛𝑓𝑜)
+𝐾𝑖𝑘 =HKDF(𝑠𝑖𝑘, 𝑖𝑛𝑓𝑜)
+𝑆𝑒𝑟𝑖𝑎𝑙𝑖𝑧𝑒 𝑚𝑜𝑑𝑒𝑙 (𝜃𝑖)
+𝐸𝑛𝑐𝑟𝑦𝑝𝑡 (𝜃𝑖)
+Send encrypted model (𝐸𝑛𝑐𝐾𝑖𝑘)
+Decrypt received model
+Reover (𝜃𝑖)
+Figure 2. Workflow of secure key establishment and model protection.
+3.3. Client-Side Training and Model Selection
+This stage governs local learning on IoT devices and introduces adaptive model selec-
+tion, enabling each client to align with the most suitable global model under heterogeneous
+data conditions. This mechanism is critical for handling extreme non-IID distributions and
+improving personalization. The workflow of this stage is summarized in Figure 3.
+At each communication round t, each client selects the most suitable model from the
+available model set Θ(t) by minimizing the local empirical loss as presented in (5):
+m(t)
+i
+= arg
+min
+m∈{1,...,M} L
+
+fθ(t)
+m , Di
+
+(5)
+The selected model θ(t)
+mi is used as the initialization for local training. The client then
+updates the model parameters using stochastic gradient descent (6):
+θ(t)
+i
+= θ(t)
+mi −η∇L
+
+fθ(t)
+mi
+, Di
+
+,
+(6)
+where η is the learning rate. To address class imbalance in intrusion detection data, the loss
+function is weighted according to class frequencies.
+Adversarial behavior is modeled by allowing a subset of clients to generate malicious
+updates. These include naive poisoning through parameter perturbations and stealthy
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 7
 
-[View original page, figures and tables](assets/page-007.png)
+[View original page](assets/page-007.png)
 
 ```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    7
-
-
-Ta  b  l  e        1        (  c  o  n  t  i  n  u  e  d  )
-
-      Authors                        Feature                  Model/Learning                                                                                 Critical    Limitations
-         (Year)                    Selection                       Paradigm                                                                                       Key    Advantages(W.r.t.    FL,    Streaming,
-                                                                                                                                                         Imbalance,    Robustness)
-                                                                   1D-CNN+                              Privacy-preserving                                No    imbalance    handling;
-         To  r  r  e                                                Federated                        federated     framework;                            no     poisoning     defense;     no
-      et    al.    [26]                                                                           NoneAveraging  +asynchronous     FL;                     streaming     incremental
-                                                                   DP  +    FHE                      evaluated    on    multiple                          updates;     computational
-                                                                                                        large-scale    datasets                                   overhead     (10%)
-                                                                   1D-CNN+                                   91.24%     model                           Centralized    training    only;
-                                                                  Knowledge                                  compression;                                no     federated     learning;     no
-          Okey                         Firefly                    Distillation                             resource-aware                                    streaming     setting;     no
-      et    al.    [27]            Algorithm                        (Teacher–                       deployment;     SMOTE  +                                adversarial    robustness
-                                                                     Student)                                weighted    loss;                                         evaluation
-                                                                                                  explainability    integration
-                                                                                                                                                          Evaluated     on     3M     subset
-                                   Variance-                                                         High    binary    accuracy;                             (not    full    dataset);    no
-        Wa  h  a  b                    based                     DNN/CNN/                               SMOTE    balancing;                                    federated     learning;
-      et     al.    [28]             pruning                     Tr  a n s  f o r  m  e  r           multi-class     evaluation                              performance    drop    in
-                                                                                                                                                               12-class    setting;    no
-                                                                                                                                                               robustness     analysis
-                                                                                                           Effective     severe                         Binary     classification     only;
-   Mallikarjun                       Implicit                    MLPP-CB  +                       imbalance    handling;    very                            centralized    setting;    no
-   &Patro[29]                      (CatBoost                           SVWS                        high    attack    recall;    stable                     streaming    learning;    no
-                                 importance)                        balancing                              cross-validation                               federated     paradigm;    no
-                                                                                                              performance                                    adversarial    resilience
-                                       None                           Hy brid                           Zero-day    detection                            Centralized     architecture;
-      Wa  k  i  l  i        &       (implicit                   anomaly-first                          capability;    macro-F1                           no     federated     learning;     no
-   Bakkali    [30]                    feature                   cascade    (IF  +                            improvement;                                streaming    adaptation;    no
-                                    learning)                    AE  +     LOF  +                    edge-deployable     (<100                                 poisoning     defense
-                                                                    RF/XGB)                                  ms     inference)
-                                                                                                     Mitigates    catastrophic                             No    federated     learning;
-                                   Automat ic                     Incremental                          forgetting;     supports                               high    computational
-         Wa  n  g                 (CAE-TCN                     Deep     Learning                           unknown     attack                               runtime;    evaluated    on
-      et     al.    [31]              feature                        (CTWA)                               detection;    hybrid                          relatively    balanced    subset;
-                                  extraction)                                                             temporal-spatial                                    no     adversarial     study
-                                                                                                                 modeling
-                                                                                                                                                                                    (Continued)
+Sensors 2026, 26, 3198
+7 of 20
+attacks via label manipulation, both of which introduce biased updates while remaining
+difficult to detect.
+Client 𝐶𝑖
+Global Models θ(𝑡)
+Select best model (𝜃𝑚)
+Client 𝐶𝑖
+Global Models θ(𝑡)
+Distribute model set 
+{𝜃𝑖, ⋯, 𝜃𝑀 }
+Local Data 𝐷𝑖
+Local Data 𝐷𝑖
+Edge
+Edge
+Evaluate models on local data
+Train selected models on 𝐷𝑖 
+alt
+[Adversarial Client]
+Apply attack 
+(Poisoning/backdoor)
+Encrypt updated model
+Send encrypted update
+Figure 3. Workflow of client-side training and model selection.
+3.4. Edge-Level Similarity-Aware Aggregation
+This stage performs robust intermediate aggregation at the edge layer, where the
+primary objective is to filter, group, and consolidate client updates before forwarding them
+to the cloud. It plays a central role in improving robustness against adversarial updates
+while preserving meaningful local patterns. The overall workflow of this stage is presented
+in Figure 4.
+Client 𝐶𝑖
+Client 𝐶𝑖
+Send encrypted updates Enc(𝜃𝑖)
+Edge Server 𝐸𝑘 
+Edge Server 𝐸𝑘 
+Cloud
+Cloud
+Decrypt updates and 
+compute ∆𝑖
+Compute similarity & 
+perform clustering
+alt
+[Anomalous updates detected]
+Isolate / discard 
+abnormal updates
+Aggregate updates within 
+each cluster
+Generate cluster models 
+{𝜃1, ⋯, 𝜃𝐿}
+Send cluster models
+Figure 4. Workflow of edge-level similarity-aware aggregation.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 8
 
-[View original page, figures and tables](assets/page-008.png)
+[View original page](assets/page-008.png)
 
 ```text
-8                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-Ta  b  l  e        1        (  c  o  n  t  i  n  u  e  d  )
-
-       Authors                         Feature                    Model/Learning                                                                                      Critical    Limitations
-         (Year)                      Selection                         Paradigm                                                                                       Key    Advantages(W.r.t.    FL,    Streaming,
-                                                                                                                                                                 Imbalance,    Robustness)
-                                     ML-based                                                             Continuous    retraining;                                Central    retraining    only;
-         Mahdi                          feature                      Incremental                             secure     data     storage;                        no     federated     learning;     no
-      et     al.    [32]              selection                           SGD  +                            validation     on     unseen                                explicit    imbalance
-                                      (unspeci-                       Blockchain                                         datasets                                  strategy;     no     adversarial
-                                           fied)                                                                                                                     robustness     evaluation
-                                                                                                         Quantified    dataset    shift                          No     federated     learning;     no
-    Doménech                                                                                             (F1    drop     up     to    66.87%);                   streaming;    no    adversarial
-      et    al.    [33]                                                                            None                                                       Random    Forest+     SMOTEoptimized    preprocessing;robustness;     limited
-                                                                                                       domain-aware    evaluation                                      cross-dataset    scope
-                                                                   GraphSAGE  +                              Captures    structural                                   We  a  k        m  i  n  o  r  i  t  y  -  c  l  a  s  s
-        Saxena                                                              MLP                         dependencies;     improved                                 precision;    no    imbalance
-      et    al.    [34]                                                                           None(GNN-basedtopology-aware     intrusion                         analysis;    no    federated
-                                                                             IDS)                                      detection                                    learning;    no    streaming
-                                                                                                                                                                                 capability
-
-
-         In    summary,    existing    studies    generally    optimize    one    aspect    of    IoT    intrusion    detection,    such    as    privacy-
-preserving     federation,     imbalance     handling,     streaming     adaptation,     or     adversarial     defense.     Limited     attention
-has   been   given   to   their   joint   interaction   under   sustained   attack-dominant   and   non-IID   streaming   conditions.
-Thisgapmotivatestheintegratedframeworkproposedinthiswork.
-
-3         Proposed     Approach
-         This        section        presents        the        proposed        federated        intrusion        detection        framework        for        IoT        environments
-operating    under    adversarial     and    imbalanced    conditions.
-         In     this     study,     resilience     denotes     the     ability     of     the     intrusion     detection     framework     to     preserve     stable     and
-reliable      performance      under      non-IID      streaming      traffic,      severe      class      imbalance,      and      malicious      or      degraded
-client    updates.
-         The     overall     workflow     consists     of     feature     selection,     similarity-guided     initialization,     and     accuracy-gated
-federated     ensemble     learning,     as     illustrated     in    Fig.    2.
-         Similarity-Guided     Data     Balancing:    Majority-class     samples     are     analyzed     for     redundancy,     and     a     struc-
-turally     diverse    subset    is    selected    to    construct    a    balanced    initialization    dataset.
-         Robust      Global      Ensemble      Initialization:    An      incremental      ensemble      model      is      trained      on      the      balanced
-dataset     to     obtain     a     stable,     cold-start     global     model.
-         Streaming        Federated        Refinement        with        Accuracy        Gating:   Clientsprocesslocaldatainstreaming
-batches,    perform    conditional    incremental    updates,    and    transmit    only    performance-preserving    updates.    The
-server    aggregates    accepted    updates    using    performance-weighted    aggregation    under    secure    communication.
-         Fig.    2      summarizes      the      complete      workflow      of      the      proposed      framework,      integrating      feature      reduction,
-similarity-guided    initialization,    and    accuracy-gated    federated    refinement    under    streaming    IoT    conditions.
+Sensors 2026, 26, 3198
+8 of 20
+Upon receiving encrypted model updates ˜θ(t)
+i , each edge server Ek decrypts them
+using the corresponding keys Kik and computes model deviations with respect to the
+selected base model as shown in (7):
+∆θ(t)
+i
+= θ(t)
+i
+−θ(t)
+mi .
+(7)
+To ensure consistency of update representations, clustering is performed separately
+for each base model θ(t)
+m . That is, only updates ∆θ(t)
+i
+computed with respect to the same
+selected model θ(t)
+mi are grouped and processed together. This guarantees that all updates
+within a cluster share a common reference model. To enable robust aggregation, each
+update is vectorized into v(t)
+i
+∈Rd, and pairwise cosine similarity is computed using (8):
+sim(i, j) =
+v(t)
+i
+· v(t)
+j
+v(t)
+i
+
+v(t)
+j
+
+(8)
+A distance matrix is defined as d(i, j) = 1 −sim(i, j), and hierarchical clustering
+partitions updates (grouped per base model θ(t)
+m ) into clusters {G1, . . . , GL}.
+Updates that exhibit abnormal norms or form isolated clusters are identified as anoma-
+lous and either excluded or isolated based on statistical thresholds. For each valid cluster
+Gl, an aggregated update is computed using (9):
+∆θ(t)
+l
+=
+1
+|Gl| ∑
+i∈Gl
+∆θ(t)
+i ,
+(9)
+and the corresponding cluster model is obtained as (10):
+θ(t+1)
+l
+= θ(t)
+m + ∆θ(t)
+l .
+(10)
+Here, θ(t)
+m denotes the common base model associated with all updates in cluster Gl.
+This process produces multiple intermediate models representing coherent groups of
+client updates.
+3.5. Cloud-Level Meta-Aggregation
+This stage refines and consolidates the intermediate models generated at the edge
+layer. The objective is to balance diversity and generalization by merging similar models
+while maintaining multiple representations to capture heterogeneous data patterns. The
+cloud-level aggregation process is highlighted in Figure 5.
+The cloud server receives a set of intermediate models (11):
+M(t+1) =
+n
+θ(t+1)
+l
+o
+.
+(11)
+Similarity-based clustering is again applied to group models with similar characteris-
+tics. For each cluster Hq, a merged model is computed using (12):
+θ(t+1)
+q
+=
+1
+Hq
+ ∑
+θ∈Hq
+θ.
+(12)
+The resulting set Θ(t+1) =
+n
+θ(t+1)
+q
+o
+is constrained to a maximum size Mmax to ensure
+scalability, forming the updated global model set.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 9
 
-[View original page, figures and tables](assets/page-009.png)
+[View original page](assets/page-009.png)
 
 ```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    9
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     Figure    2:        Overall    process    flow    of    the    proposed    resilient    streaming    federated    IoT    intrusion    detection    framework.
-
-3.1        mRMR-Based    Feature    Selection    and    Importance    Analysis
-           Feature    selection    plays    a    critical    role    in    intrusion    detection    systems    for    IoT    environments,    where    traffic
-characteristics    are    high-dimensional    and    exhibit    strong    statistical    dependencies    [35–37].    To    identify    features
-that    are    both    informative    with    respect    to    class    behavior    and    minimally    redundant,    this    work    employs    a    Max-
-imum      Relevance      Minimum      Redundancy      (mRMR)-based      feature      selection      framework      on      the      CICIoT2023
-dataset    [38].    The    original    CICIoT2023    dataset    contains    46    input    features    (excluding    the    label    attribute).    The
-objectiveisnottorelysolelyonagreedyrankingorder,buttoobtainacompactanddiscriminativesubset
-of     features    while    preserving     the    semantic    relevance     of    the    original    traffic     descriptors     [39,40].
-           Let       D  ={(xi  ,     y i )}Ni=1   denote    the    preprocessed    dataset,    where   xi   ∈Rd      represents    a    d -dimensional    vector
-of         normalized         network-flow         features         and          y i   ∈{0,   1}         corresponds         to         benign         and         malicious         IoT         traffic,
-respectively.     Feature     relevance     is     quantified     using     mutual     information     between     an     individual     feature        f  j      and
-the    class    label     Y  ,
+Sensors 2026, 26, 3198
+9 of 20
+Edge Server 𝐸𝑘 
+Edge Server 𝐸𝑘 
+Cloud Server S
+Cloud Server S
+Validate and filter invalid 
+models
+Send cluster models {𝜃1, ⋯, 𝜃𝐿}
+Compute similarity and 
+cluster models
+Aggregate models within 
+clusters
+Generate refined model set 
+𝜃(𝑡+ 1) 
+Limit number of models 
+𝑀𝑚𝑎𝑥 
+Distribute updated models𝜃(𝑡+ 1)
+Figure 5. Workflow of cloud-level meta-aggregation.
+3.6. Global Inference and Model Utilization
+This stage defines how the learned models are utilized for prediction and decision-
+making. By leveraging multiple specialized models, the framework improves robustness
+and generalization across diverse intrusion patterns.
+Given an input sample x, predictions from all models are combined using ensemble
+averaging (13):
+ˆy = arg max
+ 
+1
+M
+M
+∑
+m=1
+fθm(x)
+!
+(13)
+This ensemble mechanism enhances detection performance by aggregating knowledge
+from multiple model representations.
+The proposed framework differs from traditional FL by using a multi-model repre-
+sentation that captures diverse data distributions under highly non-IID conditions. The
+similarity-aware clustering mechanism at both edge and cloud levels enables robust ag-
+gregation by isolating anomalous updates and preserving consistent patterns. In addition,
+lightweight cryptographic protection ensures secure communication without imposing sig-
+nificant overhead. The integration of these components results in a unified framework capa-
+ble of addressing scalability, robustness, and security challenges in IoT intrusion detection.
+4. Experiments and Results
+4.1. Experimental Setup
+The proposed AMM-HFL framework was implemented and evaluated in a Google Co-
+lab Pro environment with an NVIDIA L4 GPU using a real-time IoT dataset IDSIoT2024 [27].
+The core system architecture was built with the PyTorch 2.10.0+cu128 deep learning frame-
+work, enabling the development of a customized multilayer perceptron (MLP). Given
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 10
 
-[View original page, figures and tables](assets/page-010.png)
+[View original page](assets/page-010.png)
 
 ```text
-10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-
-I(  f  j ;   Y)=   ∑p(  f  j ,     y)   log                  p(  f  j ,     y)p(  f  j) p( y),(1)
-                   f  j , y
-
-which    captures    the    expected     reduction     in    uncertainty    about     Y       provided     by      f  j .
-        To    account    for    the    pronounced    correlation    structure    typical    of    IoT    traffic    statistics,    feature    redundancy
-is     modeled     as     the     mean     absolute     Pearson     correlation     between       f  j      and    all    remaining    features,
-
-                          d
-R(  f  j)=                         1d  −1∑∣ρ(  f  j ,      f k)∣.(2)
-                         k=1
-                         k≠j
-
-        The     raw     mRMR     feature     importance     score     is     then     computed     as
-
-mRMR(  f  j)=         I(  f  j ;   Y)−R(  f  j).(3)
-
-        Since     redundancy     may     dominate     relevance     in     highly     correlated     feature     spaces,     raw     mRMR     values     can
-assume    negative    magnitudes.    To    enhance    interpretability    while    preserving    relative    importance    relationships,
-all    scores    are    normalized     using    min–max    scaling    into    the    interval  [0,   1].
-        While     performance-based     weighting     improves     contribution     from     reliable     updates,     high     local     accuracy
-may     not     always     correspond     to     greater     global     usefulness     under     heterogeneous     non-IID     client     distributions.
-In         particular,         clients         with         comparatively          easier         local         data         may         receive          stronger          influence         than         clients
-representing    more    challenging    but    important    distributions.    This    trade-off    is    accepted    here    for    computational
-simplicity    and    lightweight    deployment.
-        The        analysis        is        performed        independently        for        benign        and        malicious        traffic        to        capture        class-specific
-behavioral      characteristics.      Fig.    3      illustrates      the      normalized      mRMR      feature      importance      for      class      0      (benign
-IoT     traffic).     Several     temporal     and     protocol-related     features     exhibit     consistently     high     importance,     indicating
-their      role      in      characterizing      stable      and      regular      communication      patterns      typical      of      legitimate      IoT      behavior.
-In         contrast,         statistical         dispersion         features,         such         as         minimum,         maximum,         and         variance-based         descrip-
-tors,         demonstrate         comparatively         lower         importance,         suggesting         limited         discriminative         value         for         benign
-traffic    modeling.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       Figure    3:        Normalized    mRMR    feature    importance    for    class    0    (benign    IoT    traffic)    in    the    CICIoT2023    dataset.
+Sensors 2026, 26, 3198
+10 of 20
+the high variance and heterogeneous nature of the dataset, the PyTorch implementation
+integrated Layer Normalization across deep fully connected layers and paired it with an
+AdamW optimizer, which serves as the practical instantiation of the gradient-based update
+described in Equation (6), to ensure robust local convergence.
+4.1.1. Hierarchical Federated Learning Topology and Setup
+The simulation was structured around the proposed three-tier hierarchical FL topology,
+comprising the IoT client tier, the edge server tier, and the central cloud tier. To simulate a
+highly distributed IoT network, the environment was configured with 5 independent edge
+servers, each managing a dedicated cluster of 10 resource-constrained IoT clients, resulting
+in a total network size of 50 collaborative client nodes.
+The federated training process was executed over 50 rounds of global communication
+to ensure stable convergence and robustness evaluation under both IID and extreme non-IID
+conditions, including scenarios with adversarial clients. During each round, individual IoT
+clients dynamically evaluated the available cloud-provided global models and initialized
+their training weights based on the lowest local empirical loss. Clients then performed
+local training for 3 epochs using a batch size of 64 before encrypting and transmitting their
+updated parameters to their designated edge server. At the intermediate tier, edge servers
+performed localized, similarity-aware clustering to generate refined intermediate models,
+which were then transmitted to the central cloud server for final meta-aggregation.
+4.1.2. Libraries and Cryptographic Integration
+Beyond the core neural network, the implementation leveraged scikit-learn for critical
+data preprocessing and clustering. Standard scaling and label encoding were applied to the
+raw traffic data. Scikit-learn’s class weight computation dynamically balanced the highly
+imbalanced distributions inherent in intrusion detection datasets. Furthermore, clustering
+was employed at the edge tier to dynamically group the extracted cosine-similarity matrices
+of the decrypted model updates.
+To ensure secure model transmissions across the hierarchy without overwhelming
+resource-constrained IoT devices, the cryptography Python 43.0.3 package was integrated.
+We used the X25519 standard [28] for Elliptic-Curve Diffie–Hellman (ECDH) key exchanges
+and ChaCha20Poly1305 for authenticated symmetric encryption, achieving an optimal
+balance between cryptographic strength and computational efficiency.
+4.1.3. Hyperparameter Configuration
+The performance and behavior of the FL environment are governed by a defined set of
+hyperparameters, carefully tuned to simulate an extreme edge-computing scenario. Table 1
+outlines the comprehensive configuration used in the simulation.
+4.1.4. Data Partitioning and Adversarial Scenarios
+To accurately reflect realistic, highly localized IoT deployments, the dataset was
+partitioned using two distinct distribution strategies. In the Independent and Identically
+Distributed (IID) scenario, data shards were allocated uniformly, ensuring that each client
+had a representative sample of all global traffic classes. Conversely, the Extreme Non-IID
+scenario was designed to simulate specialized edge sensors. The dataset was sorted by
+label, and clients were strictly limited to observing up to three specific traffic classes. This
+artificially induced extreme local bias poses a severe challenge to traditional centralized
+aggregation methods.
+In these environments, adversarial behavior was introduced by designating varying
+proportions of the network (5%, 15%, and 30%) as compromised. These clients deployed
+a dual-threat strategy. A portion executed naive model-poisoning attacks by injecting
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 11
 
-[View original page, figures and tables](assets/page-011.png)
+[View original page](assets/page-011.png)
 
 ```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 11
-
-
-            Fig.    4         presents         the         corresponding         feature         importance         profile         for         class         1         (malicious         IoT         traffic).         In
-this      case,      a      broader       set      of       features      achieves      elevated      importance      values,      reflecting       the      heterogeneous       and
-irregular      nature      of      attack      traffic.      Notably,      features      associated      with      protocol      usage,      control      flags,      and      traffic
-intensity         display         stronger         relevance,         indicating         their         effectiveness         in         capturing         deviations         from         normal
-communication      behavior.      This      divergence      in      importance      patterns      highlights      the      asymmetric      information
-content     between     benign     and     malicious     traffic     classes.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        Figure    4:         Normalized    mRMR    feature    importance    for    class    1    (malicious    IoT    traffic)    in    the    CICIoT2023    dataset.
-
-            To     identify    features    that    remain     consistently    informative    across    both    traffic    classes,    a    combined    feature
-importance        profile        is        constructed        by        averaging        the        raw        mRMR        scores        from        class        0        and        class        1        prior        to
-normalization.      The      resulting      distribution,      shown      in    Fig.    5,      emphasizes       features      that      contribute      robustly      to
-discrimination     regardless     of     class     context.     These     features     are     particularly     well-suited     for     intrusion     detection
-models    intended    for    deployment    in    dynamic    IoT    environments,    where    attack    patterns    and    benign    behaviors
-may     evolve     over     time.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figure         5:        Combined         normalized         mRMR         feature         importance         across         benign         and         malicious         traffic         classes         in         the
-CICIoT2023    dataset.
+Sensors 2026, 26, 3198
+11 of 20
+high-magnitude Gaussian noise into locally computed gradients, while others performed
+stealthy backdoor attacks via label manipulation. By forcing the model to misclassify
+specific malicious traffic as normal, these attacks introduce subtle vulnerabilities while
+maintaining low parameter deviations to evade standard statistical detection.
+Table 1. Comprehensive simulation hyperparameters.
+Parameter
+Value
+Description
+Total IoT Clients
+50
+Total number of distributed devices in the FL network.
+Edge Servers
+5
+Intermediate aggregation nodes.
+Global Communication Rounds
+50
+Total iterations of the global federated training process.
+Client Local Epochs
+3
+Full passes over local data per client before edge aggregation.
+Batch Size
+64
+Number of tabular samples processed per local gradient update.
+Learning Rate
+0.001
+Step size for the AdamW optimizer.
+Extreme Non-IID Classes
+3
+Maximum distinct attack classes visible per client.
+Cosine Distance Threshold
+0.4
+Boundary for isolating anomalous update vectors via clustering.
+Attack Probability
+0.3
+Baseline likelihood of a client exhibiting malicious behavior.
+Malicious Client Ratio
+5%, 15%, 30%
+Proportion of the client pool executing adversarial actions.
+Model Poisoning Strength
+0.5
+Gaussian noise multiplier applied during naive Byzantine attacks.
+To model realistic intermittent adversarial activity, only this predefined subset of
+compromised clients generates malicious updates with a fixed probability (0.3) at each
+communication round, while benign clients always produce legitimate updates.
+4.2. Model Performance
+The global convergence and classification capabilities of the AMM-HFL architecture
+were systematically evaluated under escalating adversarial threat levels. As illustrated
+in Figure 6, the global ensemble model exhibits rapid initial learning, reaching near-peak
+accuracy within the first 10 communication rounds across both data distribution strategies.
+Under IID conditions, the learning trajectory remains stable, settling into a steady state
+with minimal variance. In contrast, Extreme Non-IID conditions introduce observable
+early-stage volatility. This fluctuation is a natural mathematical consequence of the highly
+skewed local data views; however, the similarity-aware clustering mechanism reduces this
+variance, enabling convergence by approximately the 20th communication round.
+Figure 6.
+Global model convergence across communication rounds under varying malicious
+client ratios.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 12
 
-[View original page, figures and tables](assets/page-012.png)
+[View original page](assets/page-012.png)
 
 ```text
-12                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-          For    subset    construction,    the    combined    normalized    mRMR    scores    were    sorted    in    descending    order,    and
-a      fixed      retention      ratio      of      80%      was      applied.      Based      on      this      criterion,      the      top      80%      highest-scoring      attributes
-were   retained   for   subsequent   experiments,   while   lower-ranked   features   were   discarded.   This   process   reduced
-the     original     46-dimensional     feature     space     to     31     selected     features,     improving     computational     efficiency     while
-preserving    discriminative    information    relevant    to    IoT    intrusion    detection.
-          Fig.    6     shows     the     final     selected     feature     subset     used     for     federated     model     training.     The     retained     attributes
-include     protocol     indicators     (e.g.,     ARP,     DHCP,     DNS,     SSH,     Telnet,     SMTP),     traffic-rate     descriptors     (e.g.,     Rate,
-Srate),   temporal   flow   properties   (e.g.,   Duration,   flow_duration),   and   TCP   control-flag   statistics   (e.g.,   ack,   syn,
-rst,    fin,    cwr,    ece).    This    distribution    indicates    that    both    protocol    semantics    and    traffic    behavior    are    important
-for    reliable     detection    in    dynamic    IoT    environments.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figure       6:         Final        selected        feature        subset        with        normalized       mRMR        scores        used        in        the        proposed        federated        intrusion
-detection    framework.
-
-          The     mRMR     framework     was     therefore     used     not     only     for     feature     importance     interpretation,     but     also     to
-guide     feature     reduction     and     construct     a     consistent     input   space    shared    across    all    clients    and    all    experiments.
-
-3.2        Similarity-Guided    Data    Balancing    for    Robust    Global    Initialization
-          A    fundamental    challenge    in    federated    and    streaming    intrusion    detection    systems    lies    in    the    simultane-
-ous    presence    of    severe    class    imbalance    and    cold-start    instability    during    global    model    initialization    [41,42].    In
-large-scale   network   telemetry   datasets,   malicious   traffic   (class   1)   often   dominates   benign   instances   (class   0)   by
-several     orders     of     magnitude,     biasing     both     centralized     and     federated     learners     toward     majority-class     decision
-boundaries.      When      such      an      imbalance      is      propagated      into      federated      environments,      the      initial      global      model
-becomes   poorly   conditioned,   leading   to   unstable   early   updates,   delayed   convergence,   and   degraded   detection
-accuracy         [43].         To         address         this         issue,         we         propose         a         similarity-guided         balancing         strategy         that         performs
-principled       majority-class       reduction       while       preserving       behavioral       diversity,       thereby       enabling       robust       global
-initialization    and    mitigating    cold-start     effects.
+Sensors 2026, 26, 3198
+12 of 20
+Figure 7 highlights the system’s final ensemble accuracy, demonstrating its resilience
+even under massive network compromise. In the most severe scenario, where 30% of the
+active client pool is malicious, the IID deployment achieved a final accuracy of 96.83%, while
+the heavily constrained Non-IID deployment reached 95.92%. This limited degradation
+(≤1% accuracy drop) indicates that edge-level clustering isolates anomalous updates prior
+to cloud aggregation.
+Figure 7. Final Global model accuracy under different scenarios
+The multiclass performance of the proposed design is further clarified by the confusion
+matrices shown in Figures 8–10. In the IID deployments, the architecture demonstrates
+near-perfect classification capabilities for critical attack vectors, consistently achieving true
+positive rates of 0.99 to 1.00 for DoS, MITM, Malware, and Routing attacks. However,
+the Extreme Non-IID constraint introduces necessary mathematical trade-offs in specific
+minority classes. As the major attack classes retain exceptional accuracy, the “Injection”
+class suffers a noticeable reduction in detection precision under non-IID settings, occasion-
+ally being misclassified as Normal traffic. This dynamic occurs because strict multi-model
+aggregation occasionally outvotes specialized clusters when a specific attack pattern is
+extremely rare among localized IoT nodes.
+Figure 8. Confusion matrices under 5% malicious clients.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 13
 
-[View original page, figures and tables](assets/page-013.png)
+[View original page](assets/page-013.png)
 
 ```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               13
-
-
-           To          formalize          the          imbalance          setting          considered          in          this          study,          the          dominant          and          minority          traffic
-distributions     are     defined     as     follows.
-           Let              D1 ={x(1)i        }N1i=1       denote        the        set        of        dominant-class        samples        (class        1,        malicious        traffic),        where        each
-x(1)i           ∈Rd          represents        a        d -dimensional        feature        vector        derived        from        network        traffic        statistics.       Similarly,        let
-D0  ={x(0)j         }N0j=1    denote     the     underrepresented-class     dataset    (class     0,     benign     traffic),     with   N1  ≫N0 .
-           In      ongoing      attack      scenarios,      streaming      traffic      becomes      attack-heav y,      causing      benign      communication
-patterns      to      appear      sparsely      [44].      Under      such      an      inverted      imbalance,      gradient-based      optimization      is      dom-
-inated         by         malicious         gradients,         suppressing         benign         structure         and         biasing        early         decision         boundaries.         To
-prevent    benign-class    underrepresentation    during    initialization,    the    objective    is    to    construct    a    reduced    subset
-D1  ⊂˜      D1    such     that  ∣D1∣=˜                  N0 ,     yielding     a     balanced     dataset
-
-Dbal    =           ˜D1 ∪D0 ,
-
-while    preserving     structurally     diverse     malicious    behaviors.
-           To    achieve    this,    we    quantify    the    intrinsic    redundancy    of    dominant-class    (malicious)    samples    through    a
-similarity-based     functional.     Let      ϕ(x)∈Rd       denote     the     normalized     representation     of     a     sample     after     numeric
-feature    sanitization.    For    any    two     dominant-class    samples    x(1)i                      and    x(1)j               ,     we     define     a     similarity     kernel
-
-S(x(1)                                            ϕ(x(1)i       )−ϕ(x(1)j       )∥2                  ,(4)
-         i                 ,   x(1)j      )=     1−∥max ϕ(x(1)                 ϕ(x(1)
-                                             k , l      ∥k     )−                       l        )∥2
-
-which        maps        pairwise        Euclidean        distances        into        a        bounded        similarity        score        in    [0,   1].Highervaluesof                                           S
-indicate         greater         redundancy         within         the         attack         manifold,         while         lower         values         correspond         to         structurally
-distinct     malicious     behaviors.
-           For       each      dominant-class      instance      x(1)i                 ,       we       compute       an       aggregate       similarity       score       with       respect       to       the
-entire     dominant-class     distribution:
-
-                                        N1
-ψ(x(1)i      )=                              1N1 −1∑S(x(1)i                 ,   x(1)j       ).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (5)
-                                        j=1
-                                       j≠i
-
-           The       scalar    ψ(x(1)i        )      serves       as       a       redundancy       measure:       samples       with       high      ψlie       in       dense       regions       of       the
-malicious    manifold,    whereas    samples    with    low    ψcapture     diverse     attack     behaviors     that     are     more     informative
-for    discriminative    learning.
-           The         pairwise         similarity         computation         has         quadratic         complexity         with         respect         to         the         dominant-class
-sample    count,    i.e.,        O(N  21 ).    However,    this    operation    is    performed    only    once    during    the    server-side    initializa-
-tion      stage      and      is      not      repeated      during      subsequent      federated      communication      rounds.      Therefore,      it      does      not
-contribute    to    the    recurring    online    training    overhead.
-           In      practical      deployments,      the      computation      can      be      accelerated      through      vectorized      matrix      operations,
-multi-core         or         GPU-based         parallelization,         and         block-wise         distance         evaluation.         For         large-scale         datasets,
-approximate           strategies           such           as           random           subsampling,           clustering-based           prototype           generation,           nearest-
-neighbor       sparsification,       or       locality-sensitive       hashing       can       be       adopted       to       reduce       computational       cost       while
-preserving     representative     structural     diversity     within     the     dominant     class.
+Sensors 2026, 26, 3198
+13 of 20
+Figure 9. Confusion matrices under 15% malicious clients.
+Figure 10. Confusion matrices under 30% malicious clients.
+4.3. Computational Performance
+For an intrusion detection framework to be viable in real-world IoT networks, it must
+meet stringent latency constraints. The computational performance was profiled across the
+three architectural tiers, as shown in Figure 11.
+Figure 11.
+Average latency profile across client, edge, and cloud tiers for IID and Non-
+IID deployments.
+The latency analysis shows that the local client-side training phase is the most time-
+consuming operation, consuming an average of 1.20 to 1.22 s per communication round.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 14
 
-[View original page, figures and tables](assets/page-014.png)
+[View original page](assets/page-014.png)
 
 ```text
-14                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-         The   dominant-class   dataset    D1   is    then    sorted    in    ascending    order    of   ψ(⋅),andonlythelowest        N0     samples
-are     retained:
-D1  =     arg                               min˜       6)
-                A⊂D1,∣A∣=N0  ∑x∈A  ψ(x).(
-
-         This    selection    criterion    ensures    that    malicious    samples    exhibiting    maximal    structural    diversity    are    pre-
-served,    while    highly    redundant    attack    instances    are    systematically    discarded.    In    the    conducted    experiments,
-this       procedure       reduced       the       original       dominant-class       dataset       to       match       the       cardinality       of       the       benign       class,
-yielding        a        balanced        initialization        dataset.        Since        only        the        reduced        initialization        subset        is        required,        exact
-evaluation     over     the     full     dominant-class     set     is     not     mandatory,     and     approximate     candidate     selection     methods
-remain     suitable     in    large     deployments.
-         Beyond   class   balance,   the   proposed   strategy   plays   a   critical   role   in   stabilizing   global   model   initialization.
-Let      θ0       denote      the      parameters      of      the      initial     global      model      trained      on         Dbal  .Since          Dbal          is      both      balanced      and
-diversity-preserving,     θ0      provides     a     well-conditioned     approximation     of    the     joint    class    distribution:
-
-θ0   ≈arg   minθ                  E(x, y)∼Dbal   [L(  f θ(x),     y)],(7)
-
-where           L(⋅)denotes      the      model-specific      classification      loss      (log-likelihood      for      Bernoulli      Naïve      Bayes,      hinge
-loss     for     Passive–Aggressive,     and     logistic     loss     for     SGD).
-         This          initialization          mitigates          the          cold-start          instability          commonly          observed          in          federated          streaming
-learning,       wherein       early       updates       would       otherwise       be       dominated       by       attack-heav y       gradients       that       suppress
-benign    discrimination.
-         The           proposed           initialization           stage           reduces           attack-dominant           bias           by           constructing           a           balanced           and
-diversity-preserving     training    subset    prior     to    federated    optimization.
-         Empirically,   the   similarity-guided   balancing   approach   produces   a   reduced   yet   information-rich   training
-set   that   improves   convergence   speed,   stabilizes   early   federated   updates,   and   preserves   benign-class   sensitivity
-under       attack-dominant       streaming       conditions.       By       embedding       balancing       directly       into       global       initialization
-through    a    mathematically    grounded    similarity    functional,    the    proposed    method    establishes    a    principled    link
-between     dataset     conditioning     and     federated     robustness     in     adversarial     IoT     environments.
-
-3.3        Proposed    Streaming    Federated    Learning    Framework    with    Robust    Global    Initialization
-         This         section         presents         the         proposed         federated         intrusion         detection         framework         for         handling         attack-
-dominant      imbalance,      cold-start       instability,      federated       privacy       constraints,      and      unreliable       client      updates       in
-streaming     IoT     environments.
-         The         proposed         streaming         federated         framework         is         designed         for         IoT         environments         characterized         by
-non-IID        traffic        distributions,        attack-dominant        imbalance,        and        unreliable        client        updates        during        continu-
-ous     operation.
-Problem    Setting    and    Motivation
-         Let        Dk  ={(x(k)i                    ,     y(k)i          )}N ki=1    denote    the    local    dataset    of    client      k,where     x(k)i            ∈Rd       represents     numeric     IoT
-traffic     features     and      y(k)i          ∈{0,   1}      denotes      benign      (0)      or      attack      (1)      traffic.      In      sustained      attack      conditions,      the
-local       class       distribution       typically       satisfies       N(1)k          ≫N(0)k                 ,       meaning       malicious       instances       dominate       streaming
-observations     while     benign     traffic     becomes     underrepresented.
+Sensors 2026, 26, 3198
+14 of 20
+Once encrypted updates reach the intermediate edge servers, secure decryption, model
+deviation derivation, cosine similarity computation, and subsequent clustering execute effi-
+ciently, requiring only 34.2 ms to 35.9 ms on average. The final cloud-tier meta-aggregation
+is similarly lightweight, operating in approximately 42.7 ms to 46.4 ms. Notably, the pro-
+cessing overhead remains virtually identical whether the system manages an IID or a highly
+fragmented Non-IID distribution, demonstrating that the similarity-aware hierarchical
+routing scales exceptionally well without introducing unpredictable processing bottlenecks.
+4.4. Security Evaluation
+The primary defense mechanism of the AMM-HFL architecture relies on proactive,
+edge-level statistical isolation. Figure 12 illustrates the direct correlation between the
+cumulative number of adversarial model updates injected across all communication rounds
+and the number of those updates that the edge servers successfully identify and discard.
+Figure 12. Proactive fog security defense illustrating the cumulative number of adversarial model
+updates injected and isolated across all communication rounds.
+The evaluation shows a high filtering rate, particularly in structurally balanced envi-
+ronments. For instance, in the 5% malicious IID scenario, the edge servers isolated 714 of
+the 748 injected malicious updates. Stealthy backdoor attacks, intentionally engineered to
+keep parameter deviations low, occasionally bypass the initial static thresholding. How-
+ever, the secondary cosine-similarity clustering segregates these divergent models into
+isolated groups, preventing them from influencing the primary legitimate clusters. As the
+adversarial presence increases to 30% in the Non-IID scenario, the isolation rate declines
+slightly. This is because the substantial natural variance in legitimate Non-IID updates
+makes it mathematically challenging to distinguish a stealthy anomaly from a naturally
+skewed data shard. Despite this, the downstream ensemble mechanism maintains final
+accuracy above 95% in the presence of residual noise.
+Figure 13 validates the operational viability of the lightweight cryptography mod-
+ule. Across all experimental conditions, the average time to serialize and encrypt a deep
+learning model using the ChaCha20Poly1305 cipher remains strictly under 2.04 ms. The
+corresponding decryption operation at the edge server is similarly efficient, requiring only
+1.67 ms to 1.76 ms. When contextualized against the overall client training time, this crypto-
+graphic security overhead accounts for less than 0.2% of the total processing pipeline. This
+indicates that robust data privacy and protection against man-in-the-middle interception
+can be seamlessly integrated into IoT intrusion detection without degrading the system’s
+computational efficiency.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 15
 
-[View original page, figures and tables](assets/page-015.png)
+[View original page](assets/page-015.png)
 
 ```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               15
-
-
-          Under     an     attack-dominant     imbalance,     early     optimization     becomes     biased     toward     malicious     gradients,
-weakening         benign-class         discrimination.         Since         federated         servers         do         not         access         raw         data,         this         bias         may
-propagate    across    communication    rounds    if    initialization    is    poorly     conditioned.
-          Classical      federated       learning      approaches      assume      reasonably       balanced      distributions       and       reliable       client
-updates          [45].         However,         in         attack-heav y         streaming         IoT         environments,         poorly         conditioned         initial         mod-
-els         amplify         benign-class         suppression,         while         corrupted         or         mislabeled         local         data—whether         accidental         or
-adversarial—can     further     destabilize     aggregation.     These     effects     motivate     a     federated     design     that     is            cold-start
-aware,    incremental     by     construction,and     selective     in     accepting     client     updates.
-Similarity-Guided    Global    Initialization
-          To          mitigate          cold-start          instability,          the          global          model          is          initialized          using          a          balanced          and          diversity-
-preserving    dataset    constructed    via    the    previously    introduced    Similarity-Guided    Data    Balancing     mechanism.
-          Let            D1      and           D0        denote      the      majority      (malicious)      and      minority      (benign)      class      datasets,      respectively.       A
-similarity       functional       ψ(x)       is       computed       for       each       x  ∈D0 ,       capturing       redundancy       within       the       benign       feature
-manifold.    The    balanced    initialization    set    is    defined     as
-Dinit   =           ˜D0  ∪D1,where  ∣D0∣=∣˜                            D1∣.
-
-          This         construction         preserves         structural         diversity         while         eliminating         redundant         benign         observations,
-yielding    a    well-conditioned     dataset    for    initializing    the    global    model.
-Incremental    Learning    as    a    First-Class    Design    Choice
-          To         support         streaming         IoT         traffic         under         federated         constraints,         the         framework         adopts         incremental
-learning    through    partial_fit-based    updates,    enabling    mini-batch    adaptation    without    full    retraining.
-          Based          on          extensive          empirical          evaluation,          three          incremental          classifiers          were          selected          due          to          their
-complementary     inductive     biases     and     superior     performance     on     the     CICIoT2023     datasets:
-•                               Bernoulli    Naïve    Bayes    (BNB):    robust     to     sparse,     binary,     and     thresholded     traffic     indicators.
-•                               Passive–Aggressive       Classifier       (PA):      margin-based       learner       capable       of       rapid       adaptation       to       emerging
-          attack     patterns.
-•                               Stochastic   Gradient   Descent   Classifier   (SGD):  scalable   linear   learner   with   probabilistic   loss   modeling.
-Streaming    Federated    Learning    Protocol
-          The     federated     learning     process     unfolds     in     two     operational     phases.
-Phase     I:     Server-Side     Global     Initialization
-          The     federated     server     initializes    an     ensemble     E0      by    incrementally     training    each    base    learner     on        Dinit :
-θ(0)            partial_fit(θ(0)                                                   1,   2,   3}.
-   m        ←                              m            ,      Dinit),                          m  ∈{
-
-          Model    quality    is    evaluated    on    a    disjoint    evaluation    dataset    using    stratified    sampling,    allocating    20%    for
-validation    and    20%    for    testing    while    preserving    the    original    class    distribution.    The    initialization    dataset   Dinit
-is     never     reused     for     validation     or     testing.
-Phase    II:    Accuracy-Gated    Streaming     Federated     Refinement
-          When      a      client       k       connects,      it      retrieves      the      current      global      ensemble           Et        over      a      secure      HTTPS      channel.
-Localdataareprocessedinstreamingbatchesofsize                              B  =     1000:
-
-D(b)k         ={(x(k)i                    ,     y(k)i          )}Bi=1.
+Sensors 2026, 26, 3198
+15 of 20
+Figure 13. Cryptographic overhead analysis detailing average encryption and decryption latencies.
+4.5. Resilience Against Advanced Adaptive Attacks
+To validate the AMM-HFL framework’s resilience against highly sophisticated adver-
+saries, a supplementary security evaluation was conducted that goes beyond standard noise
+injection and naive backdoors. This evaluation introduced three advanced threat models
+explicitly designed to exploit and bypass FL defenses. Specifically, it tested optimization-
+based stealthy attacks in which adversaries apply an L2 regularization penalty during
+local training to artificially minimize parameter distance and evade norm-based anomaly
+detection. It also evaluated aggressive model replacement attacks, which use large scaling
+factors on poisoned weights to mathematically override the global aggregation process, as
+well as colluding Sybil attacks, in which multiple compromised nodes within a single edge
+cluster synchronize identical malicious updates to form an artificial consensus intended to
+trick agglomerative clustering metrics.
+As illustrated in Figure 14, the proposed framework mitigates these advanced threats
+over 50 communication rounds without compromising the system’s primary intrusion
+detection capabilities. The Main Task Accuracy (MTA) remains robust, tracking closely
+with the baseline for optimized and colluding attacks and rapidly recovering to above 90%
+even after the severe mathematical perturbations induced by the model replacement attack
+between rounds 10 and 30. More importantly, the Attack Success Rate (ASR) validates
+the efficacy of the hierarchical defense mechanisms. After a brief initial vulnerability pe-
+riod before statistical baselines are firmly established, the system suppresses the ASR to
+near-zero levels starting in round 5. By successfully identifying zero-variance Sybil clones,
+clipping excessive update magnitudes, and isolating negatively correlated stealth param-
+eters, the AMM-HFL framework demonstrates consistent robustness against adaptive
+adversaries under the evaluated conditions.
+4.6. Performance Comparison with Aggregation Baselines
+To rigorously validate the robustness of the proposed architecture, a comparative
+analysis was conducted against standard and state-of-the-art robust aggregation base-
+lines. These implementations include Standard FedAvg, Krum, and Trimmed Mean under
+an extreme non-IID distribution with a 30% ratio of malicious clients. As illustrated in
+Figure 15, conventional single-model aggregation paradigms exhibit distinct vulnerabilities
+in this highly heterogeneous and adversarial environment. Standard FedAvg demonstrates
+significant variance and instability across communication rounds, as its naive averaging
+mechanism incorporates injected noise and backdoor manipulations. Krum struggles the
+most, exhibiting the lowest accuracy and F1-scores by a wide margin. Because it assumes
+an IID distribution to filter outliers, it frequently misidentifies highly specialized, legitimate
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 16
 
-[View original page, figures and tables](assets/page-016.png)
+[View original page](assets/page-016.png)
 
 ```text
-16                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-         Before   performing   any   local   update,   the   client   evaluates   the   current   global   ensemble   on        D(b)k                     and   obtains
-a     baseline     accuracy     Acc(b)global  .     The    client    then    tentatively     updates    its    local    copy     using    incremental    learning:
-
-θ(t+1)            partial_fit(θ(t)
-  m , k        ←                            m          ,      D(b)k        ).
-
-         The    updated    local    ensemble    is    re-evaluated    on    the    same    batch,    yielding    Acc(b)local .    The    update    is    accepted
-only     if
-
-Acc(b)local   ≥Acc(b)global   −δ,
-
-where      δisatolerancemargin(setto5%inexperiments).Ifthisconditionisviolated,thebatchupdateis
-discarded,     and     a     diagnostic     message     is     generated.
-         This     accuracy-gated     mechanism     prevents     harmful     updates     arising     from     label-flipped,     noisy,     or     adver-
-sarial    data,    while    still    permitting    b enign    distributional    variation.
-         Algorithm       1       summarizes       the       client-side       streaming       federated       procedure,       including       batch       evaluation,
-temporary    incremental    learning,    and    the    accuracy-gated    update    acceptance    mechanism    under    non-IID    and
-potentially     corrupted     local     data.
-         The        algorithm        explicitly        separates        tentative        local        updates        from        committed        parameter        replacement,
-thereby     preventing     propagation     of     performance-degrading     gradients    to     the    federation.
-Performance-Weighted    Ensemble    Aggregation
-         Accepted   client   updates   are   transmitted   to   the   server   as   model   parameters   accompanied   by   performance
-statistics.      Model      parameters      are      aggregated      using      symmetric      parameter      averaging,      while      ensemble      voting
-weights      are      updated      in      a      performance-proportional      manner.      This      hybrid      design      preserves      the      stability      of
-parameter      fusion      while      allowing      reliable      client      contributions      to      influence      ensemble      decision      strength.      Let
-f m(x)    denote     the     prediction     of     base     learner     m.Theensembledecisionisdefinedas
-
-                      M                              1
-y(x)=          I (ˆ  ∑                               2 )      ,
-                    m=1 w m    f m(x)≥
-where    the    weights    are    updated    as
-
-w(t+1)m               =     w(t)m       +       Ac  c(b)k
-                                     2                          ,
-followed     by    normalization:
-
-w(t+1)m               ←   w(t+1)m          .
-                   ∑M
-                        j=1  w(t+1)j
-
-         Weight   normalization   prevents   unbounded   growth   across   federated   rounds   and   preserves   the   numerical
-stability     of     the     ensemble     decision     threshold.
-         In      the      experimental      evaluation,      the      default      client-side      tolerance      parameter      was      set      to      0.95      relative      to
-the      current      server      accuracy,      corresponding      to      δ=     0.05,      while      the      server-side      acceptance      threshold      was      set
-to    0.90.    Additional    sensitivity    analysis    was    conducted    using    alternative    client-side    thresholds    to    examine    the
-trade-off    between    robustness    and    update    acceptance.    This    asymmetric    design    enforces    stricter    local    filtering
-prior     to     a     comparatively     tolerant     global     aggregation     stage.
+Sensors 2026, 26, 3198
+16 of 20
+minority-class updates as anomalous and discards them. Trimmed Mean offers much better
+resilience by clipping statistical extremes, allowing it to achieve performance closer to the
+proposed method in later rounds, yet it still suffers from noticeable instability and sharp
+dips throughout the training process.
+Figure 14. Adaptive Multi-Model HFL resilience against advanced adversaries.
+Figure 15. Aggregation strategy comparison under extreme Non-IID + 30% attackers.
+In contrast, the proposed AMM-HFL consistently achieves higher performance than
+the evaluated baselines under the considered settings. As evidenced by the top-performing
+trajectory in Figure 15, AMM-HFL rapidly converges to superior Accuracy and Macro
+F1-Scores, maintaining them with minimal variance. By abandoning the restrictive single-
+model constraint in favor of similarity-aware clustering, AMM-HFL dynamically separates
+conflicting updates at the edge. This mechanism isolates adversarial parameter manipula-
+tions in discarded outlier clusters while aggregating divergent legitimate updates into a
+refined set of multi-model representations. Consequently, the framework preserves highly
+skewed local data patterns without compromising global security, ensuring sustained
+robustness even when nearly a third of the participating edge nodes are compromised.
+4.7. Ablation Study
+To systematically quantify the contributions of the framework’s core architectural
+components, an ablation study was conducted under extreme non-IID conditions, with
+a 15% ratio of malicious clients. As shown in Figure 16, disabling edge-tier similarity
+clustering fundamentally degrades the system’s defensive posture. Without this vital
+filtering mechanism, unmitigated adversarial updates trigger severe accuracy collapses
+and extreme instability across all communication rounds. Furthermore, retaining clustering
+while forcing the cloud tier to consolidate updates into a Single Global Model results in
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 17
 
-[View original page, figures and tables](assets/page-017.png)
+[View original page](assets/page-017.png)
 
 ```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       17
-
-
-Algorithm    1: Accuracy-gated     client-side     streaming     federated     update
-Require:        Global         ensemble               E g  ={(M m  ,   w m)}Mm=1,         server         accuracy          Ac  c g ,localdataset         D k ,         batch         size         B,
-        tolerance     δ
-Ensure:    Accepted    local    model    updates    transmitted    to    server
-   1:               Receive (E g  ,    Ac  c g)    from    server
-   2:              Partition     D k       into     batches  {D(b)k        }Tb=1    of     size     B
-   3:              for    each    batch     D(b)k         =(Xb  ,     yb)    do
-   4:                                                //    Step    1:    Evaluate    current    global    ensemble
-   5:                                                 Compute    weighted    ensemble    predictions:
-                                             M                                             1
-           y   globalˆb                        =          I(∑                             2 )
-                                           m=1 w m       f m(Xb)≥
-   6:                                                 Compute     Ac  c globalb                                              on  (Xb  ,     yb)
-   7:                                                //    Step    2:    Tentative    local    incremental    update
-   8:                                                 for    each    base    learner      M m   ∈E g      do
-   9:                                                                                  θtemppartial_fit(M m  ,    Xb  ,     yb)
-                                    m               ←
-10:                                                end    for
-11:                                                   Compute    updated    ensemble    predictions:
-                                       M                                                     1
-        y   localˆb                   =          I(∑       m              (Xb)≥2 )
-                                     m=1 w m       f   temp
-12:                                                  Compute  Ac  c localb
-13:                                               //    Step    3:    Accuracy-Gated    Acceptance    Rule
-14:                                                if       Ac  c localb                  ≥Ac  c globalb                      −δthen
-15:                                                                      Accept    update
-16:                                                                       Replace  M m   ←θtemp
-                                                                         m                              for     all     m
-17:                                                                      Transmit    updated    parameters    and    metrics    to    server
-18:                                                                      Receive    updated    global    accuracy  Ac  c g
-19:                                               else
-20:                                                                      Reject    batch    update
-21:                                                                        Discard     temporary     parameters
-22:                                                end     if
-23:               end     for
-
-            To       operationalize       the       performance-weighted       aggregation       mechanism       described       above,       the       complete
-server-side         procedure         is         summarized         in         Algorithm         2.         The         server         performs         robust         global         initialization
-using     the     similarity-balanced     dataset,     followed     by     selective     aggregation     of     client     updates     based     on     accuracy
-thresholds.    Only    updates    that    satisfy    the    global    acceptance    criterion    contribute    to    parameter    refinement    and
-ensemble    weight    adjustment,    thereby     preventing     propagation    of     unreliable     gradients    into    the    global    model.
-
-Algorithm    2:    Server-side     performance-weighted     federated     aggregation    with    accuracy-based    rejection
-Require:    Balanced    initialization    dataset     D init ,     evaluation     dataset     D eval  ,     tolerance    γ
-Ensure:     Up date d      g lob a l      ens emble        E g
-   1:            Phase    I:    Robust    Global    Initialization
-   2:               Train    base    learners  {M m}Mm=1    on     D init      using    incremental    partial_fit
-   3:                Evaluate    ensemble    on     validation    subset    of    D eval
-                                                                                                                                                                                                                                                         (Continued)
+Sensors 2026, 26, 3198
+17 of 20
+violent oscillations in accuracy. This erratic trajectory empirically demonstrates that a single
+model representation is mathematically inadequate for reliably capturing and retaining the
+highly divergent, skewed traffic patterns inherent in specialized IoT edge sensors.
+The evaluation also tested a variant bypassing the encryption modules to assess the
+impact of the security layer. While this variant avoids the catastrophic failures observed
+in the structural ablations, it unexpectedly exhibits a slower, slightly lower convergence
+trajectory during intermediate learning phases compared to the fully intact architecture,
+while completely sacrificing critical data confidentiality guarantees. Ultimately, the fully
+integrated AMM-HFL framework demonstrates superior performance, rapidly converging
+to a highly stable, peak accuracy trajectory. These results demonstrate that synergy among
+similarity-aware clustering, multi-model generalization, and cryptographic protection is
+essential for robust, secure, and consistent intrusion detection.
+Figure 16. Experimental outcomes of ablation study.
+4.8. Performance Comparison with Related Work
+Table 2 presents a comparative analysis of the proposed AMM-HFL framework against
+state-of-the-art HFL-based intrusion detection systems. It is important to note that Table 2
+provides a contextual comparison rather than a direct benchmark, as existing HFL-based
+IDS studies are evaluated on different datasets, metrics, and experimental settings. In
+contrast, the proposed framework is evaluated on the recent IDSIoT2024 dataset, which
+better reflects realistic IoT traffic and adversarial conditions
+Existing approaches primarily rely on single-model aggregation strategies, such as
+averaging or weighted aggregation, and often address specific aspects such as scalabil-
+ity, privacy, or robustness in isolation. For instance, Refs. [17,18] employ conventional
+averaging-based HFL, achieving moderate-to-high performance but lacking explicit secu-
+rity mechanisms. Similarly, Refs. [19,20] enhance detection performance through advanced
+models and feature engineering; however, they do not incorporate defenses against ad-
+versarial attacks. More recent frameworks, such as [22], introduce robustness through
+anomaly-weighted aggregation and differential privacy, while [24] focuses on secure aggre-
+gation via homomorphic encryption. Although these methods improve specific dimensions,
+they still rely on single global models and remain limited in handling extreme non-IID
+data distributions.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 18
 
-[View original page, figures and tables](assets/page-018.png)
+[View original page](assets/page-018.png)
 
 ```text
-18                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-Algorithm    2    (continued)
-  4:               Compute    initial    global    accuracy      Ac  c g
-  5:               Initialize    performance     weights {w m}Mm=1
-  6:                Distribute  (E g  ,    Ac  c g)     to     clients
-  7:               Phase    II:    Accuracy-Based    Federated    Aggregation
-  8:                Upon    receiving     client    update  (Ec  ,    Ac  c c)
-  9:               if       Ac  c c   <     γ⋅Ac  c g      then
-10:                                                 Reject     update
-11:                                                Return    currentAc  c g
-12:               else
-13:                                              for    each    base    learner      M m      do
-14:                                                                                     Update     model     parameters:
-                           θm+θ(c )
-           θm   ←                2   m
-15:                                                                                 Update    ensemble    weight:
-           w m   ←w m   +       Ac c c2
-16:                                              end     for
-17:                                                 Ac  c g   ←max(Ac  c g  ,    Ac  c c)
-18:                                                 Store     updated     global     ensemble
-19:                                                  Return     updated  Ac  c g
-20:               end     if
-
-4        Results    and    Discussion
-           In      this      section,      we      present      and      analyze      the      experimental      findings      of      the      proposed      resilient      federated
-intrusion        detection        framework.        The        objective        is        to        examine        how        the        system        behaves        under        streaming,
-non-IID,     and     adversarial     conditions     that     reflect     realistic     IoT     deployments.     We     evaluate     client-wise     stability,
-batch-level    performance,    and    robustness    against    label-flipping    attacks.    In    addition,    ablation    experiments    are
-conducted       to       understand       the       contribution       of       structured       global       initialization.       Rather       than       only       reporting
-high-level    accuracy,    we    focus    on    convergence    behavior,    minority-class    sensitivity,    and    resistance    to    unstable
-updates.      The      discussion      aims      to      connect      observed      empirical      trends      with      the      design      choices      introduced      in
-the     proposed     methodology.
-
-4.1        Experimental    Setup    and    Reproducibility
-           All    experiments    were    implemented    in    Python    using    standard    scientific    and    machine    learning    libraries,
-including        NumPy,        Pandas,        Scikit-learn,        and        Flask        for        client-server        communication.        The        evaluation        was
-conducted      on      a      workstation      equipped      with      a      multi-core      CPU      and      sufficient      main      memory      for      streaming
-batch    execution.
-           The   CICIoT2023   dataset   was   preprocessed   using   label   encoding,   missing-value   handling,   and   min–max
-normalization.   The   processed   data   were   partitioned   into   three   client   datasets   to   simulate   distributed   non-IID
-federated    learning    conditions.
-           Each   client   received   streaming   batches   sequentially.   For   every   batch,   local   evaluation   was   first   performed
-using     the     current     global     model.     Updates     satisfying     the     acceptance     criterion     were     used     for     incremental     local
-training    and    then    transmitted    to    the    server    for    weighted    aggregation.    Final    reported    metrics    were    computed
-by     averaging    client-wise     results     over     the     full     streaming     process.
+Sensors 2026, 26, 3198
+18 of 20
+In contrast, the proposed AMM-HFL framework integrates similarity-aware cluster-
+ing, multi-model aggregation, and lightweight cryptographic protection within a unified
+architecture. Our design enables effective isolation of adversarial updates while preserving
+model diversity, leading to superior performance under both IID and extreme non-IID
+settings. The proposed framework achieves 96.83% to 97.54% accuracy under IID condi-
+tions and 95.64% to 97.52% under non-IID conditions, outperforming or matching existing
+methods while providing enhanced robustness and adaptability.
+Table 2. Performance comparison with state-of-the-art HFL-based IDS studies.
+Ref.
+Proposed Approach
+Data Distribution
+Security Characteristics
+Aggregation Strategy
+Performance Score
+[17]
+HFL-based IDS
+IID/Non-IID
+Not addressed
+Averaging
+∼78% (IID), ∼77%
+(non-IID)
+[18]
+HFed-IDS
+(Transformer-IDM)
+Not specified
+Not addressed
+Averaging
+95%
+[19]
+HFL + Lightweight
+LLMs
+Non-IID
+Not addressed
+Averaging
+96.2% (F1 Score)
+[20]
+HFL + Feature Extraction
++ Ensemble
+Not specified
+Not addressed
+Central aggregation
+97.96%
+[21]
+FL + Adaptive GHSOM
+Not specified
+Not addressed
+Selective updates
+94% (Precision)
+[22]
+AHFL-DAWA
+Non-IID
+Differential Privacy +
+Byzantine Robustness
+Weighted aggregation
+96.8% (IID), 94.3%
+(non-IID)
+[23]
+HFL under
+Label-Flipping Attacks
+IID
+Attack detection
+(poisoning defense)
+Averaging + defense
+∼95%
+[24]
+Two-Level FL +
+Encryption
+Not specified
+Homomorphic
+Encryption
+Averaging
+92.14%, 98.97
+[12]
+Secure Two-Tier HFL
+Non-IID
+Lightweight
+Cryptography +
+Poisoning Resistance
+Averaging
+96.04%
+Proposed
+AMM-HFL (This Work)
+Extreme Non-IID
+Clustering-based
+anomaly isolation +
+implicit poisoning
+defense + cryptography
+Similarity-aware
+multi-model aggregation
+96.83% to 97.54% (IID),
+95.64% to 97.52%
+(non-IID)
+5. Conclusions
+This paper presented an adaptive multi-model hierarchical federated learning frame-
+work for robust and scalable IoT intrusion detection in highly heterogeneous and adver-
+sarial environments. By combining similarity-aware clustering at the edge layer with
+meta-aggregation at the cloud layer, the proposed approach goes beyond conventional
+averaging-based FL and enables the generation of multiple specialized models that better
+capture diverse local data distributions. The incorporation of lightweight cryptographic
+mechanisms ensures secure communication while maintaining efficiency for resource-
+constrained IoT devices. Extensive experimental evaluation under both IID and extreme
+non-IID settings, including scenarios with a significant proportion of malicious clients,
+demonstrates that the framework achieves strong detection performance and reduces the
+impact of poisoning and backdoor attacks under these conditions. These results emphasize
+the value of adaptive aggregation and model diversity in enhancing the robustness and
+scalability of federated intrusion detection systems.
+A promising direction for future work is to extend the proposed framework to support
+real-time streaming data and evolving attack patterns. This would enable the model to
+adapt continuously to concept drift in dynamic IoT environments, thereby improving its
+practical applicability and long-term effectiveness in real-world deployments.
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 19
 
-[View original page, figures and tables](assets/page-019.png)
+[View original page](assets/page-019.png)
 
 ```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              19
-
-
-         To        reduce        numerical        instability        and        experimental        bias,        normalized        features        were        used        throughout
-training,   identical   preprocessing    was    applied    across    all    clients,   deterministic   data    partitions    were    maintained
-during         evaluation,         and         multiple         complementary         metrics         were         reported,         including         Accuracy,         Precision,
-Sensitivity,F1-score,MCC,Youden’sJ,andFMI.
-
-4.2        Computational    Complexity    and    Runtime    Considerations
-         The        proposed        framework        introduces        an        additional        preprocessing        stage        during        global        initialization
-through      similarity-guided      balancing.      Let       N1   denotethenumberofdominant-classsamples.Thepairwise
-similarity     computation     is     defined     in    Eqs.    (4)     and    (5)    require        O(N  21 )     operations     in     the     worst     case     due     to     all-
-pairs   distance   evaluation   within   the   dominant   class.   However,    this   computation   is   executed   only   once   during
-server-side     initialization    and    is    not    repeated     during     subsequent    federated     communication    rounds.
-         Compared        with        conventional        federated        learning        approaches        that        directly        initialize        from        randomly
-sampled      or      locally      available      data,      the      proposed      method      therefore      incurs      additional      initialization      cost      but
-does     not     increase     recurring     online     communication     overhead.     During     federated     operation,     clients     continue
-to    perform     lightweight    incremental    partial_fit    updates    on    streaming    mini-batches    and    transmit    only    model
-parameters,    preserving     communication    behavior    comparable     to    standard    incremental    FL    settings.
-         The      additional      initialization      overhead      is      compensated      by      improved      early-round      convergence      stability
-and        reduced        propagation        of        unstable        updates        under        attack-dominant        traffic        distributions.        Furthermore,
-for        large-scale        IoT        deployments,        the        preprocessing        stage        can        be        accelerated        using        approximate        nearest-
-neighbor        search,        clustering-based         prototype         selection,         locality-sensitive         hashing,         or         parallel         block-wise
-similarity     computation.
-
-4.3        Client-Wise    Federated    Performance    Analysis
-         This    subsection    analyzes    the    client-wise    behavior    of    the    proposed    streaming    federated    intrusion    detec-
-tion    framework    in    relation    to    its    underlying    design    principles,    namely    similarity-guided    global    initialization,
-incremental        ensemble        learning,        and        accuracy-gated        update        acceptance.        Rather        than        focusing        solely        on
-aggregate         performance,          the          analysis         examines         batch-wise         dynamics         across          individual         clients         to         assess
-stability,     robustness,     and     consistency     under     non-IID     streaming     conditions.
-         Fig.    7     presents      the     federated     accuracy     progression      for     three      clients     over      successive     streaming     batches.
-Across     all     clients,     accuracy     remains     tightly     bound     within     a     narrow     high-performance     band,     predominantly
-between    0.97    and    0.99.    Importantly,    no    client   exhibits    sustained   accuracy   degradation    as    training   progresses.
-This         behavior         is         non-trivial         in         streaming         federated         environments,         where         early         instability         and         concept
-drift        often        amplify        local        errors.        The        observed        stability        can        be        attributed        to        the        similarity-guided        global
-initialization     strategy,     which     produces     a     well-conditioned     starting     model     by     preserving     structurally     diverse
-benign       samples       while       eliminating       majority-class       redundancy.       As       a       result,       early       federated       updates       are       not
-dominated      by      biased      decision      boundaries,      allowing      subsequent      incremental      updates      to      refine      rather      than
-correct     the     global     model.
-         Short-lived   accuracy   fluctuations   are   visible   at   isolated   batches   for   individual   clients.   These   variations   are
-expected   in   streaming   IoT   settings   due   to   localized   traffic   bursts,   transient   attack   patterns,   and   client-specific
-distribution     shifts.     Crucially,     such     fluctuations     do     not     accumulate     across     batches,     indicating     that     unreliable
-local     updates     are     effectively     prevented     from     influencing     the     global     ensemble.     This     behavior     directly     reflects
-the    impact    of    the    accuracy-gated    update    acceptance    mechanism,    which    selectively     filters    batch    updates    that
-would      otherwise      degrade      global      performance.      Consequently,      the      federation      exhibits      resilience      to      noisy      or
-inconsistent    local    batches    without    suppressing    benign    adaptation.
+Sensors 2026, 26, 3198
+19 of 20
+Author Contributions: Conceptualization, S.L. and D.D.; methodology, S.L. and D.D.; software,
+S.L.; validation, S.L.; formal analysis, S.L. and D.D.; investigation, D.D.; writing—original draft
+preparation, S.L. and D.D.; writing—review and editing, S.L. and D.D.; visualization, S.L. and D.D.;
+supervision, D.D.; project administration, D.D.; funding acquisition, D.D. All authors have read and
+agreed to the published version of the manuscript.
+Funding: This work is funded by the EU CHIST-ERA initiative (Grant EP/Y036301/1 from EP-
+SRC/UKRI, UK) as part of the REMINDER project.
+Data Availability Statement: The experimental evaluation in this study was conducted exclusively
+using the publicly available IDSIoT2024 dataset, and no new data were generated. The processed
+data and Jupyter Notebooks (Version 6.5.7) supporting the reproduction of the proposed framework
+are available from the authors upon reasonable request for research purposes.
+Acknowledgments: The authors declare that Grammarly’s AI tool (v1.2.260.1887) was used solely
+for limited language editing to enhance the clarity and grammatical quality of the manuscript. No
+generative AI tools were used in the development of the scientific content, analysis, or interpretation
+presented in this study.
+Conflicts of Interest: The authors declare no conflicts of interests.
+References
+1.
+Khan, M.A.; Khan Khattk, M.A.; Latif, S.; Shah, A.A.; Ur Rehman, M.; Boulila, W.; Driss, M.; Ahmad, J. Voting classifier-based
+intrusion detection for iot networks. In Advances on Smart and Soft Computing: Proceedings of ICACIn 2021, Casablanca, Morocco,
+24–25 May 2021 ; Springer: Berlin/Heidelberg, Germany, 2021; pp. 313–328.
+2.
+Kołaczek, G. Internet of things (iot) technologies in cybersecurity: Challenges and opportunities. Appl. Sci. 2025, 15, 2935.
+[CrossRef]
+3.
+Latif, S.; Driss, M.; Boulila, W.; Huma, Z.E.; Jamal, S.S.; Idrees, Z.; Ahmad, J. Deep learning for the industrial internet of
+things (iiot): A comprehensive survey of techniques, implementation frameworks, potential applications, and future directions.
+Sensors 2021, 21, 7518. [CrossRef] [PubMed]
+4.
+Abualghanam, O.; Alazzam, H.; Almobaideen, W. Hierarchical lightweight intrusion detection system using deep learning in the
+context of IoT. Clust. Comput. 2025, 28, 783. [CrossRef]
+5.
+Zhukabayeva, T.; Zholshiyeva, L.; Karabayev, N.; Khan, S.; Alnazzawi, N. Cybersecurity solutions for industrial internet of
+things–edge computing integration: Challenges, threats, and future directions. Sensors 2025, 25, 213. [CrossRef] [PubMed]
+6.
+Huma, Z.E.; Jan, S.U.; Ahmad, J.; Buchanan, W.; Pitropakis, N. Adversarial machine learning in IoT security: A comprehensive
+survey. ACM Comput. Surv. 2026, 58, 202. [CrossRef]
+7.
+Laidi, R.; Merabtine, N.; Djenouri, D.; Latif, S.; Qadir, H.A.; Djenouri, Y.; Balasingham, I. Federated learning in IoT environments:
+Examining the three-way see-saw for privacy, model-performance, and network-efficiency. IEEE Commun. Surv. Tutor. 2025,
+28, 1025–1058. [CrossRef]
+8.
+Dubey, P.; Kumar, M. Integrating Explainable AI with Federated Learning for Next-Generation IoT: A comprehensive review and
+prospective insights. Comput. Sci. Rev. 2025, 56, 100697. [CrossRef]
+9.
+Latif, S.; Djenouri, D.; Adamatzky, A. An Integrated Approach to Mitigate Poisoning Attacks in Federated Learning Frameworks.
+In Proceedings of the 2025 International Joint Conference on Neural Networks (IJCNN), Rome, Italy, 30 June–5 July 2025; IEEE: Piscataway,
+NJ, USA, 2025; pp. 1–8.
+10.
+Alqattan, D.S.; Snasel, V.; Ranjan, R.; Ojha, V. Analysis of deep learning under adversarial attacks in hierarchical federated
+learning. High-Confid. Comput. 2025, 5, 100321. [CrossRef]
+11.
+Kumar, K.N.; Mohan, C.K.; Cenkeramaddi, L.R. The impact of adversarial attacks on federated learning: A survey. IEEE Trans.
+Pattern Anal. Mach. Intell. 2023, 46, 2672–2691. [CrossRef] [PubMed]
+12.
+Latif, S.; Djenouri, D. A Two-Tier Secure Federated Learning Framework with Lightweight Cryptography for Edge-Cloud
+Collaboration. In Proceedings of the 2025 IEEE 35th International Telecommunication Networks and Applications Conference (ITNAC),
+Christchurch, New Zealand, 26–28 November 2025; IEEE: Piscataway, NJ, USA, 2025; pp. 1–6.
+13.
+Lu, Z.; Pan, H.; Dai, Y.; Si, X.; Zhang, Y. Federated learning with non-iid data: A survey.
+IEEE Internet Things J. 2024,
+11, 19188–19209. [CrossRef]
+14.
+Wang, Z.; Zhu, Y.; Wang, D.; Han, Z. Federated analytics informed distributed industrial IoT learning with non-IID data.
+IEEE Trans. Netw. Sci. Eng. 2022, 10, 2924–2939. [CrossRef]
+https://doi.org/10.3390/s26103198
 ```
-
 
 ### PDF page 20
 
-[View original page, figures and tables](assets/page-020.png)
+[View original page](assets/page-020.png)
 
 ```text
-20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                           Figure    7:        Federated    accuracy    progression    per    client    across    streaming    batches.
-
-           Fig.    8    complements    the    accuracy    analysis    by    reporting    the    Fowlkes–Mallows    Index    (FMI)    progression.
-Unlike         accuracy,         FMI         jointly         captures         precision–recall         agreement         for         the         positive         (attack)         class         and         is
-therefore      more      sensitive      to      class      imbalance      effects      common      in      IoT      intrusion      detection.      Across      all      clients,
-FMI    remains    consistently    high    and    closely    tracks    the    accuracy    curves,    largely    exceeding    0.97    throughout    the
-streaming     process.     The     absence     of     divergence     between     accuracy     and     FMI     trends     indicates     that     high     overall
-accuracy       is       not       achieved       by       biasing       predictions       toward       the       dominant       class.       Instead,       the       model       preserves
-reliable     attack-class    discrimination     across     clients     and     batches.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                   Figure    8:         Federated    Fowlkes–Mallows    Index    (FMI)    progression    per    client    across    streaming    batches.
-
-           The          consistency          between          accuracy          and          FMI          trends          indicates          that          the          ensemble          maintains          stable
-minority-class    discrimination    throughout    streaming    adaptation.
-           Ta  b  l  e        2     summarizes     the     aggregate     federated     performance     across     all     participating     clients.     The     achieved
-accuracy         of         0.99         and         precision         of         1.00         indicate         a         strong         overall         detection         capability         under         distributed
-operation       without       centralized       access       to       raw       data.       This       aggregate       evaluation       complements       the       client-wise
-analysis    by    providing    a    global    view    of    the    final    federated    model.    However,    in    imbalanced    intrusion    detection
-settings,     accuracy     alone     can     overstate     effectiveness     because     the     dominant     class     contributes     more     heavily     to
-the     final     score.
-```
-
-
-### PDF page 21
-
-[View original page, figures and tables](assets/page-021.png)
-
-```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           21
-
-
-                                             Ta  b  l  e       2  :        Average    federated    performance    metrics    aggregated    across    all    clients.
-
-Evaluation   Stage                                  Accuracy                                  Precision                                  Sensitivity                                  F1-Score                                      MCC                                      Markedness                                  YoudenJ                                          FMI
-  Clients    Average                                                            0.99                                                                           1.00                                                                       0.8636                                                           0.7925                                           0.7870                                                         0.9881                                                                  0.8278                                           0.9898
-
-
-           Although        the        overall        accuracy        is        high,        performance        should        be        interpreted        together        with        minority-
-sensitive     metrics     such     as     Sensitivity,     F1-score,     MCC,     and     FMI.     These     measures     are     particularly     important     in
-imbalanced    settings,    where    accuracy    alone    may     mask    bias    toward    the    dominant    attack    class.
-           The      sensitivity      of      0.8636      and      F1-score      of      0.7925      indicate      that      minority-class      detection      remains      more
-challenging    under    attack-dominant    and    non-IID    streaming    conditions,    where    class    skew    and    heterogeneous
-client    distributions    can    affect    recall    and    precision    for    underrepresented    patterns.
-           At      the      same      time,      the      MCC,      Markedness,      Youden’s      J,      and      FMI      values      remain      strong,      indicating      that
-the        model        preserves        meaningful        discriminative        performance        and        does        not        rely        solely        on        majority-class
-predictions.      Together,      the      client-level      trends      and      aggregate      metrics      indicate      that      the      proposed      framework
-achieves      both      stable      local      adaptation      and      strong      global      federated      performance       through      similarity-guided
-initialization,    incremental    ensemble    learning,    and    accuracy-aware    federation.
-
-4.4        Robustness    against    Label-Flipping    Poisoning    Attacks
-           This       section       evaluates       the       behavior       of        the       proposed        streaming       federated        learning       framework        under
-complete       label-flipping       poisoning,       where       all       client-side       labels       are       inverted       prior       to       local       processing.       The
-analysis      is      restricted      to      client-level      Accuracy,      as      shown      in     Fig.    9,      and      focuses      on      update      rejection      behavior
-induced    by     the    accuracy-gated    mechanism.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figure      9:         Client-level      batch-wise      accuracy      under      complete      label-flipping      poisoning.      Across      all      clients      and      batches,
-accuracy    remains    persistently    low,    fluctuating    approximately    between    0.01    and    0.036,    with    no    sustained    upward    trend.
-All    batches    fall    below    the    acceptance    criterion,    resulting    in    systematic    rejection    of    local    updates.
-
-           Fig.    9        shows        the        batch-wise        accuracy        trajectories        for        three        clients        under        complete        label        inversion.
-For        all        clients,        accuracy        remains        consistently        low        throughout        the        streaming        process,        fluctuating        within
-a        narrow        range        close        to        random-guess        performance        (approximately        0.01–0.036).        No        client        exhibits        sus-
-tained      improvement      or      stabilization      across      batches,      and      no      batch      reaches      accuracy      levels      associated      with
-benign    operation.
-           As       a       direct       consequence       of       these       low       accuracy       values,       all       local       batches       fail       to       satisfy       the       accuracy-
-gated     update     acceptance     criterion     and     are     rejected     prior     to     server     aggregation.     This     behavior     demonstrates
-```
-
-
-### PDF page 22
-
-[View original page, figures and tables](assets/page-022.png)
-
-```text
-22                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-deterministic    suppression     of     learning    under     maximal    label    corruption.     Since    no    client    updates    are    accepted
-during    this    experiment,    the    results    do    not    permit    analysis    of    convergence,    recovery,    or    adaptation    dynamics
-under     adversarial     influence.
-              These       findings       are       limited       to       an       extreme       boundary-condition       scenario       in       which       all       client       labels       are
-flipped.        Accordingly,        the        results        should        be        interpreted        strictly        as        empirical        evidence        of        fail-safe        update
-rejection        under        complete        label-flipping        poisoning,        rather        than        as        robustness        to        partial,        probabilistic,        or
-adaptive    poisoning    strategies.
-
-4.5        Adversarial    Batch    Rejection    under    FGSM    Perturbation
-              To        extend        the        robustness        evaluation        beyond         complete         label-flipping        attacks,        an        additional        experi-
-ment       was       conducted       using       adversarially       perturbed       client       datasets       generated       with       the       Fast       Gradient       Sign
-Method      (FGSM).      Three      independent      adversarial      datasets      were      created      in      separate      runs      using      randomized
-seeds        and        assigned        to        three        federated        clients        for        streaming        evaluation        under        the        standard        training        and
-communication    protocol.
-              Adversarial       samples       were       generated       using       a       feed-forward       neural       network       surrogate       model       with       two
-hidden      layers      of      128      neurons      each      and      ReLU      activation.      The      surrogate      model      was      trained      for      five      epochs
-on     the     initialization     dataset.     FGSM     perturbations     were     then     applied     in     the     normalized     feature     space     using
-randomly     selected     perturbation     magnitudes          ϵ  ∈[0.05,   0.25]     for     each     run.     After     perturbation,     the     generated
-samples       were       mapped       back       to       the       original       feature       scale       while       preserving       their       original       class       labels.       Each
-adversarial    dataset    contained    200,000    samples.
-              Each      client      processed      200      streaming      batches,      resulting      in      a      total      of      600      batch-update      attempts      across
-the     federation.     For     every      batch,     the     client     first     evaluated     the     current     global     ensemble      and     then     applied      the
-proposed    accuracy-gating    acceptance    rule    before    any    local    update    could    be    transmitted    to    the    server.
-              The        outcome        was        consistent        across        all        three        clients.        In        every        case,        the        batch-level        accuracy        of        the
-adversarial    data    remained    below    the    required    acceptance    threshold,    and    all    attempted    updates    were    rejected
-locally.    Consequently,    no    adversarial    update    was    forwarded     for    server-side    aggregation.
-              As    shown    in    Ta  b  l  e        3,    all    FGSM-based    adversarial    batch    updates    were    rejected    across    the    three    federated
-clients.       These       results       indicate       that       strongly       degraded       adversarial       inputs       can       be       effectively       filtered       before
-entering          the          federated          aggregation          stage.          Although          FGSM          perturbation          does          not          cover          all          poisoning
-scenarios     or     adaptive     adversarial     strategies,     the     experiment     provides     additional     evidence     that     the     proposed
-gating    mechanism    can    block     low-quality    or     manipulated    client    updates    under    adversarial    conditions.
-
-                                           Ta  b  l  e       3  :        FGSM-based    adversarial    batch    rejection    results    across    three    federated    clients.
-
-  Client                                                                                                                                              Total    Batches                                                                                                                                        Accepted    Updates                                                                                                                                        Rejected    Updates
-Client    1                                                                                                                                                                                       200                                                                                                                                                                                                                                                                 0                                                                                                                                                                                                                                                                                   200
-Client    2                                                                                                                                                                                      200                                                                                                                                                                                                                                                                 0                                                                                                                                                                                                                                                                                   200
-Client    3                                                                                                                                                                                      200                                                                                                                                                                                                                                                                 0                                                                                                                                                                                                                                                                                   200
-    Total                                                                                                                                                                                                  600                                                                                                                                                                                                                                                                 0                                                                                                                                                                                                                                                                                   600
-
-
-4.6        Ablation    Study:    Effect    of    Removing    Global    Initialization
-              To   isolate   the   contribution   of   structured   global   initialization,   we   disable   the   similarity-guided   balancing
-phase        and        skip        the        initial        incremental        training        over        Dinit  .        The        federated        process,        therefore,        begins        with
-```
-
-
-### PDF page 23
-
-[View original page, figures and tables](assets/page-023.png)
-
-```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  23
-
-
-randomly    initialized    BNB,    PA,    and    SGD    classifiers.    The    ensemble    aggregation,    client-side    0.95    accuracy    gat-
-ing,     and     server-side     0.90     acceptance     threshold     remain     unchanged.     No     other     hyperparameters     are     modified.
-          Cold-start     behavior     under     this     ablated     configuration     is     illustrated     in    Fig.    10.     The     degradation     is     imme-
-diate.     Sensitivity     drops     to     0.6582,     while     overall     accuracy     settles     at     0.8159.     At     first     glance,     this     accuracy     may
-appear    moderate.    However,    precision    increases    to    0.9616,    indicating    that    the    model    is    strongly    biased    toward
-predicting    benign    traffic    during    early    batches.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                        Figure    10:      Cold-start    performance    without    structured    global    initialization.
-
-          The         imbalance         propagates         across         other         performance         measures.         The         F1         score         decreases         to         0.7815,
-reflecting     the     recall     loss.     The     Matthews     Correlation     Coefficient     (MCC)     falls     to     0.6659,     indicating     weakened
-agreement     between     predictions     and     ground     truth.     Similarly,     the     Fowlkes–Mallows     Index     (FMI)     reduces     to
-0.7146.    Markedness    (0.7017)    and    Youden’sJ      statistic     (0.6319)     further     confirm     that     the     decision     boundary     is
-poorly     conditioned    at    initialization.
-          Across   repeated   runs,   random   initialization   consistently   produced   unstable   early   optimization   behavior
-and    weaker    minority-class    sensitivity    during    initial    communication    rounds.
-          In     contrast,     the     initialized     configuration     discussed     earlier     stabilizes     near     the     0.97–0.99     accuracy     range
-while       maintaining       substantially       higher       minority       recall.       The       divergence       between       the       two       settings       is       most
-visible   during   the   first   communication   rounds.   Later   batches   show   partial   recovery   in   the   ablated   case,   but   the
-early     vulnerability     window     remains     extended.     In     streaming     IoT     deployments,     that     early     phase     corresponds
-to    live     traffic    conditions     and    therefore     carries     operational    significance.
-          We        do        not        claim        that        structured        initialization        yields        theoretical        optimality.        The        experiment        simply
-demonstrates     that     removing     principled     global     conditioning     degrades     early     stability     and     minority     detection
-in    practice.    For    streaming    federated    intrusion    detection,    this    degradation    is    non-trivial.
-
-4.7         Sensitivity    Analysis     of     Accuracy-Gating    Tolerance
-          To      evaluate      the      effect      of      the      client-side      acceptance      tolerance,      additional      experiments      were      conducted
-on       three       federated       clients       using       multiple       values       of       δ.       The       acceptance       rule       rejects       a       local       update       when       its
-batch     accuracy     falls     below  (1−δ)     times     the     current     server     accuracy.     Four     operating     points     were     examined:
-δ={0.01,   0.05,   0.10,   0.15},    corresponding    to    acceptance    thresholds    of    99%,    95%,    90%,    and    85%,    respectively.
-          Ta  b  l  e        4      summarizes     the     results     in     terms     of     average     accepted-update     accuracy     and     the     total     number     of
-accepted      packets/connections      (accepted      batch      updates).      A      stricter      threshold      yields      higher      average      update
-quality       but       accepts       fewer       updates.       In       contrast,       relaxed       thresholds       improve       adaptation       by       accepting       more
-updates,   with   a   small   reduction   in   average   accuracy.   The   95%   threshold   provides   a   balanced   trade-off   between
-robustness     and     update     acceptance.
-```
-
-
-### PDF page 24
-
-[View original page, figures and tables](assets/page-024.png)
-
-```text
-24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-                    Ta  b  l  e       4  :         Sensitivity    analysis    of    client-side    accuracy-gating    tolerance    under    different    acceptance    thresholds.
-
-Acceptance    Threshold                                                                                                                                                                             Average    Accuracy                                                                                                                                                                             Accepted    Batch    Updates
-                 99%    (δ=     0.01)                                                                                                                                                                                                                                                             0.9838                                                                                                                                                                                                                                                                                                                          88
-                 95%     (δ=     0.05)                                                                                                                                                                                                                                                               0.9811                                                                                                                                                                                                                                                                                                                          137
-                 90%    (δ=     0.10)                                                                                                                                                                                                                                                                          0.9796                                                                                                                                                                                                                                                                                                                                      210
-                  85%     (δ=     0.15)                                                                                                                                                                                                                                                              0.9794                                                                                                                                                                                                                                                                                                                     238
-
-
-4.8        Comparison    with    State-of-the-Art
-                   Ta  b  l  e        5  summarizes   quantitative   performance   and   deployment   characteristics   of   recent   intrusion   detec-
-tion   studies   evaluated   on   CICIoT2023   and   related   settings.   While   several   centralized   approaches   ([28–30,33])
-report       very       high       accuracy       values,       many       are       limited       to       offline       evaluation.       Federated       learning       is       explored
-in     [26],     but     without     poisoning     resilience     or     streaming     adaptation.     Incremental     approaches     ([31,32])     remain
-centrally    coordinated.    As    observed,    high    accuracy    alone    does    not    imply    robustness    under    attack-dominated
-imbalance     or     distributed     updates.     The     proposed     framework     differs     primarily     in     its     integration     of     streaming
-federated        learning        with        structured        initialization        and        selective        update        acceptance        under        imbalanced        IoT
-traffic    conditions.
-
-                                                                                    Ta  b  l  e       5  :        Quantitative    comparison    with    state-of-the-art    on    CICIoT2023.
-
-                                                                                                                                                                                                                                                                                                                                                                                              Real-World
-                           Ref                                                                               Learning   Type                      Accurac y                          Precision                              Recall                                         F1                                                                                SpecialMechanism               Deployment
-                                                                                                                                                                                                                                                                                                                                                                                        Consideration
-
-        Abid    et    al.    [25]                                                   Centralized                                           95.24%                                            95.22%                                  86.39%                   95.09%                                                  GWO    andCNN-LGBM                                                                       Offline    only
-
-
-       Torreetal.[    26]                                                        Federated                                                    97.31%                                            95.59%                                   92.43%                    92.69%                                                   DP      +    FHE                                                            10%    overhead;    nopoisoning    defense
-
-       Okey    et    al.    [27]                                                  Centralized                                                     98%                                                                High                                                     High                                     High                           Model    compression                      Two-stage    training
-     Wahabetal.[    28]                                            Centralized                                          99.20%                                                      94%                                                           93%                                           93%                                                SMOTE                                                  3Msubsetonly
-         Mallikarjun    &
-                Patro    [29]                                                                     Centralized                                           99.73%                                           99.73%                                   99.73%                    99.73%                           SVWS    balancing                                                          Binary    only
-                  Wakili    &                                                     Centralized                                                                                                                                                                                                                                                                                           CPU-only    edge
-            Bakkali   [30]                                                               Hybrid                                                          99.94%                                             95.53%                                  95.87%                    95.64%                                    Anomaly-firstcascade                                                    deployable
-
-       Wa  n  g       e  t       a  l  .       [31]                                                Incremental(Centralized)                                    96.43%                                           96.59%                                  96.43%                   96.45%                      Weight    Alignment                                             High    runtime(789s)
-
-
-     Mahdi    et    al.    [32]                                    Incremental      +Blockchain                                            99.89%                                           99.86%                                  99.92%                    99.89%                           Secure    retraining                                 Central    retrainingonly
-
-              Doménech                                                                                                                                                                                                                                                                                                                                                            Shows    dataset    shift
-                  et    al.    [33]                                                                        Centralized                                          99.85%                                            96.91%                                    97.12%                       97.00%                                                  SMOTE      +optimized    splits                         issue
-
-     Saxena    et    al.    [34]                                            Centralized(GNN)                                                         90.69%                                                      0.90(weighted)                                            –                                                    0.90                                          Graph    modeling                                                           We  a  k       m  i  n  o r  i t  yclass    precision
-
-                                                                                                                                                                                                                                                                                                         Similarity-guided                                                           Cold-start-aware
-                 Proposed                                                                             Federated                                                           99%                                                              100%                                        86.36%                    79.25%data    balancing                                                   initialization;
-                                                                                                                                                                                                                                                                                                                          strategy                                                               streaming
-                                                                                                                                                                                                                                                                                                                                                                                   federated    learning
-```
-
-
-### PDF page 25
-
-[View original page, figures and tables](assets/page-025.png)
-
-```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                25
-
-
-4.9        Communication    Cost,    Computational    Efficiency,    and    Scalability
-          Beyond        predictive        performance,        practical        federated        IoT        deployment        requires        attention        to        commu-
-nication        cost        and        computational        efficiency.        The        proposed        framework        uses        incremental        linear        classifiers,
-which    update    model    parameters    batch-wise    without    repeated    full    retraining,    reducing    client-side    processing
-overhead.     In     addition,     mRMR-based     feature     selection     reduces     the     original     46-dimensional     feature     space     to
-31     features,    lowering     both    training    cost    and    data    handling    complexity.
-          Communication       overhead       is       also       reduced       through       the       proposed       accuracy-gating       mechanism.       Only
-clients        whose        local        batch        performance        satisfies        the        acceptance        criterion        transmit        updated        models        to        the
-server.        This        avoids        unnecessary        communication        from        low-quality        or        corrupted        updates        and        can        reduce
-uplink     traffic     under     unstable     client     conditions.
-          The      similarity-guided      balancing      stage      is      executed      once      during      server-side      initialization      and      therefore
-does       not       add       recurring       communication       cost       during       federation.       Its       quadratic       worst-case       complexity       may
-become   expensive   for   very   large   datasets,   but   this   step   can   be   accelerated   using   approximate   nearest-neighbor
-search,    block-wise    similarity    computation,    parallel    processing,    or    sampled    initialization    subsets.
-          For      larger      federated      deployments,      the      framework      can      be      extended      through      client      subsampling,      asyn-
-chronous        participation,        or        hierarchical        aggregation        across        edge        gateways.        These        strategies        can        improve
-scalability    while    preserving     the    proposed     update    filtering     mechanism.
-
-4.10        Threats    to    Validity
-          As    the    present    study    is    based    on    simulation    using    the    CICIoT2023    dataset,    the    reported    findings    should
-be    interpreted    with    appropriate    validity    considerations.
-          Internal     Validity:     Internal     validity     may     be     affected     by     preprocessing     choices,     client     data     partitioning,
-hyperparameter      settings,      and      assumptions      used      in      the      simulated      federated      environment.      To      reduce      these
-effects,        consistent        preprocessing        was        applied        across        all        clients,        fixed        evaluation        settings        were        used,        and
-multiple    complementary    metrics    were    reported    instead    of    relying    on    a    single    performance    measure.
-          External   Validity:   External   validity   concerns   the   generalization   of   the   results   beyond   the   current   dataset
-and     simulation     setting.     Real     IoT     deployments     may     exhibit     different     traffic     distributions,     larger     numbers     of
-clients,       changing       network       conditions,       device       constraints,       and       more       adaptive       attack       behaviors       than       those
-modeled     here.     Therefore,     performance     may     vary     under     other     datasets    or     operational     environments.
-          Future   work   will   include   validation   on   additional   datasets,   larger-scale   federated   settings,   and   real-world
-deployment     scenarios.
-
-4.11         Effect     of     Initialization     on     Early     Federated     Stability
-          To    further    examine    the    effect    of    early    federated    initialization,    an    additional    experiment    was    conducted
-using        three        alternative        starting        conditions        for        the        global        model:        random        balanced        initialization,        attack-
-dominant       skewed       initialization,       and       the       proposed       similarity-guided       initialization.       In       all       cases,       the       same
-client     datasets,     streaming     protocol,     and     aggregation     settings     were     maintained     so     that     only     the     initialization
-strategy     varied.
-          The        random       setting       used       an       equal       number       of        benign       and       malicious       samples        selected        uniformly       at
-random.       The       skewed       setting       used       an       attack-dominant       initialization       set       with       a       90:10       malicious-to-benign
-ratio.    The    proposed     setting    used    the    similarity-guided    balanced    initialization    described    in    Section    3.2.
-          Ta  b  l  e        6         reports         the         final         aggregate         performance.         The         proposed         initialization         achieved         the         highest
-Accuracy   (0.979596)    and   FMI   (0.979392),    followed    by    the   skewed    and   random    settings.   These   results    suggest
-```
-
-
-### PDF page 26
-
-[View original page, figures and tables](assets/page-026.png)
-
-```text
-26                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-that      initialization      quality      influences      downstream      federated      learning      performance,      and      that      a      balanced      yet
-structurally    diverse     starting    model     provides     improved     convergence     reliability.
-
-                                                            Ta  b  l  e       6  :         Impact    of    initialization    strategy    on    federated    performance.
-
-              Experiment                                                                                                                                                                                                                                                                                                                                            Accuracy                                                                                                                                                                                                                                                                                                                FMI
- Random    Initialization                                                                                                                                                                                                                                                                                                   0.975008                                                                                                                                                                                                                                                                                                0.975414
-  Skewed    Initialization                                                                                                                                                                                                                                                                                                        0.978662                                                                                                                                                                                                                                                                                                 0.978391
-Proposed     Initialization                                                                                                                                                                                                                                                                                                0.979596                                                                                                                                                                                                                                                                                                0.979392
-
-
-5        Conclusions
-             This        work        investigated        federated        intrusion        detection        under        sustained        IoT        attack        conditions,        where
-malicious       traffic       may       dominate       the       data       stream       and       create       severe       imbalance       during       deployment.       Unlike
-conventional        settings        in        which        benign        traffic        overwhelms        rare        attacks,        ongoing        attack        scenarios        reverse
-this     distribution     and     introduce     a     different     form     of     instability.     When     attack-heav y     gradients     dominate     early
-federated       rounds,       the       global       model       can       overfit       malicious       patterns,       weakening       discrimination       of       residual
-benign    traffic    and    increasing    false    alarms    or     misclassification    after    attack    intensity    subsides.
-             To        address        this        challenge,        we        introduced        a        similarity-guided        balancing        mechanism        that        preserves
-structurallydiversesamplesfromthedominantclass                        while        constructing        a        stable        and        class-conditioned
-initialization       dataset.       The       balancing       stage       is       performed       once       during       server-side       initialization       and       can       be
-accelerated    through    parallel,    block-wise,    or    approximate    similarity    computation    in    large-scale    deployments.
-The        framework        further        integrates        mRMR-based        feature        selection,        reducing        the        original        46-dimensional
-CICIoT2023    feature    space    to    31    informative    features    through    an    80%    retention    criterion    based    on    combined
-relevance-redundancy      scores.      This      compact      representation      improves      efficiency      while      preserving      discrimi-
-native     traffic     characteristics.     In     addition,     the     proposed     framework     employs     incremental     ensemble     learning
-for        continuous        adaptation        and        an        accuracy-gated        update        mechanism        that        selectively        filters        unreliable        or
-corrupted     client    updates.
-             Experimental       evaluation       demonstrates       stable       convergence       across       clients,       strong       agreement       between
-accuracy         and         minority-sensitive         metrics,         and         deterministic         rejection         of         updates         under         complete         label-
-flipping    poisoning.    The    ablation    study    confirms    that    removing    structured    initialization    increases    early-stage
-bias       and       extends       the       vulnerability       window.       An       additional       initialization       study       further       confirmed       that       the
-proposed      similarity-guided      starting      model      yields      stronger      federated      performance      than      random      or      attack-
-dominant      initialization      baselines.      These      results      indicate      that      robust      initialization,      selective      federation,      and
-principled     feature     reduction     jointly     improve     detection     reliability     in     streaming     IoT     environments     operating
-under    adversarial    and    imbalanced    conditions.
-             Few    limitations    remain.    First,    although    the    similarity-based    redundancy    computation    is    an    offline    one-
-time        operation,        its        quadratic        worst-case        complexity        may        still        require        approximation        for        extremely        large
-IoT      telemetry      streams.      Second,      adversarial      evaluation      was      limited      to      complete      label-flipping      and      strongly
-degraded     adversarial     batches;     more     subtle,     adaptive,     partial,     stealthy,     or     collusive     poisoning     strategies     were
-not      examined.      Third,      the      use      of      lightweight      linear      incremental      classifiers      may      restrict      expressive      capacity
-under        highly        nonlinear        traffic        dynamics        or        severe        cross-domain        distribution        shifts.        Fourth,        the        current
-performance-weighted       aggregation      relies       primarily       on      local      accuracy      and      may      favor      clients      with      trivially
-high-performing        local        data.        Fifth,        a        formal        convergence        guarantee        under        non-IID        streaming        data        with
-```
-
-
-### PDF page 27
-
-[View original page, figures and tables](assets/page-027.png)
-
-```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      27
-
-
-dynamic       client       acceptance       and       adversarial       behavior       was       not       derived       in       this       study       due       to       non-stationary
-distributions,    incremental    updates,    and    time-varying    participation     sets.
-         Future       work       will       address       these       limitations       by       developing       approximate       or       distributed       similarity       esti-
-mation     techniques     for     scalable     initialization,     incorporating     adaptive     trust     or     reputation-aware     aggregation
-mechanisms         to         counter         stealthy         adversaries,         exploring         lightweight         nonlinear         incremental         models         with
-domain-adaptive      capabilities,      and      investigating      theoretical      convergence      under      selective      participation      with
-robustness      bounds      against      poisoning      attacks.      These      extensions      aim      to      strengthen      robustness      in      prolonged
-real-world   attack   scenarios   while   preserving   the   privacy,   communication,   and   streaming   constraints   inherent
-to    federated    IoT    intrusion    detection.
-
-Acknowledgement:       The    authors    extend    their    appreciation   to    Umm    Al-Qura    University,    Saudi    Arabia,    for    funding    this
-research    work    through    grant    number:    26UQU4290235GSSR01.
-
-Funding    Statement:       This    research    work    was    funded    by    Umm    Al-Qura    University,    Saudi    Arabia    under    grant    number:
-26UQU4290235GSSR01.
-
-Author       Contributions:          Arvind       Prasad       contributed       to       conceptualization,       methodology,       experimental       design,       data
-curation,      formal      analysis,      software      implementation,      writing      of      the      original      draft,      and      manuscript      revision.      Ibrahim
-Aljubayri    contributed   through    visualization,    expert    consultation,   and    professional   guidance.    Mohammad    Zubair    Khan
-contributed   to   supervision,   validation,   visualization,   and   critical   manuscript   review   and   editing.   Abdulfattah   Noorwali
-contributed    to    funding    acquisition,    investigation,    and    visualization.    All    authors    reviewed    the    results    and    approved    the
-final    version    of    the    manuscript.
-
-Availability     of     Data     and     Materials:        The     CICIoT2023     dataset     used     in     this     study     is     publicly     available     at  https://www.
-unb.ca/cic/datasets/iotdataset-2023.html.
-
-Ethics    Approval:        Not     applicable.
-
-Conflicts    of    Interest:       The    authors    declare    no    conflicts    of    interest.
-
-References
-1.                           Al-Quayed    F.    AI-powered    anomaly    detection    and    cybersecurity    in    healthcare    IoT    with    fog-edge.    Comput    Model
-         Eng    Sci.    2026;146(1):1–10.    doi:10.32604/cmes.2025.074799.
-2.                        Abdulganiyu      OH,      Fadi      O,      Moukafih      Y,      Ait      Tchakoucht      T,      Saheed      YK,      Chukwuere      JE,      et      al.      Explainable      atten-
-         tion        based        few        shot        LSTM        for        intrusion        detection        in        imbalanced        cyber        physical        system        networks.        Sci        Rep.
-         2026;16(1):7217.    doi:10.1038/s41598-026-38668-4.
-3.                         Hazman     C,     Guezzaz     A,     Benkirane     S,     Azrour     M.     A     smart     model     integrating     LSTM     and     XGBoost     for     improving
-         IoT-enabled    smart    cities    security.    Clust    Comput.    2024;28(1):70.    doi:10.1007/s10586- 024- 04780- 1.
-4.                        Singh    S,    Tyagi    V,    Malik    A,    Kumar    R,    Ankur,    Kumar    N.    Intelligent    energy-aware    routing    via    protozoa    behavior    in
-         IoT-enabled    WSNs.    IEEE    Trans    Netw    Serv    Manage.    2026;23:1960–9.    doi:10.1109/TNSM.2025.3636202.
-5.                         Prasad   A,   Chandra   S.   BotDefender:   a   collaborative   defense   framework   against   botnet   attacks   using   network   traffic
-         analysis    and    machine    learning.    Arab    J    Sci    Eng.    2024;49(3):3313–29.    doi:10.1007/s13369- 023- 08016- z.
-6.                        Khasawneh      M,      Azab      A,      Alrabaee      S,      Sakkal      H,      Bakhit      HH.      Convergence      of      IoT      and      cognitive      radio      networks:
-         a      survey      of      applications,      techniques,      and      challenges.      IEEE      Access.      2023;11:71097–112.      doi:10.1109/ACCESS.2023.
-         3294091.
-7.                           Al-Bakhrani     AA,     Li     M,     Obaidat     MS,     Amran     GA.     MOALF-UAV-MEC:     adaptive     multiobjective     optimization     for
-         UAV-assisted   mobile   edge   computing   in   dynamic   IoT   environments.   IEEE   Internet   Things   J.   2025;12(12):20736–56.
-         doi:10.1109/JIOT.2025.3544624.
-8.              KarmousN,JlassiW,AoueileyineMO,FilaliI,BouallegueR.AnewdatasetfornetworkfloodingattacksinSDN-
-         based    IoT    environments.    Comput    Model    Eng    Sci.    2025;145(3):4363–93.    doi:10.32604/cmes.2025.074178.
-```
-
-
-### PDF page 28
-
-[View original page, figures and tables](assets/page-028.png)
-
-```text
-28                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Comput   Model   Eng   Sci.    2026;147(3):48
-
-
-9.                         Joe      M,      Kim      M,      Kwon      M.      Contrastive      learning      based      network      attack      classifier      for      imbalanced      data.      J      Commun
-         Netw.    2026;28(1):86–97.    doi:10.23919/JCN.2025.000082.
-10.                 Kim      MG,      Kim      H.      Anomaly      detection      in      imbalanced      encrypted      traffic      with      few      packet      metadata-based      feature
-         extraction.    Comput    Model    Eng    Sci.    2024;141(1):585–607.    doi:10.32604/cmes.2024.051221.
-11.                    Saba   T,   Sadad   T,   Rehman   A,   Mehmood   Z,   Javaid   Q.   Intrusion   detection   system   through   advance   machine   learning
-         for    the    Internet    of    Things    networks.    IT    Prof.    2021;23(2):58–64.    doi:10.1109/MITP.2020.2992710.
-12.                  Li     C,     Li     J,     Liu     M,     Wang     H.     Entropy-driven     personalized     privacy     and     dynamic     federated     learning     inIoTSystems.
-         Secur    Priv.    2026;9(1):e70180.    doi:10.1002/spy2.70180.
-13.                  Patnaik         LM,         Wang         W.         AI         fairness–from         machine         learning         to         federated         learning.         Comput         Model         Eng         Sci.
-         2024;139(2):1203–15.    doi:10.32604/cmes.2023.029451.
-14.                 Khan    AY,    Latif    R,    Latif    S,    Tahir    S,    Batool    G,    Saba    T.    Malicious    insider    attack    detection    in    IoTs    using    data    analytics.
-         IEEE    Access.    2020;8:11743–53.    doi:10.1109/ACCESS.2019.2959047.
-15.                  Prasad    A,    Mohammad    Alenazy    W,    Ahmad    N,    Ali    G,    Abdallah    HA,    Ahmad    S.    Optimizing    IoT    intrusion    detection
-         with     cosine     similarity     based     dataset     balancing     and     hybrid     deep     learning.     Sci     Rep.     2025;15(1):30939.     doi:10.1038/
-         s41598-025-15631-3.
-16.                 Sánchez       PMS,       Celdrán       AH,       Schenk       T,       Iten       ALB,       Bovet       G,       Pérez       GM,       et       al.       Studying       the       robustness       of       anti-
-         adversarial      federated      learning      models      detecting      cyberattacks      in      IoT      spectrum      sensors.      IEEE      Trans      Dependable
-         Secure    Comput.    2024;21(2):573–84.    doi:10.1109/TDSC.2022.3204535.
-17.                     Lei    T.    Securing    Fog-enabled    IoT:    federated    learning    and    generative    adversarial    networks    for    intrusion    detection.
-         Telecommun    Syst.    2025;88(1):11.    doi:10.1007/s11235-024-01237-z.
-18.           PathakJ,MundraP,SejpalY,MahapatraT,RajputAS.Earlyrounddetectionprotocols:strategiesagainstuntargeted
-         adversarial        attacks        in        federated        learning        network.        Comput        Netw.        2026;279:112098.        doi:10.1016/j.comnet.2026.
-         112098.
-19.                  Prasad    A,    Chandra    S,    Uddin    M,    Al-Shehari    T,    Alsadhan    NA,    Sajid    Ullah    S.    PermGuard:    a    scalable    framework    for
-         Android    malware    detection    using    permission-to-exploitation    mapping.    IEEE    Access.    2025;13:507–28.    doi:10.1109/
-         ACCESS.2024.3523629.
-20.               Alshehri     MS,     Saidani     O,     Al     Malwi     W,     Asiri     F,     Latif     S,     Ahmad     Khattak     A,     et     al.     A     hybrid     Wasserstein     GAN     and
-         autoencoder     model     for     robust     intrusion     detection     in     IoT.     Comput     Model     Eng     Sci.     2025;143(3):3899–920.     doi:10.
-         32604/cmes.2025.064874.
-21.                  Tyagi    V,    Singh    S,    Wu    H,    Gill    SS.    Load    balancing    in    SDN-enabled    WSNs    toward    6G    IoE:    partial    cluster    migration
-         approach.    IEEE    Internet    Things    J.    2024;11(18):29557–68.    doi:10.1109/JIOT.2024.3402266.
-22.               Malik     A,     Tyagi     V,     Singh     S,     Kumar     R,     Wu     H,     Gill     SS.     Optimizing     secure     data     transmission     in     6G-enabled     IoMT
-         using    blockchain    integration.    IEEE    Trans    Consumer    Electron.    2025;71(2):4534–43.    doi:10.1109/TCE.2024.3510812.
-23.               Grispos    G,    Studiawan    H,    Alrabaee    S.    Internet    of    Things    (IoT)    forensics    and    incident    response:    the    good,    the    bad,
-         and    the    unaddressed.    Forensic    Sci    Int    Digit    Investig.    2024;48(3):301671.    doi:10.1016/j.fsidi.2023.301671.
-24.               Prasad       A,       Chandra       S,       Alenazy       WM,       Ali       G,       Shah       S,       ElAffendi       M.       AndroMD:       an       Android       malware       detection
-         framework    based    on    source    code    analysis    and    permission    scanning.    Results    Eng.    2025;28(1):107050.    doi:10.1016/j.
-         rineng.2025.107050.
-25.               Abid     T,     Ahmim     A,     Maazouzi     F,     Chefrour     D,     Ullah     I,     Ahmim     M,     et     al.     A     novel     IoT     threat     detection     using     GWO
-         feature    selection   and   CNN-enhanced   LightGBM.    J    Cloud    Comput.   2025;14(1):72.    doi:10.1186/s13677-025- 00785-2.
-26.               Torre       D,       Chennamaneni       A,       Jo       J,       Vyas       G,       Sabrsula       B.       Toward       enhancing       privacy       preservation       of       a       federated
-         learning    CNN    intrusion    detection    system    in    IoT:    method    and    empirical    study.    ACM    Trans    Softw    Eng    Methodol.
-         2025;34(2):1–48.    doi:10.1145/3695998.
-27.                  Okey       OD,       Dadkhah       S,       Rodríguez       DZ,       Kleinschmidt       JH.       Explainable       resource-Aware       IoT       security       model       via
-         knowledge   distillation   and   adaptive   loss   function   optimization.   Expert   Syst   Appl.   2026;302(7):130460.   doi:10.1016/
-         j.eswa.2025.130460.
-28.               Wahab      SA,      Sultana      S,      Tariq      N,      Mujahid      M,      Ali      Khan      J,      Mylonas      A.      A      multi-class      intrusion      detection      system
-         for     DDoS     attacks     in     IoT     networks     using     deep     learning     and     transformers.     Sensors.     2025;25(15):4845.     doi:10.3390/
-         s25154845.
-```
-
-
-### PDF page 29
-
-[View original page, figures and tables](assets/page-029.png)
-
-```text
-Comput   Model   Eng   Sci.    2026;147(3):48                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            29
-
-
-29.                Mallikarjun       A,       Patro       P.       Hybrid       data       balancing       with       MLP       probabilities-based       categorical       boosting       model       for
-         robust      intrusion      detection      system      in      IoT      environment.      Syst      Soft      Comput.      2026;8(16):200443.      doi:10.1016/j.sasc.
-         2026.200443.
-30.               Wakili    A,    Bakkali    S.    ZeroDefense:    an    adaptive    hybrid    fusion-based    intrusion    detection    system    for    zero-day    threat
-         detection    in    IoT    networks.    J    Electron    Sci    Technol.    2026;24(1):100345.    doi:10.1016/j.jnlest.2026.100345.
-31.                   Wang      H,      Yang      Y,      Tan      P.      CTWA:      a      novel      incremental      deep      learning-based      intrusion      detection      method      for      the
-         Internet    of    Things.    Artif    Intell    Rev.    2025;58(12):374.    doi:10.1007/s10462-025-11358-9.
-32.                Mahdi      ZS,      Zaki      RM,      Alzubaidi      L.      A      secure      and      adaptive      framework      for      enhancing      intrusion      detection      in      IoT
-         networks    using    incremental    learning    and    blockchain.    Secur    Priv.    2025;8(4):e70071.    doi:10.1002/spy2.70071.
-33.                Doménech    J,    León    O,    Siddiqui    MS,    Pegueroles    J.    Evaluating    and    enhancing    intrusion    detection    systems    in    IoMT:
-         the    importance    of    domain-specific    datasets.    Internet    Things.    2025;32(1):101631.    doi:10.1016/j.iot.2025.101631.
-34.               Saxena    S,    Grover    J,    Singhal    S.    Exploring    graph    neural    networks    for    robust    network    intrusion    detection.    Procedia
-         Comput    Sci.    2025;258(10):3630–9.    doi:10.1016/j.procs.2025.04.618.
-35.     FarhanS,MubashirJ,HaqYU,MahmoodT,RehmanA.Enhancingnetworksecurity:anintrusiondetection
-         system      using      residual      network-based      convolutional     neural      network.      Clust      Comput.      2025;28(4):251.      doi:10.1007/
-         s10586-025-05156-9.
-36.               Alrayes     FS,     Amin     SU,     Hakami     N.     An     adaptive     framework     for     intrusion     detection     in     IoT     security     using     MAML
-         (model-agnostic    meta-learning).    Sensors.    2025;25(8):2487.    doi:10.3390/s25082487.
-37.                   Prasad     A,     Chandra     S.     PhiUSIIL:     a     diverse     security     profile     empowered     phishing     URL     detection     framework     based
-         on    similarity    index    and    incremental    learning.    Comput    Secur.    2024;136(4):103545.    doi:10.1016/j.cose.2023.103545.
-38.               Neto        ECP,        Dadkhah       S,        Ferreira        R,        Zohourian       A,        Lu       R,        Ghorbani        AA.        CICIoT2023:       a        real-time       dataset       and
-         benchmark    for    large-scale    attacks    in    IoT    environment.    Sensors.    2023;23(13):5941.    doi:10.3390/s23135941.
-39.                Khalil   A,   Farman   H,   Nasralla   MM,   Jan   B,   Ahmad   J.   Artificial   Intelligence-based   intrusion   detection   system   for   V2V
-         communication    in    vehicular    adhoc    networks.    Ain    Shams    Eng    J.    2024;15(4):102616.    doi:10.1016/j.asej.2023.102616.
-40.              Prasad   A,   Yadav   V,   Solanki   C,   Goswami   H,   Jha   T,   Nagal   D.   StealthPhisher:   a   defensive   framework   against   phishing
-         attack        using        hybrid        deep        learning        and        GenAI.        Expert        Syst        Appl.        2026;299(4):130205.        doi:10.1016/j.eswa.2025.
-         130205.
-41.     ZhaoZ,ZhengM,MaF,LiT.Anovelfederatedadaptivehybridsamplingframeworkforimbalanceddata
-         classification.    Appl    Soft    Comput.    2026;193(8):114866.    doi:10.1016/j.asoc.2026.114866.
-42.              Zhao    X,    Wu    Y,    Chaddad    A,    Daqqaq    T,    Kateb    R.    Federated    vision    transformer    with    adaptive    focal    loss    for    medical
-         image    classification.    Knowl    Based    Syst.    2026;338(Suppl    3):115474.    doi:10.1016/j.knosys.2026.115474.
-43.               Alnajar     O,     Barnawi     A.     A     novel     clustered     distributed     federated     learning     architecture     for     tactile     Internet     of     Things
-         applications    in    6G    environment.    Comput    Model    Eng    Sci.    2025;143(3):3861–97.    doi:10.32604/cmes.2025.065833.
-44.             Martinez-Lopez   F,   Santana   L,   Rahouti   M,   Chehri   A,   Al-Maliki   S,   Jeon   G.   Learning   in   multiple   spaces:   prototypical
-         few-shot        learning        with        metric        fusion        for        next-generation        network        security.        IEEE        Trans        Netw        Serv        Manage.
-         2026;23:3156–65.    doi:10.1109/TNSM.2026.3665647.
-45.               Krouka   M,   Ben   Issaid   C,   Bennis   M.   Distributionally   robust   federated   learning   with   client   drift   minimization.   Trans
-         Mach    Learn    Comm    Netw.    2026;4:438–56.    doi:10.1109/TMLCN.2026.3658026.
+Sensors 2026, 26, 3198
+20 of 20
+15.
+Arbaoui, M.; Brahmia, M.e.A.; Rahmoun, A.; Zghal, M. Federated learning survey: A multi-level taxonomy of aggregation
+techniques, experimental insights, and future frontiers. ACM Trans. Intell. Syst. Technol. 2024, 15, 113. [CrossRef]
+16.
+AbuAlghanam, O.; Alazzam, H.; Almobaideen, W.; Saadeh, M.; Saadeh, H. A Novel Key Distribution for Mobile Patient
+Authentication Inspired by the Federated Learning Concept and Based on the Diffie–Hellman Elliptic Curve. Sensors 2025,
+25, 2357. [CrossRef] [PubMed]
+17.
+Saadat, H.; Aboumadi, A.; Mohamed, A.; Erbad, A.; Guizani, M. Hierarchical federated learning for collaborative IDS in
+IoT applications. In Proceedings of the 2021 10th Mediterranean Conference on Embedded Computing (MECO), Budva, Montenegro,
+7–10 June 2021; IEEE: Piscataway, NJ, USA, 2021; pp. 1–6.
+18.
+Sun, X.; Tang, Z.; Du, M.; Deng, C.; Lin, W.; Chen, J.; Qi, Q.; Zheng, H. A hierarchical federated learning-based intrusion detection
+system for 5g smart grids. Electronics 2022, 11, 2627. [CrossRef]
+19.
+Mohawesh, R.; Al-Obiedollah, H.; Maqsood, S.; Bany Salameh, H. Lightweight large language model based hierarchical federated
+learning for B5G enabled IoT intrusion detection networks. Clust. Comput. 2026, 29, 195. [CrossRef]
+20.
+Malviya, A.; Singal, G. Hierarchical Federated Learning based Architecture for IDS in IoMT Network. In Proceedings of the 2025
+IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS), New Delhi, India, 15–18 December 2025;
+IEEE: Piscataway, NJ, USA, 2025; pp. 1–6.
+21.
+Alkulaib, L. Adaptive hierarchical GHSOM with federated learning for context-aware anomaly detection in IoT networks. In
+Proceedings of the 2024 IEEE International Conference on Big Data (BigData), Washington, DC, USA, 15–18 December 2024; IEEE:
+Piscataway, NJ, USA, 2024; pp. 5917–5925.
+22.
+Alharbi, F. Adaptive Hierarchical Federated Learning for IoT Anomaly Detection. IEEE Access 2025, 13, 190449–190470. [CrossRef]
+23.
+Elmahfoud, E.; El Hajla, S.; Maleh, Y.; Mounir, S.; Ouazzane, K. Label flipping attacks in hierarchical federated learning for
+intrusion detection in IoT. Inf. Secur. J. Glob. Perspect. 2025, 34, 310–326. [CrossRef]
+24.
+Rabieinejad, E.; Yazdinejad, A.; Dehghantanha, A.; Srivastava, G. Two-level privacy-preserving framework: Federated learning
+for attack detection in the consumer Internet of Things. IEEE Trans. Consum. Electron. 2024, 70, 4258–4265. [CrossRef]
+25.
+Yin, X.; Zhu, Y.; Hu, J. A comprehensive survey of privacy-preserving federated learning: A taxonomy, review, and future
+directions. ACM Comput. Surv. (CSUR) 2021, 54, 131. [CrossRef]
+26.
+Caruccio, L.; Cimino, G.; Deufemia, V.; Iuliano, G.; Stanzione, R. Surveying federated learning approaches through a multi-criteria
+categorization. Multimed. Tools Appl. 2024, 83, 36921–36951. [CrossRef]
+27.
+Koppula, M.; Joseph, L.L. A real-world dataset “IDSIoT2024” for machine learning/deep learning based cyber attack detection
+system for IoT architecture. In Proceedings of the 2025 3rd International Conference on Intelligent Data Communication Technologies and
+Internet of Things (IDCIoT), Bengaluru, India, 5–7 February 2025; IEEE: Piscataway, NJ, USA, 2025; pp. 1757–1764.
+28.
+Langley, A.; Hamburg, M.; Turner, S. RFC 7748: Elliptic Curves for Security. Request for Comments: 7748. 2016. Available online:
+https://www.rfc-editor.org/rfc/rfc7748 (accessed on 14 April 2026).
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.
+https://doi.org/10.3390/s26103198
 ```

@@ -37,3 +37,5 @@ New papers preserve `paper-N/paper-N.pdf`, `paper-N/paper-N.md`, and `paper-N/as
 | paper-13 | Nguyen & Park, *Electronics* 14(14):2756, 2025 | [10.3390/electronics14142756](https://doi.org/10.3390/electronics14142756) |
 
 The previous paper-10 (Prasad et al., *Computer Modeling in Engineering & Sciences*, 2026) was the weakest addition on venue and relevance (binary, static classes) and is archived, not deleted, in `_archive/2026-10-20-rubric-replacement/prasad-cmes/`.
+
+Selection method, rubric check for all ten additions and critical summaries of papers 10-13: [phase2-rubric-check.md](phase2-rubric-check.md). Revision plan and the final report: [phase2-improvement-plan.md](../../submissions/review-phase2/phase2-improvement-plan.md), [phase2-with-claude.tex](../../submissions/phase2-with-claude.tex).

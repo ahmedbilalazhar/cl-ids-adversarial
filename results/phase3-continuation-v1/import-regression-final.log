@@ -1,0 +1,26 @@
+test_cli_selection_and_override_guard (tests.test_continuation.Continuation.test_cli_selection_and_override_guard) ... usage: worker [-h] [--device {cpu,cuda:0,cuda:1}] --train-package
+              TRAIN_PACKAGE --train-manifest-sha256 TRAIN_MANIFEST_SHA256
+              --output OUTPUT [--learner {FT,EI,DR}]
+              [--admission {NONE,DM,DC,DQ}] [--seed {101,102,103}]
+              [--dose DOSE DOSE] [--qualification-overrides] [--rounds {3,12}]
+              [--epochs {1,4}] [--learning-rate LEARNING_RATE]
+              [--lambda-E LAMBDA_E] [--lambda-y LAMBDA_Y]
+              [--lambda-z LAMBDA_Z] [--budget-seconds BUDGET_SECONDS]
+              [--reserve-seconds RESERVE_SECONDS]
+              [--transition-bound-seconds TRANSITION_BOUND_SECONDS]
+              [--max-commits MAX_COMMITS]
+worker: error: Non-selected settings require --qualification-overrides
+ok
+test_cpu_metric_requires_bound_run (tests.test_continuation.Continuation.test_cpu_metric_requires_bound_run) ... ok
+test_duplicate_writer_then_normal_release (tests.test_continuation.Continuation.test_duplicate_writer_then_normal_release) ... ok
+test_import_positive_and_duplicate_lineage (tests.test_continuation.Continuation.test_import_positive_and_duplicate_lineage) ... ok
+test_malformed_counts_and_bindings (tests.test_continuation.Continuation.test_malformed_counts_and_bindings) ... ok
+test_preflight_storage_and_declared_limits (tests.test_continuation.Continuation.test_preflight_storage_and_declared_limits) ... ok
+test_seed_summary (tests.test_continuation.Continuation.test_seed_summary) ... ok
+test_selected_settings (tests.test_continuation.Continuation.test_selected_settings) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 8.469s
+
+OK
+{}

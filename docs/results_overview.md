@@ -1,3 +1,5 @@
+> Current continuation, 2026-10-25: CPU v3 is verified; Kaggle v4 corrects selected-setting binding. Final scope, actual CUDA equivalence and durable Kaggle recovery remain gated. Historical instructions below retain their original scope. See [continuation audit](phase3-cpu-v3/continuation-audit.md).
+
 # Results Overview (post-fix, 2026-09-26 — SUPERSEDES all pre-2026-09-25 numbers)
 
 > **READ FIRST — 2026-09-27 protocol-correction banner.** The Phase-2 rebuild

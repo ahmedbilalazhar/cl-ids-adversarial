@@ -10,7 +10,7 @@ from src.phase3_v3.protocol import DECISIONS, PROTOCOL, Settings, code_identity
 
 from .runtime import FROZEN, source_files
 
-REVISION = 'kaggle-qualification-v3'
+REVISION = 'kaggle-qualification-v4'
 EXECUTION_KEYS = {'study_revision', 'frozen_code_identity', 'worker_source_identity', 'protocol_sha256',
                   'decisions_sha256', 'taxonomy_sha256', 'settings_identity', 'runtime_identity',
                   'train_manifest_sha256', 'final_dispatchable'}

@@ -15,12 +15,13 @@ from src.phase3_v3.protocol import Settings, code_files, code_identity
 
 from .runtime import FROZEN, source_files
 from .artifacts import valid_name
+from .selection import SELECTION
 
 SOURCE_EXTRA = ['configs/phase3/cpu-v2.json', 'configs/phase3/cpu-v3.json',
                 'configs/phase3/reference74-v1.json', 'configs/phase3/taxonomy-v1.json',
                 'docs/phase3-cpu-v2/decisions-2026-10-24.md', 'docs/phase3-cpu-v3/decisions-2026-10-24.md',
                 'docs/phase3-reference/evidence/preparation-rebuild.json',
-                'docs/phase3-plan/experiment-manifest.json', 'docs/phase3-plan/analysis-contrasts.json']
+                'docs/phase3-plan/experiment-manifest.json', 'docs/phase3-plan/analysis-contrasts.json', SELECTION]
 
 
 def verify(archive_path):

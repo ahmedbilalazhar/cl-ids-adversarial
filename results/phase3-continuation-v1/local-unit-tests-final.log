@@ -1,0 +1,265 @@
+test_cli_selection_and_override_guard (tests.test_continuation.Continuation.test_cli_selection_and_override_guard) ... usage: worker [-h] [--device {cpu,cuda:0,cuda:1}] --train-package
+              TRAIN_PACKAGE --train-manifest-sha256 TRAIN_MANIFEST_SHA256
+              --output OUTPUT [--learner {FT,EI,DR}]
+              [--admission {NONE,DM,DC,DQ}] [--seed {101,102,103}]
+              [--dose DOSE DOSE] [--qualification-overrides] [--rounds {3,12}]
+              [--epochs {1,4}] [--learning-rate LEARNING_RATE]
+              [--lambda-E LAMBDA_E] [--lambda-y LAMBDA_Y]
+              [--lambda-z LAMBDA_Z] [--budget-seconds BUDGET_SECONDS]
+              [--reserve-seconds RESERVE_SECONDS]
+              [--transition-bound-seconds TRANSITION_BOUND_SECONDS]
+              [--max-commits MAX_COMMITS]
+worker: error: Non-selected settings require --qualification-overrides
+ok
+test_cpu_metric_requires_bound_run (tests.test_continuation.Continuation.test_cpu_metric_requires_bound_run) ... ok
+test_duplicate_writer_then_normal_release (tests.test_continuation.Continuation.test_duplicate_writer_then_normal_release) ... ok
+test_import_positive_and_duplicate_lineage (tests.test_continuation.Continuation.test_import_positive_and_duplicate_lineage) ... ok
+test_malformed_counts_and_bindings (tests.test_continuation.Continuation.test_malformed_counts_and_bindings) ... ok
+test_preflight_storage_and_declared_limits (tests.test_continuation.Continuation.test_preflight_storage_and_declared_limits) ... ok
+test_seed_summary (tests.test_continuation.Continuation.test_seed_summary) ... ok
+test_selected_settings (tests.test_continuation.Continuation.test_selected_settings) ... ok
+test_acquisition_equal_family_then_equal_stage_not_pooled (tests.test_phase3_analysis.Phase3Analysis.test_acquisition_equal_family_then_equal_stage_not_pooled) ... ok
+test_benign_far_raw_integer_denominator (tests.test_phase3_analysis.Phase3Analysis.test_benign_far_raw_integer_denominator) ... ok
+test_bootstrap_keeps_zero_pairs_in_resampling (tests.test_phase3_analysis.Phase3Analysis.test_bootstrap_keeps_zero_pairs_in_resampling) ... ok
+test_contrast_wiring_no_double_clean_subtraction (tests.test_phase3_analysis.Phase3Analysis.test_contrast_wiring_no_double_clean_subtraction) ... ok
+test_exact_signed_rank_independent_small_sign_counts (tests.test_phase3_analysis.Phase3Analysis.test_exact_signed_rank_independent_small_sign_counts) ... ok
+test_exact_zeros_tied_ranks_and_rational_near_ties (tests.test_phase3_analysis.Phase3Analysis.test_exact_zeros_tied_ranks_and_rational_near_ties) ... ok
+test_holm_exact_full_family_and_monotonicity (tests.test_phase3_analysis.Phase3Analysis.test_holm_exact_full_family_and_monotonicity) ... ok
+test_hulk_integer_endpoints_signs_and_denominator_rejection (tests.test_phase3_analysis.Phase3Analysis.test_hulk_integer_endpoints_signs_and_denominator_rejection) ... ok
+test_resolution_with_twelve_nonzero_pairs (tests.test_phase3_analysis.Phase3Analysis.test_resolution_with_twelve_nonzero_pairs) ... ok
+test_unavailable_contrast_is_not_zero_imputation (tests.test_phase3_analysis.Phase3Analysis.test_unavailable_contrast_is_not_zero_imputation) ... ok
+test_whole_seed_bootstrap_constant_interval_and_fixed_rng (tests.test_phase3_analysis.Phase3Analysis.test_whole_seed_bootstrap_constant_interval_and_fixed_rng) ... ok
+test_admission_nonfinite_and_all_inactive_rejected (tests.test_phase3_v2.Phase3V2.test_admission_nonfinite_and_all_inactive_rejected) ... ok
+test_broadcast_and_optimizer_reset (tests.test_phase3_v2.Phase3V2.test_broadcast_and_optimizer_reset) ... ok
+{}
+{"elapsed_seconds":0.09598829998867586,"learner":"EI","round":1,"stage":1}
+{"elapsed_seconds":0.17607549999956973,"learner":"EI","round":2,"stage":1}
+{"elapsed_seconds":0.28744499999447726,"learner":"EI","round":3,"stage":1}
+test_checkpoint_incompatible_incomplete_and_corrupt_rejected (tests.test_phase3_v2.Phase3V2.test_checkpoint_incompatible_incomplete_and_corrupt_rejected) ... ok
+test_corruption_integer_nested_scope_reference_immutable (tests.test_phase3_v2.Phase3V2.test_corruption_integer_nested_scope_reference_immutable) ... ok
+test_dark_mask_before_square_and_per_record_normalization (tests.test_phase3_v2.Phase3V2.test_dark_mask_before_square_and_per_record_normalization) ... ok
+test_data_isolation_and_readonly (tests.test_phase3_v2.Phase3V2.test_data_isolation_and_readonly) ... ok
+test_development_gates_are_per_family_and_require_three_seeds (tests.test_phase3_v2.Phase3V2.test_development_gates_are_per_family_and_require_three_seeds) ... ok
+test_development_grid_and_exact_budget_ties (tests.test_phase3_v2.Phase3V2.test_development_grid_and_exact_budget_ties) ... ok
+test_ei_analytic_gradients_not_square_of_mean (tests.test_phase3_v2.Phase3V2.test_ei_analytic_gradients_not_square_of_mean) ... ok
+test_ei_exact_sample_limit (tests.test_phase3_v2.Phase3V2.test_ei_exact_sample_limit) ... ok
+test_ei_penalty_scale_and_new_coordinates (tests.test_phase3_v2.Phase3V2.test_ei_penalty_scale_and_new_coordinates) ... ok
+test_ei_stage_anchor_fixed_and_inactive_commit (tests.test_phase3_v2.Phase3V2.test_ei_stage_anchor_fixed_and_inactive_commit) ... ok
+test_ei_vectorized_independent_reference_tolerance (tests.test_phase3_v2.Phase3V2.test_ei_vectorized_independent_reference_tolerance) ... ok
+test_evaluator_full_head_banks_denominators_missingness (tests.test_phase3_v2.Phase3V2.test_evaluator_full_head_banks_denominators_missingness) ... ok
+test_evaluator_zero_prediction_precision_na_f1_zero (tests.test_phase3_v2.Phase3V2.test_evaluator_zero_prediction_precision_na_f1_zero) ... ok
+{"elapsed_seconds":0.06277380000392441,"learner":"FT","round":1,"stage":1}
+{"elapsed_seconds":0.12192469999718014,"learner":"FT","round":2,"stage":1}
+{"elapsed_seconds":0.1708404000091832,"learner":"FT","round":3,"stage":1}
+{"elapsed_seconds":0.23973929999920074,"learner":"FT","round":1,"stage":2}
+{"elapsed_seconds":0.2956973999971524,"learner":"FT","round":2,"stage":2}
+{"elapsed_seconds":0.35862890000862535,"learner":"FT","round":3,"stage":2}
+{"elapsed_seconds":0.43036769999889657,"learner":"FT","round":1,"stage":3}
+{"elapsed_seconds":0.4930229000019608,"learner":"FT","round":2,"stage":3}
+{"elapsed_seconds":0.5511068000050727,"learner":"FT","round":3,"stage":3}
+{"elapsed_seconds":0.617540100007318,"learner":"FT","round":1,"stage":4}
+{"elapsed_seconds":0.6802954000013415,"learner":"FT","round":2,"stage":4}
+{"elapsed_seconds":0.7295258000085596,"learner":"FT","round":3,"stage":4}
+{"elapsed_seconds":0.05868380000174511,"learner":"FT","round":3,"stage":1}
+{"elapsed_seconds":0.1268389000033494,"learner":"FT","round":1,"stage":2}
+{"elapsed_seconds":0.18697600001178216,"learner":"FT","round":2,"stage":2}
+{"elapsed_seconds":0.22824390001187567,"learner":"FT","round":3,"stage":2}
+{"elapsed_seconds":0.2866143999999622,"learner":"FT","round":1,"stage":3}
+{"elapsed_seconds":0.34381790000770707,"learner":"FT","round":2,"stage":3}
+{"elapsed_seconds":0.39144300000043586,"learner":"FT","round":3,"stage":3}
+{"elapsed_seconds":0.4478562000003876,"learner":"FT","round":1,"stage":4}
+{"elapsed_seconds":0.5095647999987705,"learner":"FT","round":2,"stage":4}
+{"elapsed_seconds":0.5570062000042526,"learner":"FT","round":3,"stage":4}
+{"elapsed_seconds":0.08943560000625439,"learner":"EI","round":1,"stage":1}
+{"elapsed_seconds":0.16189220000524074,"learner":"EI","round":2,"stage":1}
+{"elapsed_seconds":0.2566612999944482,"learner":"EI","round":3,"stage":1}
+{"elapsed_seconds":0.3407757999957539,"learner":"EI","round":1,"stage":2}
+{"elapsed_seconds":0.41925399999308866,"learner":"EI","round":2,"stage":2}
+{"elapsed_seconds":0.5126151000004029,"learner":"EI","round":3,"stage":2}
+{"elapsed_seconds":0.5883215000067139,"learner":"EI","round":1,"stage":3}
+{"elapsed_seconds":0.6662219999998342,"learner":"EI","round":2,"stage":3}
+{"elapsed_seconds":0.7474922999972478,"learner":"EI","round":3,"stage":3}
+{"elapsed_seconds":0.8288135000038892,"learner":"EI","round":1,"stage":4}
+{"elapsed_seconds":0.9016622000053758,"learner":"EI","round":2,"stage":4}
+{"elapsed_seconds":0.9934263000031933,"learner":"EI","round":3,"stage":4}
+{"elapsed_seconds":0.09703420000732876,"learner":"EI","round":3,"stage":1}
+{"elapsed_seconds":0.16646639999817125,"learner":"EI","round":1,"stage":2}
+{"elapsed_seconds":0.23701579999760725,"learner":"EI","round":2,"stage":2}
+{"elapsed_seconds":0.3200005999970017,"learner":"EI","round":3,"stage":2}
+{"elapsed_seconds":0.4081220999942161,"learner":"EI","round":1,"stage":3}
+{"elapsed_seconds":0.4905773000064073,"learner":"EI","round":2,"stage":3}
+{"elapsed_seconds":0.5808238000026904,"learner":"EI","round":3,"stage":3}
+{"elapsed_seconds":0.6533832999994047,"learner":"EI","round":1,"stage":4}
+{"elapsed_seconds":0.7249846000049729,"learner":"EI","round":2,"stage":4}
+{"elapsed_seconds":0.8240423999959603,"learner":"EI","round":3,"stage":4}
+{"elapsed_seconds":0.09893900000315625,"learner":"DR","round":1,"stage":1}
+{"elapsed_seconds":0.1876890999992611,"learner":"DR","round":2,"stage":1}
+{"elapsed_seconds":0.27649630000814795,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.35422120000293944,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.42370310000842437,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.502648900001077,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.5799884000007296,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.6413186999998288,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.7153553000098327,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.7889926000061678,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.8609961000038311,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.9357442000036826,"learner":"DR","round":3,"stage":4}
+{"elapsed_seconds":0.071946800002479,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.1360158000024967,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.2112909999996191,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.28850120000424795,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.36899970000376925,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.431550099994638,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.5106445999990683,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.5891714000026695,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.6730393000034383,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.7484993999969447,"learner":"DR","round":3,"stage":4}
+{"elapsed_seconds":0.07169679999060463,"learner":"DR","round":1,"stage":1}
+{"elapsed_seconds":0.13839009999355767,"learner":"DR","round":2,"stage":1}
+{"elapsed_seconds":0.21132679999573156,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.2824393000046257,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.3531133999931626,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.4112414999981411,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.4771612000040477,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.5525605000002543,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.6179608999955235,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.6944941999972798,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.7588799999939511,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.8257183999958215,"learner":"DR","round":3,"stage":4}
+{"elapsed_seconds":0.05890089999593329,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.12943400000222027,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.19236390000151005,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.25773759999719914,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.32546419999562204,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.38757110000005923,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.44682389999798033,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.5183210999966832,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.5809866999916267,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.643084600000293,"learner":"DR","round":3,"stage":4}
+{"elapsed_seconds":0.07581549999304116,"learner":"DR","round":1,"stage":1}
+{"elapsed_seconds":0.1328910000011092,"learner":"DR","round":2,"stage":1}
+{"elapsed_seconds":0.19881380000151694,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.26467699999921024,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.327659999995376,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.389217899995856,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.45938509999541566,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.5277742000034777,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.5933560999983456,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.6614445000013802,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.7311084999964805,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.7997138000064297,"learner":"DR","round":3,"stage":4}
+{"elapsed_seconds":0.06349729999783449,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.12885379999352153,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.1950055000052089,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.25930309999966994,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.3321735999925295,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.3936537999979919,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.45638200000394136,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.5369224000023678,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.6012386999937007,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.6663889000046765,"learner":"DR","round":3,"stage":4}
+{"elapsed_seconds":0.061957199999596924,"learner":"DR","round":1,"stage":1}
+{"elapsed_seconds":0.12096600000222679,"learner":"DR","round":2,"stage":1}
+{"elapsed_seconds":0.1845681999984663,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.2656903000024613,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.32847350000520237,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.3943608999979915,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.47990370000479743,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.5574042999942321,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.6372696000034921,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.7269591999938712,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.7957564999960596,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.8798839999944903,"learner":"DR","round":3,"stage":4}
+{"elapsed_seconds":0.07086580000759568,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.1473612999980105,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.22455480000644457,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.3121348999993643,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.4209419000108028,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.5051206000061939,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.5876253000024008,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.6798981000029016,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.7641998000035528,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.851915100007318,"learner":"DR","round":3,"stage":4}
+test_exact_recovered_continuation_all_methods (tests.test_phase3_v2.Phase3V2.test_exact_recovered_continuation_all_methods) ... ok
+test_filters_off_e1_and_frozen_once (tests.test_phase3_v2.Phase3V2.test_filters_off_e1_and_frozen_once) ... ok
+test_final_seed_and_invalid_runtime_settings_sealed (tests.test_phase3_v2.Phase3V2.test_final_seed_and_invalid_runtime_settings_sealed) ... ok
+test_first_pass_only_across_epochs_and_rounds (tests.test_phase3_v2.Phase3V2.test_first_pass_only_across_epochs_and_rounds) ... ok
+test_full_head_argmax_keeps_rare_outputs_and_benign_ties (tests.test_phase3_v2.Phase3V2.test_full_head_argmax_keeps_rare_outputs_and_benign_ties) ... ok
+test_full_pool_order_then_subsequence (tests.test_phase3_v2.Phase3V2.test_full_pool_order_then_subsequence) ... ok
+test_head_initialization_independent_uniform_and_expansion (tests.test_phase3_v2.Phase3V2.test_head_initialization_independent_uniform_and_expansion) ... ok
+test_inactive_client_never_updates_or_draws (tests.test_phase3_v2.Phase3V2.test_inactive_client_never_updates_or_draws) ... ok
+test_independent_aggregation_arithmetic (tests.test_phase3_v2.Phase3V2.test_independent_aggregation_arithmetic) ... ok
+test_package_rejects_extras_missing_and_corruption (tests.test_phase3_v2.Phase3V2.test_package_rejects_extras_missing_and_corruption) ... ok
+test_quota_rounding_ties_and_matched_controls (tests.test_phase3_v2.Phase3V2.test_quota_rounding_ties_and_matched_controls) ... ok
+test_reservoir_sequential_independent_algorithm_r (tests.test_phase3_v2.Phase3V2.test_reservoir_sequential_independent_algorithm_r) ... ok
+test_rng_lossless_cached_uint32_and_large_state (tests.test_phase3_v2.Phase3V2.test_rng_lossless_cached_uint32_and_large_state) ... ok
+{"elapsed_seconds":0.05932320001011249,"learner":"FT","round":1,"stage":1}
+{"elapsed_seconds":0.12058670000988059,"learner":"FT","round":2,"stage":1}
+{"elapsed_seconds":0.17907280000508763,"learner":"FT","round":3,"stage":1}
+{"elapsed_seconds":0.24517610001203138,"learner":"FT","round":1,"stage":2}
+{"elapsed_seconds":0.30477860000974033,"learner":"FT","round":2,"stage":2}
+{"elapsed_seconds":0.3651551000075415,"learner":"FT","round":3,"stage":2}
+{"elapsed_seconds":0.4229380000033416,"learner":"FT","round":1,"stage":3}
+{"elapsed_seconds":0.4742843999993056,"learner":"FT","round":2,"stage":3}
+{"elapsed_seconds":0.5373523000016576,"learner":"FT","round":3,"stage":3}
+{"elapsed_seconds":0.6029478999989806,"learner":"FT","round":1,"stage":4}
+{"elapsed_seconds":0.6689122000097996,"learner":"FT","round":2,"stage":4}
+{"elapsed_seconds":0.7378222000115784,"learner":"FT","round":3,"stage":4}
+test_supplied_only_registration (tests.test_phase3_v2.Phase3V2.test_supplied_only_registration) ... ok
+test_teacher_timing_modes_and_insertion_after_update (tests.test_phase3_v2.Phase3V2.test_teacher_timing_modes_and_insertion_after_update) ... ok
+test_teacher_values_are_pre_update (tests.test_phase3_v2.Phase3V2.test_teacher_values_are_pre_update) ... ok
+{"elapsed_seconds":0.0751557000039611,"learner":"DR","round":1,"stage":1}
+{"elapsed_seconds":0.1368633999954909,"learner":"DR","round":2,"stage":1}
+{"elapsed_seconds":0.19796079999650829,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.2539371000020765,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.315804300000309,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.3733763999916846,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.4391297999973176,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.4969686999975238,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.5674542999913683,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.6271409000037238,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.6897315999958664,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.7423583999916445,"learner":"DR","round":3,"stage":4}
+{"elapsed_seconds":0.06049459999485407,"learner":"DR","round":1,"stage":1}
+{"elapsed_seconds":0.11833460000343621,"learner":"DR","round":2,"stage":1}
+{"elapsed_seconds":0.17097459999786224,"learner":"DR","round":3,"stage":1}
+{"elapsed_seconds":0.2324189000064507,"learner":"DR","round":1,"stage":2}
+{"elapsed_seconds":0.29121690000465605,"learner":"DR","round":2,"stage":2}
+{"elapsed_seconds":0.36056030000327155,"learner":"DR","round":3,"stage":2}
+{"elapsed_seconds":0.4178217000007862,"learner":"DR","round":1,"stage":3}
+{"elapsed_seconds":0.46738129999721423,"learner":"DR","round":2,"stage":3}
+{"elapsed_seconds":0.5190124000073411,"learner":"DR","round":3,"stage":3}
+{"elapsed_seconds":0.5892486999946414,"learner":"DR","round":1,"stage":4}
+{"elapsed_seconds":0.6549760000052629,"learner":"DR","round":2,"stage":4}
+{"elapsed_seconds":0.7079407999990508,"learner":"DR","round":3,"stage":4}
+{"elapsed_seconds":0.06142019999970216,"learner":"EI","round":1,"stage":1}
+{"elapsed_seconds":0.11008969999966212,"learner":"EI","round":2,"stage":1}
+{"elapsed_seconds":0.17829830000118818,"learner":"EI","round":3,"stage":1}
+{"elapsed_seconds":0.2390460000024177,"learner":"EI","round":1,"stage":2}
+{"elapsed_seconds":0.2959973000106402,"learner":"EI","round":2,"stage":2}
+{"elapsed_seconds":0.3903061000019079,"learner":"EI","round":3,"stage":2}
+{"elapsed_seconds":0.4568940000026487,"learner":"EI","round":1,"stage":3}
+{"elapsed_seconds":0.5224353000085102,"learner":"EI","round":2,"stage":3}
+{"elapsed_seconds":0.5925559000024805,"learner":"EI","round":3,"stage":3}
+{"elapsed_seconds":0.651139300010982,"learner":"EI","round":1,"stage":4}
+{"elapsed_seconds":0.711758400007966,"learner":"EI","round":2,"stage":4}
+{"elapsed_seconds":0.7751003000012133,"learner":"EI","round":3,"stage":4}
+{"elapsed_seconds":0.060660499992081895,"learner":"EI","round":1,"stage":1}
+{"elapsed_seconds":0.10305469999730121,"learner":"EI","round":2,"stage":1}
+{"elapsed_seconds":0.15549900000041816,"learner":"EI","round":3,"stage":1}
+{"elapsed_seconds":0.20891509999637492,"learner":"EI","round":1,"stage":2}
+{"elapsed_seconds":0.2682987000007415,"learner":"EI","round":2,"stage":2}
+{"elapsed_seconds":0.3302755999902729,"learner":"EI","round":3,"stage":2}
+{"elapsed_seconds":0.3898227999889059,"learner":"EI","round":1,"stage":3}
+{"elapsed_seconds":0.44245229999069124,"learner":"EI","round":2,"stage":3}
+{"elapsed_seconds":0.5091429999883985,"learner":"EI","round":3,"stage":3}
+{"elapsed_seconds":0.5687764999893261,"learner":"EI","round":1,"stage":4}
+{"elapsed_seconds":0.622238699987065,"learner":"EI","round":2,"stage":4}
+{"elapsed_seconds":0.6817895999993198,"learner":"EI","round":3,"stage":4}
+test_unfiltered_pairing_buffer_and_importance_ids_across_doses (tests.test_phase3_v2.Phase3V2.test_unfiltered_pairing_buffer_and_importance_ids_across_doses) ... ok
+test_v1_code_identity_preserved (tests.test_phase3_v2.Phase3V2.test_v1_code_identity_preserved) ... ok
+
+----------------------------------------------------------------------
+Ran 52 tests in 27.346s
+
+OK

@@ -1,3 +1,5 @@
+> Current continuation, 2026-10-25: CPU v3 is verified; Kaggle v4 corrects selected-setting binding. Final scope, actual CUDA equivalence and durable Kaggle recovery remain gated. Historical instructions below retain their original scope. See [continuation audit](../phase3-cpu-v3/continuation-audit.md).
+
 # Implementation work breakdown for two authors
 
 Proposed work, 24 October 2026. Estimates are planning ranges and need revision after the first data/reference milestones. Eight compute contributors help with execution; the two authors remain responsible for protocol correctness and interpretation.
@@ -114,3 +116,23 @@ Preserve valid data, paired seeds, baseline learning and meaningful ablations. D
 ## 8. Definition of done
 
 The implementation phase is ready for analysis only when the selected matrix is complete/validated or every missing condition has an explicit failure disposition. The report is ready when every claim maps to a validated table/figure and every rubric item has concrete evidence. A repository upload or a notebook that ran once is not this completion criterion.
+
+
+## Continuation tasks and dependencies (25 October 2026)
+
+The earlier work breakdown is historical planning. These tasks control the next
+phase; none authorizes final data access. See [execution contract](kaggle-execution-contract.md).
+
+| ID / objective | Prerequisites / interfaces | Procedure and acceptance evidence | Failure / downstream |
+|---|---|---|---|
+| K01 Actual runtime qualification | v4 bundle, notebook generator, `runtime.configure`, `checks.run`; actual CUDA allocation | Install pinned environment; run CPU then CUDA fixtures; preserve logs and device/build hashes. Compare primitive tensors using existing tolerances, exact integer/ID state and recovery; independently disposition dropout-stream differences before whole-trajectory claims | Preserve failure; do not relax tolerances. Blocks K02, K04 |
+| K02 Target clean feasibility and cost | K01, `selection.selected_settings`, `worker.run_job`, `evaluate.evaluate`; matching packages for dev101–103 | Execute selected FT/EI/DR clean conditions on actual target runtime. Record component and command costs, mean acquisition gates and every per-seed result. No seed replacement; pass only with intact hashes and declared gates | Keep adverse results. Scientific change needs prospective revision and affected matched reruns. Blocks K04 |
+| K03 Provider durability | K01, worker/checkpoint/handoff modules | Interrupt fixture after committed round; save/download/hash output; end session; restore matching source/runtime; resume; compare full state/predictions to uninterrupted fixture; corrupt payload and duplicate-writer attempts must reject | Keep partial segments and retry lineage; no new replicate. Blocks K04 |
+| K04 Final scope and adapters | K01–K03, `continuation-scope.json`, original manifest, component specification | Explicitly freeze included arms/datasets/doses and intervention semantics; implement separately identified missing FIFO/oracle/other selected adapters with exact single-change and recovery tests; bind final seed/data registry and alias graph | Remain non-dispatchable if scope or numerical semantics unresolved. Blocks K05/K06 |
+| K05 Analysis registry integration | K04, `phase3_delivery.import_counts`, frozen `statistics` and all_29 spec | Build persistent manifest-backed import CLI and endpoint assembler; validate all condition/seed/bank identities, reject alias/retry duplicates; synthetic incomplete pairs remain missing, full R/count schemas reconcile, all29 tests retain one Holm family | Quarantine malformed artifacts; no imputation or family split. Blocks K06 |
+| K06 Explicit release review | K01–K05, 15-gate audit, complete command receipts | Human reviews exact code/data/runtime/scope/analysis freeze and grants final authorization; preserve signed/date-stamped decision. Only then implement/enable separately versioned final dispatcher/evaluator | No approval inferred from this implementation task. Final artifact and publication gates follow execution |
+
+Local completed work: immutable selected settings binding, explicit override guard,
+resource/session preflight, synthetic count import, complete-seed mean/SD,
+duplicate-writer rejection and continued final-seed rejection. A candidate with
+local tests passed is not equivalent to K01–K03 completed on Kaggle.

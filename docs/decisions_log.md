@@ -1,3 +1,5 @@
+> Continuation decision, 2026-10-25: preserve CPU v3 and the existing all_29 family. Kaggle v4 reads the immutable selected settings; no new scope, seed, numerical-method or final-grid authorization is adopted. See [continuation audit](phase3-cpu-v3/continuation-audit.md).
+
 # Decision log (mandatory per repo Decision-Making Policy)
 
 Standing settings (2026-09-26, user-stated — recorded here as project memory):

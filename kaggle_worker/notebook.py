@@ -27,9 +27,11 @@ import hashlib, json, zipfile, os, subprocess, sys, time
 # Attach the private dataset containing qualification.zip, then set its path.
 BUNDLE = Path('/kaggle/input/CHANGE-TO-YOUR-PRIVATE-DATASET/qualification.zip')
 EXPECTED_SHA256 = {expected!r}
-WORK = Path('/kaggle/working/phase3-v3')
+WORK = Path('/kaggle/working/phase3-v4')
 DEVICE = 'cpu'  # Change to 'cuda:0' for the separate CUDA qualification candidate.
-RUN_FULL_DATA = False  # Enable after synthetic checks; development seed 101 only.
+RUN_FULL_DATA = False  # Selected clean development settings; seed 101 only.
+SESSION_SECONDS = 7200  # Operator-declared bound: verify against the actual session UI.
+MINIMUM_FREE_BYTES = 2*1024**3  # Conservative local reservation, not a measured job size.
 
 def sha(path):
     h = hashlib.sha256()
@@ -64,7 +66,7 @@ os.chdir(PROJECT)
 print('Verified frozen source, worker source and train/development input bytes.')
 '''
     environment = '''# Enable Internet for setup. The candidate uses its own pinned environment.
-ENVIRONMENT = '/kaggle/working/phase3-env-v3-'+DEVICE.replace(':', '-')
+ENVIRONMENT = '/kaggle/working/phase3-env-v4-'+DEVICE.replace(':', '-')
 setup_started = time.perf_counter()
 subprocess.run([sys.executable, '-m', 'kaggle_worker.bootstrap',
                 '--device', 'cuda' if DEVICE.startswith('cuda') else 'cpu',
@@ -72,7 +74,7 @@ subprocess.run([sys.executable, '-m', 'kaggle_worker.bootstrap',
 PYTHON = ENVIRONMENT+'/bin/python'
 ENV = {**os.environ, 'CUBLAS_WORKSPACE_CONFIG': ':4096:8', 'OMP_NUM_THREADS': '1',
        'MKL_NUM_THREADS': '1', 'OPENBLAS_NUM_THREADS': '1', 'PYTHONPATH': str(PROJECT)}
-OUTPUT = Path('/kaggle/working/phase3-results-v3')/DEVICE.replace(':', '-')
+OUTPUT = Path('/kaggle/working/phase3-results-v4')/DEVICE.replace(':', '-')
 OUTPUT.mkdir(parents=True, exist_ok=True)
 import shutil
 shutil.copyfile(Path(ENVIRONMENT)/'.phase3-environment.json', OUTPUT/'environment-lock.json')
@@ -100,6 +102,9 @@ def run(module, *args):
     print('\\n'.join(log.read_text().splitlines()[-8:]))
     result.check_returncode()
 
+preflight = OUTPUT/f'preflight-{time.time_ns()}.json'
+run('kaggle_worker.preflight', '--device', DEVICE, '--output', preflight,
+    '--session-seconds', SESSION_SECONDS, '--minimum-free-bytes', MINIMUM_FREE_BYTES)
 acceptance = OUTPUT/'synthetic-acceptance.json'
 run('kaggle_worker.checks', '--device', DEVICE, '--output', acceptance, '--verify-existing')
 '''
@@ -112,7 +117,7 @@ if RUN_FULL_DATA:
         run('kaggle_worker.worker', '--device', DEVICE, '--learner', learner,
             '--train-package', PROJECT/'inputs/train',
             '--train-manifest-sha256', manifest['train_manifest_sha256'],
-            '--output', job, '--budget-seconds', 7200,
+            '--output', job, '--budget-seconds', SESSION_SECONDS,
             '--reserve-seconds', 180, '--transition-bound-seconds', 900)
         receipts = sorted(job.glob('invocation-*.json'))
         if not receipts or json.loads(receipts[-1].read_text())['status'] != 'complete':
@@ -140,7 +145,7 @@ print('These results qualify development execution only; final-study dispatch is
 '''
     cells = [cell('markdown', '# Phase 3 Kaggle qualification\n\nPrivate development-only worker. Start with CPU, then use a separate CUDA run and environment for comparison. All five federated clients stay inside one job. Each contributor operates their own account.\n\nNo final-test bank, final seeds, AMP, TF32, DDP or automatic account operation. Actual Kaggle GPU qualification and full-data confirmations remain necessary.\n'),
              cell('code', extraction), cell('markdown', '## Install and verify\n\nThe notebook image is not the experiment environment. The setup cell creates Python 3.12.14, NumPy 2.3.5 and Torch 2.7.0 in a separate environment. CUDA uses the cu126 build; CPU uses the CPU build.\n'),
-             cell('code', environment), cell('markdown', '## Representative complete worker costs\n\nThese pilot defaults benchmark execution, not final selected settings. Record the complete receipt times and evaluate all three learners. Afterwards confirm the selected clean settings on seeds 101–103 on the eventual runtime.\n'),
+             cell('code', environment), cell('markdown', '## Representative complete worker costs\n\nThese jobs read the SHA256-bound CPU v3 selection record: 12 rounds, 1 epoch, EI lambda_E=100 and DR lambda_z=0.1. Record the complete receipt times and evaluate all three learners. Afterwards confirm the selected clean settings on seeds 101-103 on the eventual runtime.\n'),
              cell('code', jobs), cell('code', export)]
     notebook = {'nbformat': 4, 'nbformat_minor': 5,
                 'metadata': {'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
@@ -149,7 +154,7 @@ print('These results qualify development execution only; final-study dispatch is
     output.mkdir(parents=True)
     path = output/'phase3-qualification.ipynb'
     path.write_text(json.dumps(notebook, indent=2)+'\n', encoding='utf-8')
-    metadata = {'id': 'YOUR-USERNAME/phase3-qualification-v3', 'title': 'Phase 3 development qualification v3',
+    metadata = {'id': 'YOUR-USERNAME/phase3-qualification-v4', 'title': 'Phase 3 development qualification v4',
                 'code_file': path.name, 'language': 'python', 'kernel_type': 'notebook',
                 'is_private': True, 'enable_gpu': False, 'enable_internet': True,
                 'dataset_sources': [], 'competition_sources': [], 'kernel_sources': [], 'model_sources': []}

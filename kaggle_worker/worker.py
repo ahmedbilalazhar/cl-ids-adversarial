@@ -11,13 +11,13 @@ from pathlib import Path
 from .runtime import configure, resources, safe_output
 
 from src.phase3.common import digest, identity, read_json, write_json
-from src.phase3_v3.protocol import Settings
 
 from .checkpoint import restore
 from .artifacts import HistoryValidator, discover, validate_receipt, verify_local_files
 from .contracts import make_procedure, parse_settings, validate_procedure
 from .data import StageCache
 from .simulator import execute
+from .selection import selected_settings
 
 
 @contextlib.contextmanager
@@ -144,19 +144,26 @@ def main():
     parser.add_argument('--admission', choices=['NONE', 'DM', 'DC', 'DQ'], default='NONE')
     parser.add_argument('--seed', type=int, choices=[101, 102, 103], default=101)
     parser.add_argument('--dose', nargs=2, type=int, default=[0, 1])
-    parser.add_argument('--rounds', type=int, choices=[3, 12], default=12)
-    parser.add_argument('--epochs', type=int, choices=[1, 4], default=1)
-    parser.add_argument('--learning-rate', type=float, default=.001)
-    parser.add_argument('--lambda-E', type=float, default=10.)
-    parser.add_argument('--lambda-y', type=float, default=1.)
-    parser.add_argument('--lambda-z', type=float, default=.5)
+    parser.add_argument('--qualification-overrides', action='store_true',
+                        help='Explicitly permit non-selected development fixture settings')
+    parser.add_argument('--rounds', type=int, choices=[3, 12])
+    parser.add_argument('--epochs', type=int, choices=[1, 4])
+    parser.add_argument('--learning-rate', type=float)
+    parser.add_argument('--lambda-E', type=float)
+    parser.add_argument('--lambda-y', type=float)
+    parser.add_argument('--lambda-z', type=float)
     parser.add_argument('--budget-seconds', type=float, default=3600)
     parser.add_argument('--reserve-seconds', type=float, default=120)
     parser.add_argument('--transition-bound-seconds', type=float, default=600)
     parser.add_argument('--max-commits', type=int, help='Optional early stop at a durable round boundary')
     args = parser.parse_args()
-    settings = Settings(args.learner, args.admission, args.seed, args.rounds, args.epochs,
-                        args.learning_rate, args.lambda_E, args.lambda_y, args.lambda_z, tuple(args.dose))
+    settings = selected_settings(args.learner, args.seed, args.admission, tuple(args.dose))
+    overrides = {key: getattr(args, key) for key in
+                 ('rounds', 'epochs', 'learning_rate', 'lambda_E', 'lambda_y', 'lambda_z')
+                 if getattr(args, key) is not None}
+    if overrides and not args.qualification_overrides:
+        parser.error('Non-selected settings require --qualification-overrides')
+    settings = parse_settings({**asdict(settings), **overrides})
     result = run_job(args.train_package, args.train_manifest_sha256, args.output, settings, args.device,
                      args.budget_seconds, args.reserve_seconds, args.transition_bound_seconds, args.max_commits)
     print({k: v for k, v in result.items() if k in ('status', 'commits_verified', 'whole_invocation_seconds', 'commits')})

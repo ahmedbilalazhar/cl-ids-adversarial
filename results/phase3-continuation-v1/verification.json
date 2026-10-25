@@ -1,0 +1,150 @@
+{
+  "baseline_commit": "b77a7bbf11c1e4ae7cc06f79e5d7d7d452dbf932",
+  "commands": [
+    {
+      "command": "git ls-remote origin HEAD refs/heads/main",
+      "outcome": "both b77a7bbf11c1e4ae7cc06f79e5d7d7d452dbf932",
+      "scope": "Read-only remote verification"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe scripts/verify_cpu_delivery.py --output results/phase3-continuation-v1/cpu-delivery-audit.json",
+      "outcome": "First publication failed: missing parent directory; retry passed, 41.0628 seconds",
+      "scope": "Hash/arithmetic audit; no training or inference"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.checks --device cpu --output results/phase3-continuation-v1/worker-acceptance.json",
+      "outcome": "passed 30 groups, 253.4874 seconds",
+      "scope": "Synthetic CPU and CPU-emulated accelerator; no actual CUDA"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.architecture_checks --output results/phase3-continuation-v1/architecture.json",
+      "outcome": "passed 55 checks",
+      "scope": "No model execution"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.review_checks --output results/phase3-continuation-v1/recovery-review.json",
+      "outcome": "passed 5 groups",
+      "scope": "Synthetic recovery and mocked environment setup; no Kaggle session"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m unittest tests.test_continuation tests.test_phase3_analysis tests.test_phase3_v2 -v",
+      "outcome": "passed 51 tests in 21.955 seconds",
+      "scope": "Local synthetic tests; output local-unit-tests.log"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.bundle --output results/phase3-continuation-v1/bundle",
+      "outcome": "passed 81 payload files",
+      "scope": "Private local development bundle; ignored ZIP; not uploaded"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.notebook --bundle-receipt results/phase3-continuation-v1/bundle/receipt.json --output results/phase3-continuation-v1/notebook",
+      "outcome": "failed: incorrect receipt filename; no output written",
+      "scope": "Retained invocation error; use acceptance.json"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.notebook --bundle-receipt results/phase3-continuation-v1/bundle/acceptance.json --output results/phase3-continuation-v1/notebook",
+      "outcome": "passed",
+      "scope": "Generated/compiled code cells; not run on Kaggle"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe docs/phase3-plan/validate_planning_package.py",
+      "outcome": "passed 109 checks",
+      "scope": "Planning consistency, not implementation/GPU qualification; historical receipt archived"
+    },
+    {
+      "command": "ruff check kaggle_worker phase3_delivery tests/test_continuation.py --select E7,E9,F63,F7,F82,F401",
+      "outcome": "failed existing E731 in kaggle_worker/review_checks.py:144",
+      "scope": "Historical lambda style issue retained; no changed implementation error"
+    },
+    {
+      "command": "ruff check kaggle_worker/worker.py kaggle_worker/contracts.py kaggle_worker/bundle.py kaggle_worker/notebook.py kaggle_worker/selection.py kaggle_worker/preflight.py phase3_delivery tests/test_continuation.py --select E7,E9,F63,F7,F82,F401",
+      "outcome": "passed",
+      "scope": "Changed implementation/tests"
+    },
+    {
+      "command": "ruff check src/phase3 src/phase3_v2 src/phase3_v3 src/phase3_analysis kaggle_worker --select E9,F63,F7,F82",
+      "outcome": "passed",
+      "scope": "Fatal/error lint across frozen and candidate code"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m compileall -q kaggle_worker phase3_delivery tests/test_continuation.py",
+      "outcome": "passed",
+      "scope": "Syntax compilation only"
+    },
+    {
+      "command": "git -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --check",
+      "outcome": "passed",
+      "scope": "Allows preserved CRLF; Git printed EOL conversion notices"
+    },
+    {
+      "command": "gh run list --branch main --limit 2 --json databaseId,status,conclusion,headSha,url",
+      "outcome": "two completed failures at b77a7bb",
+      "scope": "Remote CI was not successful"
+    },
+    {
+      "command": "gh api repos/ahmedbilalazhar/cl-ids-adversarial/actions/runs/40169262326/jobs --jq '.jobs[].check_run_url' | ForEach-Object { gh api ($_ + '/annotations') --jq '.[].message' }",
+      "outcome": "The job was not started because your account is locked due to a billing issue.",
+      "scope": "External account blocker; no code failure or local-equivalence claim"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.checks --device cpu --output results/phase3-continuation-v1/worker-acceptance-final.json",
+      "outcome": "passed 30 groups in 213.9927 seconds",
+      "scope": "Final source identity; previous candidate receipts retained after notebook text encoding correction"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.architecture_checks --output results/phase3-continuation-v1/architecture-final.json",
+      "outcome": "passed 55 checks",
+      "scope": "Final source identity, no model execution"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.review_checks --output results/phase3-continuation-v1/recovery-review-final.json",
+      "outcome": "passed 5 groups",
+      "scope": "Final source identity, synthetic/mocked setup"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.bundle --output results/phase3-continuation-v1/bundle-final",
+      "outcome": "passed 81 files",
+      "scope": "Private ZIP ignored, never uploaded"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.notebook --bundle-receipt results/phase3-continuation-v1/bundle-final/acceptance.json --output results/phase3-continuation-v1/notebook-final",
+      "outcome": "passed",
+      "scope": "Code cells compile; actual Kaggle execution pending"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m unittest tests.test_continuation -v",
+      "outcome": "passed 8 tests in 8.469 seconds",
+      "scope": "Includes separate hashed CPU run manifest positive and rejection cases"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m unittest tests.test_continuation tests.test_phase3_analysis tests.test_phase3_v2 -v",
+      "outcome": "passed 52 tests in 27.346 seconds",
+      "scope": "Final local suite, log local-unit-tests-final.log"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe docs/phase3-plan/validate_planning_package.py",
+      "outcome": "passed 109 checks",
+      "scope": "Final documents and scope reconciliation"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m compileall -q kaggle_worker phase3_delivery tests/test_continuation.py scripts/verify_continuation_delivery.py",
+      "outcome": "passed",
+      "scope": "Final syntax checks"
+    }
+  ],
+  "not_run": [
+    "actual Linux hash-lock installation",
+    "actual CUDA training/semantic comparison",
+    "Kaggle save/download/fresh-session recovery",
+    "full target-runtime development costs",
+    "final matrix or final inference"
+  ],
+  "final_dispatchable": false,
+  "additional_checks": {
+    "existing_development_count_import": "72 physical trajectories accepted; 9 aliases excluded; receipt development-import.json; inline count-only Python driver, expected run identities from previously audited CPU manifests",
+    "workflow_yaml": "Parsed using C:\\Python314\\python.exe with PyYAML; continuation tests and read-only permissions verified",
+    "final_worker_identity": "f42d7a636bd2acdcb0818e206292a9a1254225a4f4392d9c5d98f2bec8c22c3a",
+    "frozen_source_unchanged": true,
+    "final_source_lint": "ruff check kaggle_worker phase3_delivery tests/test_continuation.py scripts/verify_continuation_delivery.py --select E9,F63,F7,F82,F401: passed"
+  }
+}

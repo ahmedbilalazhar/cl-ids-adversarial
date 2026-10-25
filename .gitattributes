@@ -1,7 +1,14 @@
-# ---> Git LFS rules (uncomment if LFS is adopted) <---
-# *.parquet filter=lfs diff=lfs merge=lfs -text
-# *.npz filter=lfs diff=lfs merge=lfs -text
-# *.zip filter=lfs diff=lfs merge=lfs -text
-
-# Keep line endings consistent across Windows/Linux collaborators.
-* text=auto
+# Scientific and delivery identities hash exact bytes. Preserve their checked-in
+# line endings across hosts instead of applying core.autocrlf transformations.
+src/phase3/** -text
+src/phase3_v2/** -text
+src/phase3_v3/** -text
+src/phase3_analysis/** -text
+kaggle_worker/** -text
+configs/phase3/** -text
+docs/phase3-*/** -text
+docs/kaggle-phase3/** -text
+scripts/*phase3*.py -text
+tests/test_phase3*.py -text
+results/kaggle-readiness-v*/** -text
+.github/workflows/*.yml text eol=lf

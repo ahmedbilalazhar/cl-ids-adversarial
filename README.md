@@ -6,7 +6,29 @@ stage. This is an offline simulation, not a deployed intrusion detector.
 
 **Members:** Saneedullah (23I-2568) and Ahmed Bilal (23I-2581).
 
-## Current status (2026-09-28)
+## Current Phase 3 work (2026-10-24)
+
+**Data amendments and the 16-class taxonomy are now adopted.** Start with the
+[Phase 3 reference implementation](docs/phase3-reference/README.md) and
+[methodology amendment](submissions/phase3-methodology-amendment.md).
+The reference uses the corrected 74-feature profile and a clean development
+trajectory. The final GPU grid remains gated.
+
+The authoritative methodology for the current course submission is
+[phase2-with-claude.tex](submissions/phase2-with-claude.tex). Begin with the
+[Phase 3 implementation and evaluation plan](docs/phase3-plan/START-HERE.md)
+and its [source-level implementation gap audit](docs/phase3-plan/implementation-gap-audit.md).
+The revised four-stage, five-client protocol has **29 confirmatory contrasts**.
+The narrow DR+DC reference is implemented under `src/phase3/`; the full
+learner/worker grid and final results remain pending. The legacy commands and
+analysis specification below do not implement that protocol.
+
+The earlier audit documents/PDFs preserve the data-only evidence available when
+they were written. The separate adoption record selects corrected data for the
+current reference; it is not independent external replication. Planning-manifest
+counts are not completed experiments.
+
+## Historical implementation status (2026-09-28)
 
 The improvement program is in [docs/plan.md](docs/plan.md), with phase gates
 and resumable commands in [docs/roadmap.md](docs/roadmap.md). The working tree
@@ -28,7 +50,7 @@ using a number in a report. An undefined ASR or unmeasured FWT is **N/A**,
 never zero. The joint model is a future-data oracle. Twelve paired seeds on
 one capture estimate seed variation, not performance across network sites.
 
-## Quick start
+## Legacy implementation quick start
 
 ```powershell
 python -m venv .venv
@@ -81,3 +103,23 @@ Git-ignored archives and source snapshots must be included explicitly in a
 release bundle; [docs/release_bundle_contents.md](docs/release_bundle_contents.md)
 lists them. Figures and historical numeric prose must be regenerated from
 compatible validated runs before they can support a new claim.
+
+## Kaggle Phase 3 qualification candidate
+
+The separate [notebook workflow](docs/kaggle-phase3/README.md) prepares private,
+hash-verified development inputs, stage caching, a candidate FP32 CUDA backend,
+bounded round-checkpoint recovery, output integrity checks and whole-seed
+assignments for one to eight distinct contributors. The current CPU grid and its
+frozen scientific source are preserved. Actual Kaggle runtime qualification,
+complete-worker measurements and selected-setting confirmations remain required;
+the twelve final seeds and final-test inference stay sealed.
+
+The [v2 weakness review](docs/kaggle-phase3/review-v2.md) records the crash-recovery
+correction, hash-locked environments, streaming evaluation and measured synthetic
+memory/target-mapping improvements. Earlier notebook bundles and evidence remain
+preserved under `results/kaggle-readiness-v1/`.
+
+The latest [v3 architecture decision](docs/kaggle-phase3/architecture-v3.md)
+centralizes job/runtime contracts, checkpoint lineage and receipt validation,
+isolates CPU/CUDA backends, and adds pinned CPU qualification CI. The current
+notebook delivery is under `results/kaggle-readiness-v3/`; v1/v2 remain preserved.

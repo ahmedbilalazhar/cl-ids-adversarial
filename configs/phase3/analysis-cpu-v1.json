@@ -1,0 +1,12 @@
+{
+  "schema": "phase3-analysis-implementation-v1",
+  "contrast_spec_sha256": "1a65214d8ebee6dff173c2050503b57f1bfa8d4d92f76b5a123671867fc562be",
+  "final_seeds": [1,2,3,4,5,6,7,8,9,10,11,42],
+  "family_size": 29,
+  "alpha": [1,20],
+  "endpoint_arithmetic": "integer counts and Fraction; no rounding for zero/tie ordering",
+  "signed_rank": "drop exact zeros; average absolute ranks; enumerate all signs with inclusive two-sided absolute signed-rank sum",
+  "unavailable": "raw and adjusted inferential p unavailable; p=1 only for fixed-family Holm bookkeeping; no endpoint or effect imputation",
+  "bootstrap": {"resamples":10000,"sample_size":12,"statistic":"mean paired difference","dtype":"float64","quantile_method":"linear","probabilities":[0.025,0.975],"rng_namespace":12,"seed":20261024,"scope":"zero-based contrast index in frozen order","numpy":"2.3.5"},
+  "qualification": "synthetic fixtures only; no final prediction/evaluation or final statistical release enabled"
+}

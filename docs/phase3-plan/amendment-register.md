@@ -1,0 +1,52 @@
+# Prospective methodology decisions and amendments
+
+**Adoption update:** selected data/taxonomy items and reference numerical
+clarifications are now recorded in [adoption.json](../phase3-reference/adoption.json)
+and the [Phase 3 amendment](../../submissions/phase3-methodology-amendment.md).
+The table below preserves the original audit proposals; use the dated adoption
+record for their current disposition. Scope and final GPU settings remain gated.
+
+Working register, 24 October 2026. **No item below has silently changed the submitted methodology or implemented runtime.** Resolve applicable items before development/final locks and retain the selected version.
+
+| ID | Original requirement / ambiguity | Proposed decision | Type / current status | Required evidence |
+|---|---|---|---|---|
+| A01 | Original complete scope is 633 logical full trajectories plus 24 diagnostic rows | Use the 393-row course package if measured time/engineering capacity requires it; retain twelve final seeds and meaningful ablations | Scope amendment, pending profiling/deadline | Frozen package and rationale before final outcomes |
+| A02 | Appended rows use Xavier/zero bias; initial E1 head convention is not equally explicit | Apply an explicit initializer to the initial active head and document new-block fan-out/gain | Clarification to resolve before development | Initialization arrays/hashes and versioned specification |
+| A03 | Original canonical metadata-bearing CICIDS2017 release | If unavailable, use a justified alternative/corrected release only through a revised data contract | Conditional data amendment, not selected | Release/schema/label/features/support audit and comparability limits |
+| A04 | “Monday benign T0 pool” requires an exact selection rule | Prefer all valid, declared canonical Monday-benign fitting IDs, with linked exclusion closure kept separate | Clarification pending canonical audit | Exact fitting-ID manifest and frozen scaler statistics |
+| A05 | Clean gate wording does not enumerate every learner/family cell | Require every selected unfiltered learner's required anchor and Hulk acquisition checks averaged over three dev seeds | Clarification before development selection | Gate table with all required cells; filtered-arm failures remain results |
+| A06 | Seeded epoch shuffle leaves common-random-number implementation open | Permute full current IDs, then take each admitted subset's subsequence | Implementation choice before development | Stable stream/key rule and order manifests |
+| A07 | Logical run counts include repeated prefixes/controls | Reuse exact E1, nine selected-budget development aliases and twelve oracle controls when valid | Execution optimization, not new replicates | Complete identity/parent hashes and acceptance evidence |
+| A08 | DC–DM controls volume/composition; ranking contribution remains uncertain | Add DQ with identical per-class quotas and random within-class ranking if the intended claim needs it | Additional exploratory control, not selected | 48 full rows plus fixed RNG/analysis role |
+| A09 | Random eligible attacked site may have little source exposure | Optional largest-Hulk-owner stress at maximum dose | Separate threat sensitivity, not selected | 60 full rows, clean reference identity, no pooling with primary threat |
+| A10 | From-start ablations evaluate whole-trajectory components | Optional post-E2 FZ/FY/FM forks for a narrower persistence question | Separate mechanism amendment; not interchangeable | Complete parents, clean controls, explicit suffix endpoint and counts |
+| A11 | External CICIoT2023 protocol is unspecified beyond transferred method settings | Lock exact release/schema/grouping/source/stages and any manageable component cap | Independent exploratory protocol pending audit | Full source/split/support/rights report; no weight/estimate pooling |
+| A12 | Exact signed-rank handling needs numerically stable ties | Derive rational/count differences and enumerate signs using fixed tie/zero rules | Analysis implementation clarification | 29-row family and exact arithmetic specification |
+| A13 | Training failures/missing pairs need explicit treatment | Report method instability and unavailable endpoints; never replace seeds or average only successes | Failure-policy clarification before final runs | Complete planned/completed/invalid inventory and dispositions |
+| A14 | CPU development followed by GPU final training changes runtime | Add nine selected clean dev confirmations if needed | Conditional extra development workload | Compatible final-runtime gates; no claimed free transfer |
+| A15 | Original selected literature is not exhaustive | Add material prior art and narrow the contribution to a controlled empirical finding | Literature/framing revision | Current primary citations and claim-to-evidence table |
+| A16 | DG's 75% rounding is not explicit | Use a documented integer ceiling for nonempty local shards; zero for empty | Clarification before development | Exact quota formula and stable tie rule |
+| A17 | Floating dose/keep arithmetic can differ at integer boundaries | Encode the declared fractions as rational integers | Numerical implementation clarification | Floor/ceiling integer formulas and realized counts |
+| A18 | Tuning ties use lower measured cost but aliases have zero marginal cost | Compare logical trajectory cost consistently; keep actual saved quota separate | Clarification before development | Fixed cost fields, hardware and configuration order |
+| A19 | Clean-gate versus macro-F1 selection order is ambiguous | Predeclare feasible-candidate selection or winner-then-gate behavior | Selection clarification, pending decision | Exact candidate eligibility rule and any extra development budget |
+| A20 | Whole-component benign selection can span labels/stages | Retain prescribed attacks; select whole cross-stage benign bundles by component toward 3500/stage; all retained members keep one role/owner, excluded benign stays reserved | Revised prospective amendment after the data-only census: prior all-row rule forces 17960 E4 benign records | Realized stage counts, canonical IDs, selection identity and comparison with the strict rule |
+| A21 | Fixed split/bootstrap seeds and concrete allocator are not fully specified | Adopt or revise the explicit proposed-defaults file before development | Reproducibility clarification | Frozen seed namespace, group allocator and failure disposition |
+| A22 | Cross-day conflict filtering can make Monday calibration depend on future annotations | Fit Monday-only source-valid benign IDs; later quarantine never changes fit IDs/statistics | Prospective data-order clarification | Ordered fitting-ID hash, scaler statistics and calibration-only ambiguous-input count |
+| A23 | Original minute/second time strings lack AM/PM | Use the declared capture-specific day-first/afternoon interpretation with no manufactured precision; report sensitivity | Conditional original-source amendment | Clock census and 60/120/300-second component/support evidence |
+| A24 | Finite numeric values include negative header lengths and other invalid domains | Adopt or reject the named nonnegative-feature screen, preserving valid window -1 sentinels, before development | Prospective domain-policy amendment, not selected | Own-row domain flags, frozen fitting IDs, exclusion ledger and actual revised split |
+| A25 | Corrected confirmed E3 taxonomy/support differs materially | Preserve Infiltration-Portscan as a distinct E3 family and a sixteen-output maximum if corrected profile adopted; unsupported web families descriptive | Conditional data/stage amendment, not selected | Full source/component/split counts, explicit claim narrowing and retuning |
+| A26 | Broad sklearn lower bound permits the pre-1.8 SGKF shuffle bug | Pin an exact implementation containing fix #32540 and canonical component IDs | Data reproducibility clarification | Version/source hash and zero role-overlap/support report |
+| A27 | Class-balanced eviction was only a label | Use the explicit local class-partitioned reservoir if selected | Optional exploratory algorithm amendment | Quota/proposal/shrink/RNG state and unused-capacity reporting |
+| A28 | Binary evaluation could silently omit supported rare attacks | Full supported seen bank for descriptive binary detection; eligible-family bank separately named | Metric clarification before evaluator lock | Bank identities, denominators, full-head predictions and captions |
+| A29 | Numeric JSON can round PCG64's 128-bit state in other readers | Decimal-string/typed-binary state, typed IDs, strict JSON and exact reconstruction | Recovery implementation clarification | Serialization schema and restored-state acceptance evidence |
+| A30 | Fixed minimum support and twelve seeds do not establish statistical power or operational safety | Keep the declared inferential family; show resolution limits, absolute errors and FAR; separate seed uncertainty from capture generalization | Reporting/design clarification; any changed sample size/family requires a new prospective record | Exact planning arithmetic, effect sizes, count tables and calibrated claims |
+| A31 | Corrected header totals are narrowed to int16 and some positive values violate field consistency | Omit Fwd/Bwd Header Length before calibration/identity grouping; use 74 inputs; retune and update all dimensions/resources | Preferred prospective source/schema amendment, not adopted | Separate graph/split reuse proof, support/ownership inventory, architecture/state identity |
+| A32 | Benign annotation policy combines background and attempted traffic | Report combined benchmark FAR plus provenance-specific descriptive errors/counts; keep annotation metadata evaluator-side | Reporting clarification before final evaluator lock | Fixed subgroup memberships/denominators and no threshold/family change |
+
+## Instructor feedback
+
+No class feedback has been supplied in this chat. Keep a row marked “awaiting actual feedback” and fill it from the real comments. Do not invent approval or attribute these planning recommendations to the instructor.
+
+## Decision record template
+
+For every selected item, append date/authors, the exact versioned change, information already visible, affected artifacts, required reruns/retuning, and confirmatory/exploratory status. See [failure-and-amendment-policy.md](failure-and-amendment-policy.md).

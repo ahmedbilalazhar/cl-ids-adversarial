@@ -1,0 +1,8 @@
+{
+  "status": "fixture_attempt_stopped_after_static_defect_found",
+  "command": "python -m kaggle_worker.checks --device cpu --output results/kaggle-readiness-v1/acceptance.json",
+  "reason": "Ruff exposed a local path variable shadowing the imported corruption fixture function. The bounded synthetic test process was stopped before waiting for that known harness error.",
+  "correction": "Rename the path variable to corrupt_path; no numerical engine or research condition changed.",
+  "research_rows_executed": 0,
+  "final_test_accessed": false
+}

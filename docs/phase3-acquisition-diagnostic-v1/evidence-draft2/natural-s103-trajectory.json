@@ -1,0 +1,3715 @@
+{
+  "curves": [
+    {
+      "development": {
+        "benign_far": 0.8594176482017784,
+        "classes": [
+          {
+            "correct": 30388,
+            "mean_natural_CE": 1.0882223772310393,
+            "mean_true_probability": 0.3368338967532393,
+            "recall": 0.14058235179822168,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.2540144622325897,
+              -0.0024874601513147354,
+              0.09943758696317673
+            ]
+          },
+          {
+            "correct": 795,
+            "mean_natural_CE": 1.0559218142767373,
+            "mean_true_probability": 0.3478716145896312,
+            "recall": 1.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.044171590358018875,
+              0.044597066938877106,
+              0.048433154821395874
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.13869925205772,
+            "mean_true_probability": 0.32023536580035816,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.09742449969053268,
+              -0.08422722294926643,
+              -0.07980010658502579
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            30388,
+            185635,
+            135
+          ],
+          [
+            0,
+            795,
+            0
+          ],
+          [
+            0,
+            592,
+            0
+          ]
+        ],
+        "macro_f1": 0.08499182215091812,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "round": 0,
+      "train": {
+        "benign_far": 0.8677142857142857,
+        "classes": [
+          {
+            "correct": 463,
+            "mean_natural_CE": 1.0886107934202467,
+            "mean_true_probability": 0.33670484471321105,
+            "recall": 0.13228571428571428,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.12245025485754013,
+              -0.0024064909666776657,
+              0.09686198830604553
+            ]
+          },
+          {
+            "correct": 2382,
+            "mean_natural_CE": 1.0559240765275322,
+            "mean_true_probability": 0.34787082622073257,
+            "recall": 1.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.0441754087805748,
+              0.044593462720513344,
+              0.04843840003013611
+            ]
+          },
+          {
+            "correct": 2,
+            "mean_natural_CE": 1.1386176287993655,
+            "mean_true_probability": 0.3202620435606789,
+            "recall": 0.0011261261261261261,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.0967475175857544,
+              -0.08425452187657356,
+              0.014974400401115417
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            463,
+            3037,
+            0
+          ],
+          [
+            0,
+            2382,
+            0
+          ],
+          [
+            0,
+            1774,
+            2
+          ]
+        ],
+        "macro_f1": 0.24448559278064222,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.9707411924997965,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.992459146415486,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.8259430879896338,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.9011160254478454,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.0192294887134008,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 216158,
+            "mean_natural_CE": 0.8802247659160696,
+            "mean_true_probability": 0.41595081825146996,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.17863333225250244,
+              0.24481502175331116,
+              1.153369665145874
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.225189752248848,
+            "mean_true_probability": 0.29370210436904953,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.28532248735427856,
+              -0.2819499969482422,
+              -0.2577347755432129
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.1508303481984783,
+            "mean_true_probability": 0.3163740015211138,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.23687542974948883,
+              -0.2209680825471878,
+              -0.21396824717521667
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            216158,
+            0,
+            0
+          ],
+          [
+            795,
+            0,
+            0
+          ],
+          [
+            592,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.3322673196480848,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 1,
+      "seconds_including_readouts": 0.8255697999993572,
+      "train": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 3500,
+            "mean_natural_CE": 0.8829676249197551,
+            "mean_true_probability": 0.4146908463920866,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.18199321627616882,
+              0.2441462278366089,
+              1.0048894882202148
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.225204753285191,
+            "mean_true_probability": 0.29369766494739363,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.2857232093811035,
+              -0.2819126844406128,
+              -0.2600068151950836
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.1511558062052942,
+            "mean_true_probability": 0.31628406548721566,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.8425490856170654,
+              -0.22093286365270615,
+              -0.2145409733057022
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3500,
+            0,
+            0
+          ],
+          [
+            2382,
+            0,
+            0
+          ],
+          [
+            1776,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.20911752404851527,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.105068951845169,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.975176074925591,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.609623212705959,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.0153386414051055,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.8314067551067897,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 216158,
+            "mean_natural_CE": 0.6724015415538052,
+            "mean_true_probability": 0.516819798650726,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.3871920108795166,
+              0.5265032649040222,
+              2.923953056335449
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.3820834917092473,
+            "mean_true_probability": 0.2510554925825611,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.607294499874115,
+              -0.59971684217453,
+              -0.5497727990150452
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.2586636537232914,
+            "mean_true_probability": 0.2840340965100237,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.5556176900863647,
+              -0.5123407542705536,
+              -0.4892680048942566
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            216158,
+            0,
+            0
+          ],
+          [
+            795,
+            0,
+            0
+          ],
+          [
+            592,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.3322673196480848,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 2,
+      "seconds_including_readouts": 1.071451200004958,
+      "train": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 3500,
+            "mean_natural_CE": 0.6775883136136192,
+            "mean_true_probability": 0.5136504939794541,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.3888140320777893,
+              0.5243838727474213,
+              2.5625500679016113
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.3821178076649594,
+            "mean_true_probability": 0.2510467373041122,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.6088922619819641,
+              -0.5996713638305664,
+              -0.555250883102417
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.2599944207850877,
+            "mean_true_probability": 0.28380250840590476,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -2.220384120941162,
+              -0.5122756361961365,
+              -0.47642964124679565
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3500,
+            0,
+            0
+          ],
+          [
+            2382,
+            0,
+            0
+          ],
+          [
+            1776,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.20911752404851527,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.2187334299087524,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.9746803641319275,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.46443164348602295,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.1079383611679077,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.6625204341752189,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 216158,
+            "mean_natural_CE": 0.5074611584998675,
+            "mean_true_probability": 0.6114998438376749,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.5106763243675232,
+              0.7967812120914459,
+              4.836761474609375
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.5845302431838317,
+            "mean_true_probability": 0.20504586593534962,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.9287436008453369,
+              -0.9157631397247314,
+              -0.8346631526947021
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.3031489408096752,
+            "mean_true_probability": 0.27167681972118646,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.76207435131073,
+              -0.6888339519500732,
+              -0.6604431867599487
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            216158,
+            0,
+            0
+          ],
+          [
+            795,
+            0,
+            0
+          ],
+          [
+            592,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.3322673196480848,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [
+        {
+          "client": 0,
+          "development": {
+            "benign_far": 8.3272421099381e-05,
+            "classes": [
+              {
+                "correct": 216140,
+                "mean_natural_CE": 0.8387456536763176,
+                "mean_true_probability": 0.43622807386640533,
+                "recall": 0.9999167275789006,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.01826772838830948,
+                  0.22387196123600006,
+                  1.839597225189209
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.0114536666270322,
+                "mean_true_probability": 0.3636899145894081,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.025630753487348557,
+                  -0.02359955385327339,
+                  -0.013482537120580673
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.3443749571168744,
+                "mean_true_probability": 0.26070305392951576,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.408890962600708,
+                  -0.3782372921705246,
+                  -0.36828047037124634
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                216140,
+                18,
+                0
+              ],
+              [
+                795,
+                0,
+                0
+              ],
+              [
+                592,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.3322534404771512,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": null,
+            "classes": [
+              {
+                "correct": 0,
+                "mean_natural_CE": null,
+                "mean_true_probability": null,
+                "recall": null,
+                "source_code": 0,
+                "support": 0,
+                "true_minus_best_other_logit_quantiles_0_50_100": null
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.011450666207093,
+                "mean_true_probability": 0.36369100427842355,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 666,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.02567550539970398,
+                  -0.023626141250133514,
+                  -0.021537620574235916
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.3436373472213745,
+                "mean_true_probability": 0.2608949939409892,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 3,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.37739112973213196,
+                  -0.37700155377388,
+                  -0.3767837584018707
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                666,
+                0,
+                0
+              ],
+              [
+                3,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.0,
+            "rows": 669,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "client": 1,
+          "development": {
+            "benign_far": 0.9987000249817263,
+            "classes": [
+              {
+                "correct": 281,
+                "mean_natural_CE": 1.2639146303303097,
+                "mean_true_probability": 0.28441470913392325,
+                "recall": 0.0012999750182736702,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.4604313373565674,
+                  -0.4911607354879379,
+                  0.2183445394039154
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.4902455850217327,
+                "mean_true_probability": 0.22531854264766166,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.9185196161270142,
+                  -0.9078131914138794,
+                  -0.8436417579650879
+                ]
+              },
+              {
+                "correct": 592,
+                "mean_natural_CE": 0.5419616891524276,
+                "mean_true_probability": 0.5816094887417715,
+                "recall": 1.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.9602757692337036,
+                  1.017608106136322,
+                  1.0337893962860107
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                281,
+                0,
+                215877
+              ],
+              [
+                0,
+                0,
+                795
+              ],
+              [
+                0,
+                0,
+                592
+              ]
+            ],
+            "macro_f1": 0.0026771190543963554,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": 1.0,
+            "classes": [
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.2937618945584153,
+                "mean_true_probability": 0.2759509109186404,
+                "recall": 0.0,
+                "source_code": 0,
+                "support": 198,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.1224150657653809,
+                  -0.5375774502754211,
+                  -0.13523989915847778
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.4903289143244425,
+                "mean_true_probability": 0.22529920674032636,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 450,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.9185068607330322,
+                  -0.9076241254806519,
+                  -0.8760638236999512
+                ]
+              },
+              {
+                "correct": 1528,
+                "mean_natural_CE": 0.5420945396364047,
+                "mean_true_probability": 0.5815362304995197,
+                "recall": 1.0,
+                "source_code": 12,
+                "support": 1528,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.5657677054405212,
+                  1.0176268815994263,
+                  1.0385143756866455
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                0,
+                0,
+                198
+              ],
+              [
+                0,
+                0,
+                450
+              ],
+              [
+                0,
+                0,
+                1528
+              ]
+            ],
+            "macro_f1": 0.27501799856011516,
+            "rows": 2176,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "client": 2,
+          "development": {
+            "benign_far": 0.0,
+            "classes": [
+              {
+                "correct": 216158,
+                "mean_natural_CE": 0.12022318411052242,
+                "mean_true_probability": 0.8889612791895142,
+                "recall": 1.0,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  1.932401180267334,
+                  2.3897353410720825,
+                  12.988889694213867
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 2.992628461609846,
+                "mean_true_probability": 0.050162566879635336,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -2.9008586406707764,
+                  -2.8641271591186523,
+                  -2.6517574787139893
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 2.929759276074332,
+                "mean_true_probability": 0.05342631585065376,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -3.024073600769043,
+                  -2.8335541486740112,
+                  -2.7041125297546387
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                216158,
+                0,
+                0
+              ],
+              [
+                795,
+                0,
+                0
+              ],
+              [
+                592,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.3322673196480848,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": 0.0,
+            "classes": [
+              {
+                "correct": 2562,
+                "mean_natural_CE": 0.12570197973238265,
+                "mean_true_probability": 0.8840545013163073,
+                "recall": 1.0,
+                "source_code": 0,
+                "support": 2562,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  1.939504861831665,
+                  2.359325885772705,
+                  12.016471862792969
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 2.9945105711619058,
+                "mean_true_probability": 0.050065830101569495,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 15,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -2.886054039001465,
+                  -2.868196964263916,
+                  -2.838675022125244
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 2.931539956913438,
+                "mean_true_probability": 0.053336926735937595,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 172,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -3.005021572113037,
+                  -2.833877921104431,
+                  -2.7375659942626953
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                2562,
+                0,
+                0
+              ],
+              [
+                15,
+                0,
+                0
+              ],
+              [
+                172,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.3215966861231407,
+            "rows": 2749,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "client": 3,
+          "development": {
+            "benign_far": 0.8402094764015211,
+            "classes": [
+              {
+                "correct": 34540,
+                "mean_natural_CE": 0.9816639481038444,
+                "mean_true_probability": 0.3769076851635135,
+                "recall": 0.1597905235984789,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.40967991948127747,
+                  -0.05838913097977638,
+                  1.0277729034423828
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.8036777535324576,
+                "mean_true_probability": 0.4476797269200379,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.3317643404006958,
+                  0.34676939249038696,
+                  0.3489702343940735
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.4578721948169373,
+                "mean_true_probability": 0.23273154484057748,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.6684961318969727,
+                  -0.6572975218296051,
+                  -0.6357735991477966
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                34540,
+                181618,
+                0
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                0,
+                592,
+                0
+              ]
+            ],
+            "macro_f1": 0.09473378994689773,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": null,
+            "classes": [
+              {
+                "correct": 0,
+                "mean_natural_CE": null,
+                "mean_true_probability": null,
+                "recall": null,
+                "source_code": 0,
+                "support": 0,
+                "true_minus_best_other_logit_quantiles_0_50_100": null
+              },
+              {
+                "correct": 1221,
+                "mean_natural_CE": 0.8036923509557944,
+                "mean_true_probability": 0.44767321635229873,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 1221,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.3318157494068146,
+                  0.34677642583847046,
+                  0.3498360216617584
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.4578154961268106,
+                "mean_true_probability": 0.23274479905764262,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 15,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.6651965975761414,
+                  -0.6561234593391418,
+                  -0.6522161960601807
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1221,
+                0
+              ],
+              [
+                0,
+                15,
+                0
+              ]
+            ],
+            "macro_f1": 0.3312983312983313,
+            "rows": 1236,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "client": 4,
+          "development": {
+            "benign_far": 0.0,
+            "classes": [
+              {
+                "correct": 216158,
+                "mean_natural_CE": 0.41198304340762154,
+                "mean_true_probability": 0.6713127234174799,
+                "recall": 1.0,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.9094239473342896,
+                  1.0812931060791016,
+                  5.8379693031311035
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.747528388215311,
+                "mean_true_probability": 0.1742068019303136,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.3022866249084473,
+                  -1.2848966121673584,
+                  -1.1857240200042725
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.7238667470377844,
+                "mean_true_probability": 0.17838045989943518,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.393941879272461,
+                  -1.3139407634735107,
+                  -1.2532646656036377
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                216158,
+                0,
+                0
+              ],
+              [
+                795,
+                0,
+                0
+              ],
+              [
+                592,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.3322673196480848,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": 0.0,
+            "classes": [
+              {
+                "correct": 740,
+                "mean_natural_CE": 0.4053792752728269,
+                "mean_true_probability": 0.6743292953516986,
+                "recall": 1.0,
+                "source_code": 0,
+                "support": 740,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.9447550177574158,
+                  1.1178194284439087,
+                  3.970224142074585
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.7478463848431904,
+                "mean_true_probability": 0.17414975812037786,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 30,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.2977135181427002,
+                  -1.2851272821426392,
+                  -1.271054983139038
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.725752123470964,
+                "mean_true_probability": 0.17804412697923594,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 58,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.3574602603912354,
+                  -1.318414568901062,
+                  -1.2907048463821411
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                740,
+                0,
+                0
+              ],
+              [
+                30,
+                0,
+                0
+              ],
+              [
+                58,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.31462585034013607,
+            "rows": 828,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        }
+      ],
+      "round": 3,
+      "seconds_including_readouts": 4.016881099996681,
+      "train": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 3500,
+            "mean_natural_CE": 0.5127199687553303,
+            "mean_true_probability": 0.6078020395040512,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.514086902141571,
+              0.7945634126663208,
+              4.276333808898926
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.584597489745751,
+            "mean_true_probability": 0.20503165883166163,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.9315283298492432,
+              -0.9156759977340698,
+              -0.8440585136413574
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.3057744562088907,
+            "mean_true_probability": 0.27137694524617884,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -3.5122742652893066,
+              -0.6887176036834717,
+              -0.6653844118118286
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3500,
+            0,
+            0
+          ],
+          [
+            2382,
+            0,
+            0
+          ],
+          [
+            1776,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.20911752404851527,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.3568479816118877,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.9668316560633042,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.37090904062444513,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.2132904291152955,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.5226421356201172,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 216158,
+            "mean_natural_CE": 0.41260489630662356,
+            "mean_true_probability": 0.6712068325381569,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.44263917207717896,
+              1.0088202953338623,
+              6.3215436935424805
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.7190289768782803,
+            "mean_true_probability": 0.17924224788662774,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0720772743225098,
+              -1.0587023496627808,
+              -0.9753932952880859
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.216160984055416,
+            "mean_true_probability": 0.29636830136784026,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.7027231454849243,
+              -0.6105609238147736,
+              -0.5886886715888977
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            216158,
+            0,
+            0
+          ],
+          [
+            795,
+            0,
+            0
+          ],
+          [
+            592,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.3322673196480848,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 4,
+      "seconds_including_readouts": 0.8372349999990547,
+      "train": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 3500,
+            "mean_natural_CE": 0.4172857289225129,
+            "mean_true_probability": 0.6677113644991602,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.44270238280296326,
+              1.004660427570343,
+              5.724704742431641
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.7191066027288173,
+            "mean_true_probability": 0.17922784909793651,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0745964050292969,
+              -1.0586202144622803,
+              -0.9862727522850037
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.2199912729027036,
+            "mean_true_probability": 0.2960012255101213,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -4.473817825317383,
+              -0.610654205083847,
+              -0.5901896357536316
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3500,
+            0,
+            0
+          ],
+          [
+            2382,
+            0,
+            0
+          ],
+          [
+            1776,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.20911752404851527,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.4510445594787598,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.9144441625651192,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.30363491719419305,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.2846495449542998,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.44738996028900146,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 216158,
+            "mean_natural_CE": 0.3484231473343598,
+            "mean_true_probability": 0.7146266784903037,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.260800838470459,
+              1.2058805227279663,
+              7.836430549621582
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.776814387579384,
+            "mean_true_probability": 0.16917802191005563,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0750499963760376,
+              -1.0634454488754272,
+              -0.9974268674850464
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.0759504683114387,
+            "mean_true_probability": 0.3409804802488636,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.5831780433654785,
+              -0.4052947759628296,
+              -0.3829445242881775
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            216158,
+            0,
+            0
+          ],
+          [
+            795,
+            0,
+            0
+          ],
+          [
+            592,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.3322673196480848,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 5,
+      "seconds_including_readouts": 1.0268775999938953,
+      "train": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 3500,
+            "mean_natural_CE": 0.3524396185277895,
+            "mean_true_probability": 0.7114926705530712,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.2673410177230835,
+              1.2019942998886108,
+              7.528280258178711
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.7768826565754503,
+            "mean_true_probability": 0.16916608430076105,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0772278308868408,
+              -1.063334047794342,
+              -1.0048953294754028
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.0812456009758484,
+            "mean_true_probability": 0.34049217888444605,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -5.488852024078369,
+              -0.4051923453807831,
+              -0.38112178444862366
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3500,
+            0,
+            0
+          ],
+          [
+            2382,
+            0,
+            0
+          ],
+          [
+            1776,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.20911752404851527,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.4988536834716797,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.8370830907541162,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.268408940597014,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.3149591624736785,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.3943096910204206,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 6.47674386328519e-05,
+        "classes": [
+          {
+            "correct": 216144,
+            "mean_natural_CE": 0.30238352621897224,
+            "mean_true_probability": 0.7484968101580456,
+            "recall": 0.9999352325613672,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.00729137659072876,
+              1.4114331007003784,
+              10.295082092285156
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.7798517937930125,
+            "mean_true_probability": 0.16866438829299038,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.9628271460533142,
+              -0.951958954334259,
+              -0.9083109498023987
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 0.9007434347594107,
+            "mean_true_probability": 0.4062845713484126,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.3858676552772522,
+              -0.09417649731040001,
+              -0.07117675989866257
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            216144,
+            0,
+            14
+          ],
+          [
+            795,
+            0,
+            0
+          ],
+          [
+            592,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.3322565248369223,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 6,
+      "seconds_including_readouts": 1.2190374999991036,
+      "train": {
+        "benign_far": 0.0,
+        "classes": [
+          {
+            "correct": 3500,
+            "mean_natural_CE": 0.30588889923267143,
+            "mean_true_probability": 0.7456761796985354,
+            "recall": 1.0,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.016123585402965546,
+              1.4042962789535522,
+              9.890413284301758
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.7799063619198066,
+            "mean_true_probability": 0.16865489230898625,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.9628667831420898,
+              -0.9519269168376923,
+              -0.9177156090736389
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 0.9078521014333846,
+            "mean_true_probability": 0.405646212295766,
+            "recall": 0.0,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -6.794527530670166,
+              -0.09407980740070343,
+              -0.0737563818693161
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3500,
+            0,
+            0
+          ],
+          [
+            2382,
+            0,
+            0
+          ],
+          [
+            1776,
+            0,
+            0
+          ]
+        ],
+        "macro_f1": 0.20911752404851527,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.4930912454922993,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.7725555055281695,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.22194840081713416,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.2902924835681915,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.3594890662602016,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.013753828218247763,
+        "classes": [
+          {
+            "correct": 213185,
+            "mean_natural_CE": 0.2592453667295813,
+            "mean_true_probability": 0.7827454365184697,
+            "recall": 0.9862461717817522,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.3306208550930023,
+              1.6891844868659973,
+              12.64992904663086
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.7398714818294694,
+            "mean_true_probability": 0.17554416918904525,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.9532185792922974,
+              -0.9391194581985474,
+              -0.8577520847320557
+            ]
+          },
+          {
+            "correct": 590,
+            "mean_natural_CE": 0.7384509766424024,
+            "mean_true_probability": 0.47788383504627524,
+            "recall": 0.9966216216216216,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.16990461945533752,
+              0.25698527693748474,
+              0.2721506357192993
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            213185,
+            0,
+            2973
+          ],
+          [
+            0,
+            0,
+            795
+          ],
+          [
+            2,
+            0,
+            590
+          ]
+        ],
+        "macro_f1": 0.41048489295004337,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 7,
+      "seconds_including_readouts": 1.0585916999989422,
+      "train": {
+        "benign_far": 0.016285714285714285,
+        "classes": [
+          {
+            "correct": 3443,
+            "mean_natural_CE": 0.2621323116180221,
+            "mean_true_probability": 0.780395540705749,
+            "recall": 0.9837142857142858,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.26321953535079956,
+              1.6816688179969788,
+              12.147724151611328
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.739921317342747,
+            "mean_true_probability": 0.17553516412286774,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.9533681869506836,
+              -0.9390031397342682,
+              -0.8578856587409973
+            ]
+          },
+          {
+            "correct": 1763,
+            "mean_natural_CE": 0.7470765285663776,
+            "mean_true_probability": 0.477061260663332,
+            "recall": 0.9926801801801802,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -7.823504447937012,
+              0.25686030089855194,
+              0.27620330452919006
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3443,
+            0,
+            57
+          ],
+          [
+            0,
+            0,
+            2382
+          ],
+          [
+            13,
+            0,
+            1763
+          ]
+        ],
+        "macro_f1": 0.5265887065428646,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.4435099760691326,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.6992648945135229,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.1809317987750877,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.2397851824760437,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.3082298593861716,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.035524940090119264,
+        "classes": [
+          {
+            "correct": 208479,
+            "mean_natural_CE": 0.21134487691655418,
+            "mean_true_probability": 0.8240411132798814,
+            "recall": 0.9644750599098807,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.749519944190979,
+              2.0986437797546387,
+              15.960010528564453
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.6781607777817444,
+            "mean_true_probability": 0.1867183540977022,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0224400758743286,
+              -1.0064419507980347,
+              -0.9099346995353699
+            ]
+          },
+          {
+            "correct": 592,
+            "mean_natural_CE": 0.5886275362525437,
+            "mean_true_probability": 0.5551399450145058,
+            "recall": 1.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.03770171105861664,
+              0.6643508076667786,
+              0.6805082559585571
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            208479,
+            0,
+            7679
+          ],
+          [
+            0,
+            0,
+            795
+          ],
+          [
+            0,
+            0,
+            592
+          ]
+        ],
+        "macro_f1": 0.3681696628015409,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 8,
+      "seconds_including_readouts": 0.8980795000024955,
+      "train": {
+        "benign_far": 0.03571428571428571,
+        "classes": [
+          {
+            "correct": 3375,
+            "mean_natural_CE": 0.21351617387466593,
+            "mean_true_probability": 0.8222756032858576,
+            "recall": 0.9642857142857143,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.6098454594612122,
+              2.0952489376068115,
+              15.317235946655273
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.678202055663646,
+            "mean_true_probability": 0.1867104099639617,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0228221416473389,
+              -1.0063274502754211,
+              -0.910081684589386
+            ]
+          },
+          {
+            "correct": 1773,
+            "mean_natural_CE": 0.5991960279643536,
+            "mean_true_probability": 0.5541460558142511,
+            "recall": 0.9983108108108109,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -9.305007934570312,
+              0.6641192436218262,
+              0.6924076080322266
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3375,
+            0,
+            125
+          ],
+          [
+            0,
+            0,
+            2382
+          ],
+          [
+            3,
+            0,
+            1773
+          ]
+        ],
+        "macro_f1": 0.5223083151802523,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.3943825960159302,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.6413862845476936,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.15051473406228152,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.1819922268390655,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.2582648737089975,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.03653808788016173,
+        "classes": [
+          {
+            "correct": 208260,
+            "mean_natural_CE": 0.1663333441593374,
+            "mean_true_probability": 0.8638337979381848,
+            "recall": 0.9634619121198382,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0829722881317139,
+              2.6177473068237305,
+              19.294151306152344
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.607327022192613,
+            "mean_true_probability": 0.20042409021524513,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0148736238479614,
+              -0.9975007772445679,
+              -0.8926590085029602
+            ]
+          },
+          {
+            "correct": 592,
+            "mean_natural_CE": 0.511920919943903,
+            "mean_true_probability": 0.5994266079789078,
+            "recall": 1.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.08746610581874847,
+              0.9444204568862915,
+              0.9844149947166443
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            208260,
+            0,
+            7898
+          ],
+          [
+            0,
+            0,
+            795
+          ],
+          [
+            0,
+            0,
+            592
+          ]
+        ],
+        "macro_f1": 0.36708848099785957,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 9,
+      "seconds_including_readouts": 0.8816102999990107,
+      "train": {
+        "benign_far": 0.03857142857142857,
+        "classes": [
+          {
+            "correct": 3365,
+            "mean_natural_CE": 0.16788225411703972,
+            "mean_true_probability": 0.8626415265202523,
+            "recall": 0.9614285714285714,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.8456085920333862,
+              2.609157919883728,
+              18.507869720458984
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.6073658773120365,
+            "mean_true_probability": 0.20041605556816938,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0152000188827515,
+              -0.9973489046096802,
+              -0.8927969336509705
+            ]
+          },
+          {
+            "correct": 1773,
+            "mean_natural_CE": 0.5243521973423593,
+            "mean_true_probability": 0.5983236926949471,
+            "recall": 0.9983108108108109,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -10.801484107971191,
+              0.9442415833473206,
+              1.0041216611862183
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3365,
+            0,
+            135
+          ],
+          [
+            0,
+            0,
+            2382
+          ],
+          [
+            3,
+            0,
+            1773
+          ]
+        ],
+        "macro_f1": 0.5214921823828395,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.3080688118934631,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.5977080008562874,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.11652126620438966,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.0991782367229461,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.2346410197871072,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.03663061279249438,
+        "classes": [
+          {
+            "correct": 208240,
+            "mean_natural_CE": 0.12893123468274678,
+            "mean_true_probability": 0.8985435668015808,
+            "recall": 0.9633693872075056,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.8725359439849854,
+              3.239281177520752,
+              24.578393936157227
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.5599532710681172,
+            "mean_true_probability": 0.21014749087252707,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0330449342727661,
+              -1.013049602508545,
+              -0.8966619968414307
+            ]
+          },
+          {
+            "correct": 592,
+            "mean_natural_CE": 0.43153401796479485,
+            "mean_true_probability": 0.6496217962656472,
+            "recall": 1.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.16043493151664734,
+              1.2786825299263,
+              1.2970396280288696
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            208240,
+            0,
+            7918
+          ],
+          [
+            0,
+            0,
+            795
+          ],
+          [
+            0,
+            0,
+            592
+          ]
+        ],
+        "macro_f1": 0.3669917321441827,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 10,
+      "seconds_including_readouts": 0.7732598000002326,
+      "train": {
+        "benign_far": 0.038285714285714284,
+        "classes": [
+          {
+            "correct": 3366,
+            "mean_natural_CE": 0.13017754661916214,
+            "mean_true_probability": 0.8976013188574995,
+            "recall": 0.9617142857142857,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.101345419883728,
+              3.230293035507202,
+              23.573486328125
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.559992787669828,
+            "mean_true_probability": 0.21013890808615537,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0331240892410278,
+              -1.0128862857818604,
+              -0.8967781066894531
+            ]
+          },
+          {
+            "correct": 1773,
+            "mean_natural_CE": 0.44736328378722473,
+            "mean_true_probability": 0.6483549740259381,
+            "recall": 0.9983108108108109,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -13.59471607208252,
+              1.2782188653945923,
+              1.3179256916046143
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3366,
+            0,
+            134
+          ],
+          [
+            0,
+            0,
+            2382
+          ],
+          [
+            3,
+            0,
+            1773
+          ]
+        ],
+        "macro_f1": 0.5215738126908508,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.2422041396299999,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.5494880150346195,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.0983785211362622,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.043428933620453,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.20516403658049448,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.037569740652670734,
+        "classes": [
+          {
+            "correct": 208037,
+            "mean_natural_CE": 0.11358679493082656,
+            "mean_true_probability": 0.9150720169612768,
+            "recall": 0.9624302593473293,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -3.905346632003784,
+              3.783774733543396,
+              29.180377960205078
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.4955459915616978,
+            "mean_true_probability": 0.22412859156446638,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0137221813201904,
+              -0.992023766040802,
+              -0.8618032932281494
+            ]
+          },
+          {
+            "correct": 592,
+            "mean_natural_CE": 0.3615388333596088,
+            "mean_true_probability": 0.6967326576343259,
+            "recall": 1.0,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              0.28062906861305237,
+              1.4134956002235413,
+              1.4648807048797607
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            208037,
+            0,
+            8121
+          ],
+          [
+            0,
+            0,
+            795
+          ],
+          [
+            0,
+            0,
+            592
+          ]
+        ],
+        "macro_f1": 0.3660277418493744,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [],
+      "round": 11,
+      "seconds_including_readouts": 0.7772862999991048,
+      "train": {
+        "benign_far": 0.039142857142857146,
+        "classes": [
+          {
+            "correct": 3363,
+            "mean_natural_CE": 0.1148431295314846,
+            "mean_true_probability": 0.9143372522422245,
+            "recall": 0.9608571428571429,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.4019274711608887,
+              3.769753932952881,
+              27.972808837890625
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.4955892755042395,
+            "mean_true_probability": 0.2241185175631849,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.0149720907211304,
+              -0.9918485581874847,
+              -0.8619377613067627
+            ]
+          },
+          {
+            "correct": 1773,
+            "mean_natural_CE": 0.37929570476885316,
+            "mean_true_probability": 0.69546204546115,
+            "recall": 0.9983108108108109,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -15.289545059204102,
+              1.4131954908370972,
+              1.5151090621948242
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3363,
+            0,
+            137
+          ],
+          [
+            0,
+            0,
+            2382
+          ],
+          [
+            3,
+            0,
+            1773
+          ]
+        ],
+        "macro_f1": 0.5213289102762152,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    },
+    {
+      "clients": [
+        {
+          "client": 0,
+          "current_exposures": 669,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 1.1822549700737,
+          "optimizer_updates": 6
+        },
+        {
+          "client": 1,
+          "current_exposures": 2176,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.5169761321123909,
+          "optimizer_updates": 17
+        },
+        {
+          "client": 2,
+          "current_exposures": 2749,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.08221633181991903,
+          "optimizer_updates": 22
+        },
+        {
+          "client": 3,
+          "current_exposures": 1236,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.9741030275821686,
+          "optimizer_updates": 10
+        },
+        {
+          "client": 4,
+          "current_exposures": 828,
+          "inactive": false,
+          "mean_optimizer_batch_objective": 0.17814829094069345,
+          "optimizer_updates": 7
+        }
+      ],
+      "development": {
+        "benign_far": 0.028016543454325075,
+        "classes": [
+          {
+            "correct": 210102,
+            "mean_natural_CE": 0.08104280365684388,
+            "mean_true_probability": 0.9408187842122157,
+            "recall": 0.971983456545675,
+            "source_code": 0,
+            "support": 216158,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -5.208317756652832,
+              4.628401279449463,
+              35.54381561279297
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.400016294635317,
+            "mean_true_probability": 0.24659508959677234,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 795,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.9001890420913696,
+              -0.8727626800537109,
+              -0.729240357875824
+            ]
+          },
+          {
+            "correct": 591,
+            "mean_natural_CE": 0.3476981492461385,
+            "mean_true_probability": 0.7065578487676543,
+            "recall": 0.9983108108108109,
+            "source_code": 12,
+            "support": 592,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.013863205909729004,
+              1.4023403525352478,
+              1.464931607246399
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            210102,
+            0,
+            6056
+          ],
+          [
+            0,
+            0,
+            795
+          ],
+          [
+            1,
+            0,
+            591
+          ]
+        ],
+        "macro_f1": 0.3776383719884082,
+        "rows": 217545,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      },
+      "locals_before_aggregation": [
+        {
+          "client": 0,
+          "development": {
+            "benign_far": 0.03533989026545397,
+            "classes": [
+              {
+                "correct": 208519,
+                "mean_natural_CE": 0.13087231549525552,
+                "mean_true_probability": 0.9019673535509601,
+                "recall": 0.9646601097345461,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -3.149669647216797,
+                  3.4400367736816406,
+                  26.834251403808594
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.7741314432905905,
+                "mean_true_probability": 0.46110421291687204,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.2286996841430664,
+                  0.2400088906288147,
+                  0.2965526282787323
+                ]
+              },
+              {
+                "correct": 590,
+                "mean_natural_CE": 0.8288923840265017,
+                "mean_true_probability": 0.43659804197582036,
+                "recall": 0.9966216216216216,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.09105557203292847,
+                  0.05359096825122833,
+                  0.12327843904495239
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                208519,
+                5489,
+                2150
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                1,
+                1,
+                590
+              ]
+            ],
+            "macro_f1": 0.5202426090379868,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": null,
+            "classes": [
+              {
+                "correct": 0,
+                "mean_natural_CE": null,
+                "mean_true_probability": null,
+                "recall": null,
+                "source_code": 0,
+                "support": 0,
+                "true_minus_best_other_logit_quantiles_0_50_100": null
+              },
+              {
+                "correct": 666,
+                "mean_natural_CE": 0.7741287264737997,
+                "mean_true_probability": 0.4611054465129927,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 666,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.22809892892837524,
+                  0.2399529069662094,
+                  0.247560054063797
+                ]
+              },
+              {
+                "correct": 3,
+                "mean_natural_CE": 0.8275682727495829,
+                "mean_true_probability": 0.43711434801419574,
+                "recall": 1.0,
+                "source_code": 12,
+                "support": 3,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.04893404245376587,
+                  0.05071184039115906,
+                  0.06324785947799683
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                666,
+                0
+              ],
+              [
+                0,
+                0,
+                3
+              ]
+            ],
+            "macro_f1": 0.6666666666666666,
+            "rows": 669,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "client": 1,
+          "development": {
+            "benign_far": 0.07332136677800498,
+            "classes": [
+              {
+                "correct": 200309,
+                "mean_natural_CE": 0.22857045314229427,
+                "mean_true_probability": 0.8646690140366224,
+                "recall": 0.9266786332219951,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -9.137609481811523,
+                  3.5386394262313843,
+                  32.02445983886719
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.2281329252434976,
+                "mean_true_probability": 0.29285161990039754,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8591803312301636,
+                  -0.8264079093933105,
+                  -0.6549012064933777
+                ]
+              },
+              {
+                "correct": 592,
+                "mean_natural_CE": 0.21820771241107503,
+                "mean_true_probability": 0.8039836546255125,
+                "recall": 1.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  1.3970179557800293,
+                  1.5439987182617188,
+                  1.7555714845657349
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                200309,
+                0,
+                15849
+              ],
+              [
+                0,
+                0,
+                795
+              ],
+              [
+                0,
+                0,
+                592
+              ]
+            ],
+            "macro_f1": 0.3427855162185193,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": 0.09595959595959595,
+            "classes": [
+              {
+                "correct": 179,
+                "mean_natural_CE": 0.28402692412293584,
+                "mean_true_probability": 0.8376028146406617,
+                "recall": 0.9040404040404041,
+                "source_code": 0,
+                "support": 198,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -2.766408681869507,
+                  3.3706682920455933,
+                  17.53184700012207
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.2283070511288112,
+                "mean_true_probability": 0.2927951043844223,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 450,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8592705726623535,
+                  -0.825727641582489,
+                  -0.7593932151794434
+                ]
+              },
+              {
+                "correct": 1525,
+                "mean_natural_CE": 0.24102398214851997,
+                "mean_true_probability": 0.8025085004005897,
+                "recall": 0.9980366492146597,
+                "source_code": 12,
+                "support": 1528,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -17.132465362548828,
+                  1.5441464185714722,
+                  1.7252068519592285
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                179,
+                0,
+                19
+              ],
+              [
+                0,
+                0,
+                450
+              ],
+              [
+                3,
+                0,
+                1525
+              ]
+            ],
+            "macro_f1": 0.6026968329398169,
+            "rows": 2176,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "client": 2,
+          "development": {
+            "benign_far": 0.009789135724793901,
+            "classes": [
+              {
+                "correct": 214042,
+                "mean_natural_CE": 0.03324203692507299,
+                "mean_true_probability": 0.9732983066822812,
+                "recall": 0.9902108642752061,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -4.778958320617676,
+                  5.7578747272491455,
+                  44.81793975830078
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 2.647789871767632,
+                "mean_true_probability": 0.07080879531004144,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -2.233339786529541,
+                  -2.1956002712249756,
+                  -1.9660481214523315
+                ]
+              },
+              {
+                "correct": 590,
+                "mean_natural_CE": 0.31072943088774746,
+                "mean_true_probability": 0.7338817893351252,
+                "recall": 0.9966216216216216,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.9656631946563721,
+                  1.225738286972046,
+                  1.3023823499679565
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                214042,
+                0,
+                2116
+              ],
+              [
+                0,
+                0,
+                795
+              ],
+              [
+                2,
+                0,
+                590
+              ]
+            ],
+            "macro_f1": 0.4277912746643553,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": 0.00702576112412178,
+            "classes": [
+              {
+                "correct": 2544,
+                "mean_natural_CE": 0.028203047260172996,
+                "mean_true_probability": 0.9769064501148942,
+                "recall": 0.9929742388758782,
+                "source_code": 0,
+                "support": 2562,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.7412839531898499,
+                  5.773494243621826,
+                  42.98016357421875
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 2.6484371503194173,
+                "mean_true_probability": 0.07076267600059509,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 15,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -2.217946767807007,
+                  -2.1986546516418457,
+                  -2.1722190380096436
+                ]
+              },
+              {
+                "correct": 172,
+                "mean_natural_CE": 0.3111654267061588,
+                "mean_true_probability": 0.7330470982679101,
+                "recall": 1.0,
+                "source_code": 12,
+                "support": 172,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.14230430126190186,
+                  1.2251126766204834,
+                  1.2843977212905884
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                2544,
+                0,
+                18
+              ],
+              [
+                0,
+                0,
+                15
+              ],
+              [
+                0,
+                0,
+                172
+              ]
+            ],
+            "macro_f1": 0.6363138597021655,
+            "rows": 2749,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "client": 3,
+          "development": {
+            "benign_far": 0.05405768003034817,
+            "classes": [
+              {
+                "correct": 204473,
+                "mean_natural_CE": 0.18316162751350326,
+                "mean_true_probability": 0.8666208500293848,
+                "recall": 0.9459423199696518,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -3.17761492729187,
+                  2.768568515777588,
+                  24.626312255859375
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.47993262882502574,
+                "mean_true_probability": 0.618825553273255,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.9875608086585999,
+                  1.003281593322754,
+                  1.0095610618591309
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.303620718620919,
+                "mean_true_probability": 0.27156871589957865,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8759281039237976,
+                  -0.7848584055900574,
+                  -0.7360224723815918
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                204473,
+                11684,
+                1
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                0,
+                592,
+                0
+              ]
+            ],
+            "macro_f1": 0.36229642719331956,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": null,
+            "classes": [
+              {
+                "correct": 0,
+                "mean_natural_CE": null,
+                "mean_true_probability": null,
+                "recall": null,
+                "source_code": 0,
+                "support": 0,
+                "true_minus_best_other_logit_quantiles_0_50_100": null
+              },
+              {
+                "correct": 1221,
+                "mean_natural_CE": 0.47994052333777115,
+                "mean_true_probability": 0.618820697240025,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 1221,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.9882793426513672,
+                  1.0032943487167358,
+                  1.0096590518951416
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.2996455430984497,
+                "mean_true_probability": 0.27264293233553566,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 15,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8048533201217651,
+                  -0.7811874747276306,
+                  -0.7431761026382446
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1221,
+                0
+              ],
+              [
+                0,
+                15,
+                0
+              ]
+            ],
+            "macro_f1": 0.3312983312983313,
+            "rows": 1236,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "client": 4,
+          "development": {
+            "benign_far": 7.864617548274873e-05,
+            "classes": [
+              {
+                "correct": 216141,
+                "mean_natural_CE": 0.028820715744062142,
+                "mean_true_probability": 0.9746797155643291,
+                "recall": 0.9999213538245173,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.6648593544960022,
+                  5.256021976470947,
+                  36.98535919189453
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.5703912985399835,
+                "mean_true_probability": 0.20796810208626512,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.957417905330658,
+                  -0.7424964904785156,
+                  -0.7013406157493591
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.0450455010742754,
+                "mean_true_probability": 0.3524019146791181,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -2.0326826572418213,
+                  -0.36728209257125854,
+                  -0.11146920919418335
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                216141,
+                0,
+                17
+              ],
+              [
+                795,
+                0,
+                0
+              ],
+              [
+                592,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.33225421157242796,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "own_train": {
+            "benign_far": 0.0,
+            "classes": [
+              {
+                "correct": 740,
+                "mean_natural_CE": 0.03903197179287705,
+                "mean_true_probability": 0.9667404603313755,
+                "recall": 1.0,
+                "source_code": 0,
+                "support": 740,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.014841258525848389,
+                  5.226131439208984,
+                  21.242551803588867
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.5696163495381674,
+                "mean_true_probability": 0.2081274727980296,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 30,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.7773035168647766,
+                  -0.7447404265403748,
+                  -0.7094078063964844
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.0340293656135429,
+                "mean_true_probability": 0.35569562531750776,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 58,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.4465472102165222,
+                  -0.35292521119117737,
+                  -0.08033549785614014
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                740,
+                0,
+                0
+              ],
+              [
+                30,
+                0,
+                0
+              ],
+              [
+                58,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.31462585034013607,
+            "rows": 828,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        }
+      ],
+      "round": 12,
+      "seconds_including_readouts": 3.807244499999797,
+      "train": {
+        "benign_far": 0.027428571428571427,
+        "classes": [
+          {
+            "correct": 3404,
+            "mean_natural_CE": 0.0822288860469425,
+            "mean_true_probability": 0.9400640190839767,
+            "recall": 0.9725714285714285,
+            "source_code": 0,
+            "support": 3500,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -1.445048213005066,
+              4.612217426300049,
+              34.06494140625
+            ]
+          },
+          {
+            "correct": 0,
+            "mean_natural_CE": 1.4000382618079357,
+            "mean_true_probability": 0.24658940666793877,
+            "recall": 0.0,
+            "source_code": 7,
+            "support": 2382,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -0.9007922410964966,
+              -0.8725680708885193,
+              -0.7293384075164795
+            ]
+          },
+          {
+            "correct": 1773,
+            "mean_natural_CE": 0.3702220135108308,
+            "mean_true_probability": 0.7051618481023155,
+            "recall": 0.9983108108108109,
+            "source_code": 12,
+            "support": 1776,
+            "true_minus_best_other_logit_quantiles_0_50_100": [
+              -19.24121856689453,
+              1.4022757411003113,
+              1.5184953212738037
+            ]
+          }
+        ],
+        "confusion": [
+          [
+            3404,
+            0,
+            96
+          ],
+          [
+            0,
+            0,
+            2382
+          ],
+          [
+            3,
+            0,
+            1773
+          ]
+        ],
+        "macro_f1": 0.5246730430210906,
+        "rows": 7658,
+        "source_codes_in_matrix_order": [
+          0,
+          7,
+          12
+        ]
+      }
+    }
+  ],
+  "elapsed_seconds_including_readouts": 17.60684939999919,
+  "global_class_weights": null,
+  "model_artifacts": {
+    "E1-R12-model.npz": "b3b30d99718b3771d6a114bce3c814c128a0657398a5050d13b2dbba6841bbc1",
+    "E1-R3-model.npz": "7e03bc0cf0b1b808b5032b5d7a5f558df9c8b0508fc430daa123af4475e0694d"
+  },
+  "objective": "natural",
+  "ownership": [
+    {
+      "aggregation_weight_fp32": 0.08735962212085724,
+      "class_counts": [
+        0,
+        666,
+        3
+      ],
+      "client": 0,
+      "records": 669
+    },
+    {
+      "aggregation_weight_fp32": 0.2841472923755646,
+      "class_counts": [
+        198,
+        450,
+        1528
+      ],
+      "client": 1,
+      "records": 2176
+    },
+    {
+      "aggregation_weight_fp32": 0.3589709997177124,
+      "class_counts": [
+        2562,
+        15,
+        172
+      ],
+      "client": 2,
+      "records": 2749
+    },
+    {
+      "aggregation_weight_fp32": 0.16139984130859375,
+      "class_counts": [
+        0,
+        1221,
+        15
+      ],
+      "client": 3,
+      "records": 1236
+    },
+    {
+      "aggregation_weight_fp32": 0.10812222212553024,
+      "class_counts": [
+        740,
+        30,
+        58
+      ],
+      "client": 4,
+      "records": 828
+    }
+  ],
+  "seed": 103
+}

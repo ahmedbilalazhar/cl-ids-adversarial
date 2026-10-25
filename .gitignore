@@ -15,6 +15,7 @@ __pycache__/
 .ipynb_checkpoints/
 .venv/
 venv/
+/tmp/phase3-reference-env/
 .mypy_cache/
 .ruff_cache/
 dist/
@@ -67,7 +68,24 @@ lightning_logs/
 # /results/runs/*_R_seed*.csv
 # /results/runs/*_summary_seed*.json
 /results/run_groups.log
+# Phase 3 reference checkpoints/admission arrays contain derived flow data.
+# Keep small JSON evidence/source snapshots; rebuild binary payloads locally.
+/results/phase3-reference74-v1/**/*.npz
+# Versioned CPU studies retain binary state locally; small JSON review evidence
+# and deterministic source-only bundles remain available for explicit tracking.
+/results/phase3-cpu-v2/**/*.npz
+/results/phase3-cpu-v3/**/*.npz
+/results/phase3-acquisition-diagnostic-v1/**/*.npz
+/results/phase3-cpu-v3/profiling/*/local-worker-output.zip
 /results/**/.*.lock
+# Private Kaggle qualification archive contains exact derived train/dev arrays.
+/results/kaggle-readiness-v1/bundle/*.zip
+/results/kaggle-readiness-v1/rejections/*.zip
+/results/kaggle-readiness-v2/bundle/*.zip
+/results/kaggle-readiness-v2/rejections/*.zip
+/results/kaggle-readiness-v3/bundle/*.zip
+/results/kaggle-readiness-v3/rejections/*.zip
+/.ci-phase3/
 !/results/_archive/
 /results/_archive/*
 !/results/_archive/label_fix_20260928/

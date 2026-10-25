@@ -1,0 +1,153 @@
+{
+  "admission": "DC",
+  "admission_rule": "Once/stage after expansion; frozen eval/no-grad supplied-label CE; keep all new-global classes or local groups <20; otherwise ceil(3*n/4); ties immutable ID; nonfinite fails",
+  "adopted_date": "2026-10-24",
+  "aggregation": "FP32 increasing client ID; weight distinct admitted current count / sum active counts; zero-current clients inactive; final shared model applies to all five clients",
+  "authorization": "User: adopt the data amendments, resolve the taxonomy, and build one correct reference trajectory before launching the GPU grid.",
+  "checkpoint": "Pickle-free typed NPZ + decimal-string 128-bit PCG64 state; atomic round transaction and hash commit marker; interrupted rounds rollback all clients; resume exact identity only",
+  "data": {
+    "archive_sha256": "97fdb91d339e2d8cf5627f981b831e5e7e400b981c58181c451a38fd03c48883",
+    "attempted_rule": "Attempted Category != -1 maps to Benign; metadata is never a predictor",
+    "benign_selection": "Seed-2027 one-pass whole cross-stage benign-bundle heuristic toward 3500/stage; attacks retained independently; excluded benign remains train-reserved",
+    "calibration": "Monday-only source-valid benign; frozen min/max; zero range denominator 1; FP32; signed zero normalized; no clipping/refit",
+    "clock": "Authors ISO UTC microseconds as supplied",
+    "component_id": "Minimum immutable row ID of full provenance component including excluded members",
+    "domain": "nonnegative_flow_features_with_window_sentinel_v1",
+    "graph": "120-second unordered-endpoint/protocol interval sessions + raw FP64/final FP32 exact-input links; excluded provenance bridges retained",
+    "inputs": 74,
+    "omit": [
+      "Fwd Header Length",
+      "Bwd Header Length"
+    ],
+    "ownership": "Five clients; PCG64 SeedSequence([1,1,seed]); family Dirichlet(.5); normalized squared-error greedy; component-size descending/canonical-ID tie order; smallest-client exact ties",
+    "profile": "corrected_no_headers_74",
+    "split": "SGKF5 shuffle=True seed=2026; test=0 dev=1 train=2/3/4; sklearn 1.9.1 source pinned in split report"
+  },
+  "data_evidence": {
+    "docs/phase3-plan/annotation-provenance-census.json": "7821177d7cdf27761f4cfae44f7ae0ce3a27cc7b17f76b78d62025bbf23d3db6",
+    "docs/phase3-plan/audit-local-data-identities.json": "45d37956ee32aa258db5a1ac4eb837db10454e40e57db1e7d22bb37557f53b54",
+    "docs/phase3-plan/corrected-no-headers-74-candidate-ownership-dose-audit-benign-subset.json": "3062bde6260ccb8e76833d654a1713e968ab9cc955d6d86df95997c7b9f1114a",
+    "docs/phase3-plan/corrected-no-headers-74-candidate-split-feasibility.json": "ddb3257a5eb4336b67f7521e54ee78fc76eff21c9cff45bb961d8cb95af205e9",
+    "docs/phase3-plan/corrected-no-headers-74-component-feasibility.json": "33efcbd5fd6ddb065a8690dbe9fd6139fdf76b87ee4c79b1437401277fbd4e54",
+    "docs/phase3-plan/corrected-no-headers-74-exclusion-accounting.json": "e5541a56c13ab7cd8ddeeeb8156a3e9d8e202c4ea5e59b3fcba18e5a6364a1f3",
+    "docs/phase3-plan/corrected-no-headers-74-input-manifest.json": "c40bddaa7f04b6ea35069b8af986d0c2e8a04ec4341e4a5307593a5e6d7d486a"
+  },
+  "dispatchable_gpu_grid": false,
+  "dose": [
+    0,
+    1
+  ],
+  "epochs": 1,
+  "evaluation": "Separate development-only evaluator; full active head first-maximum argmax, Benign slot 0; eligible macro bank separate from full-seen binary bank; fixed benign union and original-background/remapped-attempted descriptive rates",
+  "final_test_evaluation_authorized": false,
+  "lambda_y": 1.0,
+  "lambda_z": 0.5,
+  "learner": "DR",
+  "learning_rate": 0.001,
+  "model": {
+    "dropout": 0.1,
+    "dtype": "FP32",
+    "encoder_init": "Pinned PyTorch Linear default",
+    "head_init": "Xavier uniform gain=1; fan-out is new block row count; zero bias",
+    "hidden": [
+      128,
+      64
+    ]
+  },
+  "optimizer": {
+    "amsgrad": false,
+    "batch_size": 128,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "early_stop": false,
+    "eps": 1e-08,
+    "foreach": false,
+    "fused": false,
+    "gradient_clipping": false,
+    "name": "Adam",
+    "reset": "Every broadcast/round",
+    "scheduler": null,
+    "weight_decay": 0
+  },
+  "reference_only": true,
+  "remaining_grid_gates": [
+    "Reference numerical/semantic/recovery acceptance",
+    "FT/EI/DM/DQ and corruption/control acceptance",
+    "GPU runtime confirmation and profiling",
+    "Clean development pilots/tuning and feasibility",
+    "Scope/code/data/runtime/analysis freeze before final-test evaluation"
+  ],
+  "replay": {
+    "batch_size": 128,
+    "capacity": 500,
+    "insertion": "Algorithm R after optimizer update; independent PCG64 draw/insert streams",
+    "objective": "Separate current CE + lambda_y replay CE in train mode + lambda_z mean(per-record width-normalized eval-mode logit MSE with gradients); mask before square",
+    "proposal_pass": "Round 1 epoch 1 only; one proposal per distinct admitted current record",
+    "sampling": "Uniform without replacement min(128,occupancy), independent of current final-batch size",
+    "teacher": "Pre-update eval/no-grad logits; store observed width"
+  },
+  "rng": "PCG64 SeedSequence([1,namespace,seed,*scope]); namespace IDs 1 ownership,4 encoder,5 head(stage),6 order(client,stage,round,epoch),7 replay draw(client),8 replay insert(client),10 persistent client dropout; torch seeds derived uniformly below 2^63",
+  "rounds": 3,
+  "runtime": {
+    "amp": false,
+    "deterministic_algorithms": true,
+    "device": "cpu",
+    "numpy": "2.3.5",
+    "threads": 1,
+    "torch": "2.7.0+cpu"
+  },
+  "schema": "phase3-reference-protocol-v1",
+  "seed": 101,
+  "settings_status": "Untuned implementation reference fixed before its first model outcome; not a selected final synchronization or hyperparameter setting",
+  "taxonomy": {
+    "append_rule": "Benign slot 0; sorted supplied current-stage source codes not already registered; no future logits",
+    "claim": "New annotated-class acquisition in a historical capture; source scenario distinctions do not establish novel techniques, zero-day detection or host/campaign independence",
+    "maximum_head_width": 16,
+    "rare_policy": "Train supported classes and retain all active logits; eligibility requires 50 rows and 5 components in each role; no heldout Heartbleed positives; E3 only Infiltration - Portscan is eligible",
+    "source_code_order": [
+      "Benign",
+      "Bot",
+      "DDoS",
+      "DoS GoldenEye",
+      "DoS Hulk",
+      "DoS Slowhttptest",
+      "DoS Slowloris",
+      "FTP-Patator",
+      "Heartbleed",
+      "Infiltration",
+      "Infiltration - Portscan",
+      "PortScan",
+      "SSH-Patator",
+      "Web Attack Brute Force",
+      "Web Attack Sql Injection",
+      "Web Attack XSS"
+    ],
+    "stage_new_attack_labels": {
+      "1": [
+        "FTP-Patator",
+        "SSH-Patator"
+      ],
+      "2": [
+        "DoS GoldenEye",
+        "DoS Hulk",
+        "DoS Slowhttptest",
+        "DoS Slowloris",
+        "Heartbleed"
+      ],
+      "3": [
+        "Infiltration",
+        "Infiltration - Portscan",
+        "Web Attack Brute Force",
+        "Web Attack Sql Injection",
+        "Web Attack XSS"
+      ],
+      "4": [
+        "Bot",
+        "DDoS",
+        "PortScan"
+      ]
+    }
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "status": "superseded_conditional_split_not_final_protocol_lock",
+  "completed_utc": "2026-10-24T04:17:27.373352+00:00",
+  "parent_evidence": "original-component-feasibility.json",
+  "allocator": "StratifiedGroupKFold",
+  "n_splits": 5,
+  "shuffle": true,
+  "random_state": 2026,
+  "role_fold_mapping": {
+    "train": [
+      2,
+      3,
+      4
+    ],
+    "development": [
+      1
+    ],
+    "test": [
+      0
+    ]
+  },
+  "scikit_learn_version": "1.9.1",
+  "allocator_source_sha256": "43f66b54b789d72d3f455968fcd87f5b8634a9f3e42f4613e1d3912bdb9d9772",
+  "rows": 1409081,
+  "components": 987432,
+  "cross_role_component_intersections": {
+    "train_development": 0,
+    "train_test": 0,
+    "development_test": 0
+  },
+  "role_counts": {
+    "train": 845448,
+    "development": 281816,
+    "test": 281817
+  },
+  "families": [
+    {
+      "train": {
+        "rows": 747616,
+        "components": 557701
+      },
+      "development": {
+        "rows": 249205,
+        "components": 186315
+      },
+      "test": {
+        "rows": 249206,
+        "components": 186303
+      },
+      "family": "Benign",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 775,
+        "components": 412
+      },
+      "development": {
+        "rows": 258,
+        "components": 138
+      },
+      "test": {
+        "rows": 258,
+        "components": 137
+      },
+      "family": "Bot",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 76805,
+        "components": 37738
+      },
+      "development": {
+        "rows": 25602,
+        "components": 12562
+      },
+      "test": {
+        "rows": 25602,
+        "components": 12584
+      },
+      "family": "DDoS",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 6170,
+        "components": 4511
+      },
+      "development": {
+        "rows": 2057,
+        "components": 1505
+      },
+      "test": {
+        "rows": 2057,
+        "components": 1504
+      },
+      "family": "DoS GoldenEye",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 749,
+        "components": 148
+      },
+      "development": {
+        "rows": 250,
+        "components": 50
+      },
+      "test": {
+        "rows": 250,
+        "components": 49
+      },
+      "family": "DoS Hulk",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 3137,
+        "components": 2608
+      },
+      "development": {
+        "rows": 1046,
+        "components": 872
+      },
+      "test": {
+        "rows": 1045,
+        "components": 869
+      },
+      "family": "DoS Slowhttptest",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 3225,
+        "components": 2771
+      },
+      "development": {
+        "rows": 1075,
+        "components": 456
+      },
+      "test": {
+        "rows": 1075,
+        "components": 924
+      },
+      "family": "DoS Slowloris",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 2643,
+        "components": 1168
+      },
+      "development": {
+        "rows": 881,
+        "components": 388
+      },
+      "test": {
+        "rows": 881,
+        "components": 389
+      },
+      "family": "FTP-Patator",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 11,
+        "components": 1
+      },
+      "development": {
+        "rows": 0,
+        "components": 0
+      },
+      "test": {
+        "rows": 0,
+        "components": 0
+      },
+      "family": "Heartbleed",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 18,
+        "components": 6
+      },
+      "development": {
+        "rows": 9,
+        "components": 1
+      },
+      "test": {
+        "rows": 9,
+        "components": 1
+      },
+      "family": "Infiltration",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 1110,
+        "components": 1049
+      },
+      "development": {
+        "rows": 370,
+        "components": 350
+      },
+      "test": {
+        "rows": 370,
+        "components": 350
+      },
+      "family": "PortScan",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 1928,
+        "components": 178
+      },
+      "development": {
+        "rows": 642,
+        "components": 59
+      },
+      "test": {
+        "rows": 643,
+        "components": 60
+      },
+      "family": "SSH-Patator",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 863,
+        "components": 254
+      },
+      "development": {
+        "rows": 288,
+        "components": 85
+      },
+      "test": {
+        "rows": 288,
+        "components": 86
+      },
+      "family": "Web Attack Brute Force",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 12,
+        "components": 7
+      },
+      "development": {
+        "rows": 4,
+        "components": 2
+      },
+      "test": {
+        "rows": 5,
+        "components": 3
+      },
+      "family": "Web Attack Sql Injection",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 386,
+        "components": 163
+      },
+      "development": {
+        "rows": 129,
+        "components": 53
+      },
+      "test": {
+        "rows": 128,
+        "components": 54
+      },
+      "family": "Web Attack XSS",
+      "eligible_50_rows_5_components_each": true
+    }
+  ],
+  "elapsed_seconds": 740.297,
+  "models_fitted": 0,
+  "limits": [
+    "Release, clock and conservative graph choices remain conditional",
+    "Support audit is on this exact candidate, not the legacy tasksets",
+    "No model outcome or final performance has been inspected",
+    "Benign training selection and ownership are subsequent data gates"
+  ],
+  "superseded_reason": "Used deterministic internal union-find root numbers rather than the specified minimum immutable provenance component IDs; v2 corrects identity before outcome inspection."
+}

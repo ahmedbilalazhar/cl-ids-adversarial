@@ -1,0 +1,323 @@
+{
+  "status": "conditional_candidate_split_census_not_final_protocol_lock",
+  "audit_version": 2,
+  "completed_utc": "2026-10-24T08:50:29.870116+00:00",
+  "parent_evidence": "corrected-no-headers-74-component-feasibility.json",
+  "release_candidate": "corrected-no-headers-74",
+  "allocator": "StratifiedGroupKFold",
+  "n_splits": 5,
+  "shuffle": true,
+  "random_state": 2026,
+  "role_fold_mapping": {
+    "train": [
+      2,
+      3,
+      4
+    ],
+    "development": [
+      1
+    ],
+    "test": [
+      0
+    ]
+  },
+  "scikit_learn_version": "1.9.1",
+  "allocator_source_sha256": "43f66b54b789d72d3f455968fcd87f5b8634a9f3e42f4613e1d3912bdb9d9772",
+  "component_id_rule": "Minimum immutable provenance row ID of the entire connected component, including excluded members; not the union-find implementation root.",
+  "rows": 1362527,
+  "components": 1130292,
+  "cross_role_component_intersections": {
+    "train_development": 0,
+    "train_test": 0,
+    "development_test": 0
+  },
+  "role_counts": {
+    "train": 817516,
+    "development": 272506,
+    "test": 272505
+  },
+  "families": [
+    {
+      "train": {
+        "rows": 648471,
+        "components": 616423
+      },
+      "development": {
+        "rows": 216158,
+        "components": 205500
+      },
+      "test": {
+        "rows": 216158,
+        "components": 205567
+      },
+      "family": "Benign",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 441,
+        "components": 441
+      },
+      "development": {
+        "rows": 148,
+        "components": 148
+      },
+      "test": {
+        "rows": 147,
+        "components": 147
+      },
+      "family": "Bot",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 57086,
+        "components": 37906
+      },
+      "development": {
+        "rows": 19029,
+        "components": 12636
+      },
+      "test": {
+        "rows": 19029,
+        "components": 12636
+      },
+      "family": "DDoS",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 4540,
+        "components": 4540
+      },
+      "development": {
+        "rows": 1513,
+        "components": 1513
+      },
+      "test": {
+        "rows": 1514,
+        "components": 1514
+      },
+      "family": "DoS GoldenEye",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 95080,
+        "components": 8561
+      },
+      "development": {
+        "rows": 31694,
+        "components": 2854
+      },
+      "test": {
+        "rows": 31694,
+        "components": 2855
+      },
+      "family": "DoS Hulk",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 1037,
+        "components": 837
+      },
+      "development": {
+        "rows": 346,
+        "components": 279
+      },
+      "test": {
+        "rows": 346,
+        "components": 279
+      },
+      "family": "DoS Slowhttptest",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 2071,
+        "components": 1382
+      },
+      "development": {
+        "rows": 691,
+        "components": 461
+      },
+      "test": {
+        "rows": 691,
+        "components": 461
+      },
+      "family": "DoS Slowloris",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 2382,
+        "components": 2382
+      },
+      "development": {
+        "rows": 795,
+        "components": 795
+      },
+      "test": {
+        "rows": 795,
+        "components": 795
+      },
+      "family": "FTP-Patator",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 11,
+        "components": 1
+      },
+      "development": {
+        "rows": 0,
+        "components": 0
+      },
+      "test": {
+        "rows": 0,
+        "components": 0
+      },
+      "family": "Heartbleed",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 27,
+        "components": 5
+      },
+      "development": {
+        "rows": 5,
+        "components": 1
+      },
+      "test": {
+        "rows": 4,
+        "components": 1
+      },
+      "family": "Infiltration",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 3591,
+        "components": 3527
+      },
+      "development": {
+        "rows": 1198,
+        "components": 1177
+      },
+      "test": {
+        "rows": 1198,
+        "components": 1178
+      },
+      "family": "Infiltration - Portscan",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 943,
+        "components": 942
+      },
+      "development": {
+        "rows": 315,
+        "components": 293
+      },
+      "test": {
+        "rows": 314,
+        "components": 220
+      },
+      "family": "PortScan",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 1776,
+        "components": 1776
+      },
+      "development": {
+        "rows": 592,
+        "components": 592
+      },
+      "test": {
+        "rows": 593,
+        "components": 593
+      },
+      "family": "SSH-Patator",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 43,
+        "components": 43
+      },
+      "development": {
+        "rows": 15,
+        "components": 15
+      },
+      "test": {
+        "rows": 15,
+        "components": 15
+      },
+      "family": "Web Attack Brute Force",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 7,
+        "components": 7
+      },
+      "development": {
+        "rows": 3,
+        "components": 3
+      },
+      "test": {
+        "rows": 3,
+        "components": 3
+      },
+      "family": "Web Attack Sql Injection",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 10,
+        "components": 10
+      },
+      "development": {
+        "rows": 4,
+        "components": 4
+      },
+      "test": {
+        "rows": 4,
+        "components": 4
+      },
+      "family": "Web Attack XSS",
+      "eligible_50_rows_5_components_each": false
+    }
+  ],
+  "elapsed_seconds": 2.344,
+  "models_fitted": 0,
+  "limits": [
+    "Release, clock and conservative graph choices remain conditional",
+    "Support audit is on this exact candidate, not the legacy tasksets",
+    "No model outcome or final performance has been inspected",
+    "Benign training selection and ownership are subsequent data gates"
+  ],
+  "split_reuse": {
+    "parent": "corrected-candidate-split-feasibility.json",
+    "parent_report_sha256": "54597a2fb77a9b77079873a21f6179b2b8e05e0cb3f9dc747f1440e4a105db0b",
+    "reason": "The allocator reads only ordered row labels and canonical component IDs; both and the selected source positions are exactly identical.",
+    "checks": {
+      "row_ids": true,
+      "labels": true,
+      "kept": true,
+      "t0_fit": true,
+      "t0_closure": true,
+      "survivor": true,
+      "all_provenance_canonical_components_identical": true,
+      "retained_74_scaler_statistics_identical": true,
+      "all_final_input_bytes_are_exact_declared_projection": true
+    },
+    "new_allocator_execution": false,
+    "parent_allocator_elapsed_seconds": 1028.593
+  }
+}

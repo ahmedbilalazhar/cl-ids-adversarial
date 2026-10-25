@@ -1,0 +1,227 @@
+{
+  "started": "2026-10-21",
+  "completed": "2026-10-22",
+  "target": "submissions/phase2-with-claude.tex",
+  "review_mode": "Direct review of the manuscript and rendered PDF; no independent reviewer panel",
+  "skill_limitation": "The paper-review skill external claude -p launcher was unavailable; no Claude executable was installed. No independent reviews or consensus were fabricated.",
+  "review_items": 20,
+  "severity_counts": {
+    "Major": 13,
+    "Minor": 7
+  },
+  "modification_events": 34,
+  "concerns": [
+    {
+      "id": "S01",
+      "severity": "Major",
+      "location": "Step 5, Eqs. 3-4",
+      "concern": "A squared mini-batch mean gradient can cancel across records and is not the usual diagonal empirical-Fisher estimate. Initial importance and sampling size also needed definitions.",
+      "correction": "Average squared per-example supplied-label log-likelihood gradients; initialise importance to zero; sample exactly min(1024,n); evaluate at the final aggregate with dropout off; disclose the empirical-Fisher and online-EWC adaptations.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S02",
+      "severity": "Major",
+      "location": "Step 5, Eq. 5; Algorithm 1",
+      "concern": "Replay target timing and stochastic dropout could make stored dark targets depend on an already updated model or inconsistent scoring modes.",
+      "correction": "Cache evaluation-mode logits before each update, read existing replay before inserting, match logits with dropout off and gradients enabled, and declare the adaptations and loss reductions.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S03",
+      "severity": "Major",
+      "location": "Step 5, Memory and Capacity accounting",
+      "concern": "A historical seen-ID set grows beyond the claimed bounded memory, and record count alone does not describe retained bytes.",
+      "correction": "Insert only on round 1/epoch 1; retain a scalar counter, pass cursor and RNG state; give Algorithm R; account for 381 raw bytes per slot and 190,500 per 500-slot client buffer, with overhead separate.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S04",
+      "severity": "Major",
+      "location": "Step 5, What DC actually tests",
+      "concern": "The schedule has no recurring fresh attack class, so the class-aware rule degenerates to preserving all supplied new attack labels and filtering benign labels.",
+      "correction": "Narrow the identified comparison to new-label protection at equal admitted volume; do not claim general recurring-class balancing or an independently demonstrated small-class benefit.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S05",
+      "severity": "Minor",
+      "location": "Steps 5 and 7",
+      "concern": "Head-copy semantics and hidden optimisation defaults could yield different implementations.",
+      "correction": "Keep all active output rows trainable; define new-row initialisation, Adam parameters, last-update selection, reset policy, loss means, no reweighting/oversampling and reproducibility metadata.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S06",
+      "severity": "Major",
+      "location": "Step 8 and metrics table",
+      "concern": "Scores on families passing the support floor could be interpreted as whole-dataset IDS performance.",
+      "correction": "Label eligible-subset outcomes; retain a separate descriptive full-inventory view with rare-family support and errors.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S07",
+      "severity": "Minor",
+      "location": "Step 8, Operational error view",
+      "concern": "Multiclass scores alone do not specify an alert decision or operational false-alarm denominator.",
+      "correction": "Use the fixed multiclass argmax decision, alert on non-benign, and report attack misses and false alerts per 10,000 benchmark benign flows; do not invent a daily volume or deployment prevalence.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S08",
+      "severity": "Major",
+      "location": "Step 10, memory diagnostic",
+      "concern": "Oracle replay-label repair changes future optimisation and admission, so it cannot isolate a direct gradient effect.",
+      "correction": "Interpret it as the total downstream effect of that intervention, including mediated changes; preserve prior logits and weights and retain zero-repair pairs.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S09",
+      "severity": "Minor",
+      "location": "Steps 3-4",
+      "concern": "The text claimed no learned feature transformation despite a fitted scaler, and a zero T0 feature range was unspecified.",
+      "correction": "Describe the frozen scaler as the fitted transformation; use denominator one for zero range, no clipping/refitting, and finite transformed FP32 input checks.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S10",
+      "severity": "Minor",
+      "location": "Step 10, eviction ablations",
+      "concern": "FIFO and class-balanced eviction were names without complete replacement rules.",
+      "correction": "Define oldest-insertion FIFO and largest supplied-label occupancy eviction with deterministic ties; bound and charge the extra order metadata; retain first-pass-only insertion and no retuning.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S11",
+      "severity": "Minor",
+      "location": "Table 11 and Appendix B",
+      "concern": "Stage-averaged ACC/BWT relied on disjoint benign cohorts without a declared allocation rule.",
+      "correction": "Partition whole benign test components into four non-empty seeded cohorts before outcomes, use their union for cumulative metrics and require at least four test components.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S12",
+      "severity": "Minor",
+      "location": "Step 7",
+      "concern": "Attacker-site selection and the new importance RNG stream needed an explicit pairing contract.",
+      "correction": "Sample the eligible attacker site uniformly; record independent importance sampling, poison, ordering, initialisation, replay and dropout streams, plus bounded checkpoint state.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S13",
+      "severity": "Major",
+      "location": "Algorithm 1 and Step 12",
+      "concern": "Immediate test access after each checkpoint could permit feedback into later scope or model choices.",
+      "correction": "Write checkpoints first, evaluate after the complete locked run set, and version/disclose amendments after any test inspection.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "S14",
+      "severity": "Major",
+      "location": "Step 12 and bibliography",
+      "concern": "An industry-standard claim needs concrete research controls and must not be confused with certification or production readiness.",
+      "correction": "Use NIST RMF/AML and NeurIPS guidance with primary citations; specify hashes, versions, predictions, resource counts, deviations and planned acceptance gates; retain independent-site/deployment validation as future work.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "D01",
+      "severity": "Major",
+      "location": "Figure 1, page 20",
+      "concern": "The methodology overview omitted or blurred calibration, development, locked final runs and sealed-test information boundaries.",
+      "correction": "Show T0/train/dev/test branches, the protocol lock, checkpoint-only evaluation and one-way analysis/reporting; give the external dataset its own audit and protocol.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "D02",
+      "severity": "Major",
+      "location": "Figure 2, page 21",
+      "concern": "The framework omitted the actual label-poisoning entry point and could imply server access to client data.",
+      "correction": "Show one-client E2 training-label corruption before admission, supplied-label-only class registration and model/count messages to the server.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "D03",
+      "severity": "Major",
+      "location": "Figure 2 and Algorithm 1",
+      "concern": "Once-per-stage setup and repeated broadcasts/optimisation were not clearly separated.",
+      "correction": "Separate registry/head expansion/frozen admission from the repeat-round loop; show the final aggregate and the previous-stage parameter input.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "D04",
+      "severity": "Major",
+      "location": "Figure 2 and Step 5",
+      "concern": "EWC retained state had no clear read/write lifecycle or stage-end update.",
+      "correction": "Show local importance/anchor reads during updates and a single stage-end commit; restrict the computation to EI and preserve absent-client importance.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "D05",
+      "severity": "Major",
+      "location": "Figure 2 and captions",
+      "concern": "Replay state was incomplete, and claiming E3/E4 had no poison ignored retained corrupted records.",
+      "correction": "Show feature/label/ID/pre-update-logit/width tuples, read and write paths, persistent counter/cursor, and the distinction between no fresh corruption and retained poisoned memory.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    },
+    {
+      "id": "D06",
+      "severity": "Minor",
+      "location": "Figures 1-2 and document pagination",
+      "concern": "Crossed labels, ambiguous path intersections, isolated headings and a nearly empty final references page weakened readability.",
+      "correction": "Route connectors outside labels, bridge independent paths, preserve native editable TikZ mirrors in a self-contained source, keep section starts with their content and compact references to two readable pages.",
+      "status": "Addressed in the proposal; experimental execution not claimed"
+    }
+  ],
+  "sources": [
+    {
+      "title": "NIST AI RMF 1.0",
+      "url": "https://doi.org/10.6028/NIST.AI.100-1",
+      "use": "Research context, measurement, documentation and limitations; voluntary framework, not certification."
+    },
+    {
+      "title": "NIST AML Taxonomy E2025",
+      "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
+      "use": "Threat goals, knowledge and capabilities; label-data poisoning scope."
+    },
+    {
+      "title": "NeurIPS Paper Checklist",
+      "url": "https://neurips.cc/public/guides/PaperChecklist",
+      "use": "Claims, limitations, reproducibility and experimental/resource disclosure."
+    },
+    {
+      "title": "Kirkpatrick et al. EWC",
+      "url": "https://doi.org/10.1073/pnas.1611835114",
+      "use": "Importance-weighted regularisation baseline."
+    },
+    {
+      "title": "Schwarz et al. Progress & Compress",
+      "url": "https://proceedings.mlr.press/v80/schwarz18a.html",
+      "use": "Online accumulated importance/anchor adaptation, explicitly declared."
+    },
+    {
+      "title": "Kunstner et al. Empirical Fisher limitations",
+      "url": "https://arxiv.org/abs/1905.12558",
+      "use": "Empirical Fisher is not an exact model Fisher or a general curvature guarantee."
+    },
+    {
+      "title": "Buzzega et al. DER++",
+      "url": "https://proceedings.neurips.cc/paper/2020/hash/b704ea2c39778f07c617f6b7ce480e9e-Abstract.html",
+      "use": "Dark replay baseline; manuscript declares its caching, masking and normalisation adaptations."
+    }
+  ],
+  "validation_summary": {
+    "pdf_pages": 25,
+    "bibliography_entries": 42,
+    "checks_passed": 40,
+    "checks_total": 40,
+    "source_sha256": "77ea6c3ee162230a62b424cb46405c37a55fe215d9be63392013be02929f6a21",
+    "pdf_sha256": "ea7e1a64acf61a48878b22993d4a684ae7528b7a00d83c90dfa7093e55f833a8"
+  },
+  "remaining_limitations": [
+    "Research proposal only; no training results or acceptance checks executed.",
+    "DC does not identify general recurring-class balancing in this schedule.",
+    "Historical single-capture client simulation does not establish independent-site or production performance.",
+    "No exhaustive guarantee that every possible flaw has been found."
+  ],
+  "git_publication": "Local source and artifacts only; this review was not committed or pushed."
+}

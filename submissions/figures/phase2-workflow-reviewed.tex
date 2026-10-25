@@ -1,0 +1,49 @@
+% Native, editable diagram. All coordinates are in millimetres.
+\begin{figure}[H]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[x=1mm,y=1mm,
+  font=\sffamily\fontsize{8.5}{10.3}\selectfont,
+  box/.style={draw=black!55,rounded corners=1.4mm,align=left,inner sep=2mm,line width=.55pt},
+  flow/.style={-{Latex[length=1.8mm]},draw=blue!50!black,line width=.65pt},
+  config/.style={-{Latex[length=1.8mm]},draw=violet!65!black,dashed,line width=.65pt}]
+\node[box,fill=blue!7,text width=162mm,minimum height=13mm] (audit) at (85,0)
+  {\textbf{1. AUDIT AND ISOLATE [Steps 1--4]}\\Release/schema checks; session + content components; fixed split and ownership manifests.};
+\node[box,fill=blue!5,text width=34mm,minimum height=17mm] (tzero) at (20,-24)
+  {\textbf{T0 benign pool}\\Fit and freeze scaler; no weight training.};
+\node[box,fill=green!7,text width=34mm,minimum height=17mm] (train) at (63,-24)
+  {\textbf{Training split}\\Current stage shards; corruption allowed here only.};
+\node[box,fill=yellow!12,text width=34mm,minimum height=17mm] (dev) at (106,-24)
+  {\textbf{Development split}\\Tuning and clean-learning feasibility.};
+\node[box,fill=violet!7,text width=34mm,minimum height=17mm] (test) at (149,-24)
+  {\textbf{Sealed test split}\\No optimiser, tuning or scope selection access.};
+\foreach \p in {tzero,train,dev,test}{\draw[flow] (audit.south) -- (85,-11) -| (\p.north);}
+\node[box,fill=yellow!12,text width=77mm,minimum height=22mm] (pilot) at (43,-58)
+  {\textbf{2. DEVELOP [Step 7 pilots]}\\Train-only pilot models; score on development data. Seeds 101--103. Frozen T0 transform is applied throughout.};
+\node[box,fill=yellow!12,text width=77mm,minimum height=22mm] (lock) at (128,-58)
+  {\textbf{PROTOCOL LOCK}\\Freeze split, transform, settings, dose grid, seed list, endpoints and analysis. Version/hash the configuration.};
+\draw[flow] (tzero.south) -- (20,-38) -| (pilot.north);
+\draw[flow] (train.south) -- (63,-41) -| (pilot.north);
+\draw[flow] (dev.south) -- (106,-43) -| (pilot.north);
+\draw[config] (pilot.east) -- (lock.west);
+\node[box,fill=green!8,text width=77mm,minimum height=21mm] (runs) at (43,-89)
+  {\textbf{3. FINAL PAIRED RUNS [Steps 5--7]}\\Five simulated clients; E1--E4; FT/EI/DR and DG/DM/DC. Final seeds 1--11, 42. Write stage checkpoints.};
+\node[box,fill=violet!7,text width=77mm,minimum height=21mm] (eval) at (128,-89)
+  {\textbf{4. EVALUATE [Step 8]}\\Read saved checkpoints + sealed test banks with the frozen transform. Produce fixed endpoint predictions; no feedback to training.};
+\draw[config] (lock.south) -- (128,-74) -| (runs.north);
+\draw[flow] (train.south) -- (63,-36) -- (-1,-36) |- (runs.west);
+\draw[flow] (runs.east) -- (eval.west);
+\draw[flow] (test.east) -- (172,-24) |- (eval.east);
+\node[box,fill=blue!7,text width=77mm,minimum height=19mm] (outputs) at (43,-119)
+  {\textbf{REPRODUCIBLE OUTPUTS [Step 12]}\\Versioned runs, failures, resource costs, protocol deviations and bounded claims.};
+\node[box,fill=violet!7,text width=77mm,minimum height=19mm] (analysis) at (128,-119)
+  {\textbf{5. ANALYSE [Steps 9--11]}\\Locked 29-test family; paired effects; exploratory mechanism/operational diagnostics.};
+\draw[flow] (eval.south) -- (analysis.north);
+\draw[flow] (analysis.west) -- (outputs.east);
+\node[box,fill=black!3,text width=162mm,minimum height=12mm] (external) at (85,-145)
+  {\textbf{OPTIONAL CICIoT2023:} re-audit data, source mapping and schedule; independent runs. Transfer method settings only; no pooled estimates or learned weights.};
+\draw[config] (lock.east) -- (176,-58) |- (external.east);
+\end{tikzpicture}}
+\caption{Study workflow and information boundaries. Solid arrows carry permitted data or artefacts; dashed arrows carry locked settings. The T0 transform is applied to every split without refitting. Only the development branch selects settings; final-test outputs feed analysis and reporting. The optional external branch requires its own protocol.}
+\label{fig:methodology}
+\end{figure}

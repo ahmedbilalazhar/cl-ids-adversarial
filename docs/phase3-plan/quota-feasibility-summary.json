@@ -1,0 +1,149 @@
+{
+  "status": "conditional_data_arithmetic_not_admission_observation",
+  "parent_evidence": "corrected-domain-checked-candidate-ownership-dose-audit-benign-subset.json",
+  "dose": [
+    1,
+    2
+  ],
+  "bound": "max(0,K-b) <= retained_poison <= min(q,K)",
+  "rows": [
+    {
+      "seed": 1,
+      "honest_benign_b": 616,
+      "flipped_q": 19891,
+      "quota_K": 15381,
+      "minimum_poison_L": 14765,
+      "maximum_poison_U": 15381,
+      "minimum_poison_retention_fraction": 0.7422955105324016,
+      "global_raw_poison_percent": 18.723937006391612,
+      "DQ_expected_retained_poison": 14918.977471107426
+    },
+    {
+      "seed": 2,
+      "honest_benign_b": 589,
+      "flipped_q": 9860,
+      "quota_K": 7837,
+      "minimum_poison_L": 7248,
+      "maximum_poison_U": 7837,
+      "minimum_poison_retention_fraction": 0.7350912778904666,
+      "global_raw_poison_percent": 9.281485037606018,
+      "DQ_expected_retained_poison": 7395.235907742368
+    },
+    {
+      "seed": 3,
+      "honest_benign_b": 1279,
+      "flipped_q": 26767,
+      "quota_K": 21035,
+      "minimum_poison_L": 19756,
+      "maximum_poison_U": 21035,
+      "minimum_poison_retention_fraction": 0.7380730003362349,
+      "global_raw_poison_percent": 25.196502028559863,
+      "DQ_expected_retained_poison": 20075.727198174427
+    },
+    {
+      "seed": 4,
+      "honest_benign_b": 1223,
+      "flipped_q": 13368,
+      "quota_K": 10944,
+      "minimum_poison_L": 9721,
+      "maximum_poison_U": 10944,
+      "minimum_poison_retention_fraction": 0.7271843207660084,
+      "global_raw_poison_percent": 12.58366044449465,
+      "DQ_expected_retained_poison": 10026.687135905695
+    },
+    {
+      "seed": 5,
+      "honest_benign_b": 746,
+      "flipped_q": 470,
+      "quota_K": 912,
+      "minimum_poison_L": 166,
+      "maximum_poison_U": 470,
+      "minimum_poison_retention_fraction": 0.35319148936170214,
+      "global_raw_poison_percent": 0.44242372897310633,
+      "DQ_expected_retained_poison": 352.5
+    },
+    {
+      "seed": 6,
+      "honest_benign_b": 354,
+      "flipped_q": 5767,
+      "quota_K": 4591,
+      "minimum_poison_L": 4237,
+      "maximum_poison_U": 4591,
+      "minimum_poison_retention_fraction": 0.734697416334316,
+      "global_raw_poison_percent": 5.4286332872083065,
+      "DQ_expected_retained_poison": 4325.485541578173
+    },
+    {
+      "seed": 7,
+      "honest_benign_b": 23,
+      "flipped_q": 1850,
+      "quota_K": 1405,
+      "minimum_poison_L": 1382,
+      "maximum_poison_U": 1405,
+      "minimum_poison_retention_fraction": 0.7470270270270271,
+      "global_raw_poison_percent": 1.74145510340478,
+      "DQ_expected_retained_poison": 1387.7469300587293
+    },
+    {
+      "seed": 8,
+      "honest_benign_b": 596,
+      "flipped_q": 222,
+      "quota_K": 614,
+      "minimum_poison_L": 18,
+      "maximum_poison_U": 222,
+      "minimum_poison_retention_fraction": 0.08108108108108109,
+      "global_raw_poison_percent": 0.2089746124085736,
+      "DQ_expected_retained_poison": 166.6356968215159
+    },
+    {
+      "seed": 9,
+      "honest_benign_b": 1396,
+      "flipped_q": 36801,
+      "quota_K": 28648,
+      "minimum_poison_L": 27252,
+      "maximum_poison_U": 28648,
+      "minimum_poison_retention_fraction": 0.7405233553436048,
+      "global_raw_poison_percent": 34.64177797859422,
+      "DQ_expected_retained_poison": 27600.990863156792
+    },
+    {
+      "seed": 10,
+      "honest_benign_b": 1356,
+      "flipped_q": 16784,
+      "quota_K": 13605,
+      "minimum_poison_L": 12249,
+      "maximum_poison_U": 13605,
+      "minimum_poison_retention_fraction": 0.729802192564347,
+      "global_raw_poison_percent": 15.799233759754502,
+      "DQ_expected_retained_poison": 12588.0
+    },
+    {
+      "seed": 11,
+      "honest_benign_b": 845,
+      "flipped_q": 280,
+      "quota_K": 844,
+      "minimum_poison_L": 0,
+      "maximum_poison_U": 280,
+      "minimum_poison_retention_fraction": 0.0,
+      "global_raw_poison_percent": 0.26357158321802077,
+      "DQ_expected_retained_poison": 210.06222222222223
+    },
+    {
+      "seed": 42,
+      "honest_benign_b": 1067,
+      "flipped_q": 302,
+      "quota_K": 1027,
+      "minimum_poison_L": 0,
+      "maximum_poison_U": 302,
+      "minimum_poison_retention_fraction": 0.0,
+      "global_raw_poison_percent": 0.2842807790422938,
+      "DQ_expected_retained_poison": 226.55514974433893
+    }
+  ],
+  "models_fitted": 0,
+  "limits": [
+    "Ranks and actual admitted poison unobserved",
+    "A retained poison count does not establish downstream harm",
+    "Quota is imposed on supplied labels; reference truth used only for audit"
+  ]
+}

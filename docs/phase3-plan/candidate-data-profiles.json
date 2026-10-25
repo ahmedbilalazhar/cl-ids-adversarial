@@ -1,0 +1,114 @@
+{
+  "adoption_record": "../phase3-reference/adoption.json",
+  "common": {
+    "benign_policy": "benign-subset-by-component",
+    "calibration": "Monday-only own-source-valid benign fitting IDs; no future-label selection/refit",
+    "domain_policy": "nonnegative_flow_features_with_window_sentinel_v1",
+    "final_seeds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      42
+    ],
+    "graph": "Conservative session + raw/final exact-input links; quarantined provenance retained",
+    "ownership": "Exact normalized squared-error greedy allocator; versioned PCG64 namespace",
+    "session_gap_seconds": 120,
+    "split": "Fixed canonical-ID SGKF five folds; test0 dev1 train2/3/4; implementation contains 1.8 fix"
+  },
+  "final_lock_requires": [
+    "source/member hashes",
+    "ordered schema and unit rationale",
+    "domain/exclusion ledger",
+    "calibration fitting IDs and statistics",
+    "full component identity",
+    "split/support and evaluation banks",
+    "benign selection and site ownership",
+    "realized dose/support all seeds",
+    "reference engine acceptance",
+    "actual runtime/profile",
+    "selected scope and analysis freeze"
+  ],
+  "historical_model_count_scope": "models_fitted refers to the data-only profile census, not subsequent reference training",
+  "models_fitted": 0,
+  "preferred_prospective_profile": "corrected_no_headers_74",
+  "profiles": [
+    {
+      "E3": [
+        "Web Attack Brute Force",
+        "Web Attack XSS",
+        "Web Attack Sql Injection",
+        "Infiltration"
+      ],
+      "adoption_status": "pending source/clock/domain/split decisions",
+      "evidence": "original-domain-checked-component-feasibility.json",
+      "id": "original_domain_screened",
+      "maximum_outputs": 15,
+      "release": "commit-pinned GeneratedLabelledFlows mirror",
+      "tradeoff": "Closer to submitted label schedule; ambiguous original clock and much smaller retained Hulk bank; domain-screened split not yet computed"
+    },
+    {
+      "E3": [
+        "Web Attack Brute Force",
+        "Web Attack XSS",
+        "Web Attack Sql Injection",
+        "Infiltration",
+        "Infiltration - Portscan"
+      ],
+      "adoption_status": "pending taxonomy/domain/benign/split evidence and author adoption",
+      "annotation_labels": 16,
+      "eligible_E3_families": [
+        "Infiltration - Portscan"
+      ],
+      "evidence": "corrected-domain-checked-component-feasibility.json",
+      "heldout_only_labels": [
+        "Heartbleed"
+      ],
+      "id": "corrected_domain_screened",
+      "maximum_outputs": 16,
+      "ownership_evidence": "corrected-domain-checked-candidate-ownership-dose-audit-benign-subset.json",
+      "realized_stage_widths": [
+        3,
+        7,
+        12,
+        15
+      ],
+      "realized_train_supported_outputs": 15,
+      "release": "authors CICIDS2017_improved archive",
+      "semantic_adoption_gate": "Justify Infiltration-Portscan versus Friday PortScan as the intended target; otherwise claim new annotated-class acquisition only or revise source/schedule before development.",
+      "split_evidence": "corrected-domain-checked-candidate-split-feasibility.json",
+      "tradeoff": "Preferred candidate for explicit corrected-label research amendment; web families cannot pass current support floor; acquisition claim narrows"
+    },
+    {
+      "adoption_status": "Adopted by user for Phase 3; resolved taxonomy and reference implementation; final GPU qualification remains gated",
+      "annotation_labels": 16,
+      "evidence": "corrected-no-headers-74-component-feasibility.json",
+      "excluded_features": [
+        "Fwd Header Length",
+        "Bwd Header Length"
+      ],
+      "id": "corrected_no_headers_74",
+      "input_dimensions": 74,
+      "ownership_evidence": "corrected-no-headers-74-candidate-ownership-dose-audit-benign-subset.json",
+      "realized_stage_widths": [
+        3,
+        8,
+        13,
+        16
+      ],
+      "realized_train_supported_outputs": 16,
+      "release": "authors CICIDS2017_improved archive",
+      "semantic_adoption_gate": "Resolved by preserving source scenario classes and limiting claims to new annotated-class acquisition; no technique/zero-day novelty claim",
+      "split_evidence": "corrected-no-headers-74-candidate-split-feasibility.json"
+    }
+  ],
+  "selected_profile": "corrected_no_headers_74",
+  "status": "profile_adopted_for_phase3_reference_grid_not_dispatchable"
+}

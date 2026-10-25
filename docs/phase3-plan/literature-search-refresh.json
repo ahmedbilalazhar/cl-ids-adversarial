@@ -1,0 +1,57 @@
+{
+  "date_client": "2026-10-24",
+  "window": [
+    "2026-04-24",
+    "2026-10-24"
+  ],
+  "scope": "Bounded title/abstract screening, not an exhaustive systematic review.",
+  "queries": [
+    {
+      "query": "federated AND (continual OR incremental) AND (poisoning OR backdoor)",
+      "returned": 3,
+      "screened": [
+        {
+          "id": "2608.23952",
+          "title": "STAIN-FL",
+          "disposition": "abstract-verified durability context; stronger video/model-update threat"
+        },
+        {
+          "id": "2610.14289",
+          "disposition": "LLM watermarking; outside target CIL IDS question"
+        },
+        {
+          "id": "2605.30650",
+          "disposition": "fintech survey; outside direct-method scope"
+        }
+      ]
+    },
+    {
+      "query": "intrusion AND (continual OR incremental) AND (poisoning OR adversarial)",
+      "returned": 4,
+      "screened": [
+        {
+          "id": "2608.04602",
+          "disposition": "already included closest continual IDS replay-poisoning preprint"
+        },
+        {
+          "id": "2606.28439",
+          "disposition": "packet-level evasion; different attack capability"
+        },
+        {
+          "id": "2606.03430",
+          "disposition": "model stealing defense; different research question"
+        },
+        {
+          "id": "2605.01892",
+          "disposition": "financial SOC framework; not the proposed controlled method"
+        }
+      ]
+    },
+    {
+      "query": "\"class incremental\" AND (\"noisy labels\" OR \"label noise\") AND (replay OR memory)",
+      "returned": 0,
+      "caution": "No results for this formulation is not evidence of no prior work."
+    }
+  ],
+  "independent_model_verification": false
+}

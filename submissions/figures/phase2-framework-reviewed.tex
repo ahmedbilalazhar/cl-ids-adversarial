@@ -1,0 +1,61 @@
+% Native, editable diagram. Stage setup is separated from repeated rounds.
+\begin{figure}[H]
+\centering
+\captionsetup{justification=raggedright,singlelinecheck=false}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[x=1mm,y=1mm,
+  font=\sffamily\fontsize{8.6}{10.5}\selectfont,
+  box/.style={draw=black!55,rounded corners=1.4mm,align=left,inner sep=2mm,line width=.55pt},
+  flow/.style={-{Latex[length=1.8mm]},draw=blue!50!black,line width=.65pt},
+  state/.style={-{Latex[length=1.8mm]},draw=violet!65!black,dashed,line width=.65pt},
+  model/.style={-{Latex[length=1.8mm]},draw=black!65,line width=.65pt}]
+\node[box,fill=blue!7,text width=162mm,minimum height=12mm] (input) at (85,0)
+  {\textbf{AUDITED CURRENT TRAINING SHARDS}\\Frozen T0 scaling; features, supplied labels and immutable IDs. No development/test records.};
+\node[font=\sffamily\bfseries\fontsize{8.6}{10.5}\selectfont] at (85,-13) {ONCE PER STAGE: LABELS, HEAD AND ADMISSION};
+\node[box,fill=red!7,draw=red!50!black,text width=48mm,minimum height=24mm] (poison) at (28,-30)
+  {\textbf{Training-label corruption}\\E2: one client, selected Hulk labels $\rightarrow$ benign. All other labels/stages unchanged; features never altered.};
+\node[box,fill=blue!7,text width=48mm,minimum height=24mm] (head) at (85,-30)
+  {\textbf{Server class registry + head}\\Start from $\theta_{t-1}$ (random $\theta_0$). Share supplied class IDs; append new rows and copy old rows, all trainable.};
+\node[box,fill=green!8,text width=48mm,minimum height=24mm] (admit) at (142,-30)
+  {\textbf{Admission snapshot}\\Freeze expanded model once; score supplied labels, dropout off. Bypass or DG/DM/DC. Lock accepted IDs for the stage.};
+\draw[flow] (input.south) -- (85,-9) -| (poison.north);
+\draw[state] (poison.east) -- (head.west);
+\draw[model] (head.east) -- (admit.west);
+\draw[flow] (poison.south) -- (28,-48) -- (137,-48) -- ($(admit.south)+(-5,0)$);
+\node[fill=white,inner sep=.5mm,font=\sffamily\fontsize{8}{9.5}\selectfont] at (82,-48) {features + supplied labels + IDs};
+\node[box,fill=blue!7,text width=44mm,minimum height=23mm] (broadcast) at (26,-80)
+  {\textbf{Broadcast shared weights}\\Initialise each active local model. Reset Adam each round; preserve local retained state.};
+\node[box,fill=green!8,text width=54mm,minimum height=23mm] (local) at (85,-80)
+  {\textbf{Local update + upload}\\Admitted current mini-batches; FT/EI/DR loss. Upload local weights + distinct admitted current-row count only.};
+\node[box,fill=blue!7,text width=44mm,minimum height=23mm] (fed) at (145,-80)
+  {\textbf{FedAvg}\\Count-weight active clients only. Replay/repeated epochs do not increase client weight.};
+\draw[model,preaction={draw=white,line width=2.3pt}] (head.south west) -- (59,-54) -- (-1,-54) |- (broadcast.west);
+\draw[flow] (admit.south) -- (142,-58) -| (local.north);
+\draw[model] (broadcast.east) -- (local.west);
+\draw[model] (local.east) -- (fed.west);
+\draw[model,preaction={draw=white,line width=2.3pt}] (fed.north) -- (145,-64) -- (26,-64) -- (broadcast.north);
+\node[fill=white,inner sep=.5mm,font=\sffamily\bfseries\fontsize{8}{9.5}\selectfont] at (80,-64) {REPEAT THE LOCKED ROUND BUDGET};
+\node[box,fill=green!6,text width=77mm,minimum height=25mm] (replay) at (43,-119)
+  {\textbf{DR-family local replay only}\\500 slots: $(x,\widetilde y,\mathrm{ID},z_{\rm pre},\omega)$. Read before update; commit pre-update cache only on round 1, epoch 1. Counter + pass cursor persist.};
+\node[box,fill=violet!6,text width=77mm,minimum height=25mm] (ei) at (128,-119)
+  {\textbf{EI local state only}\\Previous shared anchor + accumulated per-example diagonal empirical Fisher. Read during updates; write only at stage end. FT keeps neither replay nor importance.};
+\draw[state] ($(local.south)+(-10,0)$) -- (75,-100) -| ($(replay.north)+(10,0)$);
+\draw[state] ($(replay.north)+(-10,0)$) -- (33,-99) -- (54,-99) -- ($(local.west)+(0,-4)$);
+\draw[state] (ei.north) -- (128,-101) -- (116,-101) -- ($(local.east)+(0,-4)$);
+\node[box,fill=blue!7,text width=162mm,minimum height=18mm] (end) at (85,-151)
+  {\textbf{STAGE END: FINAL AGGREGATE BROADCAST + CHECKPOINT}\\EI estimates importance on its current local training sample and commits anchor once. Save weights, class map, retained state and RNG/cursor state. No test feedback.};
+\draw[model] (fed.east) -- (179,-80) |- (end.east);
+\draw[state] ($(end.north)+(43,0)$) -- (ei.south);
+\node[fill=white,inner sep=.5mm,font=\sffamily\fontsize{7.8}{9.4}\selectfont] at (144,-137) {EI commit once};
+\node[box,fill=black!3,text width=162mm,minimum height=17mm] (schedule) at (85,-177)
+  {\textbf{SAME STAGE SCHEDULE FOR ALL ARMS}\\E1: benign + FTP/SSH anchors, filters off. E2: new families + one-client label corruption.\\E3/E4: new families, no fresh Hulk or corruption; replay can still retain poisoned E2 records.};
+\node[box,fill=violet!8,text width=106mm,minimum height=20mm] (eval) at (55,-206)
+  {\textbf{EVALUATOR ONLY}\\Read saved checkpoints after locked runs; compute clean-bank outcomes and evaluator-only poison diagnostics. No arrow returns to training.};
+\node[box,fill=violet!8,text width=45mm,minimum height=20mm] (bank) at (145.5,-206)
+  {\textbf{Sealed reference bank}\\Fixed test features/labels; separate poison-marker audit.};
+\draw[model] (end.west) -- (-2,-151) |- (eval.west);
+\draw[flow] (bank.west) -- (eval.east);
+\end{tikzpicture}}
+\caption{Execution and state lifecycle for one arm. Stage setup runs once; the broadcast--update--aggregate loop repeats. Only class identifiers and model/count messages reach the server. Dashed arrows carry metadata or local state; white gaps at crossings mark separate paths. Replay reads/writes and EI's stage-end commit are distinct. E3/E4 stop fresh corruption, not retained poison. The evaluator is a one-way consumer of checkpoints and reference data.}
+\label{fig:framework}
+\end{figure}

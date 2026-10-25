@@ -1,0 +1,1210 @@
+{
+  "checks": [
+    {
+      "evidence": "3 rounds x 4 stages; recovery is the same logical run",
+      "name": "Complete one clean four-stage reference",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "code_identity": "fb115161add49d7815cbcbad05d7415af5c597cca93d75cb68ffb3c6d0619f98",
+        "protocol_sha256": "a8fc9dc310716d104a1df24f4eef24885af46481d8c6d6c25c6d2a302388127a",
+        "runtime_identity": "f4e78c30d265f353a2355956be7bd1151a809305d6917e4186d1187ad889d036",
+        "train_manifest_sha256": "cabcf3c266d85b29cfd0c60943d90c6d128d9a78d6dcae2922f1b117acfa692b"
+      },
+      "name": "Matched identities",
+      "passed": true
+    },
+    {
+      "evidence": "Reference executable is CPU-only; training package omits development/test arrays",
+      "name": "No final-test access or GPU dispatch",
+      "passed": true
+    },
+    {
+      "evidence": [
+        3,
+        8,
+        13,
+        16
+      ],
+      "name": "Append-only observed-label head widths",
+      "passed": true
+    },
+    {
+      "evidence": 10,
+      "name": "Recovered suffix is nonempty",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E1-R3.npz",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E2-R1.npz",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E2-R2.npz",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E2-R3.npz",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E3-R1.npz",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E3-R2.npz",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E3-R3.npz",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E4-R1.npz",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E4-R2.npz",
+      "passed": true
+    },
+    {
+      "evidence": "Every model/replay/admission/dropout array, cursor, counter, ledger and full PCG64 state compared",
+      "name": "Exact recovered state: E4-R3.npz",
+      "passed": true
+    },
+    {
+      "evidence": "96c15caa2f4988624a55e4f41731130d4b14ef20163d4a9eef3d0f8e1ca20259",
+      "name": "Final model equality",
+      "passed": true
+    },
+    {
+      "evidence": "No duplicate proposals or repeated committed transitions",
+      "name": "Recovered accounting ledger equality",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1584,
+        "protected": true,
+        "raw": 1584
+      },
+      "name": "DC quota E1 client0 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1,
+        "protected": true,
+        "raw": 1
+      },
+      "name": "DC quota E1 client0 source7",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 82,
+        "protected": true,
+        "raw": 82
+      },
+      "name": "DC quota E1 client0 source12",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 243,
+        "protected": true,
+        "raw": 243
+      },
+      "name": "DC quota E1 client1 source7",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 382,
+        "protected": true,
+        "raw": 382
+      },
+      "name": "DC quota E1 client1 source12",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 24,
+        "protected": true,
+        "raw": 24
+      },
+      "name": "DC quota E1 client2 source7",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 406,
+        "protected": true,
+        "raw": 406
+      },
+      "name": "DC quota E1 client2 source12",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1916,
+        "protected": true,
+        "raw": 1916
+      },
+      "name": "DC quota E1 client3 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 899,
+        "protected": true,
+        "raw": 899
+      },
+      "name": "DC quota E1 client3 source7",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 731,
+        "protected": true,
+        "raw": 731
+      },
+      "name": "DC quota E1 client3 source12",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1215,
+        "protected": true,
+        "raw": 1215
+      },
+      "name": "DC quota E1 client4 source7",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 175,
+        "protected": true,
+        "raw": 175
+      },
+      "name": "DC quota E1 client4 source12",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 813,
+        "protected": false,
+        "raw": 1084
+      },
+      "name": "DC quota E2 client0 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 834,
+        "protected": true,
+        "raw": 834
+      },
+      "name": "DC quota E2 client0 source3",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 3070,
+        "protected": true,
+        "raw": 3070
+      },
+      "name": "DC quota E2 client0 source4",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 425,
+        "protected": true,
+        "raw": 425
+      },
+      "name": "DC quota E2 client0 source5",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 276,
+        "protected": true,
+        "raw": 276
+      },
+      "name": "DC quota E2 client0 source6",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 57,
+        "protected": false,
+        "raw": 75
+      },
+      "name": "DC quota E2 client1 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1058,
+        "protected": true,
+        "raw": 1058
+      },
+      "name": "DC quota E2 client1 source3",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 26640,
+        "protected": true,
+        "raw": 26640
+      },
+      "name": "DC quota E2 client1 source4",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 264,
+        "protected": true,
+        "raw": 264
+      },
+      "name": "DC quota E2 client1 source5",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 842,
+        "protected": true,
+        "raw": 842
+      },
+      "name": "DC quota E2 client1 source6",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 505,
+        "protected": false,
+        "raw": 673
+      },
+      "name": "DC quota E2 client2 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1065,
+        "protected": true,
+        "raw": 1065
+      },
+      "name": "DC quota E2 client2 source3",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 21685,
+        "protected": true,
+        "raw": 21685
+      },
+      "name": "DC quota E2 client2 source4",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 195,
+        "protected": true,
+        "raw": 195
+      },
+      "name": "DC quota E2 client2 source5",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 58,
+        "protected": true,
+        "raw": 58
+      },
+      "name": "DC quota E2 client2 source6",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 11,
+        "protected": true,
+        "raw": 11
+      },
+      "name": "DC quota E2 client2 source8",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1066,
+        "protected": false,
+        "raw": 1421
+      },
+      "name": "DC quota E2 client3 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 495,
+        "protected": true,
+        "raw": 495
+      },
+      "name": "DC quota E2 client3 source3",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 38090,
+        "protected": true,
+        "raw": 38090
+      },
+      "name": "DC quota E2 client3 source4",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 62,
+        "protected": true,
+        "raw": 62
+      },
+      "name": "DC quota E2 client3 source5",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 678,
+        "protected": true,
+        "raw": 678
+      },
+      "name": "DC quota E2 client3 source6",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 186,
+        "protected": false,
+        "raw": 247
+      },
+      "name": "DC quota E2 client4 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1088,
+        "protected": true,
+        "raw": 1088
+      },
+      "name": "DC quota E2 client4 source3",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 5595,
+        "protected": true,
+        "raw": 5595
+      },
+      "name": "DC quota E2 client4 source4",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 91,
+        "protected": true,
+        "raw": 91
+      },
+      "name": "DC quota E2 client4 source5",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 217,
+        "protected": true,
+        "raw": 217
+      },
+      "name": "DC quota E2 client4 source6",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1204,
+        "protected": false,
+        "raw": 1605
+      },
+      "name": "DC quota E3 client0 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 9,
+        "protected": true,
+        "raw": 9
+      },
+      "name": "DC quota E3 client0 source9",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1274,
+        "protected": true,
+        "raw": 1274
+      },
+      "name": "DC quota E3 client0 source10",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 4,
+        "protected": true,
+        "raw": 4
+      },
+      "name": "DC quota E3 client0 source13",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1,
+        "protected": true,
+        "raw": 1
+      },
+      "name": "DC quota E3 client0 source14",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 4,
+        "protected": true,
+        "raw": 4
+      },
+      "name": "DC quota E3 client0 source15",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1051,
+        "protected": true,
+        "raw": 1051
+      },
+      "name": "DC quota E3 client1 source10",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 24,
+        "protected": true,
+        "raw": 24
+      },
+      "name": "DC quota E3 client1 source13",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 17,
+        "protected": true,
+        "raw": 17
+      },
+      "name": "DC quota E3 client2 source9",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1170,
+        "protected": true,
+        "raw": 1170
+      },
+      "name": "DC quota E3 client2 source10",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 6,
+        "protected": true,
+        "raw": 6
+      },
+      "name": "DC quota E3 client2 source13",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 4,
+        "protected": true,
+        "raw": 4
+      },
+      "name": "DC quota E3 client2 source14",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1422,
+        "protected": false,
+        "raw": 1895
+      },
+      "name": "DC quota E3 client3 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 1,
+        "protected": true,
+        "raw": 1
+      },
+      "name": "DC quota E3 client3 source9",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 19,
+        "protected": true,
+        "raw": 19
+      },
+      "name": "DC quota E3 client3 source10",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 9,
+        "protected": true,
+        "raw": 9
+      },
+      "name": "DC quota E3 client3 source13",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 2,
+        "protected": true,
+        "raw": 2
+      },
+      "name": "DC quota E3 client3 source14",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 2,
+        "protected": true,
+        "raw": 2
+      },
+      "name": "DC quota E3 client3 source15",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 77,
+        "protected": true,
+        "raw": 77
+      },
+      "name": "DC quota E3 client4 source10",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 4,
+        "protected": true,
+        "raw": 4
+      },
+      "name": "DC quota E3 client4 source15",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 194,
+        "protected": false,
+        "raw": 258
+      },
+      "name": "DC quota E4 client0 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 50,
+        "protected": true,
+        "raw": 50
+      },
+      "name": "DC quota E4 client0 source1",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 2647,
+        "protected": true,
+        "raw": 2647
+      },
+      "name": "DC quota E4 client0 source2",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 320,
+        "protected": true,
+        "raw": 320
+      },
+      "name": "DC quota E4 client1 source1",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 542,
+        "protected": true,
+        "raw": 542
+      },
+      "name": "DC quota E4 client1 source2",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 28,
+        "protected": true,
+        "raw": 28
+      },
+      "name": "DC quota E4 client1 source11",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 27,
+        "protected": true,
+        "raw": 27
+      },
+      "name": "DC quota E4 client2 source1",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 41807,
+        "protected": true,
+        "raw": 41807
+      },
+      "name": "DC quota E4 client2 source2",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 523,
+        "protected": true,
+        "raw": 523
+      },
+      "name": "DC quota E4 client2 source11",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 2432,
+        "protected": false,
+        "raw": 3242
+      },
+      "name": "DC quota E4 client3 source0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 22,
+        "protected": true,
+        "raw": 22
+      },
+      "name": "DC quota E4 client3 source1",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 5627,
+        "protected": true,
+        "raw": 5627
+      },
+      "name": "DC quota E4 client3 source2",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 170,
+        "protected": true,
+        "raw": 170
+      },
+      "name": "DC quota E4 client3 source11",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 22,
+        "protected": true,
+        "raw": 22
+      },
+      "name": "DC quota E4 client4 source1",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 6463,
+        "protected": true,
+        "raw": 6463
+      },
+      "name": "DC quota E4 client4 source2",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "admitted": 222,
+        "protected": true,
+        "raw": 222
+      },
+      "name": "DC quota E4 client4 source11",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E1 R1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R1 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R1 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R1 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R1 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R1 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E1 R2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R2 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R2 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R2 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R2 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R2 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E1 R3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R3 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R3 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R3 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R3 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E1 R3 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E2 R1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R1 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R1 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R1 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R1 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R1 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E2 R2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R2 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R2 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R2 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R2 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R2 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E2 R3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R3 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R3 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R3 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R3 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E2 R3 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E3 R1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R1 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R1 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R1 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R1 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R1 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E3 R2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R2 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R2 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R2 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R2 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R2 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E3 R3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R3 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R3 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R3 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R3 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E3 R3 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E4 R1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R1 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R1 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R1 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R1 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R1 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E4 R2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R2 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R2 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R2 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R2 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R2 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Distinct admitted-current counts; fixed increasing client order",
+      "name": "FedAvg E4 R3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R3 client0",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R3 client1",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R3 client2",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R3 client3",
+      "passed": true
+    },
+    {
+      "evidence": "One proposal per admitted first-pass record; fresh optimizer each broadcast",
+      "name": "Stream/Adam E4 R3 client4",
+      "passed": true
+    },
+    {
+      "evidence": "Observed 128 replay records on batches with fewer than 128 current records",
+      "name": "Replay independent of current short batch",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "occupancy": 500,
+        "seen": 12472,
+        "unique_ids": 500
+      },
+      "name": "Reservoir client0",
+      "passed": true
+    },
+    {
+      "evidence": "128-bit state integers serialized as decimal strings",
+      "name": "Lossless PCG64 representation client0",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "occupancy": 500,
+        "seen": 31451,
+        "unique_ids": 500
+      },
+      "name": "Reservoir client1",
+      "passed": true
+    },
+    {
+      "evidence": "128-bit state integers serialized as decimal strings",
+      "name": "Lossless PCG64 representation client1",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "occupancy": 500,
+        "seen": 67503,
+        "unique_ids": 500
+      },
+      "name": "Reservoir client2",
+      "passed": true
+    },
+    {
+      "evidence": "128-bit state integers serialized as decimal strings",
+      "name": "Lossless PCG64 representation client2",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "occupancy": 500,
+        "seen": 53643,
+        "unique_ids": 500
+      },
+      "name": "Reservoir client3",
+      "passed": true
+    },
+    {
+      "evidence": "128-bit state integers serialized as decimal strings",
+      "name": "Lossless PCG64 representation client3",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "occupancy": 500,
+        "seen": 15355,
+        "unique_ids": 500
+      },
+      "name": "Reservoir client4",
+      "passed": true
+    },
+    {
+      "evidence": "128-bit state integers serialized as decimal strings",
+      "name": "Lossless PCG64 representation client4",
+      "passed": true
+    }
+  ],
+  "recovered_run_sha256": "114571c4d4663ef6549d4b84417c18c20b62b2c2a6fded42919f72a50196e640",
+  "reference_run_sha256": "9d6fa3c6b862cda6016472fc1140bc22f9c2c00a8e67b99d08b02a12d2b799b8",
+  "remaining_gates": [
+    "FT/EI/DM/DQ and poisoning/control acceptance",
+    "CPU/GPU agreement and profiling",
+    "Clean development pilots/tuning",
+    "Final scope/runtime lock"
+  ],
+  "scope": "Executed clean DR+DC CPU reference and exact round-boundary suffix recovery, not full grid qualification",
+  "status": "passed"
+}

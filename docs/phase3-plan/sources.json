@@ -1,0 +1,586 @@
+{
+  "status": "working_evidence_ledger",
+  "scope": "Primary sources used for planning; not evidence of executed experiments.",
+  "sources": [
+    {
+      "id": "K01",
+      "title": "Kaggle terms",
+      "url": "https://www.kaggle.com/terms",
+      "kind": "provider terms",
+      "accessed_client_date": "2026-10-24",
+      "verification": "indexed official text",
+      "used_for": "Eight contributors are distinct people; no account credential sharing.",
+      "limits": "Do not infer current per-account quota from terms."
+    },
+    {
+      "id": "K02",
+      "title": "Efficient GPU usage",
+      "url": "https://www.kaggle.com/docs/efficient-gpu-usage",
+      "kind": "provider documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "indexed official text",
+      "used_for": "Quota planning, stopping idle GPU sessions, avoiding accidental reruns.",
+      "limits": "Nominal weekly hours vary; actual displayed allocation governs."
+    },
+    {
+      "id": "K03",
+      "title": "Kaggle notebooks",
+      "url": "https://www.kaggle.com/docs/notebooks",
+      "kind": "provider documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "indexed official text",
+      "used_for": "Session/output limits, environments and save modes.",
+      "limits": "Hardware and idle-time documentation can differ; verify current runtime UI."
+    },
+    {
+      "id": "K04",
+      "title": "Notebook persistence explanation",
+      "url": "https://www.kaggle.com/product-feedback/355440",
+      "kind": "provider staff guidance",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Persistence is best-effort and differs from saved versions.",
+      "limits": "Not a durable checkpoint guarantee."
+    },
+    {
+      "id": "K05",
+      "title": "Official Kaggle kernel CLI",
+      "url": "https://github.com/Kaggle/kaggle-cli/blob/main/docs/kernels.md",
+      "kind": "provider source documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary repository",
+      "used_for": "Version-specific job submission, status and output retrieval.",
+      "limits": "Installed CLI help governs exact flags; some accelerators are restricted."
+    },
+    {
+      "id": "K06",
+      "title": "Official Kaggle dataset CLI",
+      "url": "https://github.com/Kaggle/kaggle-cli/blob/main/docs/datasets.md",
+      "kind": "provider source documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary repository",
+      "used_for": "Private/versioned prepared data and output packaging.",
+      "limits": "No uploads or account access performed."
+    },
+    {
+      "id": "P01",
+      "title": "PyTorch performance tuning guide",
+      "url": "https://docs.pytorch.org/tutorials/recipes/recipes/tuning_guide.html",
+      "kind": "official technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Measure transfers, synchronization, loader and compiler overhead.",
+      "limits": "Examples are not measured speedups for this model."
+    },
+    {
+      "id": "P02",
+      "title": "Per-sample gradients",
+      "url": "https://docs.pytorch.org/tutorials/intermediate/per_sample_grads",
+      "kind": "official technical tutorial",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Functional per-example gradients with grad and vmap.",
+      "limits": "Square before averaging; reference parity required."
+    },
+    {
+      "id": "P03",
+      "title": "PyTorch reproducibility",
+      "url": "https://docs.pytorch.org/docs/2.14/notes/randomness.html",
+      "kind": "official technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Version/hardware/RNG limitations and deterministic settings.",
+      "limits": "Kaggle's installed version may differ; pin that version."
+    },
+    {
+      "id": "P04",
+      "title": "torch.random",
+      "url": "https://docs.pytorch.org/docs/main/random.html",
+      "kind": "official technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Scoped RNG save/restore for CPU and selected devices.",
+      "limits": "Dropout needs deliberate stream handling; defaults are not separate client streams."
+    },
+    {
+      "id": "P05",
+      "title": "Autograd mechanics",
+      "url": "https://docs.pytorch.org/docs/stable/notes/autograd",
+      "kind": "official technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "eval, no_grad and inference modes have different roles.",
+      "limits": "Teacher cache tensors may later participate in autograd operations."
+    },
+    {
+      "id": "P06",
+      "title": "CUDA semantics",
+      "url": "https://docs.pytorch.org/docs/stable/notes/cuda",
+      "kind": "official technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Record and lock matmul precision and device behavior.",
+      "limits": "Do not assume identical defaults across releases."
+    },
+    {
+      "id": "D01",
+      "title": "CICIDS2017 official dataset",
+      "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+      "kind": "dataset provider",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Canonical capture and separate flow/ML releases.",
+      "limits": "Canonical metadata-bearing records are not yet acquired/audited."
+    },
+    {
+      "id": "D02",
+      "title": "CICIDS2017 troubleshooting",
+      "url": "https://intrusion-detection.distrinet-research.be/WTMC2021/",
+      "kind": "research author project",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary paper and author page",
+      "used_for": "Known flow and annotation defects motivate release-level audits.",
+      "limits": "Corrected release is not interchangeable with original without amendment."
+    },
+    {
+      "id": "D03",
+      "title": "CICIoT2023",
+      "url": "https://www.unb.ca/cic/datasets/iotdataset-2023.html",
+      "kind": "dataset provider",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Candidate external dataset and original class inventory.",
+      "limits": "Actual selected file schema, temporal units and grouping remain unaudited."
+    },
+    {
+      "id": "D04",
+      "title": "TON_IoT",
+      "url": "https://research.unsw.edu.au/projects/toniot-datasets",
+      "kind": "dataset provider",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Alternative external source with network records and metadata.",
+      "limits": "Requires an independent protocol and license/schema audit."
+    },
+    {
+      "id": "D05",
+      "title": "UQ NIDS datasets",
+      "url": "https://staff.itee.uq.edu.au/marius/NIDS_datasets/",
+      "kind": "dataset author host",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Possible NetFlow alternative and provenance.",
+      "limits": "Printed counts should be checked against actual files."
+    },
+    {
+      "id": "S01",
+      "title": "Wilcoxon signed-rank documentation",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html",
+      "kind": "official statistical library",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Tie/zero and floating-difference pitfalls.",
+      "limits": "Generic exact mode is not the declared custom sign enumeration."
+    },
+    {
+      "id": "S02",
+      "title": "AI Risk Management Framework",
+      "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10",
+      "kind": "government framework",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Voluntary risk-management vocabulary and documentation.",
+      "limits": "No certification, compliance or deployment assurance claimed."
+    },
+    {
+      "id": "S03",
+      "title": "Adversarial Machine Learning taxonomy",
+      "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
+      "kind": "government publication",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary final publication",
+      "used_for": "Threat goals, knowledge and capabilities.",
+      "limits": "Use corrected final publication and note errata where relevant."
+    },
+    {
+      "id": "S04",
+      "title": "NeurIPS paper checklist",
+      "url": "https://neurips.cc/public/guides/PaperChecklist",
+      "kind": "venue guidance",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary page",
+      "used_for": "Claims, limitations, reproducibility and compute reporting.",
+      "limits": "Guidance is not the course's submission policy."
+    },
+    {
+      "id": "S05",
+      "title": "Improving reproducibility in ML research",
+      "url": "https://jmlr.org/papers/v22/20-303.html",
+      "kind": "primary research paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary publication",
+      "used_for": "Evidence-oriented code/data and reporting practices.",
+      "limits": "Not a guarantee that releasing code makes results reproducible."
+    },
+    {
+      "id": "L01",
+      "title": "SacFL",
+      "url": "https://arxiv.org/abs/2505.00365",
+      "kind": "primary research paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "abstract and adversarial-method/results sections read",
+      "used_for": "Adversarial tasks in federated continual learning already exist.",
+      "limits": "Image/text protocol and historical evaluation differ from this flow-source estimand; DOI 10.1109/TNNLS.2025.3565827."
+    },
+    {
+      "id": "L02",
+      "title": "Adaptive IDS with adversarial investigation",
+      "url": "https://arxiv.org/abs/2608.04602",
+      "kind": "primary research preprint",
+      "accessed_client_date": "2026-10-24",
+      "verification": "method sections 5.4, 5.8, data availability read",
+      "used_for": "Continual IDS replay poisoning and benign recurrence are prior work.",
+      "limits": "Buffer-access attack differs from one-stage feed corruption; preprint status."
+    },
+    {
+      "id": "L03",
+      "title": "Neurotoxin",
+      "url": "https://proceedings.mlr.press/v162/zhang22w.html",
+      "kind": "primary peer-reviewed paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "publisher abstract and paper inspected",
+      "used_for": "FL attack persistence after attacker withdrawal is established.",
+      "limits": "Model-update backdoor threat differs from label-only source corruption."
+    },
+    {
+      "id": "L04",
+      "title": "Single-task poisoning in exemplar-free CL",
+      "url": "https://proceedings.mlr.press/v330/pawlak26a.html",
+      "kind": "primary peer-reviewed paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "publisher abstract read",
+      "used_for": "Weak single-task attackers and effects on stability/plasticity are prior work.",
+      "limits": "Image-corruption and exemplar-free setting; conference 2025, proceedings published 2026."
+    },
+    {
+      "id": "L05",
+      "title": "May the Forgetting Be with You",
+      "url": "https://bmva-archive.org.uk/bmvc/2024/papers/Paper_680/paper.pdf",
+      "kind": "primary peer-reviewed paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "published abstract, introduction and algorithm inspected",
+      "used_for": "AER/ABS addresses noisy replay and loss separation.",
+      "limits": "Multi-epoch vision CL; a federated tabular adapter is not a faithful reproduction."
+    },
+    {
+      "id": "L06",
+      "title": "PuriDivER",
+      "url": "https://openaccess.thecvf.com/content/CVPR2022/papers/Bang_Online_Continual_Learning_on_a_Contaminated_Data_Stream_With_Blurry_CVPR_2022_paper.pdf",
+      "kind": "primary peer-reviewed paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "main/supplement algorithm and official repository",
+      "used_for": "Purity/diversity memory selection under noisy continual streams is established.",
+      "limits": "Online blurry vision setting; code has GPL-3.0 license."
+    },
+    {
+      "id": "L07",
+      "title": "Dark Experience for General Continual Learning",
+      "url": "https://proceedings.neurips.cc/paper/2020/file/b704ea2c39778f07c617f6b7ce480e9e-Paper.pdf",
+      "kind": "primary peer-reviewed paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "original objective inspected",
+      "used_for": "DER++ reference and declared adaptation boundary.",
+      "limits": "Our shared draw, eval cache, growing head and first-pass insertion differ."
+    },
+    {
+      "id": "L08",
+      "title": "FIL-ZTA",
+      "url": "https://www.mdpi.com/1999-5903/18/3/154",
+      "kind": "primary peer-reviewed paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "official indexed experimental and adversarial sections read",
+      "used_for": "Network federated incremental learning with poisoning is not a new combination.",
+      "limits": "Authentication/synthetic attributes, model-control threats and metrics differ; no direct percentage ranking."
+    },
+    {
+      "id": "L09",
+      "title": "EdgeFedCIL",
+      "url": "https://www.mdpi.com/1424-8220/26/14/4630",
+      "kind": "primary peer-reviewed paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "official indexed abstract/method/results inspected",
+      "used_for": "Recent federated CIL IDS replay/distillation comparator context.",
+      "limits": "Compression and clean incremental evaluation; no directly comparable headline metrics."
+    },
+    {
+      "id": "L10",
+      "title": "Replay can provably increase forgetting",
+      "url": "https://proceedings.mlr.press/v330/mahdaviyeh26a.html",
+      "kind": "primary peer-reviewed paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "publisher abstract read",
+      "used_for": "Replay need not improve retention monotonically even without poison.",
+      "limits": "Linear-regression theory is not a theorem about this nonlinear IDS."
+    },
+    {
+      "id": "C01",
+      "title": "ReplayIDS official implementation",
+      "url": "https://github.com/um-csnet/ReplayIDS",
+      "kind": "research author repository",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary repository located",
+      "used_for": "Potential original-protocol reproduction path for Ariffin et al.",
+      "limits": "No code execution, dependency or reproducibility verification performed."
+    },
+    {
+      "id": "C02",
+      "title": "Mammoth official framework",
+      "url": "https://github.com/aimagelab/mammoth",
+      "kind": "research author repository",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary repository located",
+      "used_for": "DER++ and AER implementation references.",
+      "limits": "Pin commit and inspect per-file licenses before incorporating code."
+    },
+    {
+      "id": "C03",
+      "title": "PuriDivER official implementation",
+      "url": "https://github.com/clovaai/puridiver",
+      "kind": "research author repository",
+      "accessed_client_date": "2026-10-24",
+      "verification": "primary README/license inspected",
+      "used_for": "Implementation reference and licensing boundary.",
+      "limits": "Do not silently copy GPL code into the project's MIT package."
+    },
+    {
+      "id": "P07",
+      "title": "PyTorch initialization",
+      "url": "https://docs.pytorch.org/docs/2.14/nn.init.html",
+      "kind": "official technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Xavier definition and fan-in/fan-out inspected",
+      "used_for": "Freeze new-block shape, gain, dtype and generator.",
+      "limits": "Installed runtime may use another version."
+    },
+    {
+      "id": "P08",
+      "title": "NumPy parallel random generation",
+      "url": "https://numpy.org/doc/stable/reference/random/parallel.html",
+      "kind": "official technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "SeedSequence guidance inspected",
+      "used_for": "Stable independent named streams and key namespaces.",
+      "limits": "Independence is probabilistic; bit generator/version must be pinned."
+    },
+    {
+      "id": "P09",
+      "title": "Python hash behavior",
+      "url": "https://docs.python.org/3/reference/datamodel.html",
+      "kind": "official language documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Salted str/bytes hash note inspected",
+      "used_for": "Do not use process-randomized hash for reproducible stream seeds.",
+      "limits": "String and bytes hash behavior differs from stable cryptographic digests."
+    },
+    {
+      "id": "D06",
+      "title": "Error Prevalence in NIDS datasets",
+      "url": "https://intrusion-detection.distrinet-research.be/CNS2022/",
+      "kind": "research author project",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Primary paper project and dataset/tool routes inspected",
+      "used_for": "Corrected-release alternative and annotation/feature provenance.",
+      "limits": "Same historical capture; not independent external validation."
+    },
+    {
+      "id": "D07",
+      "title": "Corrected CICIDS download and attempted-label guidance",
+      "url": "https://intrusion-detection.distrinet-research.be/CNS2022/Dataset_Download.html",
+      "kind": "research author dataset documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Primary guidance and public archive headers inspected",
+      "used_for": "Concrete fallback route and exclusion of annotation fields from features.",
+      "limits": "Recorded all-header probe transferred 21,174 bytes; full census/hash/support unverified."
+    },
+    {
+      "id": "D08",
+      "title": "Corrected CICFlowMeter documentation",
+      "url": "https://intrusion-detection.distrinet-research.be/CNS2022/Tools_Documentation.html",
+      "kind": "research author technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Primary extractor-change list inspected",
+      "used_for": "Corrected timestamp/extraction semantics differ from the original release.",
+      "limits": "Do not infer full old-release units or schema from the corrected tool."
+    },
+    {
+      "id": "D09",
+      "title": "BCCC-CIC-IDS2017",
+      "url": "https://www.yorku.ca/research/bccc/ucs-technical/cybersecurity-datasets-cds/intrusion-detection-dataset-bccc-cic-ids2017/",
+      "kind": "dataset provider",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Primary description and request route inspected",
+      "used_for": "Another re-extraction candidate linked by UNB.",
+      "limits": "Uses another extractor on the same capture; requires request and separate audit."
+    },
+    {
+      "id": "D10",
+      "title": "Original CICIDS2017 access form",
+      "url": "https://cicresearch.ca/CICDataset/CIC-IDS-2017/",
+      "kind": "dataset provider access page",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Access-form page inspected; returned text includes an error message, but no form was submitted.",
+      "used_for": "Acquisition risk and time-boxed alternative planning.",
+      "limits": "Error text may be a UI state; actual download availability and global outage are not established."
+    },
+    {
+      "id": "L11",
+      "title": "Label-flipping collaborative intrusion detection",
+      "url": "https://orbilu.uni.lu/handle/10993/65906",
+      "kind": "primary peer-reviewed author manuscript",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Local archived manuscript methods and PDF page 20 Figure 8 inspected; author repository located",
+      "used_for": "Stopped label-flipping attacks, clean references and recovery are close prior work.",
+      "limits": "Fixed-class binary setting; aggregate accuracy and continued source-data availability differ."
+    },
+    {
+      "id": "C04",
+      "title": "Lavaur et al. code and results",
+      "url": "https://github.com/leolavaur/cose_2025",
+      "kind": "research author repository",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Official README and implementation/result pointers inspected",
+      "used_for": "Potential faithful reproduction and contextual comparison route.",
+      "limits": "No experiments from that framework were run; not the revised four-stage protocol."
+    },
+    {
+      "id": "P10",
+      "title": "StratifiedGroupKFold",
+      "url": "https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedGroupKFold.html",
+      "kind": "official technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Signature, grouping, stratification and shuffle restrictions inspected",
+      "used_for": "Concrete optional five-fold group allocator for 60/20/20 proposal.",
+      "limits": "Approximate stratification cannot guarantee per-class row/component floors; pin installed version."
+    },
+    {
+      "id": "L12",
+      "title": "STAIN-FL",
+      "url": "https://arxiv.org/abs/2608.23952",
+      "kind": "primary research preprint",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Full author abstract read in the final six-month terminology refresh",
+      "used_for": "Recent contextual-trigger FL durability work further limits generic persistence novelty.",
+      "limits": "Video anomaly detection and gradient masking/model control; abstract-only assessment, not a replicated CIL IDS comparator."
+    },
+    {
+      "id": "L13",
+      "title": "On the Computation of the Fisher Information in Continual Learning",
+      "url": "https://arxiv.org/abs/2502.11756",
+      "kind": "ICLR 2025 blogpost-track author article",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Primary HTML methods, estimator definitions and recommendations read",
+      "used_for": "Precise empirical-importance baseline naming",
+      "limits": "Image task-incremental findings do not establish performance of this federated IDS."
+    },
+    {
+      "id": "L14",
+      "title": "Improved Modelling of Federated Datasets using Mixtures-of-Dirichlet-Multinomials",
+      "url": "https://proceedings.mlr.press/v235/scott24a.html",
+      "kind": "ICML 2024 paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Primary abstract and bibliographic record read",
+      "used_for": "Synthetic-client representativeness limitation",
+      "limits": "No reproduction or full-method comparison was performed."
+    },
+    {
+      "id": "L15",
+      "title": "Leakage and the reproducibility crisis in machine-learning-based science",
+      "url": "https://doi.org/10.1016/j.patter.2023.100804",
+      "kind": "Patterns 2023 author article",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Primary abstract and resource/claim framing read",
+      "used_for": "Explicit data roles and claim-evidence boundaries",
+      "limits": "Does not validate this dataset pipeline or certify absence of leakage."
+    },
+    {
+      "id": "S06",
+      "title": "ACM CCS 2026 artifact evaluation criteria",
+      "url": "https://www.sigsac.org/ccs/CCS2026/call-for/call-for-artifacts.html",
+      "kind": "Official conference artifact criteria",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Official indexed criteria read",
+      "used_for": "Distinguish availability, functional artifacts and reproduced results",
+      "limits": "No badge or independent reproduction is claimed."
+    },
+    {
+      "id": "P11",
+      "title": "Scikit-learn 1.8 release notes: SGKF shuffle fix",
+      "url": "https://scikit-learn.org/stable/whats_new/v1.8.html",
+      "kind": "Official release notes",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Official release entry and merged PR #32540 read",
+      "used_for": "Pin a split implementation containing the shuffle-stratification fix",
+      "limits": "A fixed library does not guarantee this dataset meets support floors."
+    },
+    {
+      "id": "D11",
+      "title": "Corrected CICIDS2017 detailed labeling investigation",
+      "url": "https://intrusion-detection.distrinet-research.be/CNS2022/CICIDS2017.html",
+      "kind": "Dataset authors detailed source documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Hulk, web, infiltration and capture-label sections read",
+      "used_for": "Source-family construct and corrected taxonomy limits",
+      "limits": "Author annotation decisions are not certified operational ground truth."
+    },
+    {
+      "id": "D12",
+      "title": "Commit-pinned original flow archive mirror",
+      "url": "https://huggingface.co/datasets/Mireu-Lab/CIC-IDS/commit/ab4a10050a2a5c3a9b36c126a409f1898a589059",
+      "kind": "Primary mirror artifact record",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Git-LFS object identity, full downloaded SHA-256 and all member CRCs verified",
+      "used_for": "Auditable candidate metadata-bearing original archive",
+      "limits": "Third-party mirror identity is not provider authentication or perfect labels."
+    },
+    {
+      "id": "P12",
+      "title": "NumPy PCG64 state documentation",
+      "url": "https://numpy.org/doc/stable/reference/random/bit_generators/pcg64.html",
+      "kind": "Official technical documentation",
+      "accessed_client_date": "2026-10-24",
+      "verification": "State/seeding and compatibility sections read",
+      "used_for": "Lossless checkpoint RNG encoding",
+      "limits": "Integer-stream guarantee does not pin every high-level distribution algorithm or complete learner runtime."
+    },
+    {
+      "id": "P13",
+      "title": "RFC 8259 JSON numeric interoperability",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259",
+      "kind": "Internet standard",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Number representation/interoperability section read",
+      "used_for": "Avoid binary64 JSON rounding of 128-bit RNG state",
+      "limits": "Defines interchange constraints, not an implemented checkpoint proof."
+    },
+    {
+      "id": "L16",
+      "title": "Dos and Donts of Machine Learning in Computer Security",
+      "url": "https://www.usenix.org/conference/usenixsecurity22/presentation/arp",
+      "kind": "USENIX Security 2022 primary paper",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Official abstract and full paper accessed; pitfalls and evaluation recommendations read",
+      "used_for": "Security-ML design/evaluation rigor",
+      "limits": "Recommendations are contextual research guidance, not certification of this study."
+    },
+    {
+      "id": "D13",
+      "title": "Authors labeling and extractor source at pinned commits",
+      "url": "https://github.com/GintsEngelen/CNS2022_Code/blob/f0ce502818e59e6cd062720ab2286c5ff6f2bdec/Labelling/CICIDS2017_labelling_fixed_CICFlowMeter.ipynb",
+      "kind": "Primary research implementation source",
+      "accessed_client_date": "2026-10-24",
+      "verification": "Notebook conversion/labeling code and related pinned Java source read; file digests recorded",
+      "used_for": "Header narrowing, field-relation audit and taxonomy provenance",
+      "limits": "Pinned current source is not proof of the exact historical archive producer; observed data consistency is separate evidence."
+    }
+  ]
+}

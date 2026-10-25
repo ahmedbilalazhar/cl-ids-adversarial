@@ -1,0 +1,77 @@
+{
+  "checks": [
+    {
+      "status": "passed",
+      "test": "tests.test_phase3_v3.Phase3V3.test_completed_receipts_resume_exact_alias_cost_and_corruption_rejected"
+    },
+    {
+      "status": "passed",
+      "test": "tests.test_phase3_v3.Phase3V3.test_cross_revision_resume_and_v2_evaluation_rejected"
+    },
+    {
+      "status": "passed",
+      "test": "tests.test_phase3_v3.Phase3V3.test_exact_old_budget_parity_all_six_pipelines"
+    },
+    {
+      "status": "passed",
+      "test": "tests.test_phase3_v3.Phase3V3.test_extended_updates_proposals_importance_and_exact_recovery_all_methods"
+    },
+    {
+      "status": "passed",
+      "test": "tests.test_phase3_v3.Phase3V3.test_frozen_grid_numeric_ties_and_no_old_budget_selection"
+    },
+    {
+      "status": "passed",
+      "test": "tests.test_phase3_v3.Phase3V3.test_interrupted_condition_retained_and_same_identity_retried"
+    },
+    {
+      "status": "passed",
+      "test": "tests.test_phase3_v3.Phase3V3.test_single_live_orchestrator_lock"
+    },
+    {
+      "status": "passed",
+      "test": "tests.test_phase3_v3.Phase3V3.test_unreceipted_import_requires_physical_measured_cost"
+    },
+    {
+      "status": "passed",
+      "test": "tests.test_phase3_v3.Phase3V3.test_version_budget_scope_and_parent_unchanged"
+    }
+  ],
+  "code_files": {
+    "src/phase3/__init__.py": "1119f01f9f4ab1ffee7ab97fad08ba53e2017538cfd877788d9499118f44e12e",
+    "src/phase3/accept_reference.py": "1dbea30c6c1a93d4fd6636d11e2bd53c3d87ec960c379bc4f070d5f4370a57b2",
+    "src/phase3/common.py": "cede35e4ca7ac9ba9df8588c03ef9fd7c4873437ba3b0048110a285f5a2799ae",
+    "src/phase3/evaluate.py": "5e9442e80498983397ca1c84b2e12f8f0a85c0e1115d69ff6763acc4e7766103",
+    "src/phase3/model.py": "688857c9676058065ae3a9c0b9ddcebe20eea1c538812553b85be8b79a5f999d",
+    "src/phase3/prepare.py": "b8ac264c10de74a69907e7bd95445fc3fd3ca6184f15730ad70031d0be0c9571",
+    "src/phase3/reference.py": "f59e00d068c9b67bb4981121feac9ccedb6838f214e1e31d1334430e2c4679f3",
+    "src/phase3_v2/__init__.py": "82fb9f67580a146405c647ac756a81a827637a483ad8458a5da7beb939d7cbb8",
+    "src/phase3_v2/checkpoint.py": "1dc0cb02628df872f7bed624f6aa204aaf41b8415d8e2c3ca3cd16588e168709",
+    "src/phase3_v2/data.py": "6ef1934775c30468911e3795a5bfa4ba90a970f9dbaa127cfbef1fa781a78f19",
+    "src/phase3_v2/development.py": "d85fb3acb920cf7653de2d35a0400e3871716a2a0deaa1c3e37c694299c9f284",
+    "src/phase3_v2/evaluate.py": "825a10fd37990cfb14d071b148b30b66d532ba9d237ab1ca2c804c802765c368",
+    "src/phase3_v2/exposure.py": "3dd0cc47e6f98d66c7f24459cf383ae1df562398d4dd3c98eb22f55aa20f9055",
+    "src/phase3_v2/learning.py": "0b2f69a94631fb9e759caa056096abf8f8da46176e97c3ef0b69862acde4679a",
+    "src/phase3_v2/prepare.py": "27695092039c082b2d9d609d2a5737ada46edee4d4c8e64540bec4e78cfbb46e",
+    "src/phase3_v2/protocol.py": "cf86004c0365445313455ded32c60df8d4f313d0429d93ccc820386990b9ea30",
+    "src/phase3_v2/train.py": "4122fc2c0278a1661af77ab6ade6dacebe2f53be6308576e00ad212c322417c3",
+    "src/phase3_v3/__init__.py": "16a929d60408089ed8f617a55f1d51e52b9b21c0ec9bd4e25b1e5dde41a8be3c",
+    "src/phase3_v3/development.py": "d15d72190796200ae42d39b2b29ea7a64f3aa6902c28525ad72540947cff5e44",
+    "src/phase3_v3/evaluate.py": "f0cf932a02fac9b5cc4390bde2034fe428ed8067c391304f192c0d0274642df8",
+    "src/phase3_v3/protocol.py": "13d15a75dfc47daea96159b1c7e0f5d819b846e17d33e0c154c8e43336b332fb",
+    "src/phase3_v3/train.py": "d96ebde0f59bd021186e247527618d7740f6e53c70a9a4d4810a8faa76edafe0"
+  },
+  "code_identity": "38830e8b9e156c5c0db8285278de4666fca1c08b1d46e033f2009ef661e9e17c",
+  "elapsed_seconds": 138.92011700000148,
+  "numerical_comparison": {
+    "CPU_same_engine_recovery": "exact logical metadata and typed states",
+    "EI_FP32_atol": 2e-07,
+    "EI_FP32_rtol": 2e-05
+  },
+  "schema": "phase3-acceptance-v3",
+  "scope": "Extended-budget counts/first-pass/EI commits and exact continuation for six pipelines at both v3 budgets; old-budget parity and orchestration interruption/receipts/locks. Parent 33-test semantics retained by immutable dependency hash; no CUDA/final qualification",
+  "status": "passed",
+  "test_source_sha256": "af89d45d84cea80ff21bbdc1ad5a00d545a90627912f65dc8cf8e972f3ecc00d",
+  "tests_run": 9,
+  "unittest_output": "test_completed_receipts_resume_exact_alias_cost_and_corruption_rejected (tests.test_phase3_v3.Phase3V3.test_completed_receipts_resume_exact_alias_cost_and_corruption_rejected) ... ok\ntest_cross_revision_resume_and_v2_evaluation_rejected (tests.test_phase3_v3.Phase3V3.test_cross_revision_resume_and_v2_evaluation_rejected) ... ok\ntest_exact_old_budget_parity_all_six_pipelines (tests.test_phase3_v3.Phase3V3.test_exact_old_budget_parity_all_six_pipelines) ... ok\ntest_extended_updates_proposals_importance_and_exact_recovery_all_methods (tests.test_phase3_v3.Phase3V3.test_extended_updates_proposals_importance_and_exact_recovery_all_methods) ... ok\ntest_frozen_grid_numeric_ties_and_no_old_budget_selection (tests.test_phase3_v3.Phase3V3.test_frozen_grid_numeric_ties_and_no_old_budget_selection) ... ok\ntest_interrupted_condition_retained_and_same_identity_retried (tests.test_phase3_v3.Phase3V3.test_interrupted_condition_retained_and_same_identity_retried) ... ok\ntest_single_live_orchestrator_lock (tests.test_phase3_v3.Phase3V3.test_single_live_orchestrator_lock) ... ok\ntest_unreceipted_import_requires_physical_measured_cost (tests.test_phase3_v3.Phase3V3.test_unreceipted_import_requires_physical_measured_cost) ... ok\ntest_version_budget_scope_and_parent_unchanged (tests.test_phase3_v3.Phase3V3.test_version_budget_scope_and_parent_unchanged) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 138.875s\n\nOK\n"
+}

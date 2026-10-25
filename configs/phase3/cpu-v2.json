@@ -1,0 +1,21 @@
+{
+  "schema": "phase3-cpu-development-v2",
+  "date": "2026-10-24",
+  "data_protocol_sha256": "a8fc9dc310716d104a1df24f4eef24885af46481d8c6d6c25c6d2a302388127a",
+  "taxonomy_sha256": "410b7e3b5709cc58c637496c08fc20200de20911b68a044edd4d420731394561",
+  "decisions": "docs/phase3-cpu-v2/decisions-2026-10-24.md",
+  "runtime": {"python": "3.12.14", "torch": "2.7.0+cpu", "numpy": "2.3.5", "device": "cpu", "threads": 1, "amp": false},
+  "development_seeds": [101, 102, 103],
+  "final_seeds_sealed": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 42],
+  "final_contrast_family_size": 29,
+  "dispatchable_gpu_grid": false,
+  "final_test_evaluation_authorized": false,
+  "importance": {"sample_max": 1024, "chunk": 64, "dtype": "FP32", "decay": 1, "penalty_factor": "lambda_E/2", "reference_rtol": 0.00002, "reference_atol": 0.0000002},
+  "replay": {"capacity": 500, "batch_size": 128, "teacher": "pre-update eval/no-grad", "insertion": "Algorithm R after update, round1 epoch1 only"},
+  "admission": {"keep": [3, 4], "small_group": 20, "E1": "off", "lock": "once per stage after supplied-label registration and head expansion"},
+  "training_batch_size": 128,
+  "registration": "current supplied-label union, Benign slot0, increasing new source codes",
+  "aggregation": "fixed client order FP32, distinct admitted current counts",
+  "optimizer": "v1 FP32 Adam reset on every broadcast",
+  "data_reconstruction": "hash-verified audited-cache reuse; no fresh CSV/session reconstruction"
+}

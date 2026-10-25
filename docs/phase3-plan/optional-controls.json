@@ -1,0 +1,52 @@
+{
+  "status": "prospective_optional_menu_not_dispatchable",
+  "planning_only": true,
+  "controls": [
+    {
+      "id": "FT_other_learning_rate_reference",
+      "conditions_max": 24,
+      "kind": "full_trajectory",
+      "formula": "1 other grid learning rate * 2 doses * 12 final seeds",
+      "trigger": "selected learner rates differ and retention-specific attribution is intended",
+      "analysis_role": "exploratory_same_rate_reference",
+      "note": "Zero extra runs if relevant selected rates match; base C1 compares separately tuned pipelines."
+    },
+    {
+      "id": "cross_runtime_clean_confirmation",
+      "conditions": 9,
+      "kind": "full_trajectory",
+      "formula": "3 selected unfiltered learners * 3 development seeds",
+      "trigger": "development runtime differs from final training runtime",
+      "analysis_role": "development_feasibility_only",
+      "note": "Run before final lock; compatible clean FT rows support the three original poisoned diagnostics."
+    },
+    {
+      "id": "source_rich_site_stress",
+      "conditions": 60,
+      "kind": "full_trajectory",
+      "formula": "5 core arms * 1 maximum dose * 12 final seeds",
+      "trigger": "prospectively selected stronger site-policy sensitivity",
+      "analysis_role": "exploratory_separate_threat",
+      "note": "Largest-Hulk owner; exact clean references may alias primary zero-dose rows."
+    },
+    {
+      "id": "unfiltered_ER_component_reference",
+      "conditions": 24,
+      "kind": "full_trajectory",
+      "formula": "1 unfiltered no-logit replay arm * 2 doses * 12 seeds",
+      "trigger": "need to distinguish filtered no-logit ablation from unfiltered replay comparison",
+      "analysis_role": "exploratory_component_reference",
+      "note": "Uses DR-selected settings; own tuning needed for a competitive baseline claim."
+    },
+    {
+      "id": "post_E2_forks",
+      "conditions": 72,
+      "kind": "new_E3_E4_execution",
+      "formula": "3 interventions * 2 doses * 12 seeds",
+      "trigger": "prospective post-withdrawal mechanism package",
+      "analysis_role": "exploratory_mechanism",
+      "note": "FZ/FY/FM; primary suffixes alias controls; distinct from from-start ablations. Original oracle adds 12 new suffixes separately."
+    }
+  ],
+  "not_included_in_729_full_manifest": true
+}

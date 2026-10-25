@@ -1,0 +1,369 @@
+{
+  "review_mode": "direct review; mandated external reviewer runtime unavailable",
+  "findings": [
+    {
+      "id": "F01",
+      "severity": "Major",
+      "location": "Abstract; gap synthesis",
+      "concern": "Novelty claims extended beyond the selected accessible corpus.",
+      "correction": "Bound claims to the reviewed studies and identify the preprint as closest located work, without asserting worldwide absence.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F02",
+      "severity": "Major",
+      "location": "Gap justification",
+      "concern": "The proposed comparison was called pre-registered without evidence of a completed registration.",
+      "correction": "State that protocol and analysis will be frozen before final runs; keep the document prospective.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F03",
+      "severity": "Minor",
+      "location": "Search strategy",
+      "concern": "The stated search window extended through December 2026, beyond the October submission.",
+      "correction": "Close eligibility at 20 October 2026.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F04",
+      "severity": "Major",
+      "location": "Search strategy",
+      "concern": "Full-text accessibility and database coverage could bias conclusions about gaps.",
+      "correction": "Describe this as a focused accessible-corpus review and explicitly limit the inference.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F05",
+      "severity": "Major",
+      "location": "Corpus table",
+      "concern": "Ranking edition, category and verification status were not consistently explicit for the new journals.",
+      "correction": "Use 2025 JCR / 2024 JIF consistently; verify Sensors Q2 (II), Electronics Q2 (EE) and Q3 (CS-IS), Scientific Reports Q1 (MS) against the archived official table; add the actual source citation.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F06",
+      "severity": "Major",
+      "location": "P7 summary; comparison; gaps",
+      "concern": "The WeiDetect auxiliary-size claim pointed to Table 9 rather than the CSE-CIC-IDS2018 Appendix Table 11; its scope and the reported +70% magnitude were easy to overread.",
+      "correction": "Correct the table, name the auxiliary-pool denominator and dataset-specific setting, and remove the ambiguous percentage/percentage-point magnitude.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F07",
+      "severity": "Major",
+      "location": "P4/P9/P10/P12 critiques",
+      "concern": "Score gaps, uncertain samples, rare-class confusion and acquisition triggers were treated as stronger causal evidence than they provide.",
+      "correction": "Distinguish demonstrated results from plausible vulnerabilities and hypotheses; label-poisoned features need not be outliers.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F08",
+      "severity": "Major",
+      "location": "Cross-paper reporting critique",
+      "concern": "Missing repeated-seed uncertainty was sometimes equated with proof that no repeated runs occurred.",
+      "correction": "Retain the documented single seed in P11; qualify P12/P13 as lacking reported repeated-seed uncertainty.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F09",
+      "severity": "Major",
+      "location": "Step 1; support table",
+      "concern": "Fixed 3/8/12/15 output widths did not explain what happens when rare classes lose training support.",
+      "correction": "Treat these as maximum widths, omit classes with no usable training rows, and freeze actual widths/eligibility before final runs.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F10",
+      "severity": "Major",
+      "location": "Step 2; source appendix",
+      "concern": "Aligning MachineLearningCSV feature rows to separate metadata rows was not identifiable in the presence of duplicates.",
+      "correction": "Project numeric features and metadata from the same TrafficLabelling row; use MachineLearningCSV as the schema reference; prohibit positional/value-only joins.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F11",
+      "severity": "Major",
+      "location": "Step 2",
+      "concern": "Session identity, endpoint direction and reconstruction uncertainty were underdefined.",
+      "correction": "Use unordered endpoint-and-port pairs plus protocol and interval-based 120-second idle gaps, with data-only threshold sensitivity and a metadata feasibility gate.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F12",
+      "severity": "Major",
+      "location": "Step 3; isolation appendix",
+      "concern": "Session isolation and exact-content isolation could conflict if split assignment was done separately by class.",
+      "correction": "Group connected components of session and duplicate links before assigning splits/owners; quarantine conflicting labels and retain deterministic same-label survivors.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F13",
+      "severity": "Major",
+      "location": "Step 3; validity",
+      "concern": "Per-family chronology could be mistaken for globally future-only testing, especially with mixed-label components.",
+      "correction": "Use one fixed group-stratified split with approximate ratios and explicitly limit conclusions to simulated class arrival; report dates and host/testbed confounding.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F14",
+      "severity": "Major",
+      "location": "Steps 1/3",
+      "concern": "T0, later benign cohorts, scaler behaviour and metadata availability needed coherent boundaries.",
+      "correction": "Use isolated Monday T0 only for the frozen scaler, forbid refitting/clipping and fresh-record reuse; permit IDs for bookkeeping but exclude metadata from predictive inputs.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F15",
+      "severity": "Major",
+      "location": "Support table; acquisition",
+      "concern": "Row counts alone did not define adequate group support or guarantee nonempty acquisition sets.",
+      "correction": "Add a distinct-component floor, required anchors/source and at least one eligible untargeted new family in each acquisition stage; call the floor operational rather than a power guarantee.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F16",
+      "severity": "Major",
+      "location": "Step 4; external tier",
+      "concern": "The external dataset was budgeted without an explicit transferred source-family/schedule protocol.",
+      "correction": "Make it conditional on an independently locked schema, source mapping, schedule, dose and isolation audit; transfer method settings only.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F17",
+      "severity": "Major",
+      "location": "Step 7 dose",
+      "concern": "The equal-client 10% global corruption example did not describe the actual Dirichlet ownership design.",
+      "correction": "Report realised global and source-local denominators, admitted poison and aggregation weights.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F18",
+      "severity": "Major",
+      "location": "Step 7 pairing",
+      "concern": "Dose draws were not explicitly nested or protected from filter-induced changes to random-number consumption.",
+      "correction": "Use nested prefixes of one eligible-ID permutation, common attack IDs across arms, and separate random streams.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F19",
+      "severity": "Major",
+      "location": "Threat model; pilots; budget; failure taxonomy",
+      "concern": "Fallbacks changed attacker count/maximum dose while the final four-dose grid and contrasts remained underspecified.",
+      "correction": "Keep one attacker and the original four doses for confirmation; report weak/null attacks and require a separate exploratory protocol for stronger threats.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F20",
+      "severity": "Major",
+      "location": "Development pilots",
+      "concern": "Hyperparameter pair values, pilot defaults, score aggregation and tie-breaking were missing.",
+      "correction": "Specify the grids/defaults, one common synchronisation budget, clean development tuning, and deterministic ties; reuse DR settings for its admission variants.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F21",
+      "severity": "Major",
+      "location": "Step 7",
+      "concern": "An identical E1 checkpoint was not fully specified as model plus persistent client state.",
+      "correction": "Clone replay, counters and random states as well as weights; retain all final seeds regardless of attack effect.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F22",
+      "severity": "Major",
+      "location": "Admission rule",
+      "concern": "Loss ranking of new classes depended on newly initialised outputs, stochastic scoring and undefined ties.",
+      "correction": "Expand before scoring, disable dropout, freeze one scorer per stage, break ties by immutable ID, and acknowledge that novelty scores may be unreliable.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F23",
+      "severity": "Major",
+      "location": "Steps 1/5; algorithm",
+      "concern": "It was unclear whether counts/new-class protection could access true labels or poison markers.",
+      "correction": "Register supplied current labels before filtering and use only supplied labels for counts/quotas; restrict reference labels to the builder/evaluator and oracle diagnostic.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F24",
+      "severity": "Major",
+      "location": "Algorithm; reservoir",
+      "concern": "Admission could be read as applying to memory only, while all current rows still trained.",
+      "correction": "Use admitted mini-batches and admitted IDs for both training and replay insertion; bypass memory in FT/EI.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F25",
+      "severity": "Major",
+      "location": "FedAvg; algorithm",
+      "concern": "Zero-current-data clients and repeated-epoch/replay counts were not explicitly excluded from aggregation weights.",
+      "correction": "Weight distinct admitted current rows once, exclude inactive clients, and invalidate a stage with no active clients.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F26",
+      "severity": "Major",
+      "location": "EWC-style learner",
+      "concern": "The anchor, importance owner, evaluation point and relation to the final aggregate were incomplete.",
+      "correction": "Broadcast the final shared model, update client-local importance there once, anchor at that model, preserve old importance and zero-pad new coordinates.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F27",
+      "severity": "Major",
+      "location": "Learner definitions",
+      "concern": "The design could be mistaken for exact Fisher-EWC and canonical DER++ implementations.",
+      "correction": "Identify squared minibatch-mean gradients as an approximation and explicitly disclose masked/normalised, post-update-logit DER++-style choices.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F28",
+      "severity": "Major",
+      "location": "Reservoir",
+      "concern": "First-pass insertion was ambiguous across multiple synchronisation rounds, and reservoir fairness did not name the admitted population.",
+      "correction": "Persist seen-ID/counter state across rounds/epochs, consider each admitted ID once, and specify replay sample size and the empty-memory case.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F29",
+      "severity": "Major",
+      "location": "Stored logits",
+      "concern": "Storage timing, dropout state, head alignment and post-broadcast refresh were undefined.",
+      "correction": "Cache post-update evaluation-mode logits once, align by class ID, and leave stored logits unchanged across broadcasts.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F30",
+      "severity": "Major",
+      "location": "Acquisition equation; traceability",
+      "concern": "Averaging Hulk together with honest new families entangled the adaptation endpoint with the targeted attack endpoint.",
+      "correction": "Define confirmatory acquisition over eligible untargeted new families; keep an all-new score including Hulk descriptive.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F31",
+      "severity": "Major",
+      "location": "Admission diagnostics",
+      "concern": "Honest-new admission could be presented as evidence for DC even though it retains those supplied labels by construction.",
+      "correction": "Treat 100% retention as a mechanism check and require measured untargeted-family F1 for adaptation.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F32",
+      "severity": "Major",
+      "location": "Persistence endpoint; validity",
+      "concern": "A later source error alone does not establish replay causation or recovery after honest source data return.",
+      "correction": "Use matched clean trajectories, call H attack-associated persistence, and distinguish withdrawal without fresh source data from recovery.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F33",
+      "severity": "Major",
+      "location": "Memory diagnostic; budget",
+      "concern": "Replacing poison with unspecified honest records altered several memory fields and did not define a unique causal contrast; the diagnosed arm was unclear.",
+      "correction": "Use two DC clones per seed; correct stored poisoned labels only, holding IDs/features/logits/weights/states fixed; restrict interpretation to erroneous-label replay and keep 24 continuations.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F34",
+      "severity": "Major",
+      "location": "Metric undefined-value rule",
+      "concern": "Undefined precision with no predicted positives could lead to dropping a valid zero-recall/zero-F1 class.",
+      "correction": "Calculate F1 directly from TP/FP/FN, preserve legitimate zeros, and reserve N/A for actual zero denominators with declared handling.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F35",
+      "severity": "Major",
+      "location": "Metrics appendix",
+      "concern": "ACC, BWT, forgetting, test-bank composition and clean FAR timing were named without full operational definitions.",
+      "correction": "Define stage cohorts, current-head predictions, cumulative scoring, equal-stage ACC, BWT/forgetting and E4 clean FAR on a fixed benign bank.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F36",
+      "severity": "Minor",
+      "location": "Interaction appendix",
+      "concern": "A generic clean-subtraction formula obscured that H and recall change were already clean-adjusted.",
+      "correction": "Write their learner contrast as a direct difference. The original is numerically equivalent if its zero-dose adjusted endpoint is correctly set to zero.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F37",
+      "severity": "Major",
+      "location": "Confirmatory statistics",
+      "concern": "Separate C1/C2 error control was legitimate only for the separately scoped question groups.",
+      "correction": "Strengthen the proposal to one 29-test Holm family for document-wide claims; explicitly note this is a conservative design refinement, not proof the old two-family arithmetic was invalid.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F38",
+      "severity": "Major",
+      "location": "Statistical appendix",
+      "concern": "Exact testing and interval language did not fully state symmetry, zero/tie handling or coverage limitations.",
+      "correction": "Specify sign enumeration on ranked nonzero differences, all-zero p=1, tied ranks, rank-biserial effects and descriptive bootstrap intervals; remove an underqualified exact-interval claim.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F39",
+      "severity": "Major",
+      "location": "Statistical conclusions",
+      "concern": "P-value resolution could be confused with power, and null significance with robustness/equivalence.",
+      "correction": "Recalculate the 29-test first-Holm resolution (11 nonzero pairs), state no demonstrated power guarantee, and retain uncertainty/null findings.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F40",
+      "severity": "Major",
+      "location": "Failure handling",
+      "concern": "Discard-and-fix language did not ensure that all affected matched runs were rerun.",
+      "correction": "Version repairs, rerun complete matched sets, avoid imputation, and preserve the fixed multiplicity count with unavailable tests reported explicitly.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F41",
+      "severity": "Minor",
+      "location": "Budget; ablations",
+      "concern": "The original 633-run sum was correct, but clone arms, eight changed settings, cached prefixes and the core/development distinction needed clarity.",
+      "correction": "Retain 633 full trajectories plus 24 continuations; explain 81 development, 240 core final, and the eight ablation settings.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F42",
+      "severity": "Major",
+      "location": "Cost; model paragraph",
+      "concern": "Raw parameter bytes and a small MLP did not establish total state size or CPU feasibility.",
+      "correction": "Separate the 76,348-byte raw payload from replay/importance/optimiser/serialisation costs; require pilot timings and report component costs.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F43",
+      "severity": "Major",
+      "location": "Baseline table",
+      "concern": "Fine-tuning was called a lower bound, which need not hold under poisoning or even clean learning.",
+      "correction": "Describe it as a reference without explicit retention, which can outperform continual-learning methods; distinguish the low-loss control from actual Co-teaching.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F44",
+      "severity": "Minor",
+      "location": "Architecture; captions",
+      "concern": "Figure labels implied generic leakage-free data and did not match the corrected acquisition endpoint.",
+      "correction": "Use group/content checks and honest-new F1; preserve the separate exploratory branch and compact its footer without shrinking diagram text.",
+      "status": "Addressed in revised source"
+    },
+    {
+      "id": "F45",
+      "severity": "Minor",
+      "location": "Typesetting; navigation",
+      "concern": "A floating glossary interrupted prose; comparison tables crowded one landscape page; section/float barriers produced a nearly empty page; heading/column text overflowed.",
+      "correction": "Keep tables/algorithms near their introductions, give comparison tables separate landscape pages at 9 pt, fix column widths and wrapping, group the RQs, and fit both diagrams together; add PDF metadata and caption hierarchy.",
+      "status": "Addressed in revised source"
+    }
+  ],
+  "validation": "validation.json",
+  "report": "audit.md",
+  "source": "C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\submissions\\phase2-with-claude.tex",
+  "pdf": "C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\output\\pdf\\phase2-with-claude.pdf"
+}

@@ -1,0 +1,43 @@
+{
+  "optimization_claim": "No training-loop speed optimization or CPU/CUDA equivalence claimed; vectorized EI is checked against independent per-record arithmetic",
+  "physical_clean_seconds": 4582.774755999955,
+  "profiles": [
+    {
+      "admission_seconds": 7.202858600030595,
+      "checkpoint_seconds": 6.329496600024868,
+      "evaluation_seconds": 35.51046109999879,
+      "importance_seconds": 0,
+      "learner": "FT",
+      "physical_clean_executions": 9,
+      "training_loop_seconds_max": 53.857524200000626,
+      "training_loop_seconds_median": 52.88986139999906,
+      "training_loop_seconds_min": 47.27333119999821,
+      "training_seconds": 447.6486791999778
+    },
+    {
+      "admission_seconds": 14.381544199990458,
+      "checkpoint_seconds": 29.362247799996112,
+      "evaluation_seconds": 96.2987018000058,
+      "importance_seconds": 60.8629120999758,
+      "learner": "EI",
+      "physical_clean_executions": 21,
+      "training_loop_seconds_max": 69.16705619999993,
+      "training_loop_seconds_median": 64.72703479999473,
+      "training_loop_seconds_min": 57.855412500000966,
+      "training_seconds": 1223.8748404999205
+    },
+    {
+      "admission_seconds": 24.224832899999456,
+      "checkpoint_seconds": 57.85493099990708,
+      "evaluation_seconds": 149.52300220003235,
+      "importance_seconds": 0,
+      "learner": "DR",
+      "physical_clean_executions": 39,
+      "training_loop_seconds_max": 114.18334049999976,
+      "training_loop_seconds_median": 81.39012479999656,
+      "training_loop_seconds_min": 35.47660899999755,
+      "training_seconds": 2654.2678226999124
+    }
+  ],
+  "scope": "Sequential, CPU single-thread complete clean trajectories, no GPU estimate; per-loop timings include scoring/importance/checkpoints and exclude setup/preparation/inference"
+}

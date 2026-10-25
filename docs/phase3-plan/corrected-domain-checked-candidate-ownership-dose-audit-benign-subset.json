@@ -1,0 +1,1849 @@
+{
+  "status": "conditional_data_only_ownership_and_dose_audit_not_final_protocol_lock",
+  "completed_utc": "2026-10-24T05:13:25.515738+00:00",
+  "parent_split": "corrected-domain-checked-candidate-split-feasibility.json",
+  "release_candidate": "corrected-domain-checked",
+  "benign_policy": "benign-subset-by-component",
+  "requires_split_audit_version": 2,
+  "ownership_seed_key": "SeedSequence([namespace_version=1,namespace_id=1,training_seed]); PCG64",
+  "attacker_seed_key": "SeedSequence([namespace_version=1,namespace_id=2,training_seed]); PCG64",
+  "builder_benign_seed": 2027,
+  "algorithm": "protocol-closure-spec.md deterministic normalized squared-error greedy allocator",
+  "preselection_training_rows": 817226,
+  "selected_training_rows": 183039,
+  "selected_training_components": 75613,
+  "mandatory_benign_stage_counts": [
+    5,
+    519,
+    0,
+    115
+  ],
+  "selected_benign_stage_counts": [
+    3500,
+    3500,
+    3500,
+    3500
+  ],
+  "all_stages_have_benign": true,
+  "stage_total_rows": {
+    "1": 7659,
+    "2": 106233,
+    "3": 7176,
+    "4": 61971
+  },
+  "family_training_rows": {
+    "Benign": 14000,
+    "Bot": 441,
+    "DDoS": 57086,
+    "DoS GoldenEye": 4539,
+    "DoS Hulk": 95086,
+    "DoS Slowhttptest": 1037,
+    "DoS Slowloris": 2071,
+    "FTP-Patator": 2382,
+    "Heartbleed": 0,
+    "Infiltration": 24,
+    "Infiltration - Portscan": 3592,
+    "PortScan": 944,
+    "SSH-Patator": 1777,
+    "Web Attack Brute Force": 43,
+    "Web Attack Sql Injection": 7,
+    "Web Attack XSS": 10
+  },
+  "seeds": [
+    {
+      "seed": 1,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 3,
+      "E2_source_counts": [
+        15746,
+        10164,
+        775,
+        39782,
+        28619
+      ],
+      "E2_honest_benign_counts": [
+        992,
+        627,
+        624,
+        616,
+        641
+      ],
+      "E2_current_counts": [
+        17468,
+        12587,
+        4112,
+        41495,
+        30571
+      ],
+      "normalized_allocation_objective": 0.07107458757919675,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 616,
+          "attacked_benign_quota": 462,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            17220,
+            12431,
+            3956,
+            41341,
+            30411
+          ],
+          "attacker_FedAvg_weight_filtered": 0.39238223597414557
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 3978,
+          "local_raw_poison_fraction": 0.09586697192432823,
+          "global_raw_poison_fraction": 0.03744599135861738,
+          "attacked_supplied_benign_count": 4594,
+          "attacked_benign_quota": 3446,
+          "minimum_retained_poison": 2830,
+          "DQ_expected_retained_poison": 2983.9329560296037,
+          "DC_DM_DQ_admitted_counts": [
+            17220,
+            12431,
+            3956,
+            40347,
+            30411
+          ],
+          "attacker_FedAvg_weight_filtered": 0.386595122886025
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 11934,
+          "local_raw_poison_fraction": 0.2876009157729847,
+          "global_raw_poison_fraction": 0.11233797407585214,
+          "attacked_supplied_benign_count": 12550,
+          "attacked_benign_quota": 9413,
+          "minimum_retained_poison": 8797,
+          "DQ_expected_retained_poison": 8950.975458167331,
+          "DC_DM_DQ_admitted_counts": [
+            17220,
+            12431,
+            3956,
+            38358,
+            30411
+          ],
+          "attacker_FedAvg_weight_filtered": 0.3746776588262874
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 19891,
+          "local_raw_poison_fraction": 0.4793589589107121,
+          "global_raw_poison_fraction": 0.1872393700639161,
+          "attacked_supplied_benign_count": 20507,
+          "attacked_benign_quota": 15381,
+          "minimum_retained_poison": 14765,
+          "DQ_expected_retained_poison": 14918.977471107426,
+          "DC_DM_DQ_admitted_counts": [
+            17220,
+            12431,
+            3956,
+            36369,
+            30411
+          ],
+          "attacker_FedAvg_weight_filtered": 0.36228794565033323
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          1684,
+          794,
+          1088,
+          918,
+          3175
+        ],
+        "2": [
+          17468,
+          12587,
+          4112,
+          41495,
+          30571
+        ],
+        "3": [
+          1806,
+          1069,
+          2024,
+          1245,
+          1032
+        ],
+        "4": [
+          48135,
+          9750,
+          2709,
+          660,
+          717
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 3,
+      "E2_source_counts": [
+        54605,
+        16189,
+        3058,
+        19721,
+        1513
+      ],
+      "E2_honest_benign_counts": [
+        636,
+        623,
+        646,
+        589,
+        1006
+      ],
+      "E2_current_counts": [
+        57226,
+        17623,
+        3878,
+        23704,
+        3802
+      ],
+      "normalized_allocation_objective": 0.1580244899858511,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 589,
+          "attacked_benign_quota": 442,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            57067,
+            17468,
+            3717,
+            23557,
+            3551
+          ],
+          "attacker_FedAvg_weight_filtered": 0.22358580106302203
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 1972,
+          "local_raw_poison_fraction": 0.08319271009112386,
+          "global_raw_poison_fraction": 0.018562970075212033,
+          "attacked_supplied_benign_count": 2561,
+          "attacked_benign_quota": 1921,
+          "minimum_retained_poison": 1332,
+          "DQ_expected_retained_poison": 1479.1925029285435,
+          "DC_DM_DQ_admitted_counts": [
+            57067,
+            17468,
+            3717,
+            23064,
+            3551
+          ],
+          "attacker_FedAvg_weight_filtered": 0.21993572811275233
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 5916,
+          "local_raw_poison_fraction": 0.24957813027337158,
+          "global_raw_poison_fraction": 0.0556889102256361,
+          "attacked_supplied_benign_count": 6505,
+          "attacked_benign_quota": 4879,
+          "minimum_retained_poison": 4290,
+          "DQ_expected_retained_poison": 4437.227363566487,
+          "DC_DM_DQ_admitted_counts": [
+            57067,
+            17468,
+            3717,
+            22078,
+            3551
+          ],
+          "attacker_FedAvg_weight_filtered": 0.21253164678815184
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 9860,
+          "local_raw_poison_fraction": 0.4159635504556193,
+          "global_raw_poison_fraction": 0.09281485037606017,
+          "attacked_supplied_benign_count": 10449,
+          "attacked_benign_quota": 7837,
+          "minimum_retained_poison": 7248,
+          "DQ_expected_retained_poison": 7395.235907742368,
+          "DC_DM_DQ_admitted_counts": [
+            57067,
+            17468,
+            3717,
+            21092,
+            3551
+          ],
+          "attacker_FedAvg_weight_filtered": 0.20498566499829923
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          1151,
+          1981,
+          2115,
+          610,
+          1802
+        ],
+        "2": [
+          57226,
+          17623,
+          3878,
+          23704,
+          3802
+        ],
+        "3": [
+          757,
+          34,
+          1653,
+          2224,
+          2508
+        ],
+        "4": [
+          3131,
+          40602,
+          4542,
+          595,
+          13101
+        ]
+      }
+    },
+    {
+      "seed": 3,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 4,
+      "E2_source_counts": [
+        7394,
+        18214,
+        8230,
+        7713,
+        53535
+      ],
+      "E2_honest_benign_counts": [
+        76,
+        285,
+        947,
+        913,
+        1279
+      ],
+      "E2_current_counts": [
+        8232,
+        19448,
+        11417,
+        8987,
+        58149
+      ],
+      "normalized_allocation_objective": 0.02436770895424366,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 1279,
+          "attacked_benign_quota": 960,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            8213,
+            19377,
+            11181,
+            8759,
+            57830
+          ],
+          "attacker_FedAvg_weight_filtered": 0.5488800303720577
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 5353,
+          "local_raw_poison_fraction": 0.09205661318337374,
+          "global_raw_poison_fraction": 0.05038923874878804,
+          "attacked_supplied_benign_count": 6632,
+          "attacked_benign_quota": 4974,
+          "minimum_retained_poison": 3695,
+          "DQ_expected_retained_poison": 4014.75,
+          "DC_DM_DQ_admitted_counts": [
+            8213,
+            19377,
+            11181,
+            8759,
+            56491
+          ],
+          "attacker_FedAvg_weight_filtered": 0.5430730333298084
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 16060,
+          "local_raw_poison_fraction": 0.27618703675041706,
+          "global_raw_poison_fraction": 0.15117712951719334,
+          "attacked_supplied_benign_count": 17339,
+          "attacked_benign_quota": 13005,
+          "minimum_retained_poison": 11726,
+          "DQ_expected_retained_poison": 12045.694676740297,
+          "DC_DM_DQ_admitted_counts": [
+            8213,
+            19377,
+            11181,
+            8759,
+            53815
+          ],
+          "attacker_FedAvg_weight_filtered": 0.5310079431644383
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 26767,
+          "local_raw_poison_fraction": 0.4603174603174603,
+          "global_raw_poison_fraction": 0.25196502028559864,
+          "attacked_supplied_benign_count": 28046,
+          "attacked_benign_quota": 21035,
+          "minimum_retained_poison": 19756,
+          "DQ_expected_retained_poison": 20075.727198174427,
+          "DC_DM_DQ_admitted_counts": [
+            8213,
+            19377,
+            11181,
+            8759,
+            51138
+          ],
+          "attacker_FedAvg_weight_filtered": 0.5182835367089634
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          986,
+          721,
+          2756,
+          1623,
+          1573
+        ],
+        "2": [
+          8232,
+          19448,
+          11417,
+          8987,
+          58149
+        ],
+        "3": [
+          29,
+          3290,
+          1397,
+          744,
+          1716
+        ],
+        "4": [
+          10404,
+          3766,
+          3518,
+          24761,
+          19522
+        ]
+      }
+    },
+    {
+      "seed": 4,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 2,
+      "E2_source_counts": [
+        4462,
+        12145,
+        26737,
+        45911,
+        5831
+      ],
+      "E2_honest_benign_counts": [
+        172,
+        882,
+        1223,
+        378,
+        845
+      ],
+      "E2_current_counts": [
+        7333,
+        15373,
+        29201,
+        46922,
+        7404
+      ],
+      "normalized_allocation_objective": 0.1375263012057688,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 1223,
+          "attacked_benign_quota": 918,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            7290,
+            15153,
+            28896,
+            46828,
+            7193
+          ],
+          "attacker_FedAvg_weight_filtered": 0.2742596810933941
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 2673,
+          "local_raw_poison_fraction": 0.09153796102873189,
+          "global_raw_poison_fraction": 0.025161672926491768,
+          "attacked_supplied_benign_count": 3896,
+          "attacked_benign_quota": 2922,
+          "minimum_retained_poison": 1699,
+          "DQ_expected_retained_poison": 2004.75,
+          "DC_DM_DQ_admitted_counts": [
+            7290,
+            15153,
+            28227,
+            46828,
+            7193
+          ],
+          "attacker_FedAvg_weight_filtered": 0.2696220305470384
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 8021,
+          "local_raw_poison_fraction": 0.27468237389130506,
+          "global_raw_poison_fraction": 0.07550384532113373,
+          "attacked_supplied_benign_count": 9244,
+          "attacked_benign_quota": 6933,
+          "minimum_retained_poison": 5710,
+          "DQ_expected_retained_poison": 6015.75,
+          "DC_DM_DQ_admitted_counts": [
+            7290,
+            15153,
+            26890,
+            46828,
+            7193
+          ],
+          "attacker_FedAvg_weight_filtered": 0.26017377169727346
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 13368,
+          "local_raw_poison_fraction": 0.4577925413513236,
+          "global_raw_poison_fraction": 0.1258366044449465,
+          "attacked_supplied_benign_count": 14591,
+          "attacked_benign_quota": 10944,
+          "minimum_retained_poison": 9721,
+          "DQ_expected_retained_poison": 10026.687135905695,
+          "DC_DM_DQ_admitted_counts": [
+            7290,
+            15153,
+            25554,
+            46828,
+            7193
+          ],
+          "attacker_FedAvg_weight_filtered": 0.25048520849261896
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          478,
+          3295,
+          1677,
+          1419,
+          790
+        ],
+        "2": [
+          7333,
+          15373,
+          29201,
+          46922,
+          7404
+        ],
+        "3": [
+          1959,
+          3091,
+          1987,
+          30,
+          109
+        ],
+        "4": [
+          25953,
+          3872,
+          9208,
+          2142,
+          20796
+        ]
+      }
+    },
+    {
+      "seed": 5,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 0,
+      "E2_source_counts": [
+        940,
+        572,
+        814,
+        38628,
+        54132
+      ],
+      "E2_honest_benign_counts": [
+        746,
+        1141,
+        133,
+        742,
+        738
+      ],
+      "E2_current_counts": [
+        2406,
+        2055,
+        1646,
+        40446,
+        59680
+      ],
+      "normalized_allocation_objective": 0.07129381120296197,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 746,
+          "attacked_benign_quota": 560,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            2220,
+            1770,
+            1613,
+            40261,
+            59496
+          ],
+          "attacker_FedAvg_weight_filtered": 0.021070615034168565
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 94,
+          "local_raw_poison_fraction": 0.03906899418121363,
+          "global_raw_poison_fraction": 0.0008848474579462125,
+          "attacked_supplied_benign_count": 840,
+          "attacked_benign_quota": 630,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 70.5,
+          "DC_DM_DQ_admitted_counts": [
+            2196,
+            1770,
+            1613,
+            40261,
+            59496
+          ],
+          "attacker_FedAvg_weight_filtered": 0.020847573479152427
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 282,
+          "local_raw_poison_fraction": 0.1172069825436409,
+          "global_raw_poison_fraction": 0.0026545423738386377,
+          "attacked_supplied_benign_count": 1028,
+          "attacked_benign_quota": 771,
+          "minimum_retained_poison": 25,
+          "DQ_expected_retained_poison": 211.5,
+          "DC_DM_DQ_admitted_counts": [
+            2149,
+            1770,
+            1613,
+            40261,
+            59496
+          ],
+          "attacker_FedAvg_weight_filtered": 0.020410489224895287
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 470,
+          "local_raw_poison_fraction": 0.19534497090606817,
+          "global_raw_poison_fraction": 0.004424237289731063,
+          "attacked_supplied_benign_count": 1216,
+          "attacked_benign_quota": 912,
+          "minimum_retained_poison": 166,
+          "DQ_expected_retained_poison": 352.5,
+          "DC_DM_DQ_admitted_counts": [
+            2102,
+            1770,
+            1613,
+            40261,
+            59496
+          ],
+          "attacker_FedAvg_weight_filtered": 0.019973014575929763
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          2074,
+          3079,
+          254,
+          1371,
+          881
+        ],
+        "2": [
+          2406,
+          2055,
+          1646,
+          40446,
+          59680
+        ],
+        "3": [
+          2273,
+          2705,
+          763,
+          682,
+          753
+        ],
+        "4": [
+          3195,
+          15555,
+          5795,
+          14533,
+          22893
+        ]
+      }
+    },
+    {
+      "seed": 6,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 1,
+      "E2_source_counts": [
+        31960,
+        11535,
+        49266,
+        2052,
+        273
+      ],
+      "E2_honest_benign_counts": [
+        1467,
+        354,
+        596,
+        34,
+        1049
+      ],
+      "E2_current_counts": [
+        34022,
+        14341,
+        50426,
+        4962,
+        2482
+      ],
+      "normalized_allocation_objective": 0.17781991064607044,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 354,
+          "attacked_benign_quota": 266,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            33656,
+            14253,
+            50277,
+            4954,
+            2220
+          ],
+          "attacker_FedAvg_weight_filtered": 0.13527904328018223
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 1153,
+          "local_raw_poison_fraction": 0.0803988564256328,
+          "global_raw_poison_fraction": 0.010853501266084926,
+          "attacked_supplied_benign_count": 1507,
+          "attacked_benign_quota": 1131,
+          "minimum_retained_poison": 777,
+          "DQ_expected_retained_poison": 865.3238221632382,
+          "DC_DM_DQ_admitted_counts": [
+            33656,
+            13965,
+            50277,
+            4954,
+            2220
+          ],
+          "attacker_FedAvg_weight_filtered": 0.13290886249428963
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 3460,
+          "local_raw_poison_fraction": 0.2412662994212398,
+          "global_raw_poison_fraction": 0.03256991706908399,
+          "attacked_supplied_benign_count": 3814,
+          "attacked_benign_quota": 2861,
+          "minimum_retained_poison": 2507,
+          "DQ_expected_retained_poison": 2595.4535920293656,
+          "DC_DM_DQ_admitted_counts": [
+            33656,
+            13388,
+            50277,
+            4954,
+            2220
+          ],
+          "attacker_FedAvg_weight_filtered": 0.12812096272548926
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 5767,
+          "local_raw_poison_fraction": 0.4021337424168468,
+          "global_raw_poison_fraction": 0.054286332872083065,
+          "attacked_supplied_benign_count": 6121,
+          "attacked_benign_quota": 4591,
+          "minimum_retained_poison": 4237,
+          "DQ_expected_retained_poison": 4325.485541578173,
+          "DC_DM_DQ_admitted_counts": [
+            33656,
+            12811,
+            50277,
+            4954,
+            2220
+          ],
+          "attacker_FedAvg_weight_filtered": 0.12327989376238957
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          2790,
+          1137,
+          566,
+          1979,
+          1187
+        ],
+        "2": [
+          34022,
+          14341,
+          50426,
+          4962,
+          2482
+        ],
+        "3": [
+          4196,
+          742,
+          167,
+          949,
+          1122
+        ],
+        "4": [
+          4527,
+          27460,
+          20634,
+          7130,
+          2220
+        ]
+      }
+    },
+    {
+      "seed": 7,
+      "eligible_attackers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 4,
+      "E2_source_counts": [
+        2,
+        16720,
+        4095,
+        70569,
+        3700
+      ],
+      "E2_honest_benign_counts": [
+        1176,
+        725,
+        1525,
+        51,
+        23
+      ],
+      "E2_current_counts": [
+        3067,
+        17860,
+        6773,
+        71666,
+        6867
+      ],
+      "normalized_allocation_objective": 0.009276915022117414,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 23,
+          "attacked_benign_quota": 18,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            2773,
+            17679,
+            6392,
+            71654,
+            6862
+          ],
+          "attacker_FedAvg_weight_filtered": 0.06512908124525436
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 370,
+          "local_raw_poison_fraction": 0.05388087956895296,
+          "global_raw_poison_fraction": 0.00348291020680956,
+          "attacked_supplied_benign_count": 393,
+          "attacked_benign_quota": 295,
+          "minimum_retained_poison": 272,
+          "DQ_expected_retained_poison": 277.735368956743,
+          "DC_DM_DQ_admitted_counts": [
+            2773,
+            17679,
+            6392,
+            71654,
+            6769
+          ],
+          "attacker_FedAvg_weight_filtered": 0.06430315293491788
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 1110,
+          "local_raw_poison_fraction": 0.16164263870685888,
+          "global_raw_poison_fraction": 0.01044873062042868,
+          "attacked_supplied_benign_count": 1133,
+          "attacked_benign_quota": 850,
+          "minimum_retained_poison": 827,
+          "DQ_expected_retained_poison": 832.7449249779347,
+          "DC_DM_DQ_admitted_counts": [
+            2773,
+            17679,
+            6392,
+            71654,
+            6584
+          ],
+          "attacker_FedAvg_weight_filtered": 0.06265583068460821
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 1850,
+          "local_raw_poison_fraction": 0.26940439784476483,
+          "global_raw_poison_fraction": 0.0174145510340478,
+          "attacked_supplied_benign_count": 1873,
+          "attacked_benign_quota": 1405,
+          "minimum_retained_poison": 1382,
+          "DQ_expected_retained_poison": 1387.7469300587293,
+          "DC_DM_DQ_admitted_counts": [
+            2773,
+            17679,
+            6392,
+            71654,
+            6399
+          ],
+          "attacker_FedAvg_weight_filtered": 0.061002697884591554
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          2015,
+          647,
+          2410,
+          647,
+          1940
+        ],
+        "2": [
+          3067,
+          17860,
+          6773,
+          71666,
+          6867
+        ],
+        "3": [
+          1629,
+          18,
+          4996,
+          513,
+          20
+        ],
+        "4": [
+          11069,
+          6684,
+          11591,
+          29561,
+          3066
+        ]
+      }
+    },
+    {
+      "seed": 8,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 2,
+      "E2_source_counts": [
+        3341,
+        4678,
+        444,
+        71862,
+        14761
+      ],
+      "E2_honest_benign_counts": [
+        784,
+        750,
+        596,
+        1106,
+        264
+      ],
+      "E2_current_counts": [
+        4801,
+        9065,
+        3167,
+        73309,
+        15891
+      ],
+      "normalized_allocation_objective": 0.157827961524024,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 596,
+          "attacked_benign_quota": 447,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            4605,
+            8878,
+            3018,
+            73033,
+            15825
+          ],
+          "attacker_FedAvg_weight_filtered": 0.028644918801431298
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 44,
+          "local_raw_poison_fraction": 0.013893274392169246,
+          "global_raw_poison_fraction": 0.0004141839164854612,
+          "attacked_supplied_benign_count": 640,
+          "attacked_benign_quota": 480,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 33.0,
+          "DC_DM_DQ_admitted_counts": [
+            4605,
+            8878,
+            3007,
+            73033,
+            15825
+          ],
+          "attacker_FedAvg_weight_filtered": 0.028543493943881233
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 133,
+          "local_raw_poison_fraction": 0.0419955794126934,
+          "global_raw_poison_fraction": 0.0012519650202855986,
+          "attacked_supplied_benign_count": 729,
+          "attacked_benign_quota": 547,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 99.79561042524006,
+          "DC_DM_DQ_admitted_counts": [
+            4605,
+            8878,
+            2985,
+            73033,
+            15825
+          ],
+          "attacker_FedAvg_weight_filtered": 0.028340580673338018
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 222,
+          "local_raw_poison_fraction": 0.07009788443321756,
+          "global_raw_poison_fraction": 0.002089746124085736,
+          "attacked_supplied_benign_count": 818,
+          "attacked_benign_quota": 614,
+          "minimum_retained_poison": 18,
+          "DQ_expected_retained_poison": 166.6356968215159,
+          "DC_DM_DQ_admitted_counts": [
+            4605,
+            8878,
+            2963,
+            73033,
+            15825
+          ],
+          "attacker_FedAvg_weight_filtered": 0.02813758261794424
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          1464,
+          1269,
+          1328,
+          3556,
+          42
+        ],
+        "2": [
+          4801,
+          9065,
+          3167,
+          73309,
+          15891
+        ],
+        "3": [
+          2384,
+          2261,
+          178,
+          1808,
+          545
+        ],
+        "4": [
+          20082,
+          4209,
+          16489,
+          5824,
+          15367
+        ]
+      }
+    },
+    {
+      "seed": 9,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 0,
+      "E2_source_counts": [
+        73602,
+        13960,
+        748,
+        3313,
+        3463
+      ],
+      "E2_honest_benign_counts": [
+        1396,
+        989,
+        993,
+        48,
+        74
+      ],
+      "E2_current_counts": [
+        75657,
+        15571,
+        5841,
+        3771,
+        5393
+      ],
+      "normalized_allocation_objective": 0.11643947726536652,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 1396,
+          "attacked_benign_quota": 1047,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            75308,
+            15324,
+            5593,
+            3759,
+            5375
+          ],
+          "attacker_FedAvg_weight_filtered": 0.7147751971829649
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 7360,
+          "local_raw_poison_fraction": 0.09728115045534451,
+          "global_raw_poison_fraction": 0.0692816733030226,
+          "attacked_supplied_benign_count": 8756,
+          "attacked_benign_quota": 6567,
+          "minimum_retained_poison": 5171,
+          "DQ_expected_retained_poison": 5520.0,
+          "DC_DM_DQ_admitted_counts": [
+            73468,
+            15324,
+            5593,
+            3759,
+            5375
+          ],
+          "attacker_FedAvg_weight_filtered": 0.7097054646973019
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 22080,
+          "local_raw_poison_fraction": 0.29184345136603357,
+          "global_raw_poison_fraction": 0.2078450199090678,
+          "attacked_supplied_benign_count": 23476,
+          "attacked_benign_quota": 17607,
+          "minimum_retained_poison": 16211,
+          "DQ_expected_retained_poison": 16560.0,
+          "DC_DM_DQ_admitted_counts": [
+            69788,
+            15324,
+            5593,
+            3759,
+            5375
+          ],
+          "attacker_FedAvg_weight_filtered": 0.6990053986918939
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 36801,
+          "local_raw_poison_fraction": 0.4864189698243388,
+          "global_raw_poison_fraction": 0.34641777978594224,
+          "attacked_supplied_benign_count": 38197,
+          "attacked_benign_quota": 28648,
+          "minimum_retained_poison": 27252,
+          "DQ_expected_retained_poison": 27600.990863156792,
+          "DC_DM_DQ_admitted_counts": [
+            66108,
+            15324,
+            5593,
+            3759,
+            5375
+          ],
+          "attacker_FedAvg_weight_filtered": 0.6874863507316008
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          2804,
+          1839,
+          1315,
+          699,
+          1002
+        ],
+        "2": [
+          75657,
+          15571,
+          5841,
+          3771,
+          5393
+        ],
+        "3": [
+          2617,
+          774,
+          1094,
+          2174,
+          517
+        ],
+        "4": [
+          7941,
+          2352,
+          26419,
+          1094,
+          24165
+        ]
+      }
+    },
+    {
+      "seed": 10,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 0,
+      "E2_source_counts": [
+        33568,
+        665,
+        6260,
+        10677,
+        43916
+      ],
+      "E2_honest_benign_counts": [
+        1356,
+        66,
+        968,
+        973,
+        137
+      ],
+      "E2_current_counts": [
+        37263,
+        2057,
+        7636,
+        12624,
+        46653
+      ],
+      "normalized_allocation_objective": 0.022522469432057924,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 1356,
+          "attacked_benign_quota": 1017,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            36924,
+            2041,
+            7394,
+            12381,
+            46619
+          ],
+          "attacker_FedAvg_weight_filtered": 0.35045890716502626
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 3356,
+          "local_raw_poison_fraction": 0.0900625285135389,
+          "global_raw_poison_fraction": 0.03159093690284563,
+          "attacked_supplied_benign_count": 4712,
+          "attacked_benign_quota": 3534,
+          "minimum_retained_poison": 2178,
+          "DQ_expected_retained_poison": 2517.0,
+          "DC_DM_DQ_admitted_counts": [
+            36085,
+            2041,
+            7394,
+            12381,
+            46619
+          ],
+          "attacker_FedAvg_weight_filtered": 0.3452449292001531
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 10070,
+          "local_raw_poison_fraction": 0.2702412580844269,
+          "global_raw_poison_fraction": 0.09479163725019532,
+          "attacked_supplied_benign_count": 11426,
+          "attacked_benign_quota": 8570,
+          "minimum_retained_poison": 7214,
+          "DQ_expected_retained_poison": 7552.940661648871,
+          "DC_DM_DQ_admitted_counts": [
+            34407,
+            2041,
+            7394,
+            12381,
+            46619
+          ],
+          "attacker_FedAvg_weight_filtered": 0.33456175492503065
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 16784,
+          "local_raw_poison_fraction": 0.45041998765531494,
+          "global_raw_poison_fraction": 0.15799233759754502,
+          "attacked_supplied_benign_count": 18140,
+          "attacked_benign_quota": 13605,
+          "minimum_retained_poison": 12249,
+          "DQ_expected_retained_poison": 12588.0,
+          "DC_DM_DQ_admitted_counts": [
+            32728,
+            2041,
+            7394,
+            12381,
+            46619
+          ],
+          "attacker_FedAvg_weight_filtered": 0.32351749157300597
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          2276,
+          880,
+          1366,
+          2976,
+          161
+        ],
+        "2": [
+          37263,
+          2057,
+          7636,
+          12624,
+          46653
+        ],
+        "3": [
+          2056,
+          1238,
+          714,
+          1009,
+          2159
+        ],
+        "4": [
+          17504,
+          1881,
+          1983,
+          20288,
+          20315
+        ]
+      }
+    },
+    {
+      "seed": 11,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 3,
+      "E2_source_counts": [
+        7741,
+        9490,
+        43789,
+        560,
+        33506
+      ],
+      "E2_honest_benign_counts": [
+        768,
+        97,
+        1264,
+        845,
+        526
+      ],
+      "E2_current_counts": [
+        9842,
+        11192,
+        47131,
+        3479,
+        34589
+      ],
+      "normalized_allocation_objective": 0.21788625414443702,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 845,
+          "attacked_benign_quota": 634,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            9650,
+            11168,
+            46815,
+            3268,
+            34458
+          ],
+          "attacker_FedAvg_weight_filtered": 0.031017758331039588
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 56,
+          "local_raw_poison_fraction": 0.01609657947686117,
+          "global_raw_poison_fraction": 0.0005271431664360415,
+          "attacked_supplied_benign_count": 901,
+          "attacked_benign_quota": 676,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 42.015538290788015,
+          "DC_DM_DQ_admitted_counts": [
+            9650,
+            11168,
+            46815,
+            3254,
+            34458
+          ],
+          "attacker_FedAvg_weight_filtered": 0.030888983815083773
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 168,
+          "local_raw_poison_fraction": 0.0482897384305835,
+          "global_raw_poison_fraction": 0.0015814294993081247,
+          "attacked_supplied_benign_count": 1013,
+          "attacked_benign_quota": 760,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 126.04146100691017,
+          "DC_DM_DQ_admitted_counts": [
+            9650,
+            11168,
+            46815,
+            3226,
+            34458
+          ],
+          "attacker_FedAvg_weight_filtered": 0.03063133207364433
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 280,
+          "local_raw_poison_fraction": 0.08048289738430583,
+          "global_raw_poison_fraction": 0.002635715832180208,
+          "attacked_supplied_benign_count": 1125,
+          "attacked_benign_quota": 844,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 210.06222222222223,
+          "DC_DM_DQ_admitted_counts": [
+            9650,
+            11168,
+            46815,
+            3198,
+            34458
+          ],
+          "attacker_FedAvg_weight_filtered": 0.03037354329512105
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          1004,
+          1375,
+          4005,
+          938,
+          337
+        ],
+        "2": [
+          9842,
+          11192,
+          47131,
+          3479,
+          34589
+        ],
+        "3": [
+          9,
+          1982,
+          4052,
+          27,
+          1106
+        ],
+        "4": [
+          242,
+          350,
+          59084,
+          2130,
+          165
+        ]
+      }
+    },
+    {
+      "seed": 42,
+      "eligible_attackers": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attacker": 3,
+      "E2_source_counts": [
+        32053,
+        11967,
+        19881,
+        604,
+        30581
+      ],
+      "E2_honest_benign_counts": [
+        809,
+        968,
+        270,
+        1067,
+        386
+      ],
+      "E2_current_counts": [
+        33716,
+        14102,
+        20416,
+        5497,
+        32502
+      ],
+      "normalized_allocation_objective": 0.008332276084569237,
+      "doses": [
+        {
+          "dose_fraction": [
+            0,
+            1
+          ],
+          "flipped_count": 0,
+          "local_raw_poison_fraction": 0.0,
+          "global_raw_poison_fraction": 0.0,
+          "attacked_supplied_benign_count": 1067,
+          "attacked_benign_quota": 801,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 0.0,
+          "DC_DM_DQ_admitted_counts": [
+            33514,
+            13860,
+            20349,
+            5231,
+            32406
+          ],
+          "attacker_FedAvg_weight_filtered": 0.04964882308276386
+        },
+        {
+          "dose_fraction": [
+            1,
+            10
+          ],
+          "flipped_count": 60,
+          "local_raw_poison_fraction": 0.010915044569765326,
+          "global_raw_poison_fraction": 0.0005647962497529016,
+          "attacked_supplied_benign_count": 1127,
+          "attacked_benign_quota": 846,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 45.0399290150843,
+          "DC_DM_DQ_admitted_counts": [
+            33514,
+            13860,
+            20349,
+            5216,
+            32406
+          ],
+          "attacker_FedAvg_weight_filtered": 0.049513503251222175
+        },
+        {
+          "dose_fraction": [
+            3,
+            10
+          ],
+          "flipped_count": 181,
+          "local_raw_poison_fraction": 0.032927051118792065,
+          "global_raw_poison_fraction": 0.00170380202008792,
+          "attacked_supplied_benign_count": 1248,
+          "attacked_benign_quota": 936,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 135.75,
+          "DC_DM_DQ_admitted_counts": [
+            33514,
+            13860,
+            20349,
+            5185,
+            32406
+          ],
+          "attacker_FedAvg_weight_filtered": 0.04923372011318533
+        },
+        {
+          "dose_fraction": [
+            1,
+            2
+          ],
+          "flipped_count": 302,
+          "local_raw_poison_fraction": 0.054939057667818814,
+          "global_raw_poison_fraction": 0.002842807790422938,
+          "attacked_supplied_benign_count": 1369,
+          "attacked_benign_quota": 1027,
+          "minimum_retained_poison": 0,
+          "DQ_expected_retained_poison": 226.55514974433893,
+          "DC_DM_DQ_admitted_counts": [
+            33514,
+            13860,
+            20349,
+            5155,
+            32406
+          ],
+          "attacker_FedAvg_weight_filtered": 0.04896280536453782
+        }
+      ],
+      "stage_client_rows": {
+        "1": [
+          1841,
+          2528,
+          163,
+          1547,
+          1580
+        ],
+        "2": [
+          33716,
+          14102,
+          20416,
+          5497,
+          32502
+        ],
+        "3": [
+          18,
+          1771,
+          971,
+          4115,
+          301
+        ],
+        "4": [
+          5894,
+          37318,
+          13077,
+          4925,
+          757
+        ]
+      }
+    }
+  ],
+  "elapsed_seconds": 77.781,
+  "models_fitted": 0,
+  "limits": [
+    "Data/release/clock/graph/allocator choices remain conditional",
+    "Admitted poison is a quota bound/expectation, not a score-selected observed count",
+    "No gradients, learned models, accuracy or GPU runtime were measured",
+    "No final scope or methodological amendment was approved by this audit"
+  ]
+}

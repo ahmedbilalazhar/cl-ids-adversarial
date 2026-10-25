@@ -1,0 +1,46 @@
+{
+  "GPU_runtime": "not pinned or confirmed",
+  "clean_infeasible_learners": [
+    "DR",
+    "EI",
+    "FT"
+  ],
+  "diagnostic_gate": "Not run unless all selected unfiltered learners pass clean acquisition",
+  "final_predictions": "sealed and unexecuted",
+  "instructor_feedback": "not supplied",
+  "invalid_development_rows": [],
+  "missing_final_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    42
+  ],
+  "missing_metrics_policy": "No favorable imputation, no retry counted as a replicate",
+  "schema": "phase3-failure-inventory-v2",
+  "superseded": [
+    "Historical v1 admitted-pool-shuffle attempt",
+    "Failed tiny fixture acceptance attempt1; successful intermediate attempt2 replaced by final-code acceptance",
+    "Incomplete ownership export s101-p000-incomplete-attempt1; never used by a learner",
+    "First fresh-process DR verifier used raw NPZ ZIP bytes; preserved as full-data-DR-recovery-verifier-attempt1.json; exact typed state/ledger passed in corrected verifier"
+  ],
+  "unmeasured_cost_gates": [
+    "Pinned GPU complete jobs and cold setup",
+    "Batch-1/256 inference latency, process peak memory and serialized communication accounting"
+  ],
+  "untested_paths": [
+    "CUDA and cross-runtime numeric agreement",
+    "Real infrastructure crash injection and disk loss",
+    "Optional FIFO/NoZ/NoY/oracle interventions",
+    "External datasets",
+    "Full-data poisoned DR/EI/filtered training; corruption acceptance uses tiny learner fixtures and full builder counts",
+    "Final 12-seed grid and single 29-contrast statistical release"
+  ]
+}

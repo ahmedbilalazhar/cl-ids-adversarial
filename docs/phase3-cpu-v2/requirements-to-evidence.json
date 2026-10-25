@@ -1,0 +1,78 @@
+{
+  "code_identity": "4b7561d38300b9f42dd6e9091ecc3509b5e1b2cabdddedb2b9cdd345baffa6a6",
+  "rows": [
+    {
+      "code_under_src_phase3_v2": "data.py; prepare.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "integrity/audit.json; preservation.json; data/processed/phase3-cpu-v2/*/preparation.json",
+      "requirement": "Data identity and isolation",
+      "tests_in_tests_test_phase3_v2": "test_data_isolation_and_readonly; test_package_rejects_extras_missing_and_corruption"
+    },
+    {
+      "code_under_src_phase3_v2": "train.py; unchanged ../phase3/model.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "acceptance.json; integration/acceptance.json",
+      "requirement": "Registry and head expansion",
+      "tests_in_tests_test_phase3_v2": "test_head_initialization_independent_uniform_and_expansion; test_supplied_only_registration"
+    },
+    {
+      "code_under_src_phase3_v2": "learning.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "acceptance.json; development/executions/*/train/run.json",
+      "requirement": "Immutable broadcasts, Adam reset, inactive clients and FedAvg",
+      "tests_in_tests_test_phase3_v2": "test_broadcast_and_optimizer_reset; test_inactive_client_never_updates_or_draws; test_independent_aggregation_arithmetic"
+    },
+    {
+      "code_under_src_phase3_v2": "learning.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "acceptance.json; integration/acceptance.json",
+      "requirement": "Matched quotas, ties, stage lock and full-pool permutation",
+      "tests_in_tests_test_phase3_v2": "test_quota_rounding_ties_and_matched_controls; test_full_pool_order_then_subsequence; test_filters_off_e1_and_frozen_once"
+    },
+    {
+      "code_under_src_phase3_v2": "learning.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "acceptance.json; integration/acceptance.json",
+      "requirement": "DR teacher timing, modes, means and masked widths",
+      "tests_in_tests_test_phase3_v2": "test_teacher_timing_modes_and_insertion_after_update; test_teacher_values_are_pre_update; test_dark_mask_before_square_and_per_record_normalization"
+    },
+    {
+      "code_under_src_phase3_v2": "learning.py; unchanged ../phase3/reference.py::insert_batch",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "acceptance.json; integration/acceptance.json",
+      "requirement": "Algorithm R first pass and independent streams",
+      "tests_in_tests_test_phase3_v2": "test_reservoir_sequential_independent_algorithm_r; test_first_pass_only_across_epochs_and_rounds"
+    },
+    {
+      "code_under_src_phase3_v2": "learning.py; checkpoint.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "acceptance.json; development/executions/*EI*/train/*.npz",
+      "requirement": "EI per-example gradient arithmetic, anchor and stage commit",
+      "tests_in_tests_test_phase3_v2": "test_ei_analytic_gradients_not_square_of_mean; test_ei_vectorized_independent_reference_tolerance; test_ei_stage_anchor_fixed_and_inactive_commit; test_ei_exact_sample_limit"
+    },
+    {
+      "code_under_src_phase3_v2": "prepare.py; exposure.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "acceptance.json; corruption-full-inventory.json; integration/*-exposure.json",
+      "requirement": "Corruption scope, nested rational doses, immutable reference",
+      "tests_in_tests_test_phase3_v2": "test_corruption_integer_nested_scope_reference_immutable; test_unfiltered_pairing_buffer_and_importance_ids_across_doses"
+    },
+    {
+      "code_under_src_phase3_v2": "checkpoint.py; train.py; ../../scripts/assemble_phase3_v2_recovery.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "acceptance.json; integration/acceptance.json; full-data-DR-recovery.json; full-data-EI-recovery.json; recovery-assembly-acceptance.json",
+      "requirement": "Strict complete transactions and exact recovery",
+      "tests_in_tests_test_phase3_v2": "test_exact_recovered_continuation_all_methods; test_checkpoint_incompatible_incomplete_and_corrupt_rejected; test_rng_lossless_cached_uint32_and_large_state"
+    },
+    {
+      "code_under_src_phase3_v2": "evaluate.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "acceptance.json; integration/*-evaluation/metrics.json; development/executions/*/evaluation/metrics.json",
+      "requirement": "Independent evaluator, rare outputs, banks and missingness",
+      "tests_in_tests_test_phase3_v2": "test_evaluator_full_head_banks_denominators_missingness; test_evaluator_zero_prediction_precision_na_f1_zero; test_full_head_argmax_keeps_rare_outputs_and_benign_ties"
+    },
+    {
+      "code_under_src_phase3_v2": "development.py; protocol.py",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "development/procedure-lock.json; development/synchronization-selection.json; development/tuning-selection.json; development/completion.json",
+      "requirement": "Prospective selection, exact ties, all-seed acquisition gates",
+      "tests_in_tests_test_phase3_v2": "test_development_grid_and_exact_budget_ties; test_development_gates_are_per_family_and_require_three_seeds"
+    },
+    {
+      "code_under_src_phase3_v2": "protocol.py; evaluate.py; configs/phase3/cpu-v2.json",
+      "evidence_under_results_phase3_cpu_v2_unless_qualified": "development/completion.json; configs/phase3/cpu-v2.json",
+      "requirement": "Final-test and GPU seals; unchanged final analysis family",
+      "tests_in_tests_test_phase3_v2": "test_final_seed_and_invalid_runtime_settings_sealed"
+    }
+  ],
+  "schema": "phase3-requirements-v2"
+}

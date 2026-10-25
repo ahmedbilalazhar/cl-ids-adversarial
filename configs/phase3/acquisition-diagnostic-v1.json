@@ -1,0 +1,22 @@
+{
+  "schema": "phase3-acquisition-diagnostic-v1",
+  "scope": "exploratory E1 only; cannot qualify final dispatch or replace v2 selection",
+  "parent_code_identity": "4b7561d38300b9f42dd6e9091ecc3509b5e1b2cabdddedb2b9cdd345baffa6a6",
+  "seeds": [101, 102, 103],
+  "stage": 1,
+  "learner": "FT",
+  "admission": "NONE",
+  "learning_rate": 0.001,
+  "epochs_per_round": 1,
+  "rounds": 12,
+  "readout_rounds": [3, 12],
+  "objectives": ["natural", "equal_class"],
+  "equal_class_weights": "N / (C * n_c), from global current supplied-label counts; mean(weight[target] * per-record CE), no batch weight-sum renormalization",
+  "pairing": "unchanged head, ownership, full-pool orders, dropout stream and distinct-count FP32 aggregation",
+  "training_batch_size": 128,
+  "gate_context": {"E1_FTP_mean_recall": 0.5, "E1_SSH_mean_recall": 0.5, "E2_Hulk_mean_recall": 0.7},
+  "baseline_reconstruction": "natural rounds1-3 must exactly match frozen v2 FT states, dropout and update/exposure counters, all seeds",
+  "numerics": "pinned v2 CPU FP32; exact baseline state equality; objective fixture rtol1e-6 atol1e-7",
+  "final_test_access": false,
+  "gpu_dispatchable": false
+}

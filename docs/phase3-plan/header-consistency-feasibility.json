@@ -1,0 +1,80 @@
+{
+  "status": "source_feature_consistency_audit_not_model_evaluation",
+  "completed_utc": "2026-10-24T08:42:48.726254+00:00",
+  "reports": [
+    {
+      "candidate": "original",
+      "constraint": "Fwd Header Length >= Total Fwd Packets * min_seg_size_forward",
+      "applicability": "Nonnegative finite total/count/minimum header fields with the documented source semantics",
+      "nonnegative_finite_triplets": 2830708,
+      "violating_triplets": 0,
+      "violations_after_current_domain_and_metadata": 0,
+      "violations_in_domain_screened_T0_fit": 0,
+      "violations_among_screened_unique_survivors": 0,
+      "violations_with_lower_bound_above_int16_max": 0,
+      "examples": []
+    },
+    {
+      "candidate": "corrected",
+      "constraint": "Fwd Header Length >= Total Fwd Packets * min_seg_size_forward",
+      "applicability": "Nonnegative finite total/count/minimum header fields with the documented source semantics",
+      "nonnegative_finite_triplets": 2099667,
+      "violating_triplets": 123,
+      "violations_after_current_domain_and_metadata": 65,
+      "violations_in_domain_screened_T0_fit": 9,
+      "violations_among_screened_unique_survivors": 56,
+      "violations_with_lower_bound_above_int16_max": 123,
+      "examples": [
+        {
+          "row_id": "356632",
+          "forward_packets": 3462,
+          "stored_header_total": 10496,
+          "minimum_segment_header": 20,
+          "implied_minimum_total": 69240
+        },
+        {
+          "row_id": "385474",
+          "forward_packets": 3800,
+          "stored_header_total": 28056,
+          "minimum_segment_header": 20,
+          "implied_minimum_total": 76000
+        },
+        {
+          "row_id": "385986",
+          "forward_packets": 10429,
+          "stored_header_total": 12192,
+          "minimum_segment_header": 32,
+          "implied_minimum_total": 333728
+        },
+        {
+          "row_id": "419095",
+          "forward_packets": 13065,
+          "stored_header_total": 24876,
+          "minimum_segment_header": 32,
+          "implied_minimum_total": 418080
+        },
+        {
+          "row_id": "422466",
+          "forward_packets": 3694,
+          "stored_header_total": 25384,
+          "minimum_segment_header": 20,
+          "implied_minimum_total": 73880
+        },
+        {
+          "row_id": "465281",
+          "forward_packets": 3542,
+          "stored_header_total": 11472,
+          "minimum_segment_header": 20,
+          "implied_minimum_total": 70840
+        }
+      ]
+    }
+  ],
+  "models_fitted": 0,
+  "scope": "Own-row label-independent field relation; no prediction or threshold tuning",
+  "limits": [
+    "Source semantics and archive/extractor provenance remain relevant",
+    "No values repaired, unsigned-cast or silently reclassified",
+    "Consistency flags do not uniquely recover pre-cast totals"
+  ]
+}

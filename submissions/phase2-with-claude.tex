@@ -2,21 +2,27 @@
 \usepackage[margin=0.75in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern,amsmath,amssymb,booktabs,array,enumitem}
+\usepackage{lmodern,amsmath,amssymb,booktabs,array,enumitem,float}
 \usepackage[expansion=false]{microtype}
 \usepackage{csquotes}
 \usepackage{xurl,hyperref,pdflscape,tabularx,algorithm,algpseudocode,graphicx,tikz,xcolor}
 \usepackage[section]{placeins}
-\hypersetup{hidelinks}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+\setlength{\emergencystretch}{1.5em}
+\raggedbottom
+\hypersetup{hidelinks,pdftitle={Phase 2: Poisoning, Retention and Legitimate Adaptation},pdfauthor={Saneedullah; Ahmed Bilal}}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcommand{\NA}{\mathrm{N/A}}
 \newcommand{\CE}{\operatorname{CE}}
 \newcommand{\sumitem}[2]{\noindent\textbf{#1:} #2\par}
-\newcommand{\why}[1]{\par\noindent\colorbox{black!5}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small\textbf{Why (literature basis):} #1}}\par}
+\newcommand{\why}[1]{\par\nopagebreak[4]\noindent\colorbox{black!5}{\parbox{\dimexpr\linewidth-2\fboxsep}{\small\textbf{Why (literature basis):} #1}}\par}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{4pt}
 \setlength{\tabcolsep}{3pt}
+\setlength{\intextsep}{8pt}
 \renewcommand{\arraystretch}{1.12}
 \setlist{nosep,leftmargin=*}
 
@@ -30,17 +36,18 @@
 \maketitle
 
 \begin{abstract}
-Intrusion detection systems (IDS) must keep learning new attack families without forgetting old ones, and they are increasingly trained \emph{federally}, across several organizations that never share raw traffic. Our Phase 1 review found that continual-learning security methods are tested almost only with honest participants. In Phase 2 we extend the review with ten additional 2025--2026 studies and confirm a sharper gap: continual-learning IDS assume clean labels and honest clients, while federated poisoning defences are evaluated only on a fixed set of attack classes, and those defences can discard honest but rare or new evidence. We propose a controlled study on CICIDS2017 in which five federated clients learn four successive attack-family stages with fine-tuning, an EWC-style regulariser or DER++ replay. One client receives poisoned labels (DoS-Hulk relabelled as benign) during the second stage only. We measure (i) immediate damage to the poisoned family, (ii) whether the damage persists after the attacker withdraws, and (iii) how a class-aware admission rule trades off poisoning damage against the learning of new attack families, compared with an equally sized global filter. Twelve paired seeds and pre-declared statistical tests support the analysis. This document reports a research design; all performance figures quoted belong to the cited studies.
+Intrusion detection systems must learn new attack families while retaining earlier knowledge. Federated learning combines updates from multiple sites, creating an opportunity for a corrupted labelling feed to affect the shared model. We extend our Phase 1 review with ten additional 2025--2026 studies. In this selected corpus, continual IDS studies generally evaluate trusted training data, whereas federated poisoning defences use fixed class sets. The joint effect of poisoning during class acquisition, subsequent attacker withdrawal and legitimate adaptation remains insufficiently evaluated. We propose a five-client simulation on CICIDS2017 with four successive attack-family stages, comparing fine-tuning, an EWC-style regulariser and DER++ replay. One client's DoS-Hulk training labels are partly changed to benign during the second stage only. We measure immediate source-family damage and later persistence, and compare class-aware admission with a global filter that admits the same number of records. Acquisition on untargeted new families is evaluated separately from source-family damage. Twelve paired seeds, development-only tuning and a pre-specified analysis support this controlled comparison. This is a research proposal; quoted performance results belong to the cited studies, and null or adverse outcomes remain valid findings.
 \end{abstract}
+
 \noindent\textbf{Keywords:} continual learning; federated learning; intrusion detection; label poisoning; replay memory; legitimate adaptation.
 
 %=====================================================================
 \section{Introduction and Scope}
-Network attacks change continuously. An IDS that is retrained on each new attack family tends to forget earlier families (\emph{catastrophic forgetting}); continual-learning (CL) methods such as regularisation and replay reduce this problem. At the same time, privacy rules push organizations towards \emph{federated learning} (FL), where each site trains locally and only model updates are combined. Combining the two creates a security question that neither field answers on its own: what happens when one participant's labels are wrong \emph{while} the shared model is learning a new attack family, and does a defence that filters suspicious data also block the legitimate new family it should learn?
+Network attacks change continuously. An IDS that is retrained on each new attack family tends to forget earlier families (\emph{catastrophic forgetting}); continual-learning (CL) methods such as regularisation and replay reduce this problem. At the same time, data-governance constraints can motivate organizations to use \emph{federated learning} (FL), where each site trains locally and only model updates are combined. Combining the two creates a security question that neither field answers on its own: what happens when one participant's labels are wrong \emph{while} the shared model is learning a new attack family, and does a defence that filters suspicious data also block the legitimate new family it should learn?
 
 Our Phase 1 report \cite{phase1} studied three 2026 papers on CL for network security \cite{ge,wu,luo} and identified three gaps: old or synthetic evaluation data, no testing against attackers who target the adaptation mechanism, and no measured deployment cost. Phase 2 keeps Phase 1 unchanged and builds on it. Table~\ref{tab:phase1link} shows how each Phase 1 gap is carried forward.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{How the Phase 1 gaps carry into Phase 2.}
 \label{tab:phase1link}
@@ -48,30 +55,32 @@ Our Phase 1 report \cite{phase1} studied three 2026 papers on CL for network sec
 \toprule
 Phase 1 gap & Phase 2 status & Reason\\
 \midrule
-Gap 1: old, narrow or synthetic evaluation data & Narrowed & Real public captures (CICIDS2017) with an external CICIoT2023 check; synthetic RF data dropped.\\
+Gap 1: old, narrow or synthetic evaluation data & Partly addressed & Historical CICIDS2017 supports controlled tests; CICIoT2023 is a planned extension. Modern multi-site generalisation remains open.\\
 Gap 2: no attacker targeting the continual-learning mechanism & \textbf{Retained as the core} & Becomes Gaps G1 and G2 below: poisoning during class acquisition and defence side-effects.\\
 Gap 3: no measured runtime or deployment cost & Partly retained & We measure CPU time, memory and update bytes; physical edge-device energy is deferred (no hardware available).\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
+\begin{samepage}
 We ask three research questions:
 \begin{itemize}
 \item \textbf{RQ1:} How do fine-tuning, an EWC-style regulariser and DER++ replay differ in the damage a poisoned stage causes to the targeted attack family, both immediately and after the attacker withdraws?
 \item \textbf{RQ2:} Compared with a global filter that admits the same number of samples, how does a class-aware admission rule change the trade-off between poisoning damage and the learning of new attack families?
 \item \textbf{RQ3:} Which memory and selection mechanisms explain the differences, and what computation and communication do they cost?
 \end{itemize}
+\end{samepage}
 Throughout this document, page numbers cited for the reviewed articles refer to the PDF pages of each article.
 
 %=====================================================================
 \section{Deliverable 1: Extended Literature Review}
 
 \subsection{Search Strategy and Selection Criteria}
-We searched for studies that combine at least two of: intrusion detection, continual or incremental learning, federated learning, and poisoning. Sources were the Crossref publication index (journal articles dated 2025-01-01 to 2026-12-31; queries such as \emph{federated continual learning intrusion detection}, \emph{poisoning attack federated intrusion detection defense} and \emph{class incremental intrusion detection replay}), author and publisher pages, and the references of our Phase 1 papers. Each candidate had to satisfy the course criteria: published in 2025--2026; an original research article; a Q1--Q2 journal or a peer-reviewed conference; directly relevant; with an identifiable method, dataset and evaluation. We kept only papers whose \emph{complete} text we could read, because a critical analysis needs the full experimental details. One formally eligible candidate was rejected after full reading because its dataset was synthetic and unpublished and its results came from a single run. Table~\ref{tab:corpus} lists the ten selected papers. Journal quartiles follow the Clarivate Journal Citation Reports 2024 edition (released June 2025) \cite{clarivate}.
+We searched for studies that combine at least two of: intrusion detection, continual or incremental learning, federated learning, and poisoning. The corpus was closed on 20 October 2026. Sources were the Crossref publication index (articles published from 1 January 2025 through that cutoff; queries such as \emph{federated continual learning intrusion detection}, \emph{poisoning attack federated intrusion detection defense} and \emph{class incremental intrusion detection replay}), author and publisher pages, and the references of our Phase 1 papers. Each candidate had to satisfy the course criteria: published in 2025--2026; an original research article; a Q1--Q2 journal or a peer-reviewed conference; directly relevant; with an identifiable method, dataset and evaluation. We kept only papers whose \emph{complete} text we could read, because a critical analysis needs the full experimental details. One formally eligible candidate was rejected after full reading because its dataset was synthetic and unpublished and its results came from a single run. Table~\ref{tab:corpus} lists the ten selected papers. Journal quartiles use the \emph{2025 JCR release, based on 2024 JIF data}, consistently across this table \cite{clarivate,jcrtable}. Categories are named because a journal can have different quartiles in different categories. This is a focused, full-text-accessible review, not a systematic review or proof that no other relevant work exists; access and database coverage can bias selection.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
-\caption{The ten additional papers reviewed in Phase 2. CS-IS: Computer Science, Information Systems.}
+\caption{The ten additional papers reviewed in Phase 2. CS-IS: Computer Science, Information Systems; EE: Engineering, Electrical and Electronic; II: Instruments and Instrumentation; MS: Multidisciplinary Sciences.}
 \label{tab:corpus}
 \begin{tabularx}{\linewidth}{L{0.55cm}L{3.3cm}Y L{0.8cm}L{2.9cm}L{2.6cm}}
 \toprule
@@ -83,14 +92,14 @@ P6 & Fuhrman et al. \cite{cnd} & ACM/IEEE Design Automation Conf. (DAC) & 2025 &
 P7 & Sameera et al. \cite{wei} & J. Information Security and Applications (Elsevier) & 2025 & Q2, CS-IS & Poisoning defence for federated IDS\\
 P8 & Cerasuolo et al. \cite{cerasuolo} & Computer Networks (Elsevier) & 2025 & Q1, CS-IS & Class-incremental IDS benchmark\\
 P9 & Guo et al. \cite{guo} & Future Internet (MDPI) & 2025 & Q2, CS-IS & Continual IDS, memory selection\\
-P10 & Latif and Djenouri \cite{amm} & Sensors (MDPI) & 2026 & Q2 & Robust hierarchical federated IDS\\
-P11 & Banbhrani et al. \cite{flzt} & Electronics (MDPI) & 2026 & Q2 & Trust-aware federated IDS\\
-P12 & Abhijit et al. \cite{rare} & Scientific Reports (Nature Portfolio) & 2025 & Q1 & Federated rare/new attack classes\\
-P13 & Nguyen and Park \cite{elgnn} & Electronics (MDPI) & 2025 & Q2 & EWC-based continual IDS\\
+P10 & Latif and Djenouri \cite{amm} & Sensors (MDPI) & 2026 & Q2, II & Robust hierarchical federated IDS\\
+P11 & Banbhrani et al. \cite{flzt} & Electronics (MDPI) & 2026 & Q2, EE & Trust-aware federated IDS\\
+P12 & Abhijit et al. \cite{rare} & Scientific Reports (Nature Portfolio) & 2025 & Q1, MS & Federated rare/new attack classes\\
+P13 & Nguyen and Park \cite{elgnn} & Electronics (MDPI) & 2025 & Q2, EE & EWC-based continual IDS\\
 \bottomrule
 \end{tabularx}
 \end{table}
-% VERIFY before submission: confirm the JCR/SJR quartiles of Sensors, Electronics and Scientific Reports on the journal profiles.
+\noindent\footnotesize Electronics is Q2 in EE and Q3 in CS-IS in this same edition; its Q2 entry must not be read as a CS-IS ranking. JIF quartiles are used throughout, rather than mixing JIF, AIS and SJR quartiles.\normalsize
 
 \subsection{Critical Summaries of the Ten Additional Papers}
 Each summary follows the same structure as Phase 1: what the paper does, how it was evaluated, what it found, the limitations the authors state, the limitations we identify, and why it matters for our study.
@@ -100,7 +109,7 @@ Each summary follows the same structure as Phase 1: what the paper does, how it 
 \sumitem{Data and setup}{TON\_IoT, IoT-NID and Edge-IIoTset; scenarios with two and five clients, each contributing a disjoint new attack (p.~1).}
 \sumitem{Key results}{The best setting (FedProx with MEMENTO+, 100 rounds, five clients on TON\_IoT) reaches old/new/all-class F1 of 79.05/68.10/74.49\% (Table IV).}
 \sumitem{Author-stated limitations}{Federated class-incremental learning retains old knowledge but has difficulty integrating new attacks; future work lists improved robustness against adversarial threats (Sec.~VI, p.~15).}
-\sumitem{Our critique}{All clients are honest; the gap between old-class and new-class F1 shows that acquisition, not retention, is the weak point, so any defence that rejects new-class data would make it worse.}
+\sumitem{Our critique}{Clients are not adversarial in the reported evaluation. The lower new-class F1 raises an acquisition concern, but differences in class difficulty prevent attributing that gap to one mechanism. Whether admission filtering worsens acquisition requires a controlled test.}
 \sumitem{Relevance}{Clean reference for federated class acquisition and for reporting old and new classes separately.}
 
 \subsubsection*{P5 --- Investigating the Impact of Label-Flipping Attacks against Federated Learning for Collaborative Intrusion Detection (Lavaur et al., 2025)}
@@ -122,9 +131,9 @@ Each summary follows the same structure as Phase 1: what the paper does, how it 
 \subsubsection*{P7 --- WeiDetect: Weibull Distribution-Based Defense against Poisoning Attacks in Federated Learning for NIDS (Sameera et al., 2025)}
 \sumitem{Problem and method}{A server-side defence scores each client model on an auxiliary validation set and removes models that a fitted Weibull distribution marks as suspicious, before aggregation.}
 \sumitem{Data and setup}{CIC-Darknet2020 and CSE-CIC-IDS2018; 80/20 split; non-IID clients drawn from a Dirichlet distribution (pp.~12--13); poisoning by adversarial samples (FGSM, PGD, Gaussian noise) and label flipping.}
-\sumitem{Key results}{Clean F1 of 89.79\% and 94.18\% (Sec.~5.4.1); target-class recall improves by up to 70\% compared with existing defences.}
+\sumitem{Key results}{Clean F1 of 89.79\% and 94.18\% (Sec.~5.4.1); the reported poisoning experiments also compare target-class recall with existing defences.}
 \sumitem{Author-stated limitations}{Future work on inference attacks, federated unlearning and resource-constrained domains (Sec.~7, p.~21).}
-\sumitem{Our critique}{The defence depends on trusted server data: on CSE-CIC-IDS2018 it needs at least 90\% of the auxiliary data to identify malicious models (Sec.~6.2, Table 9). A client that has just observed a new attack family may also look \enquote{suspicious}.}
+\sumitem{Our critique}{The defence depends on trusted server data. For the CSE-CIC-IDS2018 sensitivity experiment, the authors report needing at least 90\% of their auxiliary pool to surpass comparison methods (Sec.~6.2, Appendix Table 11). This is a fraction of that pool, not of all training data or a universal requirement. Rejection of honest novel-family clients remains an untested possibility.}
 \sumitem{Relevance}{Evidence that defences can depend on information unavailable in practice and can conflict with legitimate novelty (Gap G2).}
 
 \subsubsection*{P8 --- Attack-Adaptive Network Intrusion Detection Systems for IoT Networks through Class Incremental Learning (Cerasuolo et al., 2025)}
@@ -140,7 +149,7 @@ Each summary follows the same structure as Phase 1: what the paper does, how it 
 \sumitem{Data and setup}{UNSW-NB15, CICIDS2017 and TON\_IoT in five incremental stages; nominal memory of 5,000 samples.}
 \sumitem{Key results}{On CICIDS2017, average accuracy 83.4\% and F1 82.1\% (Table 6); removing the DP-Means memory lowers F1 to 76.4\% (Table 12).}
 \sumitem{Author-stated limitations}{Because the method relies on pseudo-labelling and memory replay, the authors note it may be vulnerable to attacks that exploit these mechanisms (Sec.~5, p.~22).}
-\sumitem{Our critique}{The memory deliberately keeps uncertain, outlying samples, which is exactly how poisoned samples tend to look; this risk is never tested.}
+\sumitem{Our critique}{The memory favours diversity and uncertainty, so incorrect supplied or pseudo-labels could be retained. Poisoned labels need not create feature outliers or high loss; vulnerability cannot be inferred from the selection rule alone and is not tested in this study.}
 \sumitem{Relevance}{Direct evidence for Gap G1 and for comparing memory policies under equal capacity.}
 
 \subsubsection*{P10 --- Adaptive Multi-Model Hierarchical Federated Learning for Robust IoT Intrusion Detection (Latif and Djenouri, 2026)}
@@ -148,10 +157,10 @@ Each summary follows the same structure as Phase 1: what the paper does, how it 
 \sumitem{Data and setup}{IDSIoT2024 (multi-class); MLP; 50 clients in five edge groups; 5/15/30\% malicious clients performing noise-based model poisoning and a label-manipulation backdoor that makes malicious traffic look normal (pp.~10--11).}
 \sumitem{Key results}{With 30\% malicious clients, accuracy is 96.83\% (IID) and 95.92\% (non-IID) (p.~12); it outperforms FedAvg, Krum and Trimmed-Mean.}
 \sumitem{Author-stated limitations}{Extending the framework to streaming data and evolving attack patterns is future work (p.~17).}
-\sumitem{Our critique}{The class set is fixed and only accuracy is reported, without repeated runs. Its own results show defence side-effects: under non-IID data the rare Injection class is sometimes absorbed into Normal (p.~12), and Krum is reported to reject specialised legitimate clients (p.~15).}
+\sumitem{Our critique}{The class set is fixed; the headline robustness comparison emphasises accuracy and does not report uncertainty across repeated seeds. Rare Injection traffic is sometimes confused with Normal under non-IID data (p.~12), but that confusion alone does not prove the defence caused it. The discussion also reports that Krum can reject specialised legitimate clients (p.~15).}
 \sumitem{Relevance}{Closest threat model to ours (attack traffic relabelled as normal); evidence for Gaps G1 and G2.}
 
-\subsubsection*{P11 --- Trust-Aware Federated Learning for Privacy-Preserving IoT Intrusion Detection (Banbhrani et al., 2026)}
+\subsubsection*{P11 --- Trust-Aware Federated Learning for IoT Intrusion Detection (Banbhrani et al., 2026)}
 \sumitem{Problem and method}{Federated IDS must resist malicious clients while protecting updates. A GNN plus attention-BiLSTM detector; clients are filtered by a dynamic trust score and gradient-deviation screening before secure aggregation with local differential privacy (Sec.~3.5.3, p.~13).}
 \sumitem{Data and setup}{CICIDS2017 and Edge-IIoTset, binary labels; session-grouped 80/10/10 split; scaler fitted on training data only; ten clients with Dirichlet ($\alpha=0.5$) label skew; one seed (pp.~16--17).}
 \sumitem{Key results}{97.8\% accuracy and F1 on CICIDS2017 (Table 6); with 30\% sign-flipping clients it keeps 89.3\% accuracy versus 72.3\% for plain FL (pp.~21--22). The trust filter wrongly excludes 4.6\% of honest clients on CICIDS2017 and 5.1\% on Edge-IIoTset (Sec.~5.5, p.~22).}
@@ -164,7 +173,7 @@ Each summary follows the same structure as Phase 1: what the paper does, how it 
 \sumitem{Data and setup}{CSE-CIC-IDS2018, UNSW-NB15 and Edge-IIoT; small dense networks; four to six clients with some attack types withheld from some clients.}
 \sumitem{Key results}{Accuracy of 98.90/98.70/97.92\% on the three datasets; for example, DDoS-HOIC F1 rises from 0 to 98.08\% (p.~12). Plain FedAvg reaches 98.57\% accuracy but only 68.50\% F1 on CSE-CIC-IDS2018 (p.~16).}
 \sumitem{Author-stated limitations}{Privacy of the personalised design needs stronger protection; aggregation via embeddings is suggested (p.~20).}
-\sumitem{Our critique}{All clients are trusted. The new-class trigger (a client-reported performance change plus client-uploaded class data) is an obvious poisoning entry point. Some reported precision/recall/F1 values are inconsistent between paragraphs (p.~17), and no repeated runs are given.}
+\sumitem{Our critique}{All clients are trusted. Client-reported performance changes and uploaded class data create a potential poisoning entry point, which this paper does not test. Some reported precision/recall/F1 values are inconsistent between paragraphs (p.~17), and uncertainty across repeated seeds is not reported.}
 \sumitem{Relevance}{Shows that federated IDS already acquire new classes with no adversary in the threat model (Gap G1), and that rare classes need protection (motivating class-aware admission).}
 
 \subsubsection*{P13 --- EL-GNN: A Continual-Learning-Based Graph Neural Network for Task-Incremental IDS (Nguyen and Park, 2025)}
@@ -175,49 +184,10 @@ Each summary follows the same structure as Phase 1: what the paper does, how it 
 \sumitem{Our critique}{Two coarse binary tasks are not class-incremental learning. Headline accuracies differ between sections (pp.~21, 23, 29), and IP-based edges risk learning testbed hosts rather than attack behaviour. Clean data only.}
 \sumitem{Relevance}{Supports EWC as a standard CL baseline (with P8) and our rule excluding IP addresses and ports.}
 
-\subsection{Cross-Paper Comparison}
-Tables~\ref{tab:comp1} and~\ref{tab:comp2} compare the ten papers using the course template. Entries are our own synthesis; the last column states the gap each paper leaves open for our study.
-
-\begin{landscape}
-\begin{table}[p]
-\centering\scriptsize
-\caption{Cross-paper comparison (part 1: P4--P8). Reported results are the authors' own.}
-\label{tab:comp1}
-\begin{tabularx}{\linewidth}{L{0.6cm}L{2.9cm}L{0.6cm}Y Y Y Y Y Y}
-\toprule
-\# & Title & Year & Dataset used & Preprocessing & Models / techniques & Evaluation metrics & Results & Limitations / research gap\\
-\midrule
-P4 & Federated and incremental NIDS for IoT emerging threats \cite{carillo} & 2026 & TON\_IoT, IoT-NID, Edge-IIoTset & First 10 packets per biflow, zero padding; IP/ports removed; attack hierarchy; undersampling & Packet CNN; FedAvg/FedProx/FedDyn; BiC+, MEMENTO+ (rehearsal, distillation, bias correction) & Old/new/all-class F1; rounds; resource use & Old/new/all F1 79.05/68.10/74.49\% (TON\_IoT, 5 clients) & Honest clients; new classes learned poorly $\rightarrow$ we add poisoning during acquisition\\[3pt]
-P5 & Impact of label-flipping attacks on federated collaborative IDS \cite{lavaur} & 2025 & NF-v2 CSE-CIC-IDS2018, UNSW-NB15 & Common NetFlow features; sampling; IID and cluster-based client splits & Binary MLP (2$\times$128); FedAvg; targeted/untargeted flips; timing and collusion sweeps & F1, recall, accuracy; absolute and relative attack success & One attacker of ten: relative success $<0.1$; damage grows with participation & Fixed binary model, no new classes or replay $\rightarrow$ we test persistence through memory\\[3pt]
-P6 & CND-IDS: continual novelty detection \cite{cnd} & 2025 & X-IIoTID, WUSTL-IIoT, CICIDS2017, UNSW-NB15 & Benign-only initial pool; incremental experiences; PCA fitted on benign embeddings & Continual encoder (reconstruction, clustering, distillation) + PCA novelty score & Threshold F1, PR-AUC, forward/backward transfer & 1.93$\times$/2.64$\times$ over LwF on CICIDS2017 & Thresholds chosen with test labels; no poisoning $\rightarrow$ we calibrate on development data\\[3pt]
-P7 & WeiDetect: Weibull-based poisoning defence \cite{wei} & 2025 & CIC-Darknet2020, CSE-CIC-IDS2018 & Cleaning, one-hot and normalisation; 80/20 split; Dirichlet non-IID clients & Server scores client models on auxiliary data; Weibull rejection; FGSM/PGD/noise and label-flip poisoning & F1, target-class recall, computation time & Clean F1 89.79/94.18\%; target recall up to +70\% & Needs $\ge$90\% trusted auxiliary data; static classes $\rightarrow$ we test defences without trusted data\\[3pt]
-P8 & Attack-adaptive NIDS via class-incremental learning \cite{cerasuolo} & 2025 & IoT-23, TON-IoT, IoT-NID, Edge-IIoT & Biflow packet matrices; base/extended fields; incremental attack families & Packet CNN; FT, replay, LwF, EWC, iCaRL+, EEIL, LUCIR, BiC; memory and few-shot sweeps & Old/new/all F1, PR-AUC; explainability & BiC all/old/new F1 95.30/96.47/85.89\% (TON-IoT) & Centralised and clean; perturbs test inputs only $\rightarrow$ we poison training labels\\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\begin{table}[p]
-\centering\scriptsize
-\caption{Cross-paper comparison (part 2: P9--P13). Reported results are the authors' own.}
-\label{tab:comp2}
-\begin{tabularx}{\linewidth}{L{0.6cm}L{2.9cm}L{0.6cm}Y Y Y Y Y Y}
-\toprule
-\# & Title & Year & Dataset used & Preprocessing & Models / techniques & Evaluation metrics & Results & Limitations / research gap\\
-\midrule
-P9 & Continual learning for IDS under evolving threats \cite{guo} & 2025 & UNSW-NB15, CICIDS2017, TON\_IoT & Min--max and one-hot encoding; five stages; low-label settings & DP-Means + entropy memory; multi-level distillation; meta-weighting; semi-supervision & Average accuracy, F1, forgetting, BWT; ablations & CICIDS2017 accuracy/F1 83.4/82.1\%; 76.4\% F1 without DP-Means & Memory favours outliers; attacks on replay untested $\rightarrow$ we test poisoned memory\\[3pt]
-P10 & AMM-HFL: robust hierarchical federated IDS \cite{amm} & 2026 & IDSIoT2024 & Standard scaling; label encoding; class weights; IID and extreme non-IID splits & MLP; client--edge--cloud FL; cosine clustering; multiple global models & Accuracy, confusion matrices, latency; FedAvg/Krum/Trimmed-Mean comparison & 96.83\% (IID) / 95.92\% (non-IID) with 30\% malicious clients & Static classes; rare class absorbed into Normal $\rightarrow$ we measure defence cost on rare/new classes\\[3pt]
-P11 & FLZT-IDS: trust-aware federated IDS \cite{flzt} & 2026 & CICIDS2017, Edge-IIoTset & Session-grouped 80/10/10 split; train-only min--max; Dirichlet($0.5$) over 10 clients; local SMOTE & GNN + attention BiLSTM; trust filter; gradient screening; LDP + secure aggregation & Accuracy, precision, recall, F1, FPR, communication; membership inference & 97.8\% accuracy; 89.3\% under 30\% sign-flipping; 4.6\% honest clients rejected & Binary, static classes, one seed $\rightarrow$ we test rejection of honest new-family evidence\\[3pt]
-P12 & Federated transfer learning for rare attack classes \cite{rare} & 2025 & CSE-CIC-IDS2018, UNSW-NB15, Edge-IIoT & NaN removal; min--max; correlation-based feature selection; attacks withheld per client & Personalised layers; metric-change new-class trigger; server exemplars and transfer learning & Per-class precision, recall, F1; accuracy & Accuracy 98.90/98.70/97.92\%; DDoS-HOIC F1 0$\rightarrow$98\% & Trusts all clients; new-class trigger is an attack surface $\rightarrow$ we poison during acquisition\\[3pt]
-P13 & EL-GNN: EWC-based continual graph IDS \cite{elgnn} & 2025 & CICIDS2017 $\rightarrow$ UNSW-NB15 & Correlation-based feature selection; label encoding; IP-based flow graphs & Graph convolutional network + EWC (Fisher penalty) & Accuracy, precision, recall, F1 & $\approx$85\% after two tasks vs.\ $\approx$50--55\% for other GNNs & Two binary tasks, clean data, IP leakage risk $\rightarrow$ we use class-incremental, IP-free inputs\\
-\bottomrule
-\end{tabularx}
-\end{table}
-\end{landscape}
-
 \subsection{Common Research Patterns}
 Comparing the papers' methods reveals six recurring patterns (Table~\ref{tab:patterns}). The most important is the last one: the literature splits into clean continual learning and static poisoning studies, and no reviewed peer-reviewed paper combines them in a federated setting.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Common research patterns across the Phase 1 (P1--P3) and Phase 2 (P4--P13) papers.}
 \label{tab:patterns}
@@ -230,24 +200,64 @@ Federated clients are simulated by splitting one dataset & Dirichlet label skew:
 Retention relies on replay and/or regularisation & Replay with distillation: P2, P4, P8, P9; EWC: P8, P13 & Justifies fine-tuning vs.\ EWC vs.\ DER++ as our learners\\
 Small dense or convolutional backbones & MLP: P5 (2$\times$128), P10, P12; packet CNN: P4, P8 & A 128/64 MLP matches common practice for flow features\\
 Results are split by old vs.\ new classes & Old/new F1: P4, P8; forgetting/BWT: P2, P9 & We report acquisition (new) and retention (old) separately\\
-\textbf{Either clean continual learning or static poisoning --- never both} & Clean CL with honest clients: P1, P2, P4, P6, P8, P9, P12, P13; poisoning on a fixed class set: P5, P7, P10, P11; replay poisoning of a single, non-federated continual IDS appears only in a preprint \cite{replaypoison} & \textbf{This is the core gap (G1)}\\
+\textbf{Selected corpus separates clean continual learning from fixed-class poisoning} & Clean CL with honest clients: P1, P2, P4, P6, P8, P9, P12, P13; poisoning on a fixed class set: P5, P7, P10, P11; replay poisoning of a single, non-federated continual IDS appears only in a preprint \cite{replaypoison} & \textbf{This is the core gap (G1)}\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-A second pattern concerns defences: they rely on information that may be unavailable or that conflicts with legitimate novelty --- trusted server data (P7), similarity to the majority of clients (P10, P11) or reported performance changes (P12). Reporting is also weak in several studies: single runs without variance (P11, P12, P13) and test-informed thresholds (P6). Our design therefore uses development-only calibration and twelve paired seeds.
+A second pattern concerns defences: they rely on information that may be unavailable or that conflicts with legitimate novelty --- trusted server data (P7), similarity to the majority of clients (P10, P11) or reported performance changes (P12). Reporting is also weak in several studies: a fixed seed in P11 and no reported repeated-seed uncertainty in P12/P13 and test-informed thresholds (P6). Our design therefore uses development-only calibration and twelve paired seeds.
 
 \subsection{Methodological Foundations}
-Beyond the reviewed corpus, our design uses established methods: FedAvg for aggregation \cite{fedavg}, Elastic Weight Consolidation \cite{ewc}, Learning without Forgetting \cite{lwf}, episodic and dark-experience replay (DER++) \cite{tiny,der}, the Adam optimiser \cite{adam}, reservoir sampling \cite{vitter}, and Dirichlet non-identical partitioning \cite{hsu}. Learning with noisy labels has used low-loss selection before: Co-teaching exchanges low-loss mini-batches between two networks and MentorNet learns a sample-weighting curriculum \cite{coteach,mentornet}. Our admission rule uses a single frozen network with per-class quotas. Targeted poisoning of federated learning \cite{tolpegin} and Byzantine-robust aggregation \cite{krum,yin} are related but assume a different, stronger attacker. The closest related work we found is a 2026 preprint that poisons the replay buffer of a continual IDS on CICIDS2017 with label flipping and a backdoor \cite{replaypoison}. It confirms that replay memory is an attack surface, but it describes a single, non-federated system, attacks the stored buffer rather than one client's incoming labels, does not study attacker withdrawal, and has not yet been peer-reviewed; it is therefore cited as related work, not counted among the ten reviewed papers.
+Beyond the reviewed corpus, our design uses established methods: FedAvg for aggregation \cite{fedavg}, Elastic Weight Consolidation \cite{ewc}, Learning without Forgetting \cite{lwf}, episodic and dark-experience replay (DER++) \cite{tiny,der}, the Adam optimiser \cite{adam}, reservoir sampling \cite{vitter}, and Dirichlet non-identical partitioning \cite{hsu}. Learning with noisy labels has used low-loss selection before: Co-teaching exchanges low-loss mini-batches between two networks and MentorNet learns a sample-weighting curriculum \cite{coteach,mentornet}. Our admission rule uses a single frozen network with per-class quotas. Targeted poisoning of federated learning \cite{tolpegin} and Byzantine-robust aggregation \cite{krum,yin} are related but assume a different, stronger attacker. The closest related work we found is a 2026 preprint that poisons the replay buffer of a continual IDS on CICIDS2017 with label flipping and a backdoor \cite{replaypoison}. It reports evidence that replay memory can be an attack surface, but it describes a single, non-federated system, attacks the stored buffer rather than one client's incoming labels, does not study attacker withdrawal, and has not yet been peer-reviewed; it is therefore cited as related work, not counted among the ten reviewed papers.
 
 %=====================================================================
+\begin{landscape}
+\subsection{Cross-Paper Comparison}
+Tables~\ref{tab:comp1} and~\ref{tab:comp2} compare the ten papers using the course template. Entries are our own synthesis; the last column states the gap each paper leaves open for our study.
+
+\begin{table}[H]
+\centering\small
+\caption{Cross-paper comparison (part 1: P4--P8). Reported results are the authors' own.}
+\label{tab:comp1}
+\begin{tabularx}{\linewidth}{L{0.6cm}L{2.9cm}L{0.8cm}Y Y Y Y Y Y}
+\toprule
+\# & Title & Year & Dataset used & Preprocessing & Models / techniques & Evaluation metrics & Results & Limitations / research gap\\
+\midrule
+P4 & Federated and incremental NIDS for IoT emerging threats \cite{carillo} & 2026 & TON\_IoT, IoT-NID, Edge-IIoTset & First 10 packets per biflow, zero padding; IP/ports removed; attack hierarchy; undersampling & Packet CNN; FedAvg, FedProx, FedDyn; BiC+, MEMENTO+ (rehearsal, distillation, bias correction) & Old/new/all-class F1; rounds; resource use & Old/new/all F1 79.05/68.10/74.49\% (TON\_IoT, 5 clients) & Honest clients; new classes learned poorly $\rightarrow$ we add poisoning during acquisition\\[3pt]
+P5 & Impact of label-flipping attacks on federated collaborative IDS \cite{lavaur} & 2025 & NF-v2 CSE-CIC-IDS2018, UNSW-NB15 & Common NetFlow features; sampling; IID and cluster-based client splits & Binary MLP (2$\times$128); FedAvg; targeted/untargeted flips; timing and collusion sweeps & F1, recall, accuracy; absolute and relative attack success & One attacker of ten: relative success $<0.1$; damage grows with participation & Fixed binary model, no new classes or replay $\rightarrow$ we test persistence through memory\\[3pt]
+P6 & CND-IDS: continual novelty detection \cite{cnd} & 2025 & X-IIoTID, WUSTL-IIoT, CICIDS2017, UNSW-NB15 & Benign-only initial pool; incremental experiences; PCA fitted on benign embeddings & Continual encoder (reconstruction, clustering, distillation) + PCA novelty score & Threshold F1, PR-AUC, forward/backward transfer & 1.93$\times$/2.64$\times$ over LwF on CICIDS2017 & Thresholds chosen with test labels; no poisoning $\rightarrow$ we calibrate on development data\\[3pt]
+P7 & WeiDetect: Weibull-based poisoning defence \cite{wei} & 2025 & CIC-Darknet2020, CSE-CIC-IDS2018 & Cleaning, one-hot and normalisation; 80/20 split; Dirichlet non-IID clients & Server scores client models on auxiliary data; Weibull rejection; FGSM/PGD/noise and label-flip poisoning & F1, target-class recall, computation time & Clean F1 89.79/94.18\%; improved target recall in tested attacks & CSE-CIC-IDS2018 experiment needs 90\% of its auxiliary pool; fixed classes $\rightarrow$ test adaptation without trusted server data\\[3pt]
+P8 & Attack-adaptive NIDS via class-incremental learning \cite{cerasuolo} & 2025 & IoT-23, TON-IoT, IoT-NID, Edge-IIoT & Biflow packet matrices; base/extended fields; incremental attack families & Packet CNN; FT, replay, LwF, EWC, iCaRL+, EEIL, LUCIR, BiC; memory and few-shot sweeps & Old/new/all F1, PR-AUC; explainability & BiC all/old/new F1 95.30/96.47/85.89\% (TON-IoT) & Centralised and clean; perturbs test inputs only $\rightarrow$ we poison training labels\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\clearpage
+\begin{table}[H]
+\centering\small
+\caption{Cross-paper comparison (part 2: P9--P13). Reported results are the authors' own.}
+\label{tab:comp2}
+\begin{tabularx}{\linewidth}{L{0.6cm}L{2.9cm}L{0.8cm}Y Y Y Y Y Y}
+\toprule
+\# & Title & Year & Dataset used & Preprocessing & Models / techniques & Evaluation metrics & Results & Limitations / research gap\\
+\midrule
+P9 & Continual learning for IDS under evolving threats \cite{guo} & 2025 & UNSW-NB15, CICIDS2017, TON\_IoT & Min--max and one-hot encoding; five stages; low-label settings & DP-Means + entropy memory; multi-level distillation; meta-weighting; semi-supervision & Average accuracy, F1, forgetting, BWT; ablations & CICIDS2017 accuracy/F1 83.4/82.1\%; 76.4\% F1 without DP-Means & Memory favours outliers; attacks on replay untested $\rightarrow$ we test poisoned memory\\[3pt]
+P10 & AMM-HFL: robust hierarchical federated IDS \cite{amm} & 2026 & IDSIoT2024 & Standard scaling; label encoding; class weights; IID and extreme non-IID splits & MLP; client--edge--cloud FL; cosine clustering; multiple global models & Accuracy, confusion matrices, latency; FedAvg, Krum, Trimmed-Mean comparison & 96.83\% (IID) / 95.92\% (non-IID) with 30\% malicious clients & Static classes; rare class absorbed into Normal $\rightarrow$ we measure defence cost on rare/new classes\\[3pt]
+P11 & FLZT-IDS: trust-aware federated IDS \cite{flzt} & 2026 & CICIDS2017, Edge-IIoTset & Session-grouped 80/10/10 split; train-only min--max; Dirichlet ($0.5$) over 10 clients; local SMOTE & GNN + attention BiLSTM; trust filter; gradient screening; LDP + secure aggregation & Accuracy, precision, recall, F1, FPR, communication; membership inference & 97.8\% accuracy; 89.3\% under 30\% sign-flipping; 4.6\% honest clients rejected & Binary, static classes, one seed $\rightarrow$ we test rejection of honest new-family evidence\\[3pt]
+P12 & Federated transfer learning for rare attack classes \cite{rare} & 2025 & CSE-CIC-IDS2018, UNSW-NB15, Edge-IIoT & NaN removal; min--max; correlation-based feature selection; attacks withheld per client & Personalised layers; metric-change new-class trigger; server exemplars and transfer learning & Per-class precision, recall, F1; accuracy & Accuracy 98.90/98.70/97.92\%; DDoS-HOIC F1 0$\rightarrow$98\% & Trusted clients; acquisition trigger is a potential attack surface $\rightarrow$ we test poisoned labels during acquisition\\[3pt]
+P13 & EL-GNN: EWC-based continual graph IDS \cite{elgnn} & 2025 & CICIDS2017 $\rightarrow$ UNSW-NB15 & Correlation-based feature selection; label encoding; IP-based flow graphs & Graph convolutional network + EWC (Fisher penalty) & Accuracy, precision, recall, F1 & $\approx$85\% after two tasks vs.\ $\approx$50--55\% for other GNNs & Two binary tasks, clean data, IP leakage risk $\rightarrow$ we use class-incremental, IP-free inputs\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{landscape}
+
+
+\begin{landscape}
 \section{Deliverable 2: Refined Research Gap}
 
 \subsection{Research Gap Synthesis}
 Table~\ref{tab:gaps} states three gaps, each supported by evidence from three of the reviewed papers.
 
-\begin{landscape}
-\begin{table}[p]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Research gap synthesis. Evidence is taken from the authors' own results or stated limitations.}
 \label{tab:gaps}
@@ -255,7 +265,7 @@ Table~\ref{tab:gaps} states three gaps, each supported by evidence from three of
 \toprule
 Research gap & Evidence from paper A & Evidence from paper B & Evidence from paper C & Proposed research opportunity\\
 \midrule
-\textbf{G1: Client label poisoning is not tested in federated class-incremental IDS.} Federated continual IDS assume honest clients; poisoning studies assume a fixed class set; the only continual-IDS poisoning study is a non-federated preprint.
+\textbf{G1: Client label poisoning is not tested in federated class-incremental IDS.} Federated continual IDS assume honest clients; poisoning studies assume a fixed class set; the closest continual-IDS poisoning study in our search is a non-federated preprint.
 & P9: the authors note that relying on pseudo-labelling and memory replay may make the method vulnerable to attacks that exploit these mechanisms (Sec.~5, p.~22).
 & P12: new classes are added from client-reported performance changes and client-uploaded data, with all clients trusted (pp.~9--12).
 & P5: 10,670 poisoning runs, but on a fixed binary model with no new classes or replay; P10 leaves evolving attacks as future work (p.~17).
@@ -263,12 +273,12 @@ Research gap & Evidence from paper A & Evidence from paper B & Evidence from pap
 \textbf{G2: Defences can reject legitimate new or rare evidence together with poison.}
 & P11: the trust filter wrongly excludes 4.6\% of honest clients on CICIDS2017 even with a fixed class set (Sec.~5.5, p.~22).
 & P10: the rare Injection class is sometimes absorbed into Normal under non-IID data, and Krum rejects specialised legitimate clients (pp.~12, 15).
-& P7: needs at least 90\% trusted auxiliary data (Table 9); P4 already struggles to learn new classes (Sec.~VI).
+& P7: a CSE-CIC-IDS2018 experiment uses at least 90\% of its auxiliary pool (Appendix Table 11); P4 reports lower new-class F1 (Sec.~VI). Neither tests novel-client rejection.
 & Compare a class-aware admission rule (DC) with a global rule admitting the same number of samples (DM); report new-family F1 \emph{and} attack damage together.\\[6pt]
-\textbf{G3: The responsible mechanism and its cost are not identified.}
+\textbf{G3: Poison-persistence mechanisms and their incremental costs need controlled attribution.}
 & P9: removing DP-Means memory drops F1 from 82.1\% to 76.4\% (Table 12), but only on clean data.
 & P8: memory-size and EWC/replay comparisons are clean and centralised.
-& P6: thresholds use labelled test batches (p.~3); P11--P13 report single runs.
+& P5 finds strong dependence on attack and data settings; P11--P13 do not provide repeated-seed uncertainty for this persistence question.
 & Equal-capacity ablations of eviction rule, DER++ terms and keep fraction; measure poison in memory, time and bytes; use development-only calibration and paired seeds.\\
 \bottomrule
 \end{tabularx}
@@ -280,24 +290,24 @@ Research gap & Evidence from paper A & Evidence from paper B & Evidence from pap
 
 \textbf{What approaches currently exist?} For retention: replay with distillation and bias correction (P4, P8, P9) and weight regularisation such as EWC (P8, P13). For robustness: validation-based rejection with trusted data (P7), similarity clustering of client updates (P10), trust scores and gradient screening (P11), and accuracy-based gating.
 
-\textbf{What are their limitations?} The continual-learning papers assume honest participants (P2 explicitly), and P9 acknowledges that its replay could be exploited. The robustness papers test only a fixed set of classes and mostly single runs. Several of their defences remove honest participants or rare classes as a side-effect (P10, P11) or require large trusted datasets (P7).
+\textbf{What are their limitations?} The continual-learning papers assume honest participants (P2 explicitly), and P9 acknowledges that its replay could be exploited. The robustness papers test only a fixed set of classes and often without reported repeated-seed uncertainty. Several of their defences remove honest participants or rare classes as a side-effect (P10, P11) or require large trusted datasets (P7).
 
 \textbf{What remains insufficiently investigated?} (a) Partial label poisoning by one federated client that occurs \emph{while} a new attack family is being learned; (b) whether poisoned knowledge persists through replay memory after the attacker stops; and (c) the acquisition cost of admission defences --- how much legitimate new-family data they discard.
 
 \textbf{Why is this gap important?} A federated IDS learns from many organisations' labelling pipelines. If one automated labelling feed is fooled into marking a DoS attack as benign, the shared model may learn to ignore that attack, and replay memory can keep the error alive after the feed is repaired. A defence that also blocks new attack families defeats the purpose of continual learning. Operators need to know which learners are vulnerable and what each defence costs.
 
-\textbf{How will our research address it?} We run a controlled, pre-registered comparison (Deliverable 3) with RQ1 addressing G1, RQ2 addressing G2 and RQ3 addressing G3. Table~\ref{tab:trace} traces each gap to its test.
+\textbf{How will our research address it?} We propose a controlled comparison whose protocol and analysis will be frozen before final runs (Deliverable 3) with RQ1 addressing G1, RQ2 addressing G2 and RQ3 addressing G3. Table~\ref{tab:trace} traces each gap to its test.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
-\caption{Traceability from gap to research question, method and test. C1/C2 are the two confirmatory hypothesis families (Table~\ref{tab:hypotheses}).}
+\caption{Traceability from gap to research question, method and test. C1/C2 are question groups in one confirmatory testing family (Table~\ref{tab:hypotheses}).}
 \label{tab:trace}
 \begin{tabularx}{\linewidth}{L{0.7cm}L{0.8cm}L{1.8cm}Y Y Y}
 \toprule
 Gap & RQ & Hypotheses & Method component & Primary endpoint & Test\\
 \midrule
-G1 & RQ1 & C1 & Three learners; poison in E2; withdrawal in E3/E4 & Source recall damage; persistent targeted error $H$ & Paired signed-rank tests; Holm correction within C1\\
-G2 & RQ2 & C2 & Class-aware vs.\ matched global admission & New-family F1 $A$; source damage; benign false alarms & Paired signed-rank tests; Holm correction within C2\\
+G1 & RQ1 & C1 & Three learners; poison in E2; withdrawal in E3/E4 & Source recall damage; persistent targeted error $H$ & Paired signed-rank tests; Holm correction across all 29 tests\\
+G2 & RQ2 & C2 & Class-aware vs.\ matched global admission & Untargeted-new-family F1 $A$; source damage; benign false alarms & Paired signed-rank tests; Same 29-test Holm correction\\
 G3 & RQ3 & Exploratory & Eviction and loss ablations; cost accounting & Poison in memory, per-family scores, time and bytes & Paired effect estimates (declared exploratory)\\
 \bottomrule
 \end{tabularx}
@@ -307,7 +317,7 @@ G3 & RQ3 & Exploratory & Eviction and loss ablations; cost accounting & Poison i
 \section{Deliverable 3: Proposed Research Methodology}
 All settings, rules, experiments and budgets in this section are \emph{proposed}; no results are reported. Each of the twelve steps states what is done, how, and why, with the literature that supports the choice. Table~\ref{tab:terms} defines the short names used throughout, and Appendix~\ref{app:notation} lists the mathematical notation.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Key terms and abbreviations.}
 \label{tab:terms}
@@ -317,9 +327,9 @@ Term & Meaning & Term & Meaning\\
 \midrule
 FL / CL & Federated learning / continual learning & T0 & Benign-only calibration pool used to fit the scaler\\
 FCIL & Federated class-incremental learning & E1--E4 & The four supervised learning stages (\enquote{experiences})\\
-FT & Fine-tuning (no protection against forgetting) & Source family & DoS-Hulk, the attack whose labels are poisoned\\
+FT & Fine-tuning (no replay or retention penalty) & Source family & DoS-Hulk, the attack whose labels are poisoned\\
 EI & EWC-style importance regularisation & Anchors & FTP-Patator and SSH-Patator, learned in E1\\
-DR & DER++ replay, no admission filter & $A$ & Acquisition: F1 on newly introduced families\\
+DR & DER++ replay, no admission filter & $A$ & Acquisition: F1 on untargeted new families\\
 DG & DER++ + global 75\% low-loss filter & ASR & Share of source-family flows predicted benign\\
 DM & DER++ + global filter with matched per-client quota & $H$ & Persistent targeted error after withdrawal (E3/E4)\\
 DC & DER++ + class-aware quota (\textbf{proposed}) & FAR$_B$ & False-alarm rate on benign traffic\\
@@ -328,19 +338,19 @@ DC & DER++ + class-aware quota (\textbf{proposed}) & FAR$_B$ & False-alarm rate 
 \end{table}
 
 \subsection{Step 1 --- Define the Research Input}
-\textbf{What.} The input is a stream of network-flow records, each a vector of numeric features with a (possibly corrupted) label, plus metadata (record ID, session ID, timestamp) kept in a separate file that the learner never sees:
+\textbf{What.} The input is a stream of network-flow records with numeric features and a possibly corrupted label. Session IDs and timestamps are builder-only metadata. Immutable record IDs are available to the data loader for ties, ownership and replay bookkeeping, but no metadata enter the network as predictive features:
 \begin{equation}
 D_{k,t}=\{(x_i,\widetilde y_i,u_i,\sigma_i,\tau_i)\}_{i=1}^{n_{k,t}},\quad
 x_i\in\mathbb R^d,\quad\mathcal C_t=\mathcal C_{t-1}\cup\mathcal C_t^{\rm new},
 \label{eq:input}
 \end{equation}
-where $k$ is the client, $t$ the stage and $\mathcal C_t$ the set of classes seen so far. We plan $d=76$ numeric features and fifteen CICIDS2017 labels, introduced in the order of Table~\ref{tab:schedule}, so the output layer grows from 3 to 8, 12 and 15 classes.
+where $k$ is the client, $t$ the stage and $\mathcal C_t$ the set of classes seen so far. We plan $d=76$ numeric features and fifteen CICIDS2017 labels, introduced in the order of Table~\ref{tab:schedule}, giving maximum output widths of 3, 8, 12 and 15. A family with no usable training records is omitted from the active head; actual widths and scoring eligibility are fixed by the data audit before final seeds.
 
-\textbf{How.} Ports, IP addresses, timestamps and IDs are excluded from $x_i$. The attacker is defined in Table~\ref{tab:threat}.
+\textbf{How.} Ports, IP addresses, timestamps and IDs are excluded from $x_i$. The supervised class registry adds only labels present in the current supplied training labels across clients; it is shared before head expansion. Reference labels and poison markers are evaluator-only. This assumes supervised class arrival, not automatic novelty discovery. The attacker is defined in Table~\ref{tab:threat}.
 
 \why{Excluding host identifiers follows P4 (IP/ports removed) and avoids the identifier-leakage risk seen in P13's IP-based graphs. Adding families stage by stage is the class-incremental protocol of P4 and P8. Relabelling attack traffic as normal is the attack studied in P5 and P10.}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Proposed learning schedule. Benign traffic accompanies every stage; no earlier attack family is reintroduced as new training data.}
 \label{tab:schedule}
@@ -357,7 +367,7 @@ E4 & Bot; PortScan; DDoS & Attacker withdrawn; adaptation\\
 \end{tabularx}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Threat model.}
 \label{tab:threat}
@@ -367,7 +377,7 @@ Field & Specification\\
 \midrule
 Goal & Make DoS-Hulk traffic appear benign during and after E2.\\
 Knowledge & Knows the source and target classes, its own local records, the schedule and its budget; no access to model gradients, filter scores or test labels.\\
-Capability & Flips labels of existing Hulk training records at one client during E2 only (two clients only under the pre-declared fallback, Step 7); cannot create new records, features or classes.\\
+Capability & Flips labels of existing Hulk training records at one client during E2 only; cannot create new records, features or classes.\\
 Constraints & Records are chosen at random (the attacker does not adapt to the filter); the client's training software runs as declared; the server and evaluation data are trusted.\\
 Scenario & An attacker fools one organisation's automated traffic-labelling feed; the organisation still controls its training software.\\
 Out of scope & Forged model updates, server compromise, filter-aware attacks, RF spoofing; these need a separate study.\\
@@ -376,26 +386,28 @@ Out of scope & Forged model updates, server compromise, filter-aware attacks, RF
 \end{table}
 
 \subsection{Step 2 --- Data Collection}
-\textbf{What and how.} We use the eight MachineLearningCSV files of CICIDS2017 \cite{dataset} (Appendix~\ref{app:files}) and record their checksums; CICIoT2023 \cite{iot} is an external, exploratory check. Because these files lack the identifiers needed to group flows into sessions, we also use the companion \emph{GeneratedLabelledFlows} (TrafficLabelling) CSVs of the same release, which record the flow ID, source and destination IP address and port, protocol and timestamp of every flow. Each feature row is aligned with its labelled flow, and flows are grouped into sessions by endpoint pair and protocol, with an idle gap of more than 120 seconds starting a new session. The raw packet captures are consulted only for ambiguous cases, which avoids processing the full capture set. Rows that cannot be aligned are quarantined, and a manifest records release, licence, counts and every exclusion.
+\textbf{What and how.} We use the CICIDS2017 release \cite{dataset}, with the eight MachineLearningCSV files specifying the target numeric schema (Appendix~\ref{app:files}). The matching \emph{GeneratedLabelledFlows} / TrafficLabelling files provide the canonical records: numeric features and session metadata are taken from the \emph{same row}. We do not join the two releases by row position or by feature values, which can be duplicated. The audit must confirm a consistent projected feature schema, timestamp parsing and metadata coverage; ambiguous or conflicting records are quarantined and counts are published. If session metadata or required class support cannot be recovered reliably, final runs stop until the protocol is revised.
+
+Sessions use the unordered pair of (IP address, port) endpoints plus protocol; a gap exceeding 120 seconds between flow intervals begins a new session. This is a reproducible operational grouping, not a claim to recover ground-truth application sessions. A sensitivity audit reports how 60- and 300-second gaps change support and overlap, without choosing the threshold using model test performance. A manifest records release, licence, checksums, feature list, counts and exclusions. CICIoT2023 \cite{iot} is a separate exploratory check.
 
 \why{CICIDS2017 is used by P6, P9, P11 and P13 and contains the multi-day attack families our schedule needs; CICIoT2023 is the newer IoT dataset from the same institute. Session grouping prevents related flows leaking between splits, as P11 also enforces.}
 
 \subsection{Step 3 --- Data Preprocessing}
-\textbf{What.} Produce clean, leakage-free training, development and test sets for every stage.
+\textbf{What.} Produce audited training, development and test sets with the declared session/content isolation.
 
 \textbf{How.}
 \begin{itemize}
-\item \emph{Cleaning.} Keep the 76-feature schema, normalise label spelling, remove non-finite values and repeated header rows, and log exclusions by family. Known CICIDS2017 labelling defects \cite{engelen} are handled by quarantining disputed flows.
-\item \emph{Leakage control.} Identical feature vectors are de-duplicated (conflicting labels are quarantined), and no session or identical input may appear in more than one split (formal conditions in Appendix~\ref{app:notation}).
-\item \emph{Splitting.} Whole sessions are allocated 60/20/20 to train/development/test, in chronological order within each attack family.
-\item \emph{Scaling.} A min--max scaler is fitted \emph{only} on the isolated benign T0 pool and then frozen; development and test data never influence preprocessing.
-\item \emph{Benign volume.} Training uses about 3,500 benign rows per stage, sampled as whole sessions; development and test sets keep their natural class proportions.
-\item \emph{Support floor.} A family enters confirmatory scoring only with at least 50 training, 50 development and 50 test rows after isolation; the number of distinct sessions is also reported (Table~\ref{tab:support}).
+\item \emph{Cleaning.} Validate the intended 76-feature projection, normalise label spelling, remove non-finite values and repeated headers, and log exclusions by family. Exclude duplicated schema columns, host identifiers and label-derived fields. Disputed CICIDS2017 flows are quarantined using documented rules \cite{engelen}; no claim is made that all labelling defects are repaired.
+\item \emph{Isolation.} Canonical feature hashes exclude labels and metadata. Conflicting labels for identical inputs are quarantined. Session links and identical-input links form connected components; an entire component receives one split and, for training, one owner. Same-label duplicates retain one deterministic earliest survivor and the provenance links of all copies. This enforces both session and content isolation, including across source files; the audit checks the final projected inputs as well.
+\item \emph{Splitting.} A fixed, seeded group-stratified allocation targets 60/20/20 train/development/test by family; indivisible components make exact proportions impossible. Split membership is fixed across all training seeds and all arms. This is a simulated class-arrival study: the stage order follows capture days, but this split does not establish globally future-only online prediction. Split date ranges and residual host/testbed confounding are reported.
+\item \emph{Scaling.} A predeclared Monday benign T0 pool is isolated before splitting and is used only to fit a frozen min--max scaler. No clipping or refitting on later stages is allowed; values outside $[0,1]$ remain valid. For a feature with zero T0 range, use denominator one in $(x-\min_{T0})/\mathrm{range}$, rather than dividing by zero or discarding later variation. Record the scaler statistics and validate finite FP32 inputs after transformation. T0 is not used for weight training. Development and test data never fit transformations.
+\item \emph{Benign volume.} Distinct benign training sessions from each stage's capture period target about 3,500 rows, with whole-component selection and realised counts reported. No record is reused as fresh data in a later stage. Evaluation keeps all eligible rows of each fixed bank; group allocation and quarantine may change original capture proportions.
+\item \emph{Support floor.} Confirmatory families need at least 50 train, 50 development and 50 test rows, and at least five distinct session/content components in each split. The eligible family list is fixed before model outcomes are inspected and is identical across arms/seeds. Families below the floor may be trained if supported but are scored descriptively. This floor is an operational feasibility rule, not a statistical power guarantee.
 \end{itemize}
 
 \why{P6's use of test labels to set thresholds and P11's session-grouped, train-only scaling show why calibration must avoid test data. Min--max scaling follows P9, P11 and P12.}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Pre-declared scoring eligibility.}
 \label{tab:support}
@@ -403,17 +415,17 @@ Out of scope & Forged model updates, server compromise, filter-aware attacks, RF
 \toprule
 Family or set & Requirement & Treatment\\
 \midrule
-FTP-Patator; SSH-Patator & 50/50/50 rows each & Required anchors; failure stops the protocol\\
+FTP-Patator; SSH-Patator & 50/50/50 rows and 5/5/5 components each & Required anchors; failure stops the protocol\\
 DoS-Hulk & Same floor; one client with $\ge$10 eligible E2 rows & Required source; failure stops the protocol\\
 Heartbleed; Web SQL injection; Infiltration & Row and session support audited separately & Below the floor: reported descriptively only\\
-Other attack families & Same floor, applied before any results & Published list of included/excluded families\\
-Benign & Non-empty sets at every stage & Training capped; evaluation proportions kept\\
+Other attack families & Same floor, applied before any results & At least one eligible untargeted new family at each of E2--E4, otherwise revise the protocol\\
+Benign & Non-empty stage banks; $\ge4$ test components & Distinct training pools; realised evaluation proportions reported\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \subsection{Step 4 --- Feature Engineering and Representation}
-\textbf{What and how.} We keep the numeric flow features without learned transformations, so that differences between conditions come from memory and selection, not representation. Poisoning changes labels only, never features. The model never receives the stage identity at test time. For CICIoT2023, a separate schema, scaler and schedule are built; only the network sizes and methods are transferred.
+\textbf{What and how.} All arms use the same numeric feature projection and frozen T0 scaling. No representation learner or feature selector is fitted; the scaler is the only fitted feature transformation. This holds representation choices constant across arms. Poisoning changes labels only, never features. The model never receives the stage identity at test time. For CICIoT2023, a separate schema, scaler, family/source mapping, dose denominator and stage schedule must be locked before its runs, with independent split and support audits. Only network sizes and method settings transfer, not learned weights or pooled estimates. If that protocol is infeasible, the external check is omitted and documented.
 
 \why{Flow-feature vectors with a small network are the most common setting in the reviewed work (P5, P9, P10, P11). Packet-level inputs (P4, P8) would need a separate capture pipeline and are left out.}
 
@@ -425,13 +437,22 @@ e_2=\operatorname{Drop}(\operatorname{ReLU}(W_2e_1+b_2)),\quad
 f_{\theta,t}(x)=W_te_2+b_t\in\mathbb R^{C_t}.
 \label{eq:head}
 \end{equation}
-With $d=76$ and $C_t=15$ the network has 19,087 parameters (76,348 bytes in 32-bit floats).
+At the maximum $d=76$, $C_t=15$, the network has 19,087 parameters (76,348 raw FP32 weight/bias bytes). This excludes optimiser, replay, importance, metadata and serialisation overhead; measured communication includes those fields actually transmitted.
 
-\textbf{Learners.} Fine-tuning (FT) minimises cross-entropy on current data only. The EWC-style learner (EI) adds a penalty that keeps important weights near their previous values, with importance $I_a$ accumulated from squared mini-batch gradients:
+\textbf{Learners.} Let $p_{\theta,t}=\operatorname{softmax}(f_{\theta,t})$. Current cross-entropy is the mean over the current mini-batch; each replay term is a separate mean over the same replay draw. No class reweighting or oversampling is used. Fine-tuning (FT) minimises current cross-entropy only. The EWC-style learner (EI) adds a penalty that keeps important weights near their previous values, with client-local diagonal importance $I_{k,a}$ estimated from squared per-example log-likelihood gradients:
 \begin{equation}
-\mathcal L_{\rm E}=\mathcal L_{\rm cur}+\frac{\lambda_E}{2}\sum_aI_a(\theta_a-\theta_a^{\rm anchor})^2 .
+\mathcal L_{\rm E}=\mathcal L_{\rm cur}+\frac{\lambda_E}{2}\sum_aI_{k,a}(\theta_a-\theta_a^{\rm anchor})^2 .
 \label{eq:ewc}
 \end{equation}
+Initialise $I_{k,0}=0$ and the anchor to the shared initial model $\theta_0$, so E1 has no retention penalty. At stage end the server broadcasts $\theta_t$. For each active EI client, draw $\mathcal F_{k,t}$ with exactly $\min(1024,n_{k,t})$ distinct current training records uniformly without replacement, and estimate
+\begin{equation}
+\widehat F_{k,t,a}=\frac{1}{|\mathcal F_{k,t}|}\sum_{i\in\mathcal F_{k,t}}
+\left[\partial_{\theta_a}\log p_{\theta_t}(\widetilde y_i\mid x_i)\right]^2,
+\qquad I_{k,t,a}=I_{k,t-1,a}+\widehat F_{k,t,a}.
+\label{eq:importance}
+\end{equation}
+Gradients are squared \emph{before} averaging, with dropout off, using supplied labels and no optimiser step. This is a sampled diagonal \emph{empirical} Fisher, not an exact model Fisher \cite{ewc,empfisher}. The next anchor is the final aggregate; new coordinates have zero prior importance. This client-local online-EWC-style accumulation uses decay one \cite{onlineewc}. A client absent in a stage preserves its importance and receives the final shared anchor. Importance is never FedAvg-averaged, and the sample IDs, RNG state and measured importance cost are recorded.
+
 DER++ (DR) stores past samples with their labels and the model's output logits at storage time, and replays both:
 \begin{equation}
 \mathcal L_{\rm D}=\mathcal L_{\rm cur}
@@ -439,9 +460,9 @@ DER++ (DR) stores past samples with their labels and the model's output logits a
 +\lambda_y\,\mathbb E_{i\sim\mathcal B}\CE(f_{\theta,t}(x_i),\widetilde y_i),
 \label{eq:der}
 \end{equation}
-where $S_i$ selects the logits that existed when sample $i$ was stored. Replay is drawn before each update and new samples are inserted after it, so post-withdrawal persistence can be separated from current poison.
+where $S_i$ selects the head coordinates present at storage time and $\omega_i$ is their number. Before an update, cache the current records' evaluation-mode logits; draw replay from the existing reservoir, apply the update, then consider each eligible first-pass record for insertion using that \emph{pre-update} cache. Logit matching also disables dropout while retaining gradients; cross-entropy training uses dropout. Class slots are appended and never reordered. Old stored logits remain unchanged across broadcasts. Masking, width normalisation and deterministic logit caching are declared adaptations of DER++ \cite{der}, rather than exact reproduction of its original setting. Withdrawal removes fresh corruption, while matched clean trajectories separate attack-associated persistence from ordinary forgetting.
 
-\textbf{Admission rule (proposed).} Before each stage, a frozen copy of the model scores every local training row by its loss. The class-aware rule keeps the lowest-loss 75\% \emph{within each class}, but always keeps every row of a newly introduced class and of very small classes (fewer than 20 rows):
+\textbf{Admission rule (proposed).} At each stage boundary, the server expands the head with identical new-row initialisation for paired runs. A frozen scoring copy then computes cross-entropy against supplied labels, with dropout off. Only supplied labels and the shared current class registry determine counts and protection; reference labels and poison markers are unavailable. Score ties use immutable record ID. Admission is computed once and stays fixed through the stage. The class-aware rule keeps the lowest-loss 75\% \emph{within each class}, but always keeps every row of a newly introduced class and of very small classes (fewer than 20 rows):
 \begin{equation}
 K_{k,c,t}=\begin{cases}
 0,&n_{k,c,t}=0,\\
@@ -450,38 +471,43 @@ n_{k,c,t},&c\text{ is new at stage }t\ \text{or}\ 0<n_{k,c,t}<20,\\
 \end{cases}
 \label{eq:quota}
 \end{equation}
-The matched global control (DM) admits the \emph{same total number} of rows per client but ranks all classes together. For example, a client with 100 benign, 10 rare and 40 new-family rows admits $75+10+40=125$ rows under both rules; only the class composition differs. Poisoned Hulk rows carry the benign label, so they compete inside the benign quota, where a high loss may expose them. However, Hulk is unseen before E2, so the frozen model may already score Hulk traffic as benign with \emph{low} loss, in which case poisoned rows are kept. DC is therefore not assumed to be an effective defence: it is a falsifiable test of the security--adaptation trade-off, and an outcome in which DC protects new-family learning but not the poisoned family is itself informative.
+The matched global control (DM) admits the \emph{same total number} of rows per client but ranks all classes together. For example, a client with 100 benign, 10 rare and 40 new-family rows admits $75+10+40=125$ rows under both rules; only the class composition differs. Poisoned Hulk rows carry the benign label, so they compete inside the benign quota, where a high loss may expose them. However, Hulk is unseen before E2, so the frozen model may already score Hulk traffic as benign with \emph{low} loss, in which case poisoned rows are kept. New-class scores also depend on untrained head rows, so global filtering may suppress novelty without identifying poison. DC is therefore not assumed to be an effective defence: it is a falsifiable test of the security--adaptation trade-off, and an outcome in which DC protects new-family learning but not the poisoned family is itself informative.
 
-\textbf{Memory.} Each client keeps a 500-record reservoir in which every distinct record ID has an equal chance of being stored \cite{vitter}; records are inserted only on their first pass, so repeated epochs cannot fill memory with copies.
+\textbf{What DC actually tests.} In this schedule every fresh attack class is new, while benign is the only recurring current-data class. Therefore DC retains all supplied attack-labelled rows and applies the quota only to benign-labelled rows (except a local pool smaller than 20). Its matched comparison tests \emph{new-label protection under equal admitted volume}; it does not demonstrate general balancing of recurring old attack classes. The small-class exception is an engineering choice, not a separately identified benefit. Old attack records occur in replay, where admission is not reapplied. Broader class-balancing claims require a separate recurrence experiment.
 
-\textbf{Federation.} After each round, the server averages client models weighted by their admitted row counts (FedAvg \cite{fedavg}); Algorithm~\ref{alg:experience} fixes the order of operations.
+\textbf{Memory and insertion.} Each DER++ client keeps a 500-record reservoir over admitted distinct records, using Algorithm R \cite{vitter}. Admission is fixed for the stage, fresh-stage IDs are disjoint, and epoch 1 of round 1 visits every admitted ID once, including the last partial batch. Only that pass proposes insertions. A persistent scalar stream counter, saved pass cursor and RNG state prevent reinsertion on resume; no growing historical seen-ID set is needed. At stream position $j\le500$, fill an empty slot; otherwise draw $v$ uniformly from $\{1,\ldots,j\}$ and replace slot $v$ only if $v\le500$. An evicted record is not reconsidered in later epochs or rounds. Rejected records never enter training or replay. Uniform reservoir sampling applies to the admitted stream, not the original unfiltered data. Replay draws $\min(128,|\mathcal B|)$ records without replacement per update; empty replay contributes zero loss.
 
-\begin{algorithm}[htbp]
+\textbf{Capacity accounting.} Each fixed slot stores 76 FP32 features (304 bytes), 15 padded FP32 logits (60), an int64 supplied label (8), a uint64 ID (8), and a uint8 observed logit width (1): 381 bytes, or 190,500 raw bytes for 500 slots per client. Coordinates beyond the stored width are masked; padding uses the declared maximum taxonomy, without activating future head rows. Report actual allocated/serialised bytes, scalar/cursor state and object/alignment overhead separately. Equal replay capacity applies to DR/DG/DM/DC, not equal total resources across FT, EI and replay. Reference-label/poison auditing runs outside client learning.
+
+\textbf{Federation.} FedAvg weights an active client by its distinct admitted current-row count, counted once per stage, excluding replay and repeated epochs \cite{fedavg}. A client with zero admitted current rows neither updates from replay alone nor contributes an unchanged model. Zero active clients invalidates the stage. Five clients are simulated on one machine; this does not demonstrate privacy, secure aggregation or real-site heterogeneity. Algorithm~\ref{alg:experience} fixes the order.
+
+\begin{algorithm}[H]
 \caption{One supervised stage (experience)}
 \label{alg:experience}
 \begin{algorithmic}[1]
 \Require Shared model, persistent client states, current client shards, round/epoch budget
-\State Apply training-only label corruption (E2 only); collect the classes present
+\State Apply E2 corruption once; share the union of supplied current class labels
 \State Expand all output layers identically; freeze a scoring copy of the model
 \State Compute admission quotas and the accepted record IDs (DG/DM/DC only)
 \For{each synchronisation round}
 \State Broadcast the shared model; reset each client's optimiser state
-\For{each client and each current mini-batch}
-\State Draw replay samples; update with the selected learner's loss
-\State Store the record and its logits in memory on its first pass only
+\For{each active client and each admitted current mini-batch}
+\State Cache pre-update logits (DR family); draw replay; update the local model
+\State Insert cached records only in round 1, epoch 1 (DER++ only)
 \EndFor
 \State Aggregate client models with admitted-count weights
 \EndFor
-\State Update EWC-style importance once (EI only); evaluate on the fixed test banks
+\State Broadcast final aggregate; estimate importance and commit anchors (EI only)
+\State Save versioned checkpoint and local state; enqueue evaluation-only artefacts
 \end{algorithmic}
 \end{algorithm}
 
-\why{The small MLP matches P5 (two hidden layers of 128). FT, EWC and replay are the standard CL learners benchmarked in P8 and used in P2, P4, P9 and P13; DER++ is a strong, simple replay baseline \cite{der}. Per-class protection is motivated by P12 and P10, where rare or new classes are easily lost, and by P11's honest-client rejections; low-loss selection follows noisy-label learning \cite{coteach,mentornet}.}
+\why{The two-layer MLP is inspired by P5's 128/128 network; our 128/64 widths reduce cost and are held constant across arms. FT, EWC and replay are benchmarked in P8 and used in P2, P4, P9 and P13; DER++ provides a replay baseline \cite{der}. P10/P12 motivate rare/new-class evaluation and P11 motivates checking honest rejection. Low-loss selection is inspired by noisy-label learning \cite{coteach,mentornet}.}
 
 \subsection{Step 6 --- Baseline Methods}
 Table~\ref{tab:arms} lists the six conditions. FT, EI and DR compare learners without any defence; DG, DM and DC compare admission rules on the same DER++ backbone, with DM as the fair, equal-volume control for the proposed DC.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Experimental conditions (baselines and proposed method). All admission filters are disabled in E1.}
 \label{tab:arms}
@@ -489,10 +515,10 @@ Table~\ref{tab:arms} lists the six conditions. FT, EI and DR compare learners wi
 \toprule
 Code & Learner and admission & Replay memory & What it tests & Literature basis\\
 \midrule
-FT & Fine-tuning; none & None & Lower bound: no protection against forgetting & P8\\
+FT & Fine-tuning; none & None & Reference without explicit retention; can outperform CL methods & P8\\
 EI & EWC-style; none & None (importance only) & Regularisation-based retention & P8, P13; \cite{ewc}\\
 DR & DER++; none & 500-record reservoir & Replay-based retention, no defence & P4, P9; \cite{der}\\
-DG & DER++; global 75\% lowest loss & Same & Common unmatched filter & \cite{coteach}\\
+DG & DER++; global 75\% lowest loss & Same & Simple unmatched low-loss control & Inspired by \cite{coteach}; not Co-teaching\\
 DM & DER++; global ranking, matched per-client quota & Same & Fair equal-volume control for DC & ---\\
 DC & DER++; class-aware quota (Eq.~\ref{eq:quota}) & Same & \textbf{Proposed rule}; tests the security--adaptation trade-off & P10, P11, P12\\
 \bottomrule
@@ -501,20 +527,26 @@ DC & DER++; class-aware quota (Eq.~\ref{eq:quota}) & Same & \textbf{Proposed rul
 Server-side defences from the literature --- validation-based rejection (P7), similarity clustering (P10) and trust filtering (P11) --- need trusted data or different information and are kept as optional extensions.
 
 \subsection{Step 7 --- Experimental Design}
-\textbf{Clients and ownership.} Five persistent clients receive data according to a Dirichlet(0.5) distribution over each training family, allocating whole sessions. The attacked client is chosen at random among clients holding at least ten Hulk rows, and the same client and record order are reused across all conditions.
+\textbf{Clients and ownership.} Five persistent clients receive whole training components, using a Dirichlet(0.5) draw over each family's target shares and deterministic component allocation. Report realised row shares, class support and deviation from targets. A component spanning labels has one owner. The attacked client is drawn uniformly from clients with at least ten Hulk rows before corruption. Ownership is fixed within a run, and matched across its arms and doses; it varies across seeds. The attacker stays a normally participating client after E2 but receives no fresh Hulk data.
 
-\textbf{Poison dose.} The attacker flips a fraction $\rho$ of its eligible Hulk training rows during E2:
+\textbf{Poison dose.} The primary threat stays at one attacked client and four fixed doses. A seed-specific random ordering of that client's eligible Hulk IDs is shared across arms; higher doses take nested prefixes:
 \begin{equation}
-Q_{k,2}=\lfloor\rho\, n^{\rm elig}_{k,2}\rfloor,\qquad \rho\in\{0,\,0.10,\,0.30,\,0.50\}.
+Q_{k,2}=\lfloor\rho n^{\rm elig}_{k,2}\rfloor,\quad
+\rho\in\{0,0.10,0.30,0.50\},\qquad
+d_2=\frac{Q_{k,2}}{\sum_j n_{j,2}}.
 \label{eq:dose}
 \end{equation}
-With equal client volumes this corrupts at most about 10\% of all E2 training rows. Stages E3 and E4 contain no poison and no fresh Hulk data, so any remaining Hulk error measures \emph{persistence}, not re-learning. All DER++ conditions start E2 from an identical, hash-verified copy of the E1 state.
+Here $\rho$ is the fraction of the attacked client's source-family rows, while $d_2$ is the realised fraction of \emph{all} E2 rows before admission. Dirichlet imbalance prevents a fixed 10\% global upper bound. Report both denominators, admitted poison and the attacked client's aggregation weight. Stages E3/E4 contain no fresh poisoned labels or fresh Hulk records; replay can still contain both honest and poisoned E2 records. All DER++ arms/doses clone identical E1 model, memory, counter/pass cursor and random states before E2; paired clean trajectories quantify ordinary forgetting.
 
-\textbf{Development pilots.} Three development seeds (101--103) compare one round of three epochs with three rounds of one epoch per stage, then tune learning rates ($10^{-4}, 10^{-3}$), $\lambda_E\in\{1,10,100\}$ and six $(\lambda_z,\lambda_y)$ pairs on development F1. Pilots must show that clean learning works (anchor recall $\ge0.50$, clean Hulk recall $\ge0.70$) and that the strongest poison has a visible effect on fine-tuning (mean increase in Hulk-to-benign error $\ge0.10$). Because P5 found a single attacker among ten clients almost harmless, two fallbacks are pre-declared and tried in order if the effect is too small: (i) $\rho=1.0$ (all eligible Hulk rows flipped) at the same client, then (ii) two attacked clients at $\rho=0.5$. The first setting that passes becomes the maximum dose. If none passes, the dilution of this attack by federated averaging is reported as a finding and the protocol is revised before any final runs.
+\textbf{Development pilots and tuning.} Seeds 101--103 are development-only; final test metrics remain sealed until the protocol is locked. First compare one round of three epochs with three rounds of one epoch, using common pilot defaults (Adam, learning rate $10^{-3}$, batch size 128, $\lambda_E=10$, $\lambda_z=0.5$, $\lambda_y=1$). Choose one common budget by mean clean development macro-F1 across learners; ties favour lower communication. Tune clean FT/EI/DR separately with learning rates $\{10^{-4},10^{-3}\}$, $\lambda_E\in\{1,10,100\}$ and the six pairs $(\lambda_z,\lambda_y)\in\{0.1,0.5,1\}\times\{0.1,1\}$. Optimisers reset at each round; replay batch size is fixed. All DER++ admission arms reuse DR's selected weights and optimiser settings. Development macro-F1 is averaged across E1--E4; ties use lower measured cost and then a fixed lexicographic configuration order.
 
-\textbf{Final runs.} Twelve seeds (1--11 and 42) randomise ownership, attack selection, data order, initialisation, replay and dropout. Table~\ref{tab:budget} gives the run budget.
+\textbf{Fixed optimisation details.} Use FP32 Adam with $(\beta_1,\beta_2)=(0.9,0.999)$, $\epsilon=10^{-8}$, zero weight decay, no learning-rate scheduler and no early stopping. Each epoch visits all admitted IDs once in a seeded shuffled order. Encoder layers use the recorded framework's standard linear-layer initialiser; appended head rows use Xavier-uniform weights and zero biases. Copy previous head rows without freezing them: every active row stays trainable. Select the final update's checkpoint rather than a test-selected epoch. Reset Adam on each broadcast; retain only the declared EI/replay state. Record framework versions, deterministic settings and CPU/BLAS thread counts; bitwise equality across hardware is not assumed.
 
-\begin{table}[htbp]
+Clean development gates require anchor recall $\ge0.50$ and Hulk recall $\ge0.70$, averaged over the three development seeds at acquisition. The maximum-dose FT pilot reports the increase in Hulk-to-benign error against its paired clean run; it is a feasibility diagnostic, \emph{not} an effect-size gate. A weak or null attack does not trigger higher doses, extra attackers or selection of favourable final seeds. Any future threat revision must be a separately documented exploratory protocol. Failure of clean-learning or data-support gates requires a protocol revision before final testing.
+
+\textbf{Final runs and pairing.} Twelve seeds (1--11 and 42) vary ownership, attack selection, order, initialisation, replay, importance sampling and dropout on the same frozen split. Independent random streams for these operations prevent a filter's changed data length from changing the poison draw or head initialisation. Admission-specific trajectories can diverge as a treatment consequence. No final seed is discarded for weak attack effect. Table~\ref{tab:budget} counts planned trajectories; shared E1 prefixes may be cached without changing those counts.
+
+\begin{table}[H]
 \centering\footnotesize
 \caption{Planned run budget. Full runs cover E1--E4; continuations cover E3--E4 only.}
 \label{tab:budget}
@@ -523,35 +555,42 @@ With equal client volumes this corrupts at most about 10\% of all E2 training ro
 Tier & Formula & Runs & Purpose\\
 \midrule
 Synchronisation pilot & 3 learners $\times$ 2 budgets $\times$ 3 dev.\ seeds & 18 & Choose rounds/epochs\\
-Poison viability & 1 FT $\times$ maximum dose (+ up to 2 fallbacks) $\times$ 3 seeds & 3--9 & Confirm the attack has an effect\\
+Poison diagnostic & 1 FT $\times$ maximum dose $\times$ 3 seeds & 3 & Estimate attack magnitude; clean references reused from tuning\\
 Hyperparameter search & $(2+6+12)$ configurations $\times$ 3 dev.\ seeds & 60 & Tune learners\\
 Primary learners & 3 learners $\times$ 4 doses $\times$ 12 seeds & 144 & RQ1\\
 Admission conditions & 3 (DG/DM/DC) $\times$ 4 doses $\times$ 12 seeds & 144 & RQ2\\
 External check & 3 (DR/DM/DC) $\times$ 2 doses $\times$ 12 seeds & 72 & CICIoT2023 transfer\\
 Ablations & 8 changed settings $\times$ 2 doses $\times$ 12 seeds & 192 & RQ3\\
-Memory diagnostic & 2 clones $\times$ maximum dose $\times$ 12 seeds & 24 & Role of poisoned memory\\
+Memory diagnostic & 2 DC clones $\times$ maximum dose $\times$ 12 seeds & 24 & Continued erroneous-label replay\\
 \bottomrule
 \end{tabularx}
 \end{table}
-The total is 633 full runs (up to 639 if both attack fallbacks are needed) plus 24 continuations; if time is short, the external check, DG and ablations are dropped first, keeping 240 final runs, the 81 development runs and all twelve seeds. The model is small enough to train on a two-thread CPU; per-run wall time is measured in the pilots and reported. Inference cost is measured at batch sizes 1 and 256 (10 warm-up and 100 timed calls), and communication as serialised upload and download bytes per round.
+The complete plan contains 633 full trajectories plus 24 E3--E4 continuations, including 81 development trajectories. The core contains FT/EI/DR/DM/DC at four doses and twelve seeds: 240 final trajectories. Dropping DG, the external check and ablations leaves 321 full trajectories (240 final + 81 development) plus 24 continuations. The scope is locked from pilot timings before final outcomes are viewed. Feasibility on a two-thread CPU is measured, not assumed. Cost reports separate training, admission scoring, importance computation and evaluation; memory includes client state and replay. Inference uses evaluation mode, batch sizes 1 and 256, 10 warm-up and 100 timed calls with median and dispersion; upload/download bytes include serialisation and label-registry traffic, summed across clients and rounds.
 
-\why{Dirichlet(0.5) client skew is used by P7 and P11, and five clients by P4. Testing several doses follows P5, which found a single attacker weak, and P10/P11, which use 5--30\% malicious clients. Withdrawal stages are new: none of P4--P13 measures damage after an attacker stops. Twelve paired seeds answer the single-run reporting seen in P11--P13.}
+\why{Dirichlet(0.5) client skew is used by P7 and P11, and five clients by P4. Testing several doses follows P5, which found a single attacker weak, and P10/P11, which use 5--30\% malicious clients. None of the selected P4--P13 studies reports this matched withdrawal comparison; broader novelty is not established by that absence. Twelve paired seeds add repeated-seed uncertainty absent from the reports in P11--P13.}
 
 \subsection{Step 8 --- Evaluation Metrics}
-All metrics are computed on fixed, clean test sets. Table~\ref{tab:metrics} lists them; the three key quantities are defined below.
+All metrics use fixed, clean evaluator-only banks. At stage $t$, multiclass evaluation uses one bank containing every eligible seen attack family plus a fixed benign test bank, with no duplicate records. Future attack classes are excluded until their supervised arrival. These confirmatory banks estimate performance on the eligible family subset. A separate, descriptive full-inventory confusion matrix includes every supported held-out family, including those below the scoring floor; exclusions are never presented as whole-dataset performance. Per-family F1 uses one-versus-rest counts on that bank; source recall and Hulk-to-benign error also use the same fixed Hulk bank at every $t\ge2$.
 \begin{equation}
-\mathrm{ASR}_t=\frac{\#\{i:y_i=\text{Hulk},\ \widehat y_i=\text{benign}\}}{N_{\rm Hulk}},\qquad
-H=\tfrac12\big(\Delta\mathrm{ASR}_3+\Delta\mathrm{ASR}_4\big),\qquad
-\Delta_{\rm rec}=\mathrm{Rec}^{\rho}_{{\rm Hulk},2}-\mathrm{Rec}^{0}_{{\rm Hulk},2},
+\begin{aligned}
+\mathrm{ASR}_t&=\frac{\#\{i:y_i=\text{Hulk},\widehat y_i=\text{benign}\}}{N_{\rm Hulk}},\\
+H&=\tfrac12\sum_{t=3}^{4}(\mathrm{ASR}^{\rho}_t-\mathrm{ASR}^{0}_t),\qquad
+\Delta_{\rm rec}=\mathrm{Rec}^{\rho}_{{\rm Hulk},2}-\mathrm{Rec}^{0}_{{\rm Hulk},2}.
+\end{aligned}
 \label{eq:asr}
 \end{equation}
-where $\Delta\mathrm{ASR}_t=\mathrm{ASR}^{\rho}_t-\mathrm{ASR}^{0}_t$ compares each poisoned run with its own clean ($\rho=0$) run. $H>0$ means harmful error that persists after withdrawal; $\Delta_{\rm rec}<0$ means the poisoned family was learned less well. Acquisition $A$ is the mean F1 on the families introduced at E2, E3 and E4, measured right after each stage:
+ASR here means an untriggered, targeted Hulk-to-benign error rate; it is not directly comparable to trigger-conditioned backdoor ASR in other papers. $H>0$ indicates attack-associated error persisting relative to the same learner's clean run; it does not identify replay as the cause. $\Delta_{\rm rec}<0$ means source-family recall was harmed.
+
+For legitimate adaptation, let $\mathcal U_t$ be the pre-audited, scoring-eligible families first introduced at $t$, \emph{excluding Hulk}. Each $\mathcal U_t$ must be non-empty. The confirmatory acquisition endpoint is
 \begin{equation}
-A=\tfrac13\sum_{t=2}^{4}\frac{1}{|\mathcal E_t|}\sum_{c\in\mathcal E_t}F1_{c,t}.
+A=\tfrac13\sum_{t=2}^{4}\frac{1}{|\mathcal U_t|}\sum_{c\in\mathcal U_t}F1_{c,t}.
 \label{eq:acquisition}
 \end{equation}
+This gives stages equal weight, then families equal weight within each stage. An all-new-family score including Hulk is reported only as a separate descriptive endpoint. DC's admission of honest new-labelled records is 100\% by construction; that retention count is a mechanism check, not evidence of successful learning. Clean FAR$_B$ in the confirmatory analysis is measured at E4 on the fixed benign bank.
 
-\begin{table}[htbp]
+\textbf{Operational error view (descriptive).} The fixed decision is multiclass argmax, with a versioned deterministic tie rule; an alert is raised whenever the predicted label is not benign. Report binary attack-miss rate and benign false-alarm rate from that same decision, plus $10,000\,\mathrm{FAR}_B$ false alerts per 10,000 benchmark benign flows. This unit is not a daily production alert forecast: traffic volume and deployment prevalence are unmeasured. Report per-family confusion and support, and retain rare-family errors in the full-inventory view. Any confidence intervals from test-component resampling are labelled separately from seed-level training variability; neither supports claims across independent sites.
+
+\begin{table}[H]
 \centering\footnotesize
 \caption{Evaluation metrics.}
 \label{tab:metrics}
@@ -561,27 +600,27 @@ Metric & What it measures & Literature basis\\
 \midrule
 Source recall change $\Delta_{\rm rec}$ & Immediate damage to the poisoned family (E2) & P5 (attack success)\\
 Persistent error $H$ & Hulk-to-benign error after withdrawal, relative to clean & New in this study\\
-Acquisition $A$ & F1 on newly introduced families & P4, P8 (new-class F1)\\
+Acquisition $A$ & F1 on untargeted newly introduced families & P4, P8 (new-class F1)\\
 Anchor recall/F1 & Collateral change on E1 families & P4, P8 (old-class F1)\\
-Macro-F1, ACC, BWT, forgetting & Overall continual-learning performance & P2, P9; \cite{gem,clmetrics}\\
+Macro-F1, ACC, BWT, forgetting & Continual-learning performance on the eligible subset & P2, P9; \cite{gem,clmetrics}\\
 Benign false-alarm rate FAR$_B$ & Cost of the defence on normal traffic & P11 (FPR)\\
 Honest-new retention, poison in memory & How many honest new rows are admitted; share of poison in replay & Diagnostics for RQ3\\
 Time, memory, bytes & Training/inference time, process memory, update size & P10, P11\\
 \bottomrule
 \end{tabularx}
 \end{table}
-Undefined values (for example precision with no positive predictions) are reported as $\NA$, never as zero. Forward transfer is not defined for an output layer that grows only when labels arrive, so it is reported only if a separate compatible-head experiment is run.
+Compute $F1_c=2TP_c/(2TP_c+FP_c+FN_c)$ directly. If a supported class receives no predictions, its recall and F1 are legitimately zero, even though precision is undefined. A genuinely zero denominator is $\NA$, with its reason; undefined cases never silently change macro averages or the predeclared eligible set. Appendix~\ref{app:metrics} defines ACC, BWT and forgetting. Forward transfer is unavailable for this expanding-head protocol unless a separate compatible-head experiment is specified.
 
 \subsection{Step 9 --- Statistical and Comparative Analysis}
-The unit of analysis is one complete seeded run, and every comparison is paired by seed. For RQ1 we compare how much poisoning changes each learner relative to its own clean run (a learner $\times$ dose interaction); for RQ2 we compare DC with DM directly. Table~\ref{tab:hypotheses} lists all confirmatory tests: two-sided Wilcoxon signed-rank tests \cite{wilcoxon} at $\alpha=0.05$, with Holm correction \cite{holm} inside each of the two families. We also report mean and median differences, rank-biserial effect sizes and 95\% bootstrap confidence intervals (10,000 resamples of whole seeds). All other analyses are labelled exploratory. Appendix~\ref{app:stats} gives the full statistical details.
+The unit of analysis is one complete seeded trajectory; comparisons pair seed, split, ownership and attack IDs. RQ1 compares each learner's poisoning-induced changes ($H$, $\Delta_{\rm rec}$), and RQ2 compares DC and DM. The 18 C1 tests and 11 C2 tests in Table~\ref{tab:hypotheses} form \emph{one family of 29} two-sided Wilcoxon signed-rank tests at familywise $\alpha=0.05$, with one Holm correction \cite{wilcoxon,holm}. C1 and C2 are question groups, not separately protected opportunities to claim significance. Mean/median paired differences, rank-biserial effects and descriptive 95\% whole-seed bootstrap intervals (10,000 resamples) accompany corrected p-values. Intervals are not simultaneous confidence statements. All unlisted endpoints, ablations and external checks are exploratory. Twelve seeds provide a fixed compute budget, not a demonstrated power guarantee; a non-significant result does not establish equivalence. Appendix~\ref{app:stats} defines the contrasts and handling of ties.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
-\caption{Confirmatory hypotheses (two-sided, $\alpha=0.05$; Holm correction within each family).}
+\caption{Confirmatory contrasts: one 29-test Holm family (two-sided, familywise $\alpha=0.05$).}
 \label{tab:hypotheses}
 \begin{tabularx}{\linewidth}{L{1.0cm}Y Y L{2.6cm}}
 \toprule
-Family & Endpoint & Comparisons & Number of tests; role\\
+Group & Endpoint & Comparisons & Number of tests; role\\
 \midrule
 C1 & Learner interaction in $H$ and $\Delta_{\rm rec}$ & 3 learner pairs $\times$ 3 non-zero doses, per endpoint & 18; poisoning susceptibility\\
 C2 & DC minus DM in acquisition $A$ & 4 doses & 4; legitimate adaptation\\
@@ -591,12 +630,14 @@ C2 & DC minus DM in clean FAR$_B$ & Zero dose only & 1; false alarms\\
 \end{tabularx}
 \end{table}
 
-\why{Paired seeds and corrected significance tests address the single-run reporting in P11--P13 and the strong run-to-run variation documented in P5's large sweep.}
+\why{Paired seeds and corrected tests address the missing repeated-seed uncertainty in P11--P13. P5's large sweep also shows sensitivity to attack and data settings; twelve seeds quantify variability under our fixed protocol.}
 
 \subsection{Step 10 --- Ablation and Component Analysis}
-Ablations (Table~\ref{tab:ablations}) change one component at a time on the DC condition, holding everything else fixed. A memory diagnostic additionally clones the poisoned E2 state and replaces poisoned memory records with honest records from the same client; comparing the two clones over E3--E4 shows how much persistence is caused by memory content.
+Ablations (Table~\ref{tab:ablations}) change one declared setting at a time: two changed eviction rules and two loss-term removals on DC, plus two alternative keep fractions on each of DC and matched DM (eight settings total). Corresponding primary settings are reused as references; changed settings use zero and maximum dose. A class-balanced eviction rule is a different sampling policy, not a uniform reservoir, and uses supplied labels only. FIFO always inserts an eligible first-pass record, evicting the oldest insertion when full. The class-balanced variant also always inserts; when full, evict the oldest stored record from the supplied-label class with the largest occupancy, breaking occupancy ties by the fixed class ID. Keep insertion order as additional bounded slot metadata and report its bytes. Neither variant reconsiders a record after the first pass; no ablation is retuned.
 
-\begin{table}[htbp]
+The memory diagnostic clones each seed's maximum-dose DC E2 state into two E3--E4 continuations. The control keeps stored memory unchanged; an \emph{oracle label-repair} clone changes only the supplied labels of stored poisoned IDs back to their evaluator reference labels. Features, IDs, logits, occupancy, model weights, optimiser state and random states remain identical. No fresh source-family records are introduced. This estimates the total downstream effect of the label-repair intervention, including any resulting changes in later admission, weights and cached logits. It is not a direct-gradient attribution and does not undo poisoned logits or earlier weight damage. It is an explanatory intervention, not a deployable defence. If no poisoned records survive in memory, the pair is retained and its zero repair effect is reported.
+
+\begin{table}[H]
 \centering\footnotesize
 \caption{Exploratory ablations.}
 \label{tab:ablations}
@@ -617,7 +658,7 @@ Keep fraction & 0.50, 0.75, 0.90 (in DC and DM) & Class protection, matched quot
 \subsection{Step 11 --- Error and Failure Analysis}
 Table~\ref{tab:failure} lists the failure modes we will look for and how each is diagnosed. We will also inspect confusion matrices per family, client and stage.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Failure taxonomy.}
 \label{tab:failure}
@@ -625,12 +666,12 @@ Table~\ref{tab:failure} lists the failure modes we will look for and how each is
 \toprule
 Failure & Diagnostic & Interpretation / action\\
 \midrule
-Attack too weak & Strongest-dose FT pilot overlaps its clean run & Apply the pre-declared fallbacks (dose 1.0, then two attackers); report dilution if none works\\
+Attack too weak & Strongest-dose FT pilot overlaps its clean run & Report the paired magnitude and uncertainty; keep the locked primary threat and all final seeds\\
 Poor acquisition & Low E2 Hulk recall with intact E1 recall & Separate learning damage from forgetting\\
-Persistence through memory & E3/E4 error together with poison in memory & Confirm with the memory diagnostic\\
-Honest rejection & Low new-family F1 and few honest rows admitted & Report the adaptation cost even if ASR falls\\
+Persistence through memory & E3/E4 error together with poison in memory & Use oracle label repair to test continued erroneous-label replay; do not attribute all persistence to memory\\
+Honest rejection & Low untargeted-new-family F1; inspect admission composition (DC retains new labels by design) & Report the adaptation cost even if ASR falls\\
 Spill-over & Anchor recall drops while source error rises & Separate targeted from shared-boundary errors\\
-Data or pipeline defect & Split overlap, unsupported labels, inconsistent outputs & Discard the run and fix the pipeline\\
+Data or pipeline defect & Split overlap, unsupported labels, inconsistent outputs & Invalidate affected trajectories, fix and version the pipeline, and rerun complete matched sets under the same protocol\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -638,7 +679,7 @@ Data or pipeline defect & Split overlap, unsupported labels, inconsistent output
 \why{P4's gap between old and new F1 and P10's rare-class confusion show why per-family error analysis is needed, not only a single accuracy number.}
 
 \subsection{Step 12 --- Final Research Output}
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Planned outputs and their acceptance evidence.}
 \label{tab:artifacts}
@@ -656,223 +697,147 @@ Final paper & Every reported number linked to a validated result; null or negati
 \end{table}
 The study succeeds if it shows clearly --- in either direction --- whether poisoning during class acquisition persists through continual learning, and whether class-aware admission trades security against legitimate adaptation. Null or adverse results will be reported as findings.
 
+\textbf{Research quality and industry relevance.} The design uses NIST AI RMF 1.0 for documenting context, measurement and limitations, NIST's AML taxonomy for the attack specification, and the NeurIPS reproducibility guidance for experimental disclosure \cite{airmf,aml,checklist}. These provide research guidance; production readiness still requires site-specific validation. The run contract records dataset/split/feature/class-map hashes; code commit and dependency lock; configuration and seeds; CPU, OS and numerical-library versions; checkpoints and local state; admitted/current/replay counts; stage-wise predictions; and all deviations. Automated checks require disjoint split IDs/content/sessions, current-only label registration, no gradient from a held-out record, identical paired prefixes, normalised active-client weights and a hard replay capacity. They are planned acceptance checks, not claims of executed certification.
+
+The final-test bank is a separate read-only evaluator input. Training writes checkpoints and predictions are generated after the complete locked run set; no final-test metric is returned to optimisation, model selection or scope selection. A defect discovered after test inspection triggers a versioned amendment that discloses affected results and any loss of confirmatory status. Deployment acceptance would additionally need independent-site and forward-time traffic, previously unseen threats, operator-approved alarm budgets, end-to-end throughput/latency and resource/security testing. Offline flow-classification timings do not establish these properties.
+
 %=====================================================================
+\clearpage
 \section{Deliverable 4: Research Methodology Architecture}
 Figure~\ref{fig:methodology} summarises the methodology as five phases and marks which of the twelve steps each phase covers. Figure~\ref{fig:framework} expands the federated experiment: server coordination, the learning pipeline of one client, the stage schedule and the evaluator, which is kept outside training. Every learner and admission condition is a separate run with its own client states.
 
-\begin{figure}[htbp]
+% ===== Inlined from figures/phase2-workflow-reviewed.tex (self-contained build) =====
+% Native, editable diagram. All coordinates are in millimetres.
+\begin{figure}[H]
 \centering
 \resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1bp,y=-1bp]
-\path[use as bounding box] (0,0) rectangle (720,358);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (16,22) {PROPOSED METHODOLOGY};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (16,40) rectangle (144,206);
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,220;green,231;blue,242},line width=1bp,rounded corners=5bp] (16,40) rectangle (144,89);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (26,60) {Data and};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (26,78) {representation};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (26,108) {CICIDS2017};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (26,126) {Audited sessions};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (26,144) {Leakage-free splits};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (26,162) {Frozen T0 scaler};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,163;green,72;blue,32},font=\sffamily\bfseries\fontsize{12}{13.8}\selectfont] at (26,198) {Steps 1--4};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (144,125) -- (156,125);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (156.000,125.000) -- (150.000,122.000) -- (150.000,128.000) -- cycle;
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (156,40) rectangle (284,206);
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,245;green,235;blue,215},line width=1bp,rounded corners=5bp] (156,40) rectangle (284,89);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (166,60) {Protocol};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (166,78) {development};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (166,108) {Development seeds};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (166,126) {Feasibility gates};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (166,144) {Tuning and pairing};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (166,162) {Analysis lock};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,163;green,72;blue,32},font=\sffamily\bfseries\fontsize{12}{13.8}\selectfont] at (166,198) {Step 7 (pilots)};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (284,125) -- (296,125);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (296.000,125.000) -- (290.000,122.000) -- (290.000,128.000) -- cycle;
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (296,40) rectangle (424,206);
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,228;green,238;blue,221},line width=1bp,rounded corners=5bp] (296,40) rectangle (424,89);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (306,60) {Federated};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (306,78) {experiments};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (306,108) {Five clients};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (306,126) {FT / EI / DR};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (306,144) {DG / DM / DC};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (306,162) {E1--E4; FedAvg};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,163;green,72;blue,32},font=\sffamily\bfseries\fontsize{12}{13.8}\selectfont] at (306,198) {Steps 5--7};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (424,125) -- (436,125);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (436.000,125.000) -- (430.000,122.000) -- (430.000,128.000) -- cycle;
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (436,40) rectangle (564,206);
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,220;green,231;blue,242},line width=1bp,rounded corners=5bp] (436,40) rectangle (564,89);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (446,60) {Fixed-bank};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (446,78) {evaluation};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (446,108) {Clean test sets};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (446,126) {Source damage};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (446,144) {Persistence};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (446,162) {Acquisition};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (446,180) {Collateral; costs};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,163;green,72;blue,32},font=\sffamily\bfseries\fontsize{12}{13.8}\selectfont] at (446,198) {Step 8};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (564,125) -- (576,125);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (576.000,125.000) -- (570.000,122.000) -- (570.000,128.000) -- cycle;
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (576,40) rectangle (704,206);
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,234;green,226;blue,241},line width=1bp,rounded corners=5bp] (576,40) rectangle (704,89);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (586,60) {Research};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (586,78) {analysis};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (586,108) {Paired statistics};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (586,126) {Ablations};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (586,144) {Failure analysis};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (586,162) {Final outputs};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,163;green,72;blue,32},font=\sffamily\bfseries\fontsize{12}{13.8}\selectfont] at (586,198) {Steps 9--12};
-\path[draw={rgb,255:red,137;green,147;blue,157},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (16,250) rectangle (441,323);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (28,270) {CICIoT2023: separate exploratory protocol};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (28,290) {Own audit, scaler, schedule and independent runs};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (28,309) {No pooled data, weights or primary estimates};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp,dashed] (220,206) -- (220,250);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (220.000,250.000) -- (223.000,244.000) -- (217.000,244.000) -- cycle;
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (236,231) {Method settings only};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (461,273) {Solid: primary dependencies};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (461,294) {Dashed: exploratory transfer};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (16,347) {E2: training-only label poisoning. E3--E4: attacker withdrawn, no fresh Hulk data.};
-\end{tikzpicture}
-}
-\caption{Methodology overview. The orange labels show which of the twelve methodology steps each phase covers. Solid arrows pass audited data, locked settings, trained models and predictions forward; the dashed branch transfers only method settings to the separate exploratory CICIoT2023 study.}
+\begin{tikzpicture}[x=1mm,y=1mm,
+  font=\sffamily\fontsize{8.5}{10.3}\selectfont,
+  box/.style={draw=black!55,rounded corners=1.4mm,align=left,inner sep=2mm,line width=.55pt},
+  flow/.style={-{Latex[length=1.8mm]},draw=blue!50!black,line width=.65pt},
+  config/.style={-{Latex[length=1.8mm]},draw=violet!65!black,dashed,line width=.65pt}]
+\node[box,fill=blue!7,text width=162mm,minimum height=13mm] (audit) at (85,0)
+  {\textbf{1. AUDIT AND ISOLATE [Steps 1--4]}\\Release/schema checks; session + content components; fixed split and ownership manifests.};
+\node[box,fill=blue!5,text width=34mm,minimum height=17mm] (tzero) at (20,-24)
+  {\textbf{T0 benign pool}\\Fit and freeze scaler; no weight training.};
+\node[box,fill=green!7,text width=34mm,minimum height=17mm] (train) at (63,-24)
+  {\textbf{Training split}\\Current stage shards; corruption allowed here only.};
+\node[box,fill=yellow!12,text width=34mm,minimum height=17mm] (dev) at (106,-24)
+  {\textbf{Development split}\\Tuning and clean-learning feasibility.};
+\node[box,fill=violet!7,text width=34mm,minimum height=17mm] (test) at (149,-24)
+  {\textbf{Sealed test split}\\No optimiser, tuning or scope selection access.};
+\foreach \p in {tzero,train,dev,test}{\draw[flow] (audit.south) -- (85,-11) -| (\p.north);}
+\node[box,fill=yellow!12,text width=77mm,minimum height=22mm] (pilot) at (43,-58)
+  {\textbf{2. DEVELOP [Step 7 pilots]}\\Train-only pilot models; score on development data. Seeds 101--103. Frozen T0 transform is applied throughout.};
+\node[box,fill=yellow!12,text width=77mm,minimum height=22mm] (lock) at (128,-58)
+  {\textbf{PROTOCOL LOCK}\\Freeze split, transform, settings, dose grid, seed list, endpoints and analysis. Version/hash the configuration.};
+\draw[flow] (tzero.south) -- (20,-38) -| (pilot.north);
+\draw[flow] (train.south) -- (63,-41) -| (pilot.north);
+\draw[flow] (dev.south) -- (106,-43) -| (pilot.north);
+\draw[config] (pilot.east) -- (lock.west);
+\node[box,fill=green!8,text width=77mm,minimum height=21mm] (runs) at (43,-89)
+  {\textbf{3. FINAL PAIRED RUNS [Steps 5--7]}\\Five simulated clients; E1--E4; FT/EI/DR and DG/DM/DC. Final seeds 1--11, 42. Write stage checkpoints.};
+\node[box,fill=violet!7,text width=77mm,minimum height=21mm] (eval) at (128,-89)
+  {\textbf{4. EVALUATE [Step 8]}\\Read saved checkpoints + sealed test banks with the frozen transform. Produce fixed endpoint predictions; no feedback to training.};
+\draw[config] (lock.south) -- (128,-74) -| (runs.north);
+\draw[flow] (train.south) -- (63,-36) -- (-1,-36) |- (runs.west);
+\draw[flow] (runs.east) -- (eval.west);
+\draw[flow] (test.east) -- (172,-24) |- (eval.east);
+\node[box,fill=blue!7,text width=77mm,minimum height=19mm] (outputs) at (43,-119)
+  {\textbf{REPRODUCIBLE OUTPUTS [Step 12]}\\Versioned runs, failures, resource costs, protocol deviations and bounded claims.};
+\node[box,fill=violet!7,text width=77mm,minimum height=19mm] (analysis) at (128,-119)
+  {\textbf{5. ANALYSE [Steps 9--11]}\\Locked 29-test family; paired effects; exploratory mechanism/operational diagnostics.};
+\draw[flow] (eval.south) -- (analysis.north);
+\draw[flow] (analysis.west) -- (outputs.east);
+\node[box,fill=black!3,text width=162mm,minimum height=12mm] (external) at (85,-145)
+  {\textbf{OPTIONAL CICIoT2023:} re-audit data, source mapping and schedule; independent runs. Transfer method settings only; no pooled estimates or learned weights.};
+\draw[config] (lock.east) -- (176,-58) |- (external.east);
+\end{tikzpicture}}
+\caption{Study workflow and information boundaries. Solid arrows carry permitted data or artefacts; dashed arrows carry locked settings. The T0 transform is applied to every split without refitting. Only the development branch selects settings; final-test outputs feed analysis and reporting. The optional external branch requires its own protocol.}
 \label{fig:methodology}
 \end{figure}
 
-\begin{figure}[htbp]
+\noindent\textbf{Reading the boundaries.} The development loop uses training and development data only. A protocol lock separates that loop from final runs. Stage setup (label registration, head expansion, scorer snapshot and admission IDs) happens once; parameter broadcasts and local optimisation repeat by round. Persistent local memory is distinct from the global model. E2 corruption is restricted to one client's training labels. E3/E4 stop fresh corruption while replay may still contain poison. Test labels and poison markers terminate at the evaluator; no arrow feeds them back into learning.
+
+% ===== Inlined from figures/phase2-framework-reviewed.tex (self-contained build) =====
+% Native, editable diagram. Stage setup is separated from repeated rounds.
+\begin{figure}[H]
 \centering
+\captionsetup{justification=raggedright,singlelinecheck=false}
 \resizebox{\linewidth}{!}{%
-\begin{tikzpicture}[x=1bp,y=-1bp]
-\path[use as bounding box] (0,0) rectangle (720,628);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (16,22) {PROPOSED FRAMEWORK ARCHITECTURE};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,220;green,231;blue,242},line width=1bp,rounded corners=5bp] (14,38) rectangle (706,150);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (26,57) {SERVER COORDINATION};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (26,68) rectangle (166,137);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{14}{16.1}\selectfont] at (35,87) {Shared head};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (35,107) {Preserve old rows};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (35,124) {Add new classes};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (182,68) rectangle (322,137);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{14}{16.1}\selectfont] at (191,87) {Broadcast};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (191,107) {Global parameters};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (191,124) {Reset local Adam};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (390,68) rectangle (530,137);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{14}{16.1}\selectfont] at (399,87) {FedAvg};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (399,107) {Admitted-row weights};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (399,124) {Active clients only};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (546,68) rectangle (694,137);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{14}{16.1}\selectfont] at (555,87) {Final broadcast};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (555,107) {End-of-stage state};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (555,124) {Frozen evaluation};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (166,102) -- (182,102);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (182.000,102.000) -- (176.000,99.000) -- (176.000,105.000) -- cycle;
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (530,102) -- (546,102);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (546.000,102.000) -- (540.000,99.000) -- (540.000,105.000) -- cycle;
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (390,102) -- (322,102);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (322.000,102.000) -- (328.000,105.000) -- (328.000,99.000) -- cycle;
-\node[anchor=base,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (355,88) {repeat};
-\path[draw={rgb,255:red,148;green,168;blue,134},fill={rgb,255:red,245;green,248;blue,241},line width=1bp,rounded corners=5bp] (30,184) rectangle (706,436);
-\path[draw={rgb,255:red,148;green,168;blue,134},fill={rgb,255:red,237;green,243;blue,231},line width=1bp,rounded corners=5bp] (22,192) rectangle (698,444);
-\path[draw={rgb,255:red,109;green,138;blue,88},fill={rgb,255:red,228;green,238;blue,221},line width=1bp,rounded corners=5bp] (14,200) rectangle (690,452);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (26,220) {CLIENT LEARNING: FIVE PERSISTENT CLIENTS};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (26,238) {Separate state per experimental condition; the blocks below describe one client.};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (252,137) -- (252,200);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (252.000,200.000) -- (255.000,194.000) -- (249.000,194.000) -- cycle;
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (267,174) {parameters};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (646,254) -- (646,164) -- (460,164) -- (460,137);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (460.000,137.000) -- (457.000,143.000) -- (463.000,143.000) -- cycle;
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (491,179) {weights + admitted counts};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (26,254) rectangle (129,350);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (34,274) {Current shard};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (34,294) {Supplied labels};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (34,311) {Training only};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (144,254) rectangle (272,350);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (152,274) {Admission};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (152,294) {Bypass, or};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (152,311) {frozen scores};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (152,328) {DG / DM / DC};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (288,254) rectangle (470,350);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (296,274) {One learner};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (296,294) {128/64 MLP};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (296,309) {FT: current loss};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (296,324) {EI: importance penalty};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (296,339) {DR family: DER++};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (487,254) rectangle (589,350);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (495,274) {Local update};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (495,294) {Local objective};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (495,311) {Local Adam};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (606,254) rectangle (678,350);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (614,274) {Upload};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (614,294) {Weights};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (614,311) {Counts};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (129,300) -- (144,300);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (144.000,300.000) -- (138.000,297.000) -- (138.000,303.000) -- cycle;
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (272,300) -- (288,300);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (288.000,300.000) -- (282.000,297.000) -- (282.000,303.000) -- cycle;
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (470,300) -- (487,300);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (487.000,300.000) -- (481.000,297.000) -- (481.000,303.000) -- cycle;
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (589,300) -- (606,300);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (606.000,300.000) -- (600.000,297.000) -- (600.000,303.000) -- cycle;
-\path[draw={rgb,255:red,123;green,149;blue,107},fill={rgb,255:red,246;green,249;blue,242},line width=1bp,rounded corners=5bp] (144,374) rectangle (272,432);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (154,393) {EI state only};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (154,410) {Anchor + importance};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp,dashed] (272,401) -- (280,401) -- (280,331) -- (288,331);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (288.000,331.000) -- (282.000,328.000) -- (282.000,334.000) -- cycle;
-\path[draw={rgb,255:red,123;green,149;blue,107},fill={rgb,255:red,246;green,249;blue,242},line width=1bp,rounded corners=5bp] (288,374) rectangle (470,432);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (298,393) {DER++ replay only};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (298,411) {Unique IDs; stored logits};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp,dashed] (342,374) -- (342,350);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (342.000,350.000) -- (339.000,356.000) -- (345.000,356.000) -- cycle;
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp,dashed] (538,350) -- (538,403) -- (470,403);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (470.000,403.000) -- (476.000,406.000) -- (476.000,400.000) -- cycle;
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (552,384) {logits + ID};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (26,447) {Admission stays fixed within a stage. Local updates and FedAvg repeat for the locked budget.};
-\path[draw={rgb,255:red,135;green,116;blue,150},fill={rgb,255:red,234;green,226;blue,241},line width=1bp,rounded corners=5bp] (14,470) rectangle (706,554);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{15}{17.25}\selectfont] at (26,489) {STAGE SCHEDULE: THE SAME FOR ALL CONDITIONS};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (26,499) rectangle (183,551);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (34,514) {E1: acquire};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (34,529) {FTP / SSH anchors};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (34,543) {Filters disabled};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (183,522) -- (194,522);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (194.000,522.000) -- (188.000,519.000) -- (188.000,525.000) -- cycle;
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (194,499) rectangle (351,551);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (202,514) {E2: poison};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (202,529) {Hulk to benign};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (202,543) {One client; labels only};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (351,522) -- (362,522);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (362.000,522.000) -- (356.000,519.000) -- (356.000,525.000) -- cycle;
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (362,499) rectangle (519,551);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (370,514) {E3: withdraw};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (370,529) {New attack families};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (370,543) {No fresh Hulk};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (519,522) -- (530,522);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (530.000,522.000) -- (524.000,519.000) -- (524.000,525.000) -- cycle;
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,255;green,255;blue,255},line width=1bp,rounded corners=5bp] (530,499) rectangle (687,551);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (538,514) {E4: withdraw};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (538,529) {New attack families};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (538,543) {No fresh Hulk};
-\path[draw={rgb,255:red,102;green,119;blue,137},fill={rgb,255:red,220;green,231;blue,242},line width=1bp,rounded corners=5bp] (14,577) rectangle (706,619);
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\bfseries\fontsize{13}{14.95}\selectfont] at (26,594) {EVALUATOR ONLY: fixed clean test sets; reference labels and poison markers kept separate};
-\node[anchor=base west,inner sep=0,text={rgb,255:red,38;green,55;blue,70},font=\sffamily\fontsize{12}{13.8}\selectfont] at (26,611) {Source damage, persistence, acquisition, collateral errors and resource costs};
-\path[draw={rgb,255:red,80;green,101;blue,118},line width=1.4bp] (694,104) -- (713,104) -- (713,598) -- (706,598);
-\path[fill={rgb,255:red,80;green,101;blue,118}] (706.000,598.000) -- (712.000,601.000) -- (712.000,595.000) -- cycle;
-\end{tikzpicture}
-}
-\caption{Proposed framework architecture. Server coordination and client learning repeat within each stage. FT/EI/DR are alternative learners; DG/DM/DC are alternative admission rules on DER++. Only EI keeps importance state and only DER++ conditions keep replay memory (dashed links). E2 corrupts training labels at one client only; E3--E4 contain no poison and no fresh Hulk data. The evaluator never influences training or admission.}
+\begin{tikzpicture}[x=1mm,y=1mm,
+  font=\sffamily\fontsize{8.6}{10.5}\selectfont,
+  box/.style={draw=black!55,rounded corners=1.4mm,align=left,inner sep=2mm,line width=.55pt},
+  flow/.style={-{Latex[length=1.8mm]},draw=blue!50!black,line width=.65pt},
+  state/.style={-{Latex[length=1.8mm]},draw=violet!65!black,dashed,line width=.65pt},
+  model/.style={-{Latex[length=1.8mm]},draw=black!65,line width=.65pt}]
+\node[box,fill=blue!7,text width=162mm,minimum height=12mm] (input) at (85,0)
+  {\textbf{AUDITED CURRENT TRAINING SHARDS}\\Frozen T0 scaling; features, supplied labels and immutable IDs. No development/test records.};
+\node[font=\sffamily\bfseries\fontsize{8.6}{10.5}\selectfont] at (85,-13) {ONCE PER STAGE: LABELS, HEAD AND ADMISSION};
+\node[box,fill=red!7,draw=red!50!black,text width=48mm,minimum height=24mm] (poison) at (28,-30)
+  {\textbf{Training-label corruption}\\E2: one client, selected Hulk labels $\rightarrow$ benign. All other labels/stages unchanged; features never altered.};
+\node[box,fill=blue!7,text width=48mm,minimum height=24mm] (head) at (85,-30)
+  {\textbf{Server class registry + head}\\Start from $\theta_{t-1}$ (random $\theta_0$). Share supplied class IDs; append new rows and copy old rows, all trainable.};
+\node[box,fill=green!8,text width=48mm,minimum height=24mm] (admit) at (142,-30)
+  {\textbf{Admission snapshot}\\Freeze expanded model once; score supplied labels, dropout off. Bypass or DG/DM/DC. Lock accepted IDs for the stage.};
+\draw[flow] (input.south) -- (85,-9) -| (poison.north);
+\draw[state] (poison.east) -- (head.west);
+\draw[model] (head.east) -- (admit.west);
+\draw[flow] (poison.south) -- (28,-48) -- (137,-48) -- ($(admit.south)+(-5,0)$);
+\node[fill=white,inner sep=.5mm,font=\sffamily\fontsize{8}{9.5}\selectfont] at (82,-48) {features + supplied labels + IDs};
+\node[box,fill=blue!7,text width=44mm,minimum height=23mm] (broadcast) at (26,-80)
+  {\textbf{Broadcast shared weights}\\Initialise each active local model. Reset Adam each round; preserve local retained state.};
+\node[box,fill=green!8,text width=54mm,minimum height=23mm] (local) at (85,-80)
+  {\textbf{Local update + upload}\\Admitted current mini-batches; FT/EI/DR loss. Upload local weights + distinct admitted current-row count only.};
+\node[box,fill=blue!7,text width=44mm,minimum height=23mm] (fed) at (145,-80)
+  {\textbf{FedAvg}\\Count-weight active clients only. Replay/repeated epochs do not increase client weight.};
+\draw[model,preaction={draw=white,line width=2.3pt}] (head.south west) -- (59,-54) -- (-1,-54) |- (broadcast.west);
+\draw[flow] (admit.south) -- (142,-58) -| (local.north);
+\draw[model] (broadcast.east) -- (local.west);
+\draw[model] (local.east) -- (fed.west);
+\draw[model,preaction={draw=white,line width=2.3pt}] (fed.north) -- (145,-64) -- (26,-64) -- (broadcast.north);
+\node[fill=white,inner sep=.5mm,font=\sffamily\bfseries\fontsize{8}{9.5}\selectfont] at (80,-64) {REPEAT THE LOCKED ROUND BUDGET};
+\node[box,fill=green!6,text width=77mm,minimum height=25mm] (replay) at (43,-119)
+  {\textbf{DR-family local replay only}\\500 slots: $(x,\widetilde y,\mathrm{ID},z_{\rm pre},\omega)$. Read before update; commit pre-update cache only on round 1, epoch 1. Counter + pass cursor persist.};
+\node[box,fill=violet!6,text width=77mm,minimum height=25mm] (ei) at (128,-119)
+  {\textbf{EI local state only}\\Previous shared anchor + accumulated per-example diagonal empirical Fisher. Read during updates; write only at stage end. FT keeps neither replay nor importance.};
+\draw[state] ($(local.south)+(-10,0)$) -- (75,-100) -| ($(replay.north)+(10,0)$);
+\draw[state] ($(replay.north)+(-10,0)$) -- (33,-99) -- (54,-99) -- ($(local.west)+(0,-4)$);
+\draw[state] (ei.north) -- (128,-101) -- (116,-101) -- ($(local.east)+(0,-4)$);
+\node[box,fill=blue!7,text width=162mm,minimum height=18mm] (end) at (85,-151)
+  {\textbf{STAGE END: FINAL AGGREGATE BROADCAST + CHECKPOINT}\\EI estimates importance on its current local training sample and commits anchor once. Save weights, class map, retained state and RNG/cursor state. No test feedback.};
+\draw[model] (fed.east) -- (179,-80) |- (end.east);
+\draw[state] ($(end.north)+(43,0)$) -- (ei.south);
+\node[fill=white,inner sep=.5mm,font=\sffamily\fontsize{7.8}{9.4}\selectfont] at (144,-137) {EI commit once};
+\node[box,fill=black!3,text width=162mm,minimum height=17mm] (schedule) at (85,-177)
+  {\textbf{SAME STAGE SCHEDULE FOR ALL ARMS}\\E1: benign + FTP/SSH anchors, filters off. E2: new families + one-client label corruption.\\E3/E4: new families, no fresh Hulk or corruption; replay can still retain poisoned E2 records.};
+\node[box,fill=violet!8,text width=106mm,minimum height=20mm] (eval) at (55,-206)
+  {\textbf{EVALUATOR ONLY}\\Read saved checkpoints after locked runs; compute clean-bank outcomes and evaluator-only poison diagnostics. No arrow returns to training.};
+\node[box,fill=violet!8,text width=45mm,minimum height=20mm] (bank) at (145.5,-206)
+  {\textbf{Sealed reference bank}\\Fixed test features/labels; separate poison-marker audit.};
+\draw[model] (end.west) -- (-2,-151) |- (eval.west);
+\draw[flow] (bank.west) -- (eval.east);
+\end{tikzpicture}}
+\caption{Execution and state lifecycle for one arm. Stage setup runs once; the broadcast--update--aggregate loop repeats. Only class identifiers and model/count messages reach the server. Dashed arrows carry metadata or local state; white gaps at crossings mark separate paths. Replay reads/writes and EI's stage-end commit are distinct. E3/E4 stop fresh corruption, not retained poison. The evaluator is a one-way consumer of checkpoints and reference data.}
 \label{fig:framework}
 \end{figure}
 
 %=====================================================================
+\clearpage
 \section{Scope and Threats to Validity}
-\textbf{Internal validity.} Session reconstruction errors, known label defects in CICIDS2017, duplicate flows and shared optimiser settings could bias comparisons; the isolation rules, support floors and pilot gates are designed to catch them before final runs. The admission rule may still keep low-loss poisoned rows; this is a possible finding, not a flaw.
+\textbf{Internal validity.} Operational session grouping, known label defects, duplicate flows and optimiser choices can bias comparisons. Group/content audits and clean-learning gates reduce these risks without proving perfect isolation. A group-stratified split supports a controlled class-arrival simulation, not a claim of globally chronological online generalisation. The admission rule may still keep low-loss poisoned rows; this is a possible finding, not a flaw.
 
-\textbf{External validity.} Clients are simulated by splitting one historical capture, so they do not represent independent organisations (a limitation shared with P5, P7 and P11). CICIoT2023 provides a separate check, and CPU timings and update sizes do not measure energy or network delay on real edge devices.
+\textbf{External validity.} Clients are simulated by splitting one historical capture, so they do not represent independent organisations (a limitation shared with P5, P7 and P11). CICIoT2023 is a planned, independently audited exploratory check, and CPU timings and update sizes do not measure energy or network delay on real edge devices.
 
-\textbf{Construct validity.} Source recall, persistent error, acquisition and anchor scores measure different things and are reported separately. The attacker controls labels only; a fully compromised client that skips filtering is a stronger, separate threat.
+\textbf{Construct validity.} Source recall, persistent error, acquisition and anchor scores measure different things and are reported separately. Withdrawal without fresh Hulk data measures persistence, not recovery after correctly labelled Hulk traffic returns. The attacker controls labels only; a fully compromised client that skips filtering is a stronger, separate threat. Session-separated flows can still share hosts or collection artefacts, so identifier exclusion does not establish cross-site generalisation.
 
-\textbf{Conclusion validity.} Twelve seeds measure training variability with fixed test sets, not variability between captures. Signed-rank tests assume roughly symmetric differences, and the two hypothesis families each control error at 5\%, not jointly.
+\textbf{Conclusion validity.} Twelve seeds measure training variability with fixed test sets, not variability between captures. Signed-rank tests assume independent seed-level differences with an approximately symmetric distribution. One Holm correction controls the 29 confirmatory tests jointly at 5\% under valid marginal tests; small samples and many contrasts can leave low power. Unadjusted bootstrap intervals describe seed variability only.
 
 %=====================================================================
 \appendix
 \section{Notation and Data-Isolation Conditions}
 \label{app:notation}
-\begin{table}[htbp]
+\begin{table}[H]
 \centering\footnotesize
 \caption{Main notation.}
 \label{tab:notation}
@@ -883,10 +848,10 @@ Symbol & Meaning\\
 $k,\ t,\ c,\ i,\ s$ & Client, stage, class, record and seed indices\\
 $x_i,\ \widetilde y_i,\ y_i,\ \widehat y_i$ & Features; supplied (possibly poisoned), reference and predicted labels\\
 $u_i,\ \sigma_i,\ \tau_i$ & Immutable record ID, session ID and timestamp (metadata only)\\
-$\mathcal C_t,\ \mathcal C_t^{\rm new},\ C_t,\ \mathcal E_t$ & Classes seen so far, new classes at stage $t$, their number, scheduled new families\\
+$\mathcal C_t,\ \mathcal C_t^{\rm new},\ C_t,\ \mathcal U_t$ & Active classes, newly registered classes, active head width, eligible untargeted new families\\
 $W,\ b,\ \theta,\ f_{\theta,t}$ & Weights, biases, all parameters, output logits\\
-$\mathcal B,\ m,\ z_i,\ \omega_i,\ S_i$ & Replay memory, its capacity (500), stored logits, their width, logit selector\\
-$\lambda_E,\ \lambda_z,\ \lambda_y,\ I_a$ & Loss weights and accumulated parameter importance\\
+$\mathcal B,\ m,\ z_i,\ \omega_i,\ S_i$ & Replay memory, capacity (500), padded pre-update logits, observed width, coordinate selector\\
+$\lambda_E,\ \lambda_z,\ \lambda_y,\ I_{k,a}$ & Loss weights and accumulated parameter importance\\
 $n_{k,c,t},\ K_{k,c,t}$ & Rows of class $c$ at client $k$ in stage $t$; admitted quota\\
 $\rho,\ Q_{k,2}$ & Poison dose and number of flipped Hulk rows\\
 $\mathcal S_{\rm tr/dev/te},\ \mathcal G_{\rm tr/dev/te},\ H_{\rm sha},\ \Psi_0$ & Splits, their sessions, content hash, frozen T0 scaler\\
@@ -894,43 +859,68 @@ $\mathrm{ASR},\ H,\ \Delta_{\rm rec},\ A,\ \mathrm{FAR}_B$ & Attack success, per
 \bottomrule
 \end{tabularx}
 \end{table}
-The splits must not share content or sessions, and the scaler is fitted on T0 only:
+The hash $H_{\rm sha}$ denotes the set of canonical feature hashes in a set of records. For each pair of distinct splits $a,b\in\{\mathrm{tr},\mathrm{dev},\mathrm{te}\}$,
 \begin{equation}
-H_{\rm sha}(\mathcal S_{\rm tr})\cap H_{\rm sha}(\mathcal S_{\rm dev}\cup\mathcal S_{\rm te})=\varnothing,\quad
-H_{\rm sha}(\mathcal S_{\rm dev})\cap H_{\rm sha}(\mathcal S_{\rm te})=\varnothing,\quad
-\mathcal G_{\rm tr}\cap\mathcal G_{\rm dev}=\mathcal G_{\rm tr}\cap\mathcal G_{\rm te}=\mathcal G_{\rm dev}\cap\mathcal G_{\rm te}=\varnothing,
+\begin{aligned}
+H_{\rm sha}(\mathcal S_a)\cap H_{\rm sha}(\mathcal S_b)&=\varnothing,\\
+\mathcal G_a\cap\mathcal G_b&=\varnothing,\\
+H_{\rm sha}(T0)\cap H_{\rm sha}(\mathcal S_a)&=\varnothing,\qquad
+\mathcal G_{T0}\cap\mathcal G_a=\varnothing.
+\end{aligned}
 \label{eq:isolation}
 \end{equation}
-with $\Psi_0=\operatorname{FitMinMax}(\text{isolated T0 benign inputs})$. The same conditions hold between T0 and every supervised split.
+The scaler is $\Psi_0=\operatorname{FitMinMax}(T0)$; it is never refitted. Ownership is disjoint across clients and fresh record IDs are disjoint across stages; replay of a past training record is the intentional exception to fresh-stage use.
+
+\section{Continual-Learning Metric Definitions}
+\label{app:metrics}
+Before outcomes are inspected, partition the fixed benign test bank into four non-empty, disjoint cohorts by a seeded, balanced allocation of whole session/content components; record realised sizes. This partition is for metric accounting and does not assert chronological prediction. The cumulative multiclass bank always uses their union. Let $R_{t,j}$ be accuracy after stage $t$ on the fixed stage-$j$ test cohort (its eligible attack families and its allocated benign cohort), predicting over all classes currently registered. Later-class predictions on an earlier cohort count as errors. For $T=4$,
+\begin{equation}
+\begin{aligned}
+\mathrm{ACC}_T&=\tfrac1T\sum_{j=1}^{T}R_{T,j},\\
+\mathrm{BWT}_T&=\tfrac1{T-1}\sum_{j=1}^{T-1}(R_{T,j}-R_{j,j}),\\
+F_T&=\tfrac1{T-1}\sum_{j=1}^{T-1}\left(\max_{\ell=j,\ldots,T}R_{\ell,j}-R_{T,j}\right).
+\end{aligned}
+\end{equation}
+ACC is an equal-stage mean, not pooled sample accuracy. Macro-F1 averages the fixed eligible seen classes on the cumulative bank, including benign; the separate acquisition endpoint excludes Hulk and benign. FAR$_B$ is the fraction of the fixed benign bank assigned any attack label. Report denominator counts and support alongside these scores.
 
 \section{Statistical Details}
 \label{app:stats}
-For endpoint $U$, seed $s$ and learners $\mathsf A,\mathsf B$, the learner interaction is
+The endpoints $H$ and $\Delta_{\rm rec}$ already subtract the matching clean run. Therefore the learner contrast is
 \begin{equation}
-\mathcal J_s^{\mathsf A,\mathsf B}(\rho;U)=[U_s^{\mathsf A,\rho}-U_s^{\mathsf A,0}]-[U_s^{\mathsf B,\rho}-U_s^{\mathsf B,0}],
+\mathcal J_s^{\mathsf A,\mathsf B}(\rho;U)
+=U_s^{\mathsf A}(\rho)-U_s^{\mathsf B}(\rho),\qquad U\in\{H,\Delta_{\rm rec}\},
 \label{eq:interaction}
 \end{equation}
-and $\bar\delta=\frac1n\sum_s\delta_s$ is the mean paired difference over $n=12$ seeds. Wilcoxon signed-rank tests drop zero differences and average tied ranks \cite{wilcoxon}; Holm's procedure compares the $h$-th smallest p-value with $0.05/(L-h+1)$ within each family of $L$ tests \cite{holm}. Bootstrap intervals resample whole seeds 10,000 times:
+without a second baseline subtraction. C1 uses the three learner pairs at three non-zero doses for each of those two endpoints (18 tests). C2 uses DC minus DM in $A$ at all four doses (4), $H$ and $\Delta_{\rm rec}$ at the three non-zero doses (6), and clean E4 FAR$_B$ (1).
+
+For each contrast, compute twelve paired differences $\delta_s$. Drop exact zero differences from signed ranking, average ranks of tied absolute differences, and enumerate all $2^m$ signs on the $m$ non-zero ranked differences for a two-sided signed-rank p-value; all-zero differences give $p=1$ and rank-biserial effect zero. Report $m$ and ties. The rank-biserial effect is $(W_+-W_-)/(W_++W_-)$ for a non-empty rank set. Test validity relies on symmetry of the difference distribution; enumeration does not remove that assumption. An exact paired sign test is an exploratory sensitivity check when symmetry is doubtful.
+
+Holm correction orders all $L=29$ p-values and compares the $h$-th with $0.05/(L-h+1)$, stopping at the first failure \cite{holm}. Whole-seed bootstrap samples preserve the pair:
 \begin{equation}
-\delta_b^*=\tfrac1n\sum_{\kappa=1}^n\delta_{\mathcal I_\kappa},\quad\mathcal I_\kappa\sim\operatorname{Uniform}\{1,\ldots,n\},\qquad
-\mathrm{CI}_{\rm boot}=[\operatorname{Quant}_{0.025}(\delta^*),\operatorname{Quant}_{0.975}(\delta^*)].
+\begin{aligned}
+\delta_b^*&=\tfrac1{12}\sum_{\kappa=1}^{12}\delta_{\mathcal I_\kappa},\quad
+\mathcal I_\kappa\sim\operatorname{Uniform}\{1,\ldots,12\},\\
+\mathrm{CI}_{\rm boot}&=[\operatorname{Quant}_{0.025}(\delta^*),\operatorname{Quant}_{0.975}(\delta^*)].
+\end{aligned}
 \label{eq:bootstrap}
 \end{equation}
-Because twelve seeds give uncertain percentile coverage, a supplementary exact sign-flip interval $\{\delta_0:\mathfrak p_{\delta_0}>0.05\}$ is also reported, with
-$\mathfrak p_{\delta_0}=2^{-n}\sum_{\varepsilon\in\{\pm1\}^n}\mathbf 1\{|\frac1n\sum_s\varepsilon_s(\delta_s-\delta_0)|\ge|\bar\delta-\delta_0|\}$.
-\textbf{Resolution.} With twelve non-zero pairs the smallest possible two-sided p-value is $2/2^{12}\approx0.00049$. The strictest Holm thresholds are $0.05/18\approx0.0028$ (C1) and $0.05/11\approx0.0045$ (C2), so at least ten (C1) or nine (C2) non-zero pairs are needed for any rejection. These are resolution limits, not power estimates; failed runs are re-run as complete pairs, never imputed.
+These descriptive percentile intervals are neither exact nor adjusted for 29 comparisons. With only twelve seeds, interval coverage and tail estimates can be unstable; interpret them with the raw paired trajectories.
+
+\textbf{Resolution and missingness.} The smallest two-sided p-value for $m$ non-zero pairs is $2/2^m$. The first Holm cutoff is $0.05/29\simeq0.00172$, requiring at least eleven non-zero pairs for that first rejection; later cutoffs can be less strict. This is a resolution calculation, not power. Failed trajectories are repaired and rerun with their complete matched set. If a predeclared endpoint cannot be restored, no zero or favourable replacement is imputed: its confirmatory test is reported unavailable (assigned $p=1$ for the fixed Holm bookkeeping), with a documented protocol deviation. Conclusions remain conditional on this capture, split and threat.
 
 \section{CICIDS2017 Source Files}
 \label{app:files}
-Session metadata come from the eight matching TrafficLabelling CSVs in \emph{GeneratedLabelledFlows}. The eight MachineLearningCSV files are: \path{Monday-WorkingHours.pcap_ISCX.csv}, \path{Tuesday-WorkingHours.pcap_ISCX.csv}, \path{Wednesday-workingHours.pcap_ISCX.csv}, \path{Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv}, \path{Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv}, \path{Friday-WorkingHours-Morning.pcap_ISCX.csv}, \path{Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv} and \path{Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv}.
+Numeric features and session metadata are projected together from the eight TrafficLabelling CSVs in \emph{GeneratedLabelledFlows}. The eight MachineLearningCSV files are: \path{Monday-WorkingHours.pcap_ISCX.csv}, \path{Tuesday-WorkingHours.pcap_ISCX.csv}, \path{Wednesday-workingHours.pcap_ISCX.csv}, \path{Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv}, \path{Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv}, \path{Friday-WorkingHours-Morning.pcap_ISCX.csv}, \path{Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv} and \path{Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv}.
 
 %=====================================================================
 \begin{thebibliography}{99}
+\small
 \bibitem{phase1} Saneedullah and A. Bilal, \enquote{Continual learning for network security: Phase 1 literature review and research gap identification,} Computer Networks course report, FAST-NUCES, 2026.
 \bibitem{ge} J. Ge, Y. Feng, and K. Sakurai, \enquote{A stage-wise framework using class-incremental learning for unknown DoS attack detection,} \emph{Future Internet}, vol. 18, no. 3, Art. 145, 2026. \url{https://doi.org/10.3390/fi18030145}.
 \bibitem{wu} Z. Wu, B. He, Z. Si, C. Qiu, X. Liao, and C. Su, \enquote{Communication-efficient federated class-incremental intrusion detection for edge IoT networks,} \emph{Sensors}, vol. 26, no. 14, Art. 4630, 2026. \url{https://doi.org/10.3390/s26144630}.
 \bibitem{luo} F. Luo, S. Fan, X. Li, and W. Xu, \enquote{Adaptive feature distillation-based continuous authentication against RF fingerprint drift for power equipment,} \emph{Future Internet}, vol. 18, no. 9, Art. 457, 2026. \url{https://doi.org/10.3390/fi18090457}.
 \bibitem{clarivate} Clarivate, \enquote{Journal Citation Reports 2025 release (2024 JIF data),} Jun. 18, 2025. \url{https://clarivate.com/news/clarivate-unveils-the-2025-journal-citation-reports/}.
+\bibitem{jcrtable} UEFISCDI, \enquote{Journal quartiles in the June 2025 JCR release (2024 JIF data),} official ranking table, 2025, relevant entries pp.~129--133, 236, 380 and 523. \url{https://uefiscdi.gov.ro/resource-865584-JCR_2024.iunie2025.pdf}.
 \bibitem{carillo} R. Carillo, F. Cerasuolo, G. Bovenzi, D. Ciuonzo, and A. Pescapè, \enquote{A federated and incremental network intrusion detection system for IoT emerging threats,} \emph{IEEE Trans. Network and Service Management}, vol. 23, pp. 3865--3880, 2026. \url{https://doi.org/10.1109/TNSM.2026.3675031}.
 \bibitem{lavaur} L. Lavaur, Y. Busnel, and F. Autrel, \enquote{Investigating the impact of label-flipping attacks against federated learning for collaborative intrusion detection,} \emph{Computers \& Security}, vol. 156, Art. 104462, 2025. \url{https://doi.org/10.1016/j.cose.2025.104462}.
 \bibitem{cnd} S. Fuhrman, O. Gungor, and T. Rosing, \enquote{CND-IDS: Continual novelty detection for intrusion detection systems,} in \emph{Proc. 62nd ACM/IEEE Design Automation Conference (DAC)}, 2025, pp. 1--7. \url{https://doi.org/10.1109/DAC63849.2025.11132541}.
@@ -960,6 +950,11 @@ Session metadata come from the eight matching TrafficLabelling CSVs in \emph{Gen
 \bibitem{engelen} G. Engelen, V. Rimmer, and W. Joosen, \enquote{Troubleshooting an intrusion detection dataset: The CICIDS2017 case study,} in \emph{Proc. IEEE Security and Privacy Workshops}, 2021, pp. 7--12. \url{https://doi.org/10.1109/SPW53761.2021.00009}.
 \bibitem{gem} D. Lopez-Paz and M. Ranzato, \enquote{Gradient episodic memory for continual learning,} in \emph{Advances in Neural Information Processing Systems}, vol. 30, 2017.
 \bibitem{clmetrics} N. D\'iaz-Rodr\'iguez, V. Lomonaco, D. Filliat, and D. Maltoni, \enquote{Don't forget, there is more than forgetting: New metrics for continual learning,} arXiv:1810.13166, 2018.
+\bibitem{airmf} E. Tabassi, \enquote{Artificial Intelligence Risk Management Framework (AI RMF 1.0),} NIST AI 100-1, 2023. \url{https://doi.org/10.6028/NIST.AI.100-1}.
+\bibitem{aml} A. Vassilev et al., \enquote{Adversarial machine learning: A taxonomy and terminology of attacks and mitigations,} NIST AI 100-2 E2025, 2025. \url{https://doi.org/10.6028/NIST.AI.100-2e2025}.
+\bibitem{checklist} NeurIPS, \enquote{NeurIPS paper checklist guidelines,} accessed 21 October 2026. \url{https://neurips.cc/public/guides/PaperChecklist}.
+\bibitem{onlineewc} J. Schwarz et al., \enquote{Progress \& compress: A scalable framework for continual learning,} in \emph{Proc. ICML}, PMLR, vol. 80, pp. 4528--4537, 2018. \url{https://proceedings.mlr.press/v80/schwarz18a.html}.
+\bibitem{empfisher} F. Kunstner, L. Balles, and P. Hennig, \enquote{Limitations of the empirical Fisher approximation for natural gradient descent,} in \emph{Advances in Neural Information Processing Systems}, vol. 32, 2019. \url{https://arxiv.org/abs/1905.12558}.
 \bibitem{wilcoxon} F. Wilcoxon, \enquote{Individual comparisons by ranking methods,} \emph{Biometrics Bulletin}, vol. 1, no. 6, pp. 80--83, 1945.
 \bibitem{holm} S. Holm, \enquote{A simple sequentially rejective multiple test procedure,} \emph{Scandinavian Journal of Statistics}, vol. 6, no. 2, pp. 65--70, 1979.
 \end{thebibliography}

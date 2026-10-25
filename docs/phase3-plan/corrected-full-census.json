@@ -1,0 +1,609 @@
+{
+  "status": "candidate_release_census_not_final_experiment_builder",
+  "completed_utc": "2026-10-24T03:32:12.400732+00:00",
+  "source": "corrected-acquisition-full.json",
+  "total_rows": 2099976,
+  "files": [
+    {
+      "name": "friday.csv",
+      "column_count": 91,
+      "rows": 547557,
+      "raw_labels": {
+        "BENIGN": 288544,
+        "Botnet - Attempted": 4067,
+        "DDoS": 95144,
+        "Portscan": 159066,
+        "Botnet": 736
+      },
+      "policy_labels": {
+        "BENIGN": 292611,
+        "DDoS": 95144,
+        "Portscan": 159066,
+        "Botnet": 736
+      },
+      "attempted_categories": {
+        "-1": 543490,
+        "1": 4067
+      },
+      "invalid_metadata": 0,
+      "nonfinite_candidate_inputs": 0,
+      "rows_valid_both": 547557,
+      "valid_policy_labels": {
+        "BENIGN": 292611,
+        "DDoS": 95144,
+        "Portscan": 159066,
+        "Botnet": 736
+      },
+      "bad_numeric_columns": {},
+      "timestamp_min": "2017-07-07T11:59:50.315195",
+      "timestamp_max": "2017-07-07T20:02:40.977798",
+      "duration_min_us": 1.0,
+      "duration_max_us": 119999993.0,
+      "nonmonotonic_adjacent_starts": 248931
+    },
+    {
+      "name": "monday.csv",
+      "column_count": 91,
+      "rows": 371624,
+      "raw_labels": {
+        "BENIGN": 371624
+      },
+      "policy_labels": {
+        "BENIGN": 371624
+      },
+      "attempted_categories": {
+        "-1": 371624
+      },
+      "invalid_metadata": 0,
+      "nonfinite_candidate_inputs": 3,
+      "rows_valid_both": 371621,
+      "valid_policy_labels": {
+        "BENIGN": 371621
+      },
+      "bad_numeric_columns": {
+        "Flow Bytes/s": 3,
+        "Flow Packets/s": 3
+      },
+      "timestamp_min": "2017-07-03T11:55:58.598308",
+      "timestamp_max": "2017-07-03T20:01:34.352593",
+      "duration_min_us": 0.0,
+      "duration_max_us": 119999987.0,
+      "nonmonotonic_adjacent_starts": 174479
+    },
+    {
+      "name": "thursday.csv",
+      "column_count": 91,
+      "rows": 362076,
+      "raw_labels": {
+        "BENIGN": 288172,
+        "Web Attack - Brute Force - Attempted": 1292,
+        "Web Attack - Brute Force": 73,
+        "Infiltration - Portscan": 71767,
+        "Infiltration": 36,
+        "Infiltration - Attempted": 45,
+        "Web Attack - XSS - Attempted": 655,
+        "Web Attack - XSS": 18,
+        "Web Attack - SQL Injection - Attempted": 5,
+        "Web Attack - SQL Injection": 13
+      },
+      "policy_labels": {
+        "BENIGN": 290169,
+        "Web Attack - Brute Force": 73,
+        "Infiltration - Portscan": 71767,
+        "Infiltration": 36,
+        "Web Attack - XSS": 18,
+        "Web Attack - SQL Injection": 13
+      },
+      "attempted_categories": {
+        "-1": 360079,
+        "0": 1908,
+        "4": 71,
+        "2": 18
+      },
+      "invalid_metadata": 0,
+      "nonfinite_candidate_inputs": 1,
+      "rows_valid_both": 362075,
+      "valid_policy_labels": {
+        "BENIGN": 290168,
+        "Web Attack - Brute Force": 73,
+        "Infiltration - Portscan": 71767,
+        "Infiltration": 36,
+        "Web Attack - XSS": 18,
+        "Web Attack - SQL Injection": 13
+      },
+      "bad_numeric_columns": {
+        "Flow Bytes/s": 1,
+        "Flow Packets/s": 1
+      },
+      "timestamp_min": "2017-07-06T11:59:00.490140",
+      "timestamp_max": "2017-07-06T20:04:36.513760",
+      "duration_min_us": 0.0,
+      "duration_max_us": 119999993.0,
+      "nonmonotonic_adjacent_starts": 165271
+    },
+    {
+      "name": "tuesday.csv",
+      "column_count": 91,
+      "rows": 322078,
+      "raw_labels": {
+        "BENIGN": 315106,
+        "FTP-Patator": 3972,
+        "FTP-Patator - Attempted": 12,
+        "SSH-Patator": 2961,
+        "SSH-Patator - Attempted": 27
+      },
+      "policy_labels": {
+        "BENIGN": 315145,
+        "FTP-Patator": 3972,
+        "SSH-Patator": 2961
+      },
+      "attempted_categories": {
+        "-1": 322039,
+        "2": 2,
+        "3": 27,
+        "0": 10
+      },
+      "invalid_metadata": 0,
+      "nonfinite_candidate_inputs": 0,
+      "rows_valid_both": 322078,
+      "valid_policy_labels": {
+        "BENIGN": 315145,
+        "FTP-Patator": 3972,
+        "SSH-Patator": 2961
+      },
+      "bad_numeric_columns": {},
+      "timestamp_min": "2017-07-04T11:53:44.398274",
+      "timestamp_max": "2017-07-04T20:00:30.041663",
+      "duration_min_us": 1.0,
+      "duration_max_us": 119999977.0,
+      "nonmonotonic_adjacent_starts": 152339
+    },
+    {
+      "name": "wednesday.csv",
+      "column_count": 91,
+      "rows": 496641,
+      "raw_labels": {
+        "BENIGN": 319120,
+        "DoS Hulk": 158468,
+        "DoS Slowloris": 3859,
+        "DoS Slowhttptest - Attempted": 3368,
+        "DoS Slowloris - Attempted": 1847,
+        "DoS Slowhttptest": 1740,
+        "DoS Hulk - Attempted": 581,
+        "DoS GoldenEye": 7567,
+        "Heartbleed": 11,
+        "DoS GoldenEye - Attempted": 80
+      },
+      "policy_labels": {
+        "BENIGN": 324996,
+        "DoS Hulk": 158468,
+        "DoS Slowloris": 3859,
+        "DoS Slowhttptest": 1740,
+        "DoS GoldenEye": 7567,
+        "Heartbleed": 11
+      },
+      "attempted_categories": {
+        "-1": 490765,
+        "6": 2804,
+        "0": 2927,
+        "5": 138,
+        "4": 4,
+        "2": 3
+      },
+      "invalid_metadata": 0,
+      "nonfinite_candidate_inputs": 1,
+      "rows_valid_both": 496640,
+      "valid_policy_labels": {
+        "BENIGN": 324995,
+        "DoS Hulk": 158468,
+        "DoS Slowloris": 3859,
+        "DoS Slowhttptest": 1740,
+        "DoS GoldenEye": 7567,
+        "Heartbleed": 11
+      },
+      "bad_numeric_columns": {
+        "Flow Bytes/s": 1,
+        "Flow Packets/s": 1
+      },
+      "timestamp_min": "2017-07-05T11:42:42.084372",
+      "timestamp_max": "2017-07-05T20:10:14.557249",
+      "duration_min_us": 0.0,
+      "duration_max_us": 119999998.0,
+      "nonmonotonic_adjacent_starts": 196756
+    }
+  ],
+  "candidate_feature_projection": [
+    {
+      "original": "Flow Duration",
+      "corrected": "Flow Duration",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Total Fwd Packets",
+      "corrected": "Total Fwd Packet",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Total Backward Packets",
+      "corrected": "Total Bwd packets",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Total Length of Fwd Packets",
+      "corrected": "Total Length of Fwd Packet",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Total Length of Bwd Packets",
+      "corrected": "Total Length of Bwd Packet",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd Packet Length Max",
+      "corrected": "Fwd Packet Length Max",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd Packet Length Min",
+      "corrected": "Fwd Packet Length Min",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd Packet Length Mean",
+      "corrected": "Fwd Packet Length Mean",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd Packet Length Std",
+      "corrected": "Fwd Packet Length Std",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd Packet Length Max",
+      "corrected": "Bwd Packet Length Max",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd Packet Length Min",
+      "corrected": "Bwd Packet Length Min",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd Packet Length Mean",
+      "corrected": "Bwd Packet Length Mean",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd Packet Length Std",
+      "corrected": "Bwd Packet Length Std",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Flow Bytes/s",
+      "corrected": "Flow Bytes/s",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Flow Packets/s",
+      "corrected": "Flow Packets/s",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Flow IAT Mean",
+      "corrected": "Flow IAT Mean",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Flow IAT Std",
+      "corrected": "Flow IAT Std",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Flow IAT Max",
+      "corrected": "Flow IAT Max",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Flow IAT Min",
+      "corrected": "Flow IAT Min",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd IAT Total",
+      "corrected": "Fwd IAT Total",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd IAT Mean",
+      "corrected": "Fwd IAT Mean",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd IAT Std",
+      "corrected": "Fwd IAT Std",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd IAT Max",
+      "corrected": "Fwd IAT Max",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd IAT Min",
+      "corrected": "Fwd IAT Min",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd IAT Total",
+      "corrected": "Bwd IAT Total",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd IAT Mean",
+      "corrected": "Bwd IAT Mean",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd IAT Std",
+      "corrected": "Bwd IAT Std",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd IAT Max",
+      "corrected": "Bwd IAT Max",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd IAT Min",
+      "corrected": "Bwd IAT Min",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd PSH Flags",
+      "corrected": "Fwd PSH Flags",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd PSH Flags",
+      "corrected": "Bwd PSH Flags",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd URG Flags",
+      "corrected": "Fwd URG Flags",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd URG Flags",
+      "corrected": "Bwd URG Flags",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd Header Length",
+      "corrected": "Fwd Header Length",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd Header Length",
+      "corrected": "Bwd Header Length",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd Packets/s",
+      "corrected": "Fwd Packets/s",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd Packets/s",
+      "corrected": "Bwd Packets/s",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Min Packet Length",
+      "corrected": "Packet Length Min",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Max Packet Length",
+      "corrected": "Packet Length Max",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Packet Length Mean",
+      "corrected": "Packet Length Mean",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Packet Length Std",
+      "corrected": "Packet Length Std",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Packet Length Variance",
+      "corrected": "Packet Length Variance",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "FIN Flag Count",
+      "corrected": "FIN Flag Count",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "SYN Flag Count",
+      "corrected": "SYN Flag Count",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "RST Flag Count",
+      "corrected": "RST Flag Count",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "PSH Flag Count",
+      "corrected": "PSH Flag Count",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "ACK Flag Count",
+      "corrected": "ACK Flag Count",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "URG Flag Count",
+      "corrected": "URG Flag Count",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "CWE Flag Count",
+      "corrected": "CWR Flag Count",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "ECE Flag Count",
+      "corrected": "ECE Flag Count",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Down/Up Ratio",
+      "corrected": "Down/Up Ratio",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Average Packet Size",
+      "corrected": "Average Packet Size",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Avg Fwd Segment Size",
+      "corrected": "Fwd Segment Size Avg",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Avg Bwd Segment Size",
+      "corrected": "Bwd Segment Size Avg",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd Avg Bytes/Bulk",
+      "corrected": "Fwd Bytes/Bulk Avg",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd Avg Packets/Bulk",
+      "corrected": "Fwd Packet/Bulk Avg",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Fwd Avg Bulk Rate",
+      "corrected": "Fwd Bulk Rate Avg",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd Avg Bytes/Bulk",
+      "corrected": "Bwd Bytes/Bulk Avg",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd Avg Packets/Bulk",
+      "corrected": "Bwd Packet/Bulk Avg",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Bwd Avg Bulk Rate",
+      "corrected": "Bwd Bulk Rate Avg",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Subflow Fwd Packets",
+      "corrected": "Subflow Fwd Packets",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Subflow Fwd Bytes",
+      "corrected": "Subflow Fwd Bytes",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Subflow Bwd Packets",
+      "corrected": "Subflow Bwd Packets",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Subflow Bwd Bytes",
+      "corrected": "Subflow Bwd Bytes",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Init_Win_bytes_forward",
+      "corrected": "FWD Init Win Bytes",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Init_Win_bytes_backward",
+      "corrected": "Bwd Init Win Bytes",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "act_data_pkt_fwd",
+      "corrected": "Fwd Act Data Pkts",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "min_seg_size_forward",
+      "corrected": "Fwd Seg Size Min",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Active Mean",
+      "corrected": "Active Mean",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Active Std",
+      "corrected": "Active Std",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Active Max",
+      "corrected": "Active Max",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Active Min",
+      "corrected": "Active Min",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Idle Mean",
+      "corrected": "Idle Mean",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Idle Std",
+      "corrected": "Idle Std",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Idle Max",
+      "corrected": "Idle Max",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "original": "Idle Min",
+      "corrected": "Idle Min",
+      "semantic_equivalence_verified": false
+    }
+  ],
+  "attempted_policy_for_this_audit": "Non--1 attempted category maps to BENIGN; unknown annotations invalidate metadata.",
+  "metadata_file": "data/raw/phase3-feasibility-corrected/feasibility-metadata.csv",
+  "candidate_feature_file": "data/raw/phase3-feasibility-corrected/candidate-features-fp32.raw",
+  "candidate_dtype": "little-endian float32, C order, 76 columns",
+  "elapsed_seconds": 128.485,
+  "limits": [
+    "Candidate name aliases are not a feature-semantic audit",
+    "No final T0/split/ownership adopted",
+    "No model training or performance evaluation",
+    "IP string syntax not yet validated in this census",
+    "No session/content support approval yet"
+  ]
+}

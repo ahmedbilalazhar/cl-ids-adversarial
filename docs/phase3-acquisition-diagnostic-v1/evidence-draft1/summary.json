@@ -1,0 +1,1837 @@
+{
+  "E1_total_current_exposures": 551376,
+  "E1_total_optimizer_updates": 4464,
+  "additional_complete_study_replicates": 0,
+  "baseline_exact_checks": [
+    {
+      "original_state_identity": "527a4870bcfaf435f00fb3ca475605af571bac0f46db83e890428b556e35acb5",
+      "round": 1,
+      "seed": 101,
+      "state_dropout_counters_exact": true
+    },
+    {
+      "original_state_identity": "17b8ecaf378ff9f71f4bedd52e86b75409dd6b958bc393a5c3886c0f498a3614",
+      "round": 2,
+      "seed": 101,
+      "state_dropout_counters_exact": true
+    },
+    {
+      "original_state_identity": "129acd01eab1b5abc5b568e2a9d2c7caa06e27595eb44a9544efbae468bd9d82",
+      "round": 3,
+      "seed": 101,
+      "state_dropout_counters_exact": true
+    },
+    {
+      "original_state_identity": "734993cd065241a82ffa9ff92af172cc9de8bf4073b71ba3a8aead31b25a5122",
+      "round": 1,
+      "seed": 102,
+      "state_dropout_counters_exact": true
+    },
+    {
+      "original_state_identity": "b051fd60dcc7f9d07cb14a6ddbe67d05193c1c4f679e041bca3fbf8d4d4e40b2",
+      "round": 2,
+      "seed": 102,
+      "state_dropout_counters_exact": true
+    },
+    {
+      "original_state_identity": "ff6912454198f8fdba1192659f6373bae53252a26334b88b6c9a248037879e08",
+      "round": 3,
+      "seed": 102,
+      "state_dropout_counters_exact": true
+    },
+    {
+      "original_state_identity": "b0bb4fc4fd1ebae28dc28b9e6fbdc9b36e61dc051ef4cf99a322b70d34e06a77",
+      "round": 1,
+      "seed": 103,
+      "state_dropout_counters_exact": true
+    },
+    {
+      "original_state_identity": "9655a50762d8effa0652097b64de4b24f6b11ff9239251c7dba909dff6209f15",
+      "round": 2,
+      "seed": 103,
+      "state_dropout_counters_exact": true
+    },
+    {
+      "original_state_identity": "1a69702c9a68bcddb681651a3493c27528119c6989140b04c832aa4ef602456a",
+      "round": 3,
+      "seed": 103,
+      "state_dropout_counters_exact": true
+    }
+  ],
+  "cells": [
+    {
+      "E1_development_anchor_context_passed": false,
+      "E2_Hulk_status": "not_exercised",
+      "complete_clean_gate_passed": false,
+      "mean_recall": {
+        "development": {
+          "0": 0.9897945021697092,
+          "12": 0.0,
+          "7": 0.6666666666666666
+        },
+        "train": {
+          "0": 0.9898095238095238,
+          "12": 0.0,
+          "7": 0.6666666666666666
+        }
+      },
+      "objective": "natural",
+      "per_seed": [
+        {
+          "development": {
+            "benign_far": 0.005852200705039832,
+            "classes": [
+              {
+                "correct": 214893,
+                "mean_natural_CE": 0.265100668734169,
+                "mean_true_probability": 0.7797225013061346,
+                "recall": 0.9941477992949602,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.46001166105270386,
+                  1.8457935452461243,
+                  13.143327713012695
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.9564343566414695,
+                "mean_true_probability": 0.384262175754931,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.10468383133411407,
+                  0.1870323270559311,
+                  0.19015996158123016
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.1627437860981837,
+                "mean_true_probability": 0.31265232576107654,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.6808465719223022,
+                  -0.1617475152015686,
+                  -0.12951573729515076
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                214893,
+                1265,
+                0
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                592,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.517538507297533,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 101,
+          "train": {
+            "benign_far": 0.006285714285714286,
+            "classes": [
+              {
+                "correct": 3478,
+                "mean_natural_CE": 0.2681541025116421,
+                "mean_true_probability": 0.7770304301295962,
+                "recall": 0.9937142857142857,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.23105698823928833,
+                  1.8367832899093628,
+                  12.645679473876953
+                ]
+              },
+              {
+                "correct": 2382,
+                "mean_natural_CE": 0.956360106779486,
+                "mean_true_probability": 0.38429034336788326,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.10449077188968658,
+                  0.1870233714580536,
+                  0.1911032646894455
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.1721031680568919,
+                "mean_true_probability": 0.31206341276875055,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -8.758217811584473,
+                  -0.16178461909294128,
+                  -0.10887942463159561
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3478,
+                22,
+                0
+              ],
+              [
+                0,
+                2382,
+                0
+              ],
+              [
+                1776,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.5966704795416709,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "development": {
+            "benign_far": 0.024764292785832587,
+            "classes": [
+              {
+                "correct": 210805,
+                "mean_natural_CE": 0.4662744885619893,
+                "mean_true_probability": 0.6398911436241741,
+                "recall": 0.9752357072141674,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.6482528448104858,
+                  0.9246973991394043,
+                  6.749317169189453
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.7716145772604073,
+                "mean_true_probability": 0.4622672805996061,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.25476500391960144,
+                  0.33576029539108276,
+                  0.33735042810440063
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.5899103672520534,
+                "mean_true_probability": 0.20394594592319146,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8561180830001831,
+                  -0.6841514110565186,
+                  -0.6770472526550293
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                210805,
+                5353,
+                0
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                6,
+                586,
+                0
+              ]
+            ],
+            "macro_f1": 0.39954405386322334,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 102,
+          "train": {
+            "benign_far": 0.024285714285714285,
+            "classes": [
+              {
+                "correct": 3415,
+                "mean_natural_CE": 0.47090384525233614,
+                "mean_true_probability": 0.6365626794014658,
+                "recall": 0.9757142857142858,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.5132265686988831,
+                  0.920881599187851,
+                  6.490503311157227
+                ]
+              },
+              {
+                "correct": 2382,
+                "mean_natural_CE": 0.7715631545490822,
+                "mean_true_probability": 0.4622906967684764,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.2546316981315613,
+                  0.335748553276062,
+                  0.3400708734989166
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.5940741014641684,
+                "mean_true_probability": 0.20370159880205704,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -5.187813758850098,
+                  -0.6841392517089844,
+                  -0.6704413294792175
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3415,
+                85,
+                0
+              ],
+              [
+                0,
+                2382,
+                0
+              ],
+              [
+                32,
+                1744,
+                0
+              ]
+            ],
+            "macro_f1": 0.5685809190547926,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "development": {
+            "benign_far": 0.0,
+            "classes": [
+              {
+                "correct": 216158,
+                "mean_natural_CE": 0.5074611584998675,
+                "mean_true_probability": 0.6114998438376749,
+                "recall": 1.0,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.5106763243675232,
+                  0.7967812120914459,
+                  4.836761474609375
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.5845302431838317,
+                "mean_true_probability": 0.20504586593534962,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.9287436008453369,
+                  -0.9157631397247314,
+                  -0.8346631526947021
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.3031489408096752,
+                "mean_true_probability": 0.27167681972118646,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.76207435131073,
+                  -0.6888339519500732,
+                  -0.6604431867599487
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                216158,
+                0,
+                0
+              ],
+              [
+                795,
+                0,
+                0
+              ],
+              [
+                592,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.3322673196480848,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 103,
+          "train": {
+            "benign_far": 0.0,
+            "classes": [
+              {
+                "correct": 3500,
+                "mean_natural_CE": 0.5127199687553303,
+                "mean_true_probability": 0.6078020395040512,
+                "recall": 1.0,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.514086902141571,
+                  0.7945634126663208,
+                  4.276333808898926
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.584597489745751,
+                "mean_true_probability": 0.20503165883166163,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.9315283298492432,
+                  -0.9156759977340698,
+                  -0.8440585136413574
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.3057744562088907,
+                "mean_true_probability": 0.27137694524617884,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -3.5122742652893066,
+                  -0.6887176036834717,
+                  -0.6653844118118286
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3500,
+                0,
+                0
+              ],
+              [
+                2382,
+                0,
+                0
+              ],
+              [
+                1776,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.20911752404851527,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        }
+      ],
+      "rounds": 3
+    },
+    {
+      "E1_development_anchor_context_passed": true,
+      "E2_Hulk_status": "not_exercised",
+      "complete_clean_gate_passed": false,
+      "mean_recall": {
+        "development": {
+          "0": 0.9807486499073209,
+          "12": 0.9971846846846847,
+          "7": 0.6666666666666666
+        },
+        "train": {
+          "0": 0.9810476190476191,
+          "12": 0.9953078078078078,
+          "7": 0.6666666666666666
+        }
+      },
+      "objective": "natural",
+      "per_seed": [
+        {
+          "development": {
+            "benign_far": 0.011991228638310866,
+            "classes": [
+              {
+                "correct": 213566,
+                "mean_natural_CE": 0.030764737118865074,
+                "mean_true_probability": 0.981065806054631,
+                "recall": 0.9880087713616892,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -7.118161678314209,
+                  8.847657203674316,
+                  90.99745178222656
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.032133891663086486,
+                "mean_true_probability": 0.968398658059678,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  2.494365930557251,
+                  3.5611050128936768,
+                  3.6494622230529785
+                ]
+              },
+              {
+                "correct": 590,
+                "mean_natural_CE": 0.03384616012634659,
+                "mean_true_probability": 0.9680258275789989,
+                "recall": 0.9966216216216216,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8005421161651611,
+                  3.734068989753723,
+                  3.956397533416748
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                213566,
+                1156,
+                1436
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                2,
+                0,
+                590
+              ]
+            ],
+            "macro_f1": 0.6745711250702131,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 101,
+          "train": {
+            "benign_far": 0.012571428571428572,
+            "classes": [
+              {
+                "correct": 3456,
+                "mean_natural_CE": 0.03258239022768886,
+                "mean_true_probability": 0.9801737497246691,
+                "recall": 0.9874285714285714,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -2.8743348121643066,
+                  8.836350440979004,
+                  87.69221496582031
+                ]
+              },
+              {
+                "correct": 2382,
+                "mean_natural_CE": 0.03195433957247325,
+                "mean_true_probability": 0.9685652075096102,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  2.5039539337158203,
+                  3.5627474784851074,
+                  3.6572444438934326
+                ]
+              },
+              {
+                "correct": 1765,
+                "mean_natural_CE": 0.08893301024789678,
+                "mean_true_probability": 0.9657474076338658,
+                "recall": 0.9938063063063063,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -46.01445007324219,
+                  3.730004072189331,
+                  3.972849130630493
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3456,
+                20,
+                24
+              ],
+              [
+                0,
+                2382,
+                0
+              ],
+              [
+                11,
+                0,
+                1765
+              ]
+            ],
+            "macro_f1": 0.9927024556874938,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "development": {
+            "benign_far": 0.01774627818540142,
+            "classes": [
+              {
+                "correct": 212322,
+                "mean_natural_CE": 0.06549573290089439,
+                "mean_true_probability": 0.963899613833214,
+                "recall": 0.9822537218145986,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -6.8074140548706055,
+                  5.93989109992981,
+                  50.68642807006836
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.02808604600997466,
+                "mean_true_probability": 0.9723164221775606,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  2.3528270721435547,
+                  3.6341018676757812,
+                  3.6805872917175293
+                ]
+              },
+              {
+                "correct": 590,
+                "mean_natural_CE": 0.11677606101777102,
+                "mean_true_probability": 0.8909993526601309,
+                "recall": 0.9966216216216216,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8833193778991699,
+                  2.5910534858703613,
+                  2.795332431793213
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                212322,
+                1912,
+                1924
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                2,
+                0,
+                590
+              ]
+            ],
+            "macro_f1": 0.6083263067330344,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 102,
+          "train": {
+            "benign_far": 0.01685714285714286,
+            "classes": [
+              {
+                "correct": 3441,
+                "mean_natural_CE": 0.06339115922111907,
+                "mean_true_probability": 0.9647977613082954,
+                "recall": 0.9831428571428571,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -5.222332954406738,
+                  5.9126434326171875,
+                  48.74785614013672
+                ]
+              },
+              {
+                "correct": 2382,
+                "mean_natural_CE": 0.02794905543862197,
+                "mean_true_probability": 0.9724456495742253,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  2.3611631393432617,
+                  3.6341968774795532,
+                  3.6965441703796387
+                ]
+              },
+              {
+                "correct": 1765,
+                "mean_natural_CE": 0.1444138507023118,
+                "mean_true_probability": 0.8888903432883869,
+                "recall": 0.9938063063063063,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -22.722658157348633,
+                  2.5863378047943115,
+                  2.8049402236938477
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3441,
+                29,
+                30
+              ],
+              [
+                0,
+                2382,
+                0
+              ],
+              [
+                11,
+                0,
+                1765
+              ]
+            ],
+            "macro_f1": 0.9907996956857149,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "development": {
+            "benign_far": 0.028016543454325075,
+            "classes": [
+              {
+                "correct": 210102,
+                "mean_natural_CE": 0.08104280365684388,
+                "mean_true_probability": 0.9408187842122157,
+                "recall": 0.971983456545675,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -5.208317756652832,
+                  4.628401279449463,
+                  35.54381561279297
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.400016294635317,
+                "mean_true_probability": 0.24659508959677234,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.9001890420913696,
+                  -0.8727626800537109,
+                  -0.729240357875824
+                ]
+              },
+              {
+                "correct": 591,
+                "mean_natural_CE": 0.3476981492461385,
+                "mean_true_probability": 0.7065578487676543,
+                "recall": 0.9983108108108109,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.013863205909729004,
+                  1.4023403525352478,
+                  1.464931607246399
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                210102,
+                0,
+                6056
+              ],
+              [
+                0,
+                0,
+                795
+              ],
+              [
+                1,
+                0,
+                591
+              ]
+            ],
+            "macro_f1": 0.3776383719884082,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 103,
+          "train": {
+            "benign_far": 0.027428571428571427,
+            "classes": [
+              {
+                "correct": 3404,
+                "mean_natural_CE": 0.0822288860469425,
+                "mean_true_probability": 0.9400640190839767,
+                "recall": 0.9725714285714285,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.445048213005066,
+                  4.612217426300049,
+                  34.06494140625
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.4000382618079357,
+                "mean_true_probability": 0.24658940666793877,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.9007922410964966,
+                  -0.8725680708885193,
+                  -0.7293384075164795
+                ]
+              },
+              {
+                "correct": 1773,
+                "mean_natural_CE": 0.3702220135108308,
+                "mean_true_probability": 0.7051618481023155,
+                "recall": 0.9983108108108109,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -19.24121856689453,
+                  1.4022757411003113,
+                  1.5184953212738037
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3404,
+                0,
+                96
+              ],
+              [
+                0,
+                0,
+                2382
+              ],
+              [
+                3,
+                0,
+                1773
+              ]
+            ],
+            "macro_f1": 0.5246730430210906,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        }
+      ],
+      "rounds": 12
+    },
+    {
+      "E1_development_anchor_context_passed": false,
+      "E2_Hulk_status": "not_exercised",
+      "complete_clean_gate_passed": false,
+      "mean_recall": {
+        "development": {
+          "0": 0.9728547328034741,
+          "12": 0.3322072072072072,
+          "7": 0.3333333333333333
+        },
+        "train": {
+          "0": 0.9734285714285714,
+          "12": 0.33164414414414417,
+          "7": 0.3333333333333333
+        }
+      },
+      "objective": "equal_class",
+      "per_seed": [
+        {
+          "development": {
+            "benign_far": 0.027771352436643568,
+            "classes": [
+              {
+                "correct": 210155,
+                "mean_natural_CE": 0.33371338425539,
+                "mean_true_probability": 0.7348637588034077,
+                "recall": 0.9722286475633565,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8080383539199829,
+                  1.5308103561401367,
+                  12.486197471618652
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 0.9565790830918078,
+                "mean_true_probability": 0.38420609366968744,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.03116212785243988,
+                  -0.022931531071662903,
+                  -0.013933666050434113
+                ]
+              },
+              {
+                "correct": 590,
+                "mean_natural_CE": 0.8931768283852048,
+                "mean_true_probability": 0.4093711223151233,
+                "recall": 0.9966216216216216,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.12859731912612915,
+                  0.276852622628212,
+                  0.30359888076782227
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                210155,
+                168,
+                5835
+              ],
+              [
+                0,
+                0,
+                795
+              ],
+              [
+                2,
+                0,
+                590
+              ]
+            ],
+            "macro_f1": 0.37898794620823195,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 101,
+          "train": {
+            "benign_far": 0.02542857142857143,
+            "classes": [
+              {
+                "correct": 3411,
+                "mean_natural_CE": 0.33774962564533156,
+                "mean_true_probability": 0.7314723227620125,
+                "recall": 0.9745714285714285,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.5946674942970276,
+                  1.5207508206367493,
+                  12.013143539428711
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 0.9565205965394438,
+                "mean_true_probability": 0.3842284066726138,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.03363090753555298,
+                  -0.02290274202823639,
+                  -0.0151405930519104
+                ]
+              },
+              {
+                "correct": 1767,
+                "mean_natural_CE": 0.9022700316398531,
+                "mean_true_probability": 0.40867083582955416,
+                "recall": 0.9949324324324325,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -8.414785385131836,
+                  0.2764450013637543,
+                  0.3098943531513214
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3411,
+                7,
+                82
+              ],
+              [
+                0,
+                0,
+                2382
+              ],
+              [
+                9,
+                0,
+                1767
+              ]
+            ],
+            "macro_f1": 0.5247172614608583,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "development": {
+            "benign_far": 0.053664449152934425,
+            "classes": [
+              {
+                "correct": 204558,
+                "mean_natural_CE": 0.5645078893194809,
+                "mean_true_probability": 0.5861584345571828,
+                "recall": 0.9463355508470656,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.2153468132019043,
+                  0.8358929455280304,
+                  6.7222137451171875
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.6751725425510287,
+                "mean_true_probability": 0.5090699152001795,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.604067325592041,
+                  0.6350811123847961,
+                  0.6363441944122314
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.2526927892420743,
+                "mean_true_probability": 0.2857348938044664,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.4430488348007202,
+                  -0.43055206537246704,
+                  -0.3170383870601654
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                204558,
+                11600,
+                0
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                0,
+                592,
+                0
+              ]
+            ],
+            "macro_f1": 0.3625986090957358,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 102,
+          "train": {
+            "benign_far": 0.054285714285714284,
+            "classes": [
+              {
+                "correct": 3310,
+                "mean_natural_CE": 0.5695351168227915,
+                "mean_true_probability": 0.5826733894731317,
+                "recall": 0.9457142857142857,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.0077753067016602,
+                  0.830398678779602,
+                  6.482938766479492
+                ]
+              },
+              {
+                "correct": 2382,
+                "mean_natural_CE": 0.6751161443646668,
+                "mean_true_probability": 0.5090982031912287,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.6045610904693604,
+                  0.6350769996643066,
+                  0.6363605856895447
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.2563576598290924,
+                "mean_true_probability": 0.2853947666359369,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -4.384097099304199,
+                  -0.43054455518722534,
+                  -0.3116063177585602
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3310,
+                190,
+                0
+              ],
+              [
+                0,
+                2382,
+                0
+              ],
+              [
+                3,
+                1773,
+                0
+              ]
+            ],
+            "macro_f1": 0.5599542255024147,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "development": {
+            "benign_far": 0.0,
+            "classes": [
+              {
+                "correct": 216158,
+                "mean_natural_CE": 0.5750401955004109,
+                "mean_true_probability": 0.5718451777958766,
+                "recall": 1.0,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.128874734044075,
+                  0.608198344707489,
+                  4.026890754699707
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.6536166894360909,
+                "mean_true_probability": 0.1913580165906522,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8546432256698608,
+                  -0.844552218914032,
+                  -0.7830172777175903
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.018184641325796,
+                "mean_true_probability": 0.3612511585391051,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.3034544289112091,
+                  -0.24242021888494492,
+                  -0.23176826536655426
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                216158,
+                0,
+                0
+              ],
+              [
+                795,
+                0,
+                0
+              ],
+              [
+                592,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.3322673196480848,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 103,
+          "train": {
+            "benign_far": 0.0,
+            "classes": [
+              {
+                "correct": 3500,
+                "mean_natural_CE": 0.5807003161880587,
+                "mean_true_probability": 0.5680465463314738,
+                "recall": 1.0,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.13942858576774597,
+                  0.60661780834198,
+                  3.84128999710083
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.653679143821963,
+                "mean_true_probability": 0.1913457499405699,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.8566293716430664,
+                  -0.8445046246051788,
+                  -0.7882667779922485
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.020598480561832,
+                "mean_true_probability": 0.36083501670719337,
+                "recall": 0.0,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -2.9350762367248535,
+                  -0.24250172078609467,
+                  -0.23305681347846985
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3500,
+                0,
+                0
+              ],
+              [
+                2382,
+                0,
+                0
+              ],
+              [
+                1776,
+                0,
+                0
+              ]
+            ],
+            "macro_f1": 0.20911752404851527,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        }
+      ],
+      "rounds": 3
+    },
+    {
+      "E1_development_anchor_context_passed": true,
+      "E2_Hulk_status": "not_exercised",
+      "complete_clean_gate_passed": false,
+      "mean_recall": {
+        "development": {
+          "0": 0.9738185339736057,
+          "12": 0.999436936936937,
+          "7": 0.6666666666666666
+        },
+        "train": {
+          "0": 0.9737142857142858,
+          "12": 0.9983108108108109,
+          "7": 0.6666666666666666
+        }
+      },
+      "objective": "equal_class",
+      "per_seed": [
+        {
+          "development": {
+            "benign_far": 0.019083263168608148,
+            "classes": [
+              {
+                "correct": 212033,
+                "mean_natural_CE": 0.050375973710423884,
+                "mean_true_probability": 0.9724435112202885,
+                "recall": 0.9809167368313918,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -10.836221694946289,
+                  8.199707508087158,
+                  86.18297576904297
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.025513971997600682,
+                "mean_true_probability": 0.9748152229021181,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  2.8590307235717773,
+                  3.775888442993164,
+                  3.8717808723449707
+                ]
+              },
+              {
+                "correct": 592,
+                "mean_natural_CE": 0.020653905405197293,
+                "mean_true_probability": 0.9800559465546865,
+                "recall": 1.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.0009958744049072266,
+                  4.181519269943237,
+                  4.401439189910889
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                212033,
+                1230,
+                2895
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                0,
+                0,
+                592
+              ]
+            ],
+            "macro_f1": 0.6148211527366733,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 101,
+          "train": {
+            "benign_far": 0.02142857142857143,
+            "classes": [
+              {
+                "correct": 3425,
+                "mean_natural_CE": 0.053638969929354914,
+                "mean_true_probability": 0.9710925279669463,
+                "recall": 0.9785714285714285,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -3.763612985610962,
+                  8.190444946289062,
+                  83.12277221679688
+                ]
+              },
+              {
+                "correct": 2382,
+                "mean_natural_CE": 0.02540936806465176,
+                "mean_true_probability": 0.9749150814427536,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  2.86802339553833,
+                  3.7755860090255737,
+                  3.883997917175293
+                ]
+              },
+              {
+                "correct": 1773,
+                "mean_natural_CE": 0.07361228714501988,
+                "mean_true_probability": 0.978053403599817,
+                "recall": 0.9983108108108109,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -44.75067138671875,
+                  4.177944660186768,
+                  4.4217023849487305
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3425,
+                22,
+                53
+              ],
+              [
+                0,
+                2382,
+                0
+              ],
+              [
+                3,
+                0,
+                1773
+              ]
+            ],
+            "macro_f1": 0.9895325602067112,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "development": {
+            "benign_far": 0.03205525587764506,
+            "classes": [
+              {
+                "correct": 209229,
+                "mean_natural_CE": 0.0872573526457361,
+                "mean_true_probability": 0.9540533011836773,
+                "recall": 0.967944744122355,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -7.92997932434082,
+                  5.590754508972168,
+                  50.31597900390625
+                ]
+              },
+              {
+                "correct": 795,
+                "mean_natural_CE": 0.015067766036299415,
+                "mean_true_probability": 0.9850485449317117,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  3.0363776683807373,
+                  4.273794174194336,
+                  4.3386077880859375
+                ]
+              },
+              {
+                "correct": 591,
+                "mean_natural_CE": 0.0488258307057156,
+                "mean_true_probability": 0.9528819866277076,
+                "recall": 0.9983108108108109,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -0.09178376197814941,
+                  3.392850875854492,
+                  3.591607093811035
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                209229,
+                3169,
+                3760
+              ],
+              [
+                0,
+                795,
+                0
+              ],
+              [
+                1,
+                0,
+                591
+              ]
+            ],
+            "macro_f1": 0.5189796101734391,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 102,
+          "train": {
+            "benign_far": 0.030285714285714287,
+            "classes": [
+              {
+                "correct": 3394,
+                "mean_natural_CE": 0.08572408349698593,
+                "mean_true_probability": 0.9546480382676902,
+                "recall": 0.9697142857142858,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -5.902976989746094,
+                  5.561211585998535,
+                  48.37662887573242
+                ]
+              },
+              {
+                "correct": 2382,
+                "mean_natural_CE": 0.014994427840531148,
+                "mean_true_probability": 0.9851196632727568,
+                "recall": 1.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  3.0386641025543213,
+                  4.273818016052246,
+                  4.363063812255859
+                ]
+              },
+              {
+                "correct": 1773,
+                "mean_natural_CE": 0.07619702748677416,
+                "mean_true_probability": 0.9508941513361822,
+                "recall": 0.9983108108108109,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -22.799163818359375,
+                  3.3863043785095215,
+                  3.60097336769104
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3394,
+                41,
+                65
+              ],
+              [
+                0,
+                2382,
+                0
+              ],
+              [
+                3,
+                0,
+                1773
+              ]
+            ],
+            "macro_f1": 0.9856158440816353,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        },
+        {
+          "development": {
+            "benign_far": 0.027405879032929615,
+            "classes": [
+              {
+                "correct": 210234,
+                "mean_natural_CE": 0.07699602439205486,
+                "mean_true_probability": 0.9470556731000811,
+                "recall": 0.9725941209670704,
+                "source_code": 0,
+                "support": 216158,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -7.884675979614258,
+                  5.0439746379852295,
+                  37.40290451049805
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.5083399343790498,
+                "mean_true_probability": 0.22128170361308933,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 795,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.1016299724578857,
+                  -1.0669398307800293,
+                  -0.8804033994674683
+                ]
+              },
+              {
+                "correct": 592,
+                "mean_natural_CE": 0.2519643017267053,
+                "mean_true_probability": 0.7775675942366188,
+                "recall": 1.0,
+                "source_code": 12,
+                "support": 592,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  0.13629496097564697,
+                  1.6816362142562866,
+                  1.7335216999053955
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                210234,
+                0,
+                5924
+              ],
+              [
+                0,
+                0,
+                795
+              ],
+              [
+                0,
+                0,
+                592
+              ]
+            ],
+            "macro_f1": 0.3786410688487066,
+            "rows": 217545,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          },
+          "seed": 103,
+          "train": {
+            "benign_far": 0.027142857142857142,
+            "classes": [
+              {
+                "correct": 3405,
+                "mean_natural_CE": 0.0780592486146295,
+                "mean_true_probability": 0.9463992574896132,
+                "recall": 0.9728571428571429,
+                "source_code": 0,
+                "support": 3500,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.8966948986053467,
+                  5.032850742340088,
+                  35.833953857421875
+                ]
+              },
+              {
+                "correct": 0,
+                "mean_natural_CE": 1.508400192238722,
+                "mean_true_probability": 0.22126753125292828,
+                "recall": 0.0,
+                "source_code": 7,
+                "support": 2382,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -1.1017063856124878,
+                  -1.0669316053390503,
+                  -0.8804466724395752
+                ]
+              },
+              {
+                "correct": 1773,
+                "mean_natural_CE": 0.2779525620611133,
+                "mean_true_probability": 0.7759929044754176,
+                "recall": 0.9983108108108109,
+                "source_code": 12,
+                "support": 1776,
+                "true_minus_best_other_logit_quantiles_0_50_100": [
+                  -22.08001708984375,
+                  1.6812541484832764,
+                  1.783752679824829
+                ]
+              }
+            ],
+            "confusion": [
+              [
+                3405,
+                0,
+                95
+              ],
+              [
+                0,
+                0,
+                2382
+              ],
+              [
+                3,
+                0,
+                1773
+              ]
+            ],
+            "macro_f1": 0.5247545330973618,
+            "rows": 7658,
+            "source_codes_in_matrix_order": [
+              0,
+              7,
+              12
+            ]
+          }
+        }
+      ],
+      "rounds": 12
+    }
+  ],
+  "config_sha256": "fea87956c5790238ad14acb3388a20c174e42a220c8a933b2f5b6102511c644f",
+  "diagnostic_identity": "bb30b88ee22c45a240c4b5e0e256946b6fb0c899a8c2efd142c8c99fe0300a45",
+  "elapsed_seconds_including_readouts": 108.87533590000385,
+  "final_test_accessed": false,
+  "gpu_dispatchable": false,
+  "limits": [
+    "Development evidence was already visible when this plan was written.",
+    "Only FT E1 is exercised; no EI/DR/replay, E2 Hulk, later retention or corruption claim.",
+    "Longer schedules jointly change exposure/synchronization/Adam resets.",
+    "No adaptive extension, favorable seed selection, threshold change or final dispatch."
+  ],
+  "logical_E1_cells": 12,
+  "paired_development_seeds": [
+    101,
+    102,
+    103
+  ],
+  "parent_code_identity": "4b7561d38300b9f42dd6e9091ecc3509b5e1b2cabdddedb2b9cdd345baffa6a6",
+  "physical_E1_trajectories": 6,
+  "plan_sha256": "691bcfd3767211a42a4188934232743cb61674b7df65e0dc85024b4d716fcaee",
+  "runtime_identity": "d3ab493426f23bf25d7f0b051f1f21e6598c46e4ef0d0e615dcdc070c23d6bbd",
+  "status": "completed_exploratory_E1_diagnostic"
+}

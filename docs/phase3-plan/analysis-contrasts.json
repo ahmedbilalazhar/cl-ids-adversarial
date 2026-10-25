@@ -1,0 +1,338 @@
+{
+  "status": "planning_specification_not_executed",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    42
+  ],
+  "unit": "one_complete_paired_seed_trajectory",
+  "number_of_tests": 29,
+  "alpha": 0.05,
+  "alternative": "two_sided",
+  "multiplicity": "one_Holm_family_for_all_29",
+  "unavailable_endpoint": {
+    "raw_p": null,
+    "status": "unavailable_with_protocol_deviation",
+    "holm_bookkeeping_p": 1,
+    "metric_imputation": "none",
+    "note": "Bookkeeping p=1 is not a computed no-effect result."
+  },
+  "signed_rank": {
+    "drop_zero_differences": true,
+    "ties": "average_abs_difference_ranks",
+    "p_value": "enumerate_2^m_sign_assignments; two-sided absolute signed-rank sum; include observed-or-more-extreme assignments",
+    "all_zero_p": 1,
+    "all_zero_rank_biserial": 0,
+    "numerical_ordering": "Use integer count/rational endpoint arithmetic where possible; no post-hoc arbitrary rounding.",
+    "assumption": "Sign symmetry; do not claim distribution-free mean inference."
+  },
+  "bootstrap": {
+    "resamples": 10000,
+    "unit": "whole_paired_seed",
+    "level": 0.95,
+    "statistic": "mean_paired_difference",
+    "interval": "percentile_0.025_0.975",
+    "role": "descriptive_not_simultaneous"
+  },
+  "contrasts": [
+    {
+      "id": "C1_01",
+      "metric": "H",
+      "dose": 0.1,
+      "difference": "FT minus EI",
+      "left_arm": "FT",
+      "right_arm": "EI",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_02",
+      "metric": "H",
+      "dose": 0.1,
+      "difference": "FT minus DR",
+      "left_arm": "FT",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_03",
+      "metric": "H",
+      "dose": 0.1,
+      "difference": "EI minus DR",
+      "left_arm": "EI",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_04",
+      "metric": "H",
+      "dose": 0.3,
+      "difference": "FT minus EI",
+      "left_arm": "FT",
+      "right_arm": "EI",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_05",
+      "metric": "H",
+      "dose": 0.3,
+      "difference": "FT minus DR",
+      "left_arm": "FT",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_06",
+      "metric": "H",
+      "dose": 0.3,
+      "difference": "EI minus DR",
+      "left_arm": "EI",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_07",
+      "metric": "H",
+      "dose": 0.5,
+      "difference": "FT minus EI",
+      "left_arm": "FT",
+      "right_arm": "EI",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_08",
+      "metric": "H",
+      "dose": 0.5,
+      "difference": "FT minus DR",
+      "left_arm": "FT",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_09",
+      "metric": "H",
+      "dose": 0.5,
+      "difference": "EI minus DR",
+      "left_arm": "EI",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_10",
+      "metric": "source_recall_change_E2",
+      "dose": 0.1,
+      "difference": "FT minus EI",
+      "left_arm": "FT",
+      "right_arm": "EI",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_11",
+      "metric": "source_recall_change_E2",
+      "dose": 0.1,
+      "difference": "FT minus DR",
+      "left_arm": "FT",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_12",
+      "metric": "source_recall_change_E2",
+      "dose": 0.1,
+      "difference": "EI minus DR",
+      "left_arm": "EI",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_13",
+      "metric": "source_recall_change_E2",
+      "dose": 0.3,
+      "difference": "FT minus EI",
+      "left_arm": "FT",
+      "right_arm": "EI",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_14",
+      "metric": "source_recall_change_E2",
+      "dose": 0.3,
+      "difference": "FT minus DR",
+      "left_arm": "FT",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_15",
+      "metric": "source_recall_change_E2",
+      "dose": 0.3,
+      "difference": "EI minus DR",
+      "left_arm": "EI",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_16",
+      "metric": "source_recall_change_E2",
+      "dose": 0.5,
+      "difference": "FT minus EI",
+      "left_arm": "FT",
+      "right_arm": "EI",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_17",
+      "metric": "source_recall_change_E2",
+      "dose": 0.5,
+      "difference": "FT minus DR",
+      "left_arm": "FT",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C1_18",
+      "metric": "source_recall_change_E2",
+      "dose": 0.5,
+      "difference": "EI minus DR",
+      "left_arm": "EI",
+      "right_arm": "DR",
+      "question": "poisoning_susceptibility",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_A_p000",
+      "metric": "acquisition_A",
+      "dose": 0,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "legitimate_acquisition",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_A_p010",
+      "metric": "acquisition_A",
+      "dose": 0.1,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "legitimate_acquisition",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_A_p030",
+      "metric": "acquisition_A",
+      "dose": 0.3,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "legitimate_acquisition",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_A_p050",
+      "metric": "acquisition_A",
+      "dose": 0.5,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "legitimate_acquisition",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_H_p010",
+      "metric": "H",
+      "dose": 0.1,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "defence_security",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_H_p030",
+      "metric": "H",
+      "dose": 0.3,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "defence_security",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_H_p050",
+      "metric": "H",
+      "dose": 0.5,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "defence_security",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_source_recall_change_E2_p010",
+      "metric": "source_recall_change_E2",
+      "dose": 0.1,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "defence_security",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_source_recall_change_E2_p030",
+      "metric": "source_recall_change_E2",
+      "dose": 0.3,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "defence_security",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_source_recall_change_E2_p050",
+      "metric": "source_recall_change_E2",
+      "dose": 0.5,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "defence_security",
+      "family": "all_29"
+    },
+    {
+      "id": "C2_FAR_clean",
+      "metric": "benign_FAR_E4",
+      "dose": 0,
+      "left_arm": "DC",
+      "right_arm": "DM",
+      "difference": "DC minus DM",
+      "question": "clean_false_alarms",
+      "family": "all_29"
+    }
+  ]
+}

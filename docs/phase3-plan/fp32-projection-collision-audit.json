@@ -1,0 +1,583 @@
+{
+  "status": "source_projection_collision_audit_no_model_results",
+  "completed_utc": "2026-10-24T04:42:28.150527+00:00",
+  "candidates": [
+    {
+      "release_candidate": "original",
+      "finite_raw_and_final_rows": 2827876,
+      "distinct_final_fp32_inputs": 2199080,
+      "final_groups_merging_distinct_raw_inputs": 34157,
+      "rows_in_these_merged_groups": 223111,
+      "distinct_raw_inputs_lost_to_projection": 34219,
+      "feature_group_variations": [
+        {
+          "feature": "Flow Duration",
+          "merged_groups_with_raw_difference": 110
+        },
+        {
+          "feature": "Fwd Packet Length Mean",
+          "merged_groups_with_raw_difference": 557
+        },
+        {
+          "feature": "Fwd Packet Length Std",
+          "merged_groups_with_raw_difference": 1600
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "merged_groups_with_raw_difference": 2
+        },
+        {
+          "feature": "Bwd Packet Length Std",
+          "merged_groups_with_raw_difference": 96
+        },
+        {
+          "feature": "Flow Bytes/s",
+          "merged_groups_with_raw_difference": 24523
+        },
+        {
+          "feature": "Flow Packets/s",
+          "merged_groups_with_raw_difference": 32422
+        },
+        {
+          "feature": "Flow IAT Mean",
+          "merged_groups_with_raw_difference": 10614
+        },
+        {
+          "feature": "Flow IAT Std",
+          "merged_groups_with_raw_difference": 17402
+        },
+        {
+          "feature": "Flow IAT Max",
+          "merged_groups_with_raw_difference": 20
+        },
+        {
+          "feature": "Flow IAT Min",
+          "merged_groups_with_raw_difference": 20
+        },
+        {
+          "feature": "Fwd IAT Total",
+          "merged_groups_with_raw_difference": 20
+        },
+        {
+          "feature": "Fwd IAT Mean",
+          "merged_groups_with_raw_difference": 146
+        },
+        {
+          "feature": "Fwd IAT Std",
+          "merged_groups_with_raw_difference": 754
+        },
+        {
+          "feature": "Fwd IAT Max",
+          "merged_groups_with_raw_difference": 20
+        },
+        {
+          "feature": "Fwd IAT Min",
+          "merged_groups_with_raw_difference": 20
+        },
+        {
+          "feature": "Bwd IAT Mean",
+          "merged_groups_with_raw_difference": 71
+        },
+        {
+          "feature": "Bwd IAT Std",
+          "merged_groups_with_raw_difference": 234
+        },
+        {
+          "feature": "Fwd Header Length",
+          "merged_groups_with_raw_difference": 78
+        },
+        {
+          "feature": "Bwd Header Length",
+          "merged_groups_with_raw_difference": 26
+        },
+        {
+          "feature": "Fwd Packets/s",
+          "merged_groups_with_raw_difference": 32773
+        },
+        {
+          "feature": "Bwd Packets/s",
+          "merged_groups_with_raw_difference": 27710
+        },
+        {
+          "feature": "Packet Length Mean",
+          "merged_groups_with_raw_difference": 2431
+        },
+        {
+          "feature": "Packet Length Std",
+          "merged_groups_with_raw_difference": 18096
+        },
+        {
+          "feature": "Packet Length Variance",
+          "merged_groups_with_raw_difference": 3094
+        },
+        {
+          "feature": "Average Packet Size",
+          "merged_groups_with_raw_difference": 695
+        },
+        {
+          "feature": "Avg Fwd Segment Size",
+          "merged_groups_with_raw_difference": 557
+        },
+        {
+          "feature": "Avg Bwd Segment Size",
+          "merged_groups_with_raw_difference": 2
+        },
+        {
+          "feature": "min_seg_size_forward",
+          "merged_groups_with_raw_difference": 2
+        },
+        {
+          "feature": "Idle Mean",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Idle Max",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Idle Min",
+          "merged_groups_with_raw_difference": 1
+        }
+      ],
+      "observed_pair_examples": [
+        {
+          "row_ids": [
+            "194227",
+            "12884986877"
+          ],
+          "reference_label_codes": [
+            0,
+            0
+          ],
+          "differences": [
+            {
+              "feature": "Flow Bytes/s",
+              "raw_values": [
+                116504.8544,
+                116504.85436893204
+              ],
+              "same_final_fp32_value": 5.625536141451448e-05
+            },
+            {
+              "feature": "Flow Packets/s",
+              "raw_values": [
+                19417.47573,
+                19417.47572815534
+              ],
+              "same_final_fp32_value": 0.006472486536949873
+            },
+            {
+              "feature": "Fwd Packets/s",
+              "raw_values": [
+                19417.47573,
+                19417.47572815534
+              ],
+              "same_final_fp32_value": 0.006472486536949873
+            }
+          ]
+        },
+        {
+          "row_ids": [
+            "12885048730",
+            "25769881640"
+          ],
+          "reference_label_codes": [
+            0,
+            0
+          ],
+          "differences": [
+            {
+              "feature": "Flow Packets/s",
+              "raw_values": [
+                10204.081632653062,
+                10204.08163
+              ],
+              "same_final_fp32_value": 0.0034013548865914345
+            },
+            {
+              "feature": "Fwd Packets/s",
+              "raw_values": [
+                10204.081632653062,
+                10204.08163
+              ],
+              "same_final_fp32_value": 0.003401355119422078
+            }
+          ]
+        },
+        {
+          "row_ids": [
+            "12885269519",
+            "30065202249"
+          ],
+          "reference_label_codes": [
+            0,
+            0
+          ],
+          "differences": [
+            {
+              "feature": "Flow Bytes/s",
+              "raw_values": [
+                1577777.7777777778,
+                1577777.778
+              ],
+              "same_final_fp32_value": 0.0007618434610776603
+            },
+            {
+              "feature": "Flow Packets/s",
+              "raw_values": [
+                22222.222222222223,
+                22222.22222
+              ],
+              "same_final_fp32_value": 0.007407401688396931
+            },
+            {
+              "feature": "Flow IAT Std",
+              "raw_values": [
+                98.726896031426,
+                98.72689603
+              ],
+              "same_final_fp32_value": 1.1642287063295953e-06
+            },
+            {
+              "feature": "Fwd Packets/s",
+              "raw_values": [
+                11111.111111111111,
+                11111.11111
+              ],
+              "same_final_fp32_value": 0.003703698283061385
+            },
+            {
+              "feature": "Bwd Packets/s",
+              "raw_values": [
+                11111.111111111111,
+                11111.11111
+              ],
+              "same_final_fp32_value": 0.0055555556900799274
+            },
+            {
+              "feature": "Packet Length Std",
+              "raw_values": [
+                30.672463220289305,
+                30.67246322
+              ],
+              "same_final_fp32_value": 0.006948043126612902
+            }
+          ]
+        },
+        {
+          "row_ids": [
+            "4294976025",
+            "12885292989"
+          ],
+          "reference_label_codes": [
+            0,
+            0
+          ],
+          "differences": [
+            {
+              "feature": "Flow Bytes/s",
+              "raw_values": [
+                1255319.149,
+                1255319.1489361704
+              ],
+              "same_final_fp32_value": 0.0006061415770091116
+            },
+            {
+              "feature": "Flow Packets/s",
+              "raw_values": [
+                21276.59574,
+                21276.595744680853
+              ],
+              "same_final_fp32_value": 0.0070921932347118855
+            },
+            {
+              "feature": "Flow IAT Mean",
+              "raw_values": [
+                62.66666667,
+                62.66666666666667
+              ],
+              "same_final_fp32_value": 5.191448622099415e-07
+            },
+            {
+              "feature": "Flow IAT Std",
+              "raw_values": [
+                103.3456982,
+                103.345698184943
+              ],
+              "same_final_fp32_value": 1.218695501847833e-06
+            },
+            {
+              "feature": "Fwd Packets/s",
+              "raw_values": [
+                10638.29787,
+                10638.297872340429
+              ],
+              "same_final_fp32_value": 0.003546093823388219
+            },
+            {
+              "feature": "Bwd Packets/s",
+              "raw_values": [
+                10638.29787,
+                10638.297872340429
+              ],
+              "same_final_fp32_value": 0.005319148767739534
+            },
+            {
+              "feature": "Packet Length Std",
+              "raw_values": [
+                26.29068276,
+                26.29068276024797
+              ],
+              "same_final_fp32_value": 0.005955465603619814
+            }
+          ]
+        }
+      ],
+      "negative_minimum_resolution_diagnostics": [
+        {
+          "feature": "Flow IAT Min",
+          "T0_minimum": -14.0,
+          "T0_maximum": 119748208.0,
+          "transformed_zero_fp32": 1.169119627775217e-07,
+          "local_one_ULP_in_raw_units_near_zero": 8.508622926228782e-07
+        },
+        {
+          "feature": "Fwd Header Length",
+          "T0_minimum": -1929349973.0,
+          "T0_maximum": 4644908.0,
+          "transformed_zero_fp32": 0.9975982904434204,
+          "local_one_ULP_in_raw_units_near_zero": 115.27507787942886
+        },
+        {
+          "feature": "Bwd Header Length",
+          "T0_minimum": -167770490.0,
+          "T0_maximum": 5838440.0,
+          "transformed_zero_fp32": 0.966370165348053,
+          "local_one_ULP_in_raw_units_near_zero": 10.347898602485657
+        },
+        {
+          "feature": "min_seg_size_forward",
+          "T0_minimum": -83885313.0,
+          "T0_maximum": 126.0,
+          "transformed_zero_fp32": 0.9999985098838806,
+          "local_one_ULP_in_raw_units_near_zero": 4.999961793422699
+        }
+      ]
+    },
+    {
+      "release_candidate": "corrected",
+      "finite_raw_and_final_rows": 2099971,
+      "distinct_final_fp32_inputs": 1713729,
+      "final_groups_merging_distinct_raw_inputs": 261,
+      "rows_in_these_merged_groups": 4341,
+      "distinct_raw_inputs_lost_to_projection": 368,
+      "feature_group_variations": [
+        {
+          "feature": "Flow Duration",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Flow Bytes/s",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Flow Packets/s",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Flow IAT Mean",
+          "merged_groups_with_raw_difference": 193
+        },
+        {
+          "feature": "Flow IAT Std",
+          "merged_groups_with_raw_difference": 164
+        },
+        {
+          "feature": "Fwd IAT Mean",
+          "merged_groups_with_raw_difference": 187
+        },
+        {
+          "feature": "Fwd IAT Std",
+          "merged_groups_with_raw_difference": 156
+        },
+        {
+          "feature": "Bwd IAT Total",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Bwd IAT Mean",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Bwd IAT Max",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Bwd IAT Min",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Fwd Packets/s",
+          "merged_groups_with_raw_difference": 1
+        },
+        {
+          "feature": "Bwd Packets/s",
+          "merged_groups_with_raw_difference": 1
+        }
+      ],
+      "observed_pair_examples": [
+        {
+          "row_ids": [
+            "8589938637",
+            "17180069930"
+          ],
+          "reference_label_codes": [
+            0,
+            0
+          ],
+          "differences": [
+            {
+              "feature": "Flow IAT Mean",
+              "raw_values": [
+                1.75,
+                1.7500000000000002
+              ],
+              "same_final_fp32_value": 1.153846618251464e-08
+            },
+            {
+              "feature": "Flow IAT Std",
+              "raw_values": [
+                1.1381803659589922,
+                1.1381803659589924
+              ],
+              "same_final_fp32_value": 1.3421896483123419e-08
+            },
+            {
+              "feature": "Fwd IAT Mean",
+              "raw_values": [
+                1.75,
+                1.7500000000000002
+              ],
+              "same_final_fp32_value": 1.4584911056658711e-08
+            },
+            {
+              "feature": "Fwd IAT Std",
+              "raw_values": [
+                1.1381803659589922,
+                1.1381803659589924
+              ],
+              "same_final_fp32_value": 1.3745992788471995e-08
+            }
+          ]
+        },
+        {
+          "row_ids": [
+            "8590006036",
+            "12884950378"
+          ],
+          "reference_label_codes": [
+            0,
+            0
+          ],
+          "differences": [
+            {
+              "feature": "Flow IAT Std",
+              "raw_values": [
+                13.73421959482183,
+                13.734219594821829
+              ],
+              "same_final_fp32_value": 1.6195963326026686e-07
+            },
+            {
+              "feature": "Fwd IAT Std",
+              "raw_values": [
+                13.73421959482183,
+                13.734219594821829
+              ],
+              "same_final_fp32_value": 1.6587044626703573e-07
+            }
+          ]
+        },
+        {
+          "row_ids": [
+            "1161",
+            "8590002552"
+          ],
+          "reference_label_codes": [
+            0,
+            0
+          ],
+          "differences": [
+            {
+              "feature": "Flow IAT Std",
+              "raw_values": [
+                2.1794494717703365,
+                2.179449471770337
+              ],
+              "same_final_fp32_value": 2.5700975569975526e-08
+            },
+            {
+              "feature": "Fwd IAT Std",
+              "raw_values": [
+                2.1794494717703365,
+                2.179449471770337
+              ],
+              "same_final_fp32_value": 2.6321572477172595e-08
+            }
+          ]
+        },
+        {
+          "row_ids": [
+            "148025",
+            "4295063045"
+          ],
+          "reference_label_codes": [
+            0,
+            0
+          ],
+          "differences": [
+            {
+              "feature": "Flow IAT Mean",
+              "raw_values": [
+                1.4166666666666667,
+                1.4166666666666663
+              ],
+              "same_final_fp32_value": 6.410258990285911e-09
+            },
+            {
+              "feature": "Fwd IAT Mean",
+              "raw_values": [
+                1.4166666666666667,
+                1.4166666666666663
+              ],
+              "same_final_fp32_value": 1.1806832844740711e-08
+            }
+          ]
+        }
+      ],
+      "negative_minimum_resolution_diagnostics": [
+        {
+          "feature": "Fwd Header Length",
+          "T0_minimum": -32496.0,
+          "T0_maximum": 32652.0,
+          "transformed_zero_fp32": 0.49880272150039673,
+          "local_one_ULP_in_raw_units_near_zero": 0.0019415616989135742
+        },
+        {
+          "feature": "Bwd Header Length",
+          "T0_minimum": -32764.0,
+          "T0_maximum": 32632.0,
+          "transformed_zero_fp32": 0.5010092258453369,
+          "local_one_ULP_in_raw_units_near_zero": 0.0038979053497314453
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 95.562,
+  "models_fitted": 0,
+  "limits": [
+    "Collision is feature-representation equality, not proof of source-event identity",
+    "Local ULP describes numerical resolution near raw zero, not all values or learned accuracy",
+    "No alternate scaler, clipping, curation or model variant was selected"
+  ]
+}

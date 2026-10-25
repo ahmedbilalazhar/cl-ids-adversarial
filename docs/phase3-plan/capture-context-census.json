@@ -1,0 +1,228 @@
+{
+  "status": "conditional_capture_context_census_not_host_disjoint_evaluation",
+  "completed_utc": "2026-10-24T05:13:17.139175+00:00",
+  "parent_split": "corrected-domain-checked-candidate-split-feasibility.json",
+  "rows": 1362039,
+  "models_fitted": 0,
+  "endpoint_pair_key": "lexically unordered source/destination IP pair plus protocol; no port; not a victim or campaign ID",
+  "role_pair_counts": {
+    "train": 44363,
+    "development": 26457,
+    "test": 26248
+  },
+  "role_host_counts": {
+    "train": 15461,
+    "development": 11363,
+    "test": 11309
+  },
+  "cross_role_pair_intersections": {
+    "train_development": 21735,
+    "train_test": 21653,
+    "development_test": 15279
+  },
+  "cross_role_host_intersections": {
+    "train_development": 10457,
+    "train_test": 10444,
+    "development_test": 8634
+  },
+  "families": [
+    {
+      "family": "Benign",
+      "surviving_rows": 1080307,
+      "distinct_endpoint_pair_protocols": 52276,
+      "largest_pair_rows": 212351,
+      "largest_pair_fraction": 0.19656542075539638,
+      "role_pair_counts": {
+        "train": 44346,
+        "development": 26441,
+        "test": 26236
+      }
+    },
+    {
+      "family": "Bot",
+      "surviving_rows": 736,
+      "distinct_endpoint_pair_protocols": 5,
+      "largest_pair_rows": 220,
+      "largest_pair_fraction": 0.29891304347826086,
+      "role_pair_counts": {
+        "train": 5,
+        "development": 5,
+        "test": 5
+      }
+    },
+    {
+      "family": "DDoS",
+      "surviving_rows": 95144,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 95144,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "DoS GoldenEye",
+      "surviving_rows": 7567,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 7567,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "DoS Hulk",
+      "surviving_rows": 158468,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 158468,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "DoS Slowhttptest",
+      "surviving_rows": 1729,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 1729,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "DoS Slowloris",
+      "surviving_rows": 3453,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 3453,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "FTP-Patator",
+      "surviving_rows": 3972,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 3972,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "Heartbleed",
+      "surviving_rows": 8,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 8,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 0,
+        "development": 0,
+        "test": 1
+      }
+    },
+    {
+      "family": "Infiltration",
+      "surviving_rows": 31,
+      "distinct_endpoint_pair_protocols": 2,
+      "largest_pair_rows": 28,
+      "largest_pair_fraction": 0.9032258064516129,
+      "role_pair_counts": {
+        "train": 2,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "Infiltration - Portscan",
+      "surviving_rows": 5987,
+      "distinct_endpoint_pair_protocols": 26,
+      "largest_pair_rows": 1803,
+      "largest_pair_fraction": 0.30115249707700015,
+      "role_pair_counts": {
+        "train": 25,
+        "development": 24,
+        "test": 22
+      }
+    },
+    {
+      "family": "PortScan",
+      "surviving_rows": 1572,
+      "distinct_endpoint_pair_protocols": 4,
+      "largest_pair_rows": 1545,
+      "largest_pair_fraction": 0.982824427480916,
+      "role_pair_counts": {
+        "train": 4,
+        "development": 2,
+        "test": 1
+      }
+    },
+    {
+      "family": "SSH-Patator",
+      "surviving_rows": 2961,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 2961,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "Web Attack Brute Force",
+      "surviving_rows": 73,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 73,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "Web Attack Sql Injection",
+      "surviving_rows": 13,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 13,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    },
+    {
+      "family": "Web Attack XSS",
+      "surviving_rows": 18,
+      "distinct_endpoint_pair_protocols": 1,
+      "largest_pair_rows": 18,
+      "largest_pair_fraction": 1.0,
+      "role_pair_counts": {
+        "train": 1,
+        "development": 1,
+        "test": 1
+      }
+    }
+  ],
+  "elapsed_seconds": 22.046,
+  "limits": [
+    "Endpoint concentration does not identify independent campaigns or causal spurious features",
+    "Lexical ordering is only a deterministic undirected key, not numeric IP topology",
+    "No model outcomes or final profile selection"
+  ]
+}

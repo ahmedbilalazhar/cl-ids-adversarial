@@ -1,0 +1,68 @@
+{
+  "status": "conditional_annotation_provenance_census_no_predictions",
+  "completed_utc": "2026-10-24T08:44:59.306029+00:00",
+  "profile": "corrected-no-headers-74",
+  "role_census": [
+    {
+      "role": "training_inventory_before_benign_selection",
+      "benign_total": 648471,
+      "original_background": 642568,
+      "remapped_attempted": 5903
+    },
+    {
+      "role": "development_inventory",
+      "benign_total": 216158,
+      "original_background": 214589,
+      "remapped_attempted": 1569
+    },
+    {
+      "role": "test_inventory",
+      "benign_total": 216158,
+      "original_background": 214553,
+      "remapped_attempted": 1605
+    }
+  ],
+  "selected_training_benign": [
+    {
+      "source_file": "friday.csv",
+      "selected_benign": 3500,
+      "original_background": 3498,
+      "remapped_attempted": 2
+    },
+    {
+      "source_file": "thursday.csv",
+      "selected_benign": 3500,
+      "original_background": 3474,
+      "remapped_attempted": 26
+    },
+    {
+      "source_file": "tuesday.csv",
+      "selected_benign": 3500,
+      "original_background": 3500,
+      "remapped_attempted": 0
+    },
+    {
+      "source_file": "wednesday.csv",
+      "selected_benign": 3500,
+      "original_background": 3425,
+      "remapped_attempted": 75
+    }
+  ],
+  "raw_category_values": [
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "raw_attempted_marker_category_disagreements": 0,
+  "models_fitted": 0,
+  "limits": [
+    "Original background remains a reference annotation, not certified benign ground truth",
+    "Remapped attempted traffic need not match an operational false-alert definition",
+    "No outcome-driven subgroup or threshold selection"
+  ]
+}

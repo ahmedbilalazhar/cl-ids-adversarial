@@ -1,0 +1,305 @@
+{
+  "status": "conditional_candidate_split_census_not_final_protocol_lock",
+  "audit_version": 2,
+  "completed_utc": "2026-10-24T05:11:44.378756+00:00",
+  "parent_evidence": "corrected-domain-checked-component-feasibility.json",
+  "release_candidate": "corrected-domain-checked",
+  "allocator": "StratifiedGroupKFold",
+  "n_splits": 5,
+  "shuffle": true,
+  "random_state": 2026,
+  "role_fold_mapping": {
+    "train": [
+      2,
+      3,
+      4
+    ],
+    "development": [
+      1
+    ],
+    "test": [
+      0
+    ]
+  },
+  "scikit_learn_version": "1.9.1",
+  "allocator_source_sha256": "43f66b54b789d72d3f455968fcd87f5b8634a9f3e42f4613e1d3912bdb9d9772",
+  "component_id_rule": "Minimum immutable provenance row ID of the entire connected component, including excluded members; not the union-find implementation root.",
+  "rows": 1362039,
+  "components": 1130077,
+  "cross_role_component_intersections": {
+    "train_development": 0,
+    "train_test": 0,
+    "development_test": 0
+  },
+  "role_counts": {
+    "train": 817226,
+    "development": 272407,
+    "test": 272406
+  },
+  "families": [
+    {
+      "train": {
+        "rows": 648187,
+        "components": 616309
+      },
+      "development": {
+        "rows": 216060,
+        "components": 205502
+      },
+      "test": {
+        "rows": 216060,
+        "components": 205464
+      },
+      "family": "Benign",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 441,
+        "components": 441
+      },
+      "development": {
+        "rows": 148,
+        "components": 148
+      },
+      "test": {
+        "rows": 147,
+        "components": 147
+      },
+      "family": "Bot",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 57086,
+        "components": 37907
+      },
+      "development": {
+        "rows": 19029,
+        "components": 12636
+      },
+      "test": {
+        "rows": 19029,
+        "components": 12635
+      },
+      "family": "DDoS",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 4539,
+        "components": 4539
+      },
+      "development": {
+        "rows": 1514,
+        "components": 1514
+      },
+      "test": {
+        "rows": 1514,
+        "components": 1514
+      },
+      "family": "DoS GoldenEye",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 95086,
+        "components": 8563
+      },
+      "development": {
+        "rows": 31695,
+        "components": 2858
+      },
+      "test": {
+        "rows": 31687,
+        "components": 2849
+      },
+      "family": "DoS Hulk",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 1037,
+        "components": 837
+      },
+      "development": {
+        "rows": 346,
+        "components": 279
+      },
+      "test": {
+        "rows": 346,
+        "components": 279
+      },
+      "family": "DoS Slowhttptest",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 2071,
+        "components": 1382
+      },
+      "development": {
+        "rows": 691,
+        "components": 462
+      },
+      "test": {
+        "rows": 691,
+        "components": 460
+      },
+      "family": "DoS Slowloris",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 2382,
+        "components": 2382
+      },
+      "development": {
+        "rows": 795,
+        "components": 795
+      },
+      "test": {
+        "rows": 795,
+        "components": 795
+      },
+      "family": "FTP-Patator",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 0,
+        "components": 0
+      },
+      "development": {
+        "rows": 0,
+        "components": 0
+      },
+      "test": {
+        "rows": 8,
+        "components": 1
+      },
+      "family": "Heartbleed",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 24,
+        "components": 3
+      },
+      "development": {
+        "rows": 3,
+        "components": 3
+      },
+      "test": {
+        "rows": 4,
+        "components": 1
+      },
+      "family": "Infiltration",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 3592,
+        "components": 3529
+      },
+      "development": {
+        "rows": 1198,
+        "components": 1178
+      },
+      "test": {
+        "rows": 1197,
+        "components": 1175
+      },
+      "family": "Infiltration - Portscan",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 944,
+        "components": 922
+      },
+      "development": {
+        "rows": 314,
+        "components": 220
+      },
+      "test": {
+        "rows": 314,
+        "components": 313
+      },
+      "family": "PortScan",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 1777,
+        "components": 1777
+      },
+      "development": {
+        "rows": 592,
+        "components": 592
+      },
+      "test": {
+        "rows": 592,
+        "components": 592
+      },
+      "family": "SSH-Patator",
+      "eligible_50_rows_5_components_each": true
+    },
+    {
+      "train": {
+        "rows": 43,
+        "components": 43
+      },
+      "development": {
+        "rows": 15,
+        "components": 15
+      },
+      "test": {
+        "rows": 15,
+        "components": 15
+      },
+      "family": "Web Attack Brute Force",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 7,
+        "components": 7
+      },
+      "development": {
+        "rows": 3,
+        "components": 3
+      },
+      "test": {
+        "rows": 3,
+        "components": 3
+      },
+      "family": "Web Attack Sql Injection",
+      "eligible_50_rows_5_components_each": false
+    },
+    {
+      "train": {
+        "rows": 10,
+        "components": 10
+      },
+      "development": {
+        "rows": 4,
+        "components": 4
+      },
+      "test": {
+        "rows": 4,
+        "components": 4
+      },
+      "family": "Web Attack XSS",
+      "eligible_50_rows_5_components_each": false
+    }
+  ],
+  "elapsed_seconds": 973.969,
+  "models_fitted": 0,
+  "limits": [
+    "Release, clock and conservative graph choices remain conditional",
+    "Support audit is on this exact candidate, not the legacy tasksets",
+    "No model outcome or final performance has been inspected",
+    "Benign training selection and ownership are subsequent data gates"
+  ]
+}

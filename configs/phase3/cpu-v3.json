@@ -1,0 +1,21 @@
+{
+  "schema": "phase3-cpu-development-v3",
+  "date": "2026-10-24",
+  "parent_code_identity": "4b7561d38300b9f42dd6e9091ecc3509b5e1b2cabdddedb2b9cdd345baffa6a6",
+  "data_protocol_sha256": "a8fc9dc310716d104a1df24f4eef24885af46481d8c6d6c25c6d2a302388127a",
+  "taxonomy_sha256": "410b7e3b5709cc58c637496c08fc20200de20911b68a044edd4d420731394561",
+  "decisions": "docs/phase3-cpu-v3/decisions-2026-10-24.md",
+  "runtime": {"python": "3.12.14", "torch": "2.7.0+cpu", "numpy": "2.3.5", "device": "cpu", "threads": 1, "amp": false},
+  "development_seeds": [101, 102, 103],
+  "pilot_budgets_rounds_epochs": [[3,4], [12,1]],
+  "compatibility_budgets_rounds_epochs": [[1,3], [3,1]],
+  "final_seeds_sealed": [1,2,3,4,5,6,7,8,9,10,11,42],
+  "final_contrast_family_size": 29,
+  "dispatchable_gpu_grid": false,
+  "final_test_evaluation_authorized": false,
+  "training_batch_size": 128,
+  "numerical_engine": "immutable src/phase3_v2; original natural objectives and checkpoint wire schema",
+  "input_packages": "exact existing phase3-cpu-v2 supplied-label manifests; no data reconstruction",
+  "study_revision_in_execution": "cpu-v3",
+  "development_resume": "verify frozen procedure, identities and immutable row artifact hashes; re-use valid completed rows without zeroing their logical costs"
+}

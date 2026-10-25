@@ -1,0 +1,222 @@
+{
+  "adoption_record": "../phase3-reference/adoption.json",
+  "data": {
+    "T0": "All Monday-only source-valid supplied-benign calibration IDs; no cross-day annotation/conflict selection, no later refit; linked exclusion closure remains separate.",
+    "benign_selection": {
+      "allocator": "Start B=0; canonical component order then seed-2027 permutation; one pass, select entire benign bundle only for strict integer reduction in sum_t(B_t-3500)^2.",
+      "note": "Prospective clarification/amendment: strict all-row retention forces 17,960 E4 benign records on the original candidate; do not weaken split/ownership boundaries or move excluded records.",
+      "seed": 2027,
+      "target_per_stage": 3500,
+      "unit": "All benign members of a train component form one indivisible cross-stage bundle; prescribed attack records retained independently; excluded members stay reserved to train."
+    },
+    "benign_test_cohorts": {
+      "allocator": "largest component first to smallest current row-count cohort; deterministic seeded ties; all nonempty",
+      "count": 4,
+      "seed": 2028,
+      "unit": "whole component"
+    },
+    "corrected_release_if_adopted": {
+      "annotation_columns_are_features": false,
+      "attempted_label_rule": "Attempted Category != -1 maps to benign before annotation/conflict audit; no separate Attempted class",
+      "extra_E3_label": "Infiltration - Portscan",
+      "maximum_outputs": 16,
+      "requires_independent_schema_label_support_audit": true,
+      "selected": true,
+      "unsupported_web_families": "Registered if training support exists; descriptive only unless fixed support floors pass; never count attempted traffic as confirmed merely to rescue support."
+    },
+    "ownership_reference": {
+      "adopted_for_final_execution": false,
+      "adopted_for_reference": true,
+      "algorithm": "normalised_squared_error_component_greedy_v1",
+      "five_clients": true,
+      "specification": "protocol-closure-spec.md section 1",
+      "unit": "whole retained training component"
+    },
+    "preferred_prospective_profile": "corrected_no_headers_74",
+    "profile_selected": true,
+    "prospective_domain_policy": "Adopted nonnegative_flow_features_with_window_sentinel_v1 for corrected_no_headers_74",
+    "quarantine_scope": "Conflicting inputs are excluded from learning/evaluation; predeclared Monday-only calibration fitting IDs remain fixed and their ambiguous-input count is reported.",
+    "schema_amendment": "A31 adopted: omit two header totals; 74 ordered inputs; reference-only CPU runtime and untuned settings are separately pinned",
+    "selected_profile": "corrected_no_headers_74",
+    "split": {
+      "algorithm": "StratifiedGroupKFold",
+      "development_folds": [
+        1
+      ],
+      "n_splits": 5,
+      "note": "Adopted with the canonical-ID split/reuse evidence; original feasibility reports retain their historical status.",
+      "random_state": 2026,
+      "required_library_behavior": "Contains scikit-learn 1.8 shuffle-stratification fix #32540; exact adopted version/source must be pinned.",
+      "shuffle": true,
+      "test_folds": [
+        0
+      ],
+      "training_folds": [
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "development": {
+    "candidate_validity": "all required development seeds valid",
+    "diagnostic_order": "run poisoned FT diagnostic after clean feasibility",
+    "note": "This selection-order clarification must be recorded before development.",
+    "recommended_selection": "predeclared clean acquisition feasibility constraints, then maximum equal-stage development macro-F1; comparable logical cost then fixed numeric configuration order for ties"
+  },
+  "dispatchable": false,
+  "evaluation": {
+    "active_head": "all registered rows, including unscored trained rare classes",
+    "bootstrap_seed": 2029,
+    "missing_contrast": "raw p unavailable; Holm bookkeeping p=1; no metric imputation",
+    "quantile_convention": "NumPy linear percentile, pinned version",
+    "runtime": null,
+    "tie_rule": "benign slot 0; first maximum slot wins"
+  },
+  "fractions": {
+    "DG_nonempty": "max(1, ceil(3*n/4)); n=0 gives K=0",
+    "ablation_keep": [
+      [
+        1,
+        2
+      ],
+      [
+        9,
+        10
+      ]
+    ],
+    "doses": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        10
+      ],
+      [
+        3,
+        10
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "kept_count": "(numerator * count + denominator - 1) // denominator",
+    "poison_count": "(numerator * eligible_source_count) // denominator",
+    "primary_keep": [
+      3,
+      4
+    ]
+  },
+  "numerics": {
+    "amsgrad": false,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "current_batch_size": 128,
+    "early_stopping": false,
+    "eps": 1e-08,
+    "foreach": false,
+    "framework_and_device_versions": null,
+    "fused": false,
+    "initial_head": "Xavier uniform gain=1 on newly active block, zero bias; fan-out is new row count",
+    "model_dtype": "float32",
+    "optimizer": "Adam",
+    "replay_batch_size": "min(128, occupancy)",
+    "scheduler": null,
+    "server_accumulation": "FP32, fixed increasing logical client ID order",
+    "weight_decay": 0
+  },
+  "rng": {
+    "bit_generator": "numpy.random.PCG64",
+    "derivation": "SeedSequence of fixed versioned integer namespace and scope coordinates; pin NumPy version",
+    "example_ownership_key": [
+      1,
+      1,
+      "training_seed"
+    ],
+    "key_order": [
+      "namespace_version",
+      "namespace_id",
+      "training_seed",
+      "scope_coordinates_in_declared_order"
+    ],
+    "namespace_version": 1,
+    "namespaces": [
+      {
+        "id": 1,
+        "name": "ownership",
+        "scope": "training seed"
+      },
+      {
+        "id": 2,
+        "name": "attacker_site",
+        "scope": "training seed"
+      },
+      {
+        "id": 3,
+        "name": "source_order",
+        "scope": "training seed/client"
+      },
+      {
+        "id": 4,
+        "name": "initial_weights",
+        "scope": "training seed"
+      },
+      {
+        "id": 5,
+        "name": "head_rows",
+        "scope": "training seed/stage"
+      },
+      {
+        "id": 6,
+        "name": "current_order",
+        "scope": "training seed/client/stage/round/epoch"
+      },
+      {
+        "id": 7,
+        "name": "replay_draw",
+        "scope": "training seed/client; persistent"
+      },
+      {
+        "id": 8,
+        "name": "replay_insert",
+        "scope": "training seed/client; persistent"
+      },
+      {
+        "id": 9,
+        "name": "importance_sample",
+        "scope": "training seed/client/stage"
+      },
+      {
+        "id": 10,
+        "name": "dropout",
+        "scope": "training seed/client; persistent CPU/CUDA states"
+      },
+      {
+        "id": 11,
+        "name": "DQ_admission",
+        "scope": "training seed/client/stage"
+      },
+      {
+        "id": 12,
+        "name": "bootstrap",
+        "scope": "independent analysis seed 2029/contrast"
+      }
+    ],
+    "note": "Execution order, aliases and worker/account names do not enter scientific stream identity."
+  },
+  "source": "revised Phase 2 plus planning clarifications; no outcomes used",
+  "status": "data_defaults_adopted_reference_v1_final_grid_not_dispatchable",
+  "unresolved_before_dispatch": [
+    "Final GPU package acceptance; data/taxonomy decision adopted in ../phase3-reference/adoption.json.",
+    "support and isolation gates",
+    "exact dependency/device signature",
+    "selected synchronization budget and learner settings",
+    "actual quotas and measured cost profiles",
+    "selected scope/amendment and instructor feedback if available"
+  ]
+}

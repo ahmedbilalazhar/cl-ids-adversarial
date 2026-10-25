@@ -1,0 +1,58 @@
+{
+  "code_identity": "38830e8b9e156c5c0db8285278de4666fca1c08b1d46e033f2009ef661e9e17c",
+  "source_files": {
+    "scripts/accept_phase3_v3.py": "821ee2625b8f8fc79e8bf9c39ab854a2eb5efd1e47035907d65b076b68da1d7c",
+    "scripts/accept_phase3_v3_poison.py": "f62cf4ece4d190d1a3a008448fe5a29bb66aa191eaf8459ba42aa512558e26c9",
+    "scripts/assemble_phase3_v3_recovery.py": "c97057fbaf9b0e283c86e6081c183fe82f9739f0bca9e459294e656072a806b5",
+    "scripts/finish_phase3_v3.py": "eeb2133e822d8d815a81458d4085cdc1fb83fdcb5413e44b31f018e41a6f7e36",
+    "scripts/keep_phase3_v3_awake.py": "35a6745dfd2584443a3b69c536d9ebc82426ec16b9490990497b6abd68f700da",
+    "scripts/match_phase3_v3_diagnostic.py": "12b17ef261c4980aa4f6712be0fe7fa141d94b7760fbcdb7b6e20d82ee518595",
+    "scripts/profile_phase3_v3.py": "c310ded75dcb5db1a7ada2b02ec65d56c3225a800121f61d83669e6f4c6d4922",
+    "scripts/recover_phase3_v3.py": "bceb6c18ddaf3d47c2abef041d7c55578ce4945f126fd6778a734f8e2b59105d",
+    "scripts/remeasure_phase3_v3.py": "7926a33415fe098af50d7c95a3e44439c7b101a5227a5bd15a2fa42b256c8a1d",
+    "scripts/report_phase3_v3.py": "a1fa25a11e8281c8ed51c6198f9fc61930861418a5cf5b015f21d6518b861ae1",
+    "scripts/verify_phase3_v3.py": "7395385c9879f9c786027c537a052b9d90273f197c4f07d4d8a63013e841df5b",
+    "scripts/verify_phase3_v3_controls.py": "149f34c954ddf4bcac5554f7db1a16990cf33da585f005d6744466fd02202912",
+    "tests/test_phase3_costs.py": "3383cf3272423e18e2b056d1858cfb0005be8b633a1990c7832f49a3d52375a0",
+    "tests/test_phase3_profile.py": "925c79e42a61fd8f69b42240dd559f33faaa2226aff3e1d83e41fef75ff0699a",
+    "tests/test_phase3_v3.py": "af89d45d84cea80ff21bbdc1ad5a00d545a90627912f65dc8cf8e972f3ecc00d",
+    "tests/test_phase3_v3_poison.py": "c8456a77759a81c0f7b16ac6a32ba8eb6fbfaae776c2ff46699675f9a6b3d3b6"
+  },
+  "steps": [
+    [
+      "poison-methods",
+      "scripts.accept_phase3_v3_poison",
+      "poison-acceptance.json"
+    ],
+    [
+      "timing",
+      "scripts.remeasure_phase3_v3",
+      "cost-correction/selection.json"
+    ],
+    [
+      "matched-diagnostic",
+      "scripts.match_phase3_v3_diagnostic",
+      "matched-diagnostic/index.json"
+    ],
+    [
+      "controls",
+      "scripts.verify_phase3_v3_controls",
+      "controls/acceptance.json"
+    ],
+    [
+      "recovery",
+      "scripts.recover_phase3_v3",
+      "recovery/acceptance.json"
+    ],
+    [
+      "profiles",
+      "scripts.profile_phase3_v3",
+      "profiling/jobs.json"
+    ],
+    [
+      "report",
+      "scripts.report_phase3_v3",
+      "completion.json"
+    ]
+  ]
+}

@@ -78,6 +78,9 @@ lightning_logs/
 /results/phase3-acquisition-diagnostic-v1/**/*.npz
 /results/phase3-cpu-v3/profiling/*/local-worker-output.zip
 /results/**/.*.lock
+# Retain small Phase 3 execution/acceptance logs, including failed attempts.
+!/results/phase3-*/**/*.log
+!/results/phase3-*/*.log
 # Private Kaggle qualification archive contains exact derived train/dev arrays.
 /results/kaggle-readiness-v1/bundle/*.zip
 /results/kaggle-readiness-v1/rejections/*.zip

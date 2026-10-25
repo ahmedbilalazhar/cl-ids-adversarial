@@ -1,0 +1,129 @@
+{
+  "CPU_worker_costs": [
+    {
+      "complete_process_seconds": 263.810207100003,
+      "learner": "FT",
+      "peak_MiB": 367.96875
+    },
+    {
+      "complete_process_seconds": 312.46737099999154,
+      "learner": "EI",
+      "peak_MiB": 375.16015625
+    },
+    {
+      "complete_process_seconds": 346.3757612000045,
+      "learner": "DR",
+      "peak_MiB": 373.7109375
+    }
+  ],
+  "README_sha256": "42cca489dd64ad4f501efb41b3c29b03197cd42fe60c26a5d606e3e1e347c466",
+  "audit_source_sha256": "85b74f9a66bb0775876928221d59440534e8bb3fe0168135a39b8a74ca194edf",
+  "code_identity": "38830e8b9e156c5c0db8285278de4666fca1c08b1d46e033f2009ef661e9e17c",
+  "controller_bound_files": 32,
+  "controller_steps_verified": 9,
+  "count_artifact_rejections": 8,
+  "elapsed_seconds": 60.70539099999587,
+  "final_test_accessed": false,
+  "gpu_dispatchable": false,
+  "original_files_reverified": 143,
+  "paired_FT_diagnostic_H": [
+    {
+      "H": 0.12464504322584716,
+      "seed": 101
+    },
+    {
+      "H": 1.5775856629014956e-05,
+      "seed": 102
+    },
+    {
+      "H": -0.00044172398561241876,
+      "seed": 103
+    }
+  ],
+  "physical_row_artifact_bytes_verified": 6891394713,
+  "physical_row_artifact_files_verified": 7200,
+  "report_sha256": "b05c08804c550533fb643929fc2aeeb17ca89a21557632f409e69e2033a01a18",
+  "scientific_files": 22,
+  "scope": "Independent current-source, receipt-payload, exact arithmetic and delivery binding audit; no training, inference or new research replicate",
+  "selected_conditions": {
+    "DR": {
+      "FTP_recalls_seeds_101_102_103": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "feasible_candidates": 6,
+      "score": 0.6675847851669713,
+      "settings": {
+        "admission": "NONE",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "lambda_E": 10.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "rounds": 12
+      }
+    },
+    "EI": {
+      "FTP_recalls_seeds_101_102_103": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "feasible_candidates": 3,
+      "score": 0.3483625593075478,
+      "settings": {
+        "admission": "NONE",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.5,
+        "learner": "EI",
+        "learning_rate": 0.001,
+        "rounds": 12
+      }
+    },
+    "FT": {
+      "FTP_recalls_seeds_101_102_103": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "feasible_candidates": 1,
+      "score": 0.3108262654500493,
+      "settings": {
+        "admission": "NONE",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "lambda_E": 10.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.5,
+        "learner": "FT",
+        "learning_rate": 0.001,
+        "rounds": 12
+      }
+    }
+  },
+  "source_bundle_files": 287,
+  "source_bundle_sha256": "d9ae7b516ba484ba1ff9d2c41abd1fdb8030d26079f23d3471c4d07f12bf269e",
+  "status": "passed",
+  "timing_winners_changed": false,
+  "valid_logical_development_rows": 81,
+  "verification_checks": {
+    "controls/acceptance.json": 1080,
+    "integration/acceptance.json": 559,
+    "recovery/acceptance.json": 104
+  }
+}

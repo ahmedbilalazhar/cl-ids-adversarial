@@ -104,12 +104,32 @@ release bundle; [docs/release_bundle_contents.md](docs/release_bundle_contents.m
 lists them. Figures and historical numeric prose must be regenerated from
 compatible validated runs before they can support a new claim.
 
+## Verified Phase 3 CPU development delivery
+
+The [executed CPU report](docs/phase3-cpu-v3/report.md) records 81 valid logical
+development rows: 78 clean rows (69 physical conditions and nine exact aliases)
+and three paired FT corruption diagnostics. The selected common schedule is
+12 rounds with one epoch per round. All three learners pass the declared mean
+acquisition gates; seed 103 still has zero FTP recall. Selected settings are
+LR 0.001 for all learners, EI lambda_E 100, and DR lambda_y 1 / lambda_z 0.1.
+
+The [completion record](results/phase3-cpu-v3/completion.json),
+[independent delivery audit](results/phase3-cpu-v3/independent-delivery-audit.json)
+and [source-only bundle acceptance](results/phase3-source-bundle-v1/CPU-delivery/acceptance.json)
+link the preserved source, checks, count audit, timing corrections, matched
+controls and exact recovery evidence. All nine delivery steps passed. Complete
+local CPU jobs took 263.81 s (FT), 312.47 s (EI) and 346.38 s (DR), with measured
+process peaks of 368.0–375.2 MiB. Dependency installation and network transfer
+costs are unmeasured. Weak and adverse diagnostic outcomes remain reported.
+These development results do not qualify the full poisoned/filter matrix,
+the twelve final seeds, final-test inference or a GPU release.
+
 ## Kaggle Phase 3 qualification candidate
 
 The separate [notebook workflow](docs/kaggle-phase3/README.md) prepares private,
 hash-verified development inputs, stage caching, a candidate FP32 CUDA backend,
 bounded round-checkpoint recovery, output integrity checks and whole-seed
-assignments for one to eight distinct contributors. The current CPU grid and its
+assignments for one to eight distinct contributors. The completed CPU grid and its
 frozen scientific source are preserved. Actual Kaggle runtime qualification,
 complete-worker measurements and selected-setting confirmations remain required;
 the twelve final seeds and final-test inference stay sealed.

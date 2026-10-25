@@ -1,0 +1,76 @@
+{
+  "rows": [
+    {
+      "code_under_src_phase3_v3_unless_qualified": "protocol.py; train.py; immutable ../phase3_v2/data.py",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "preservation.json; source-code-manifest.json; integration/acceptance.json",
+      "requirement": "Preserved data/source and distinct study identity",
+      "tests": "test_version_budget_scope_and_parent_unchanged"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "train.py -> immutable ../phase3_v2/train.py::Simulator",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "acceptance.json; integration/acceptance.json",
+      "requirement": "Exact old-budget numerical parity",
+      "tests": "test_exact_old_budget_parity_all_six_pipelines"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "protocol.py; immutable ../phase3_v2/learning.py/checkpoint.py",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "acceptance.json; recovery/acceptance.json",
+      "requirement": "Extended passes, inactive sites, first-pass insertion, EI commit and recovery",
+      "tests": "test_extended_updates_proposals_importance_and_exact_recovery_all_methods"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "immutable ../phase3_v2/prepare.py/learning.py",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "poison-acceptance.json; controls/acceptance.json; controls/*-exposure.json",
+      "requirement": "Poisoned extended-budget state and matched-volume interactions",
+      "tests": "tests/test_phase3_v3_poison.py"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "development.py",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "acceptance.json; development/receipts/*.json",
+      "requirement": "Writer lock, immutable receipts, alias costs and interruption attempts",
+      "tests": "test_single_live_orchestrator_lock; test_completed_receipts_resume_exact_alias_cost_and_corruption_rejected; test_interrupted_condition_retained_and_same_identity_retried; test_unreceipted_import_requires_physical_measured_cost"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "development.py; immutable ../phase3_v2/development.py",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "development/procedure-lock.json; development/tuning-selection.json; cost-correction/selection.json",
+      "requirement": "Exact declared grid, gates and selection",
+      "tests": "test_frozen_grid_numeric_ties_and_no_old_budget_selection"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "evaluate.py; immutable ../phase3_v2/evaluate.py::stage_counts",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "integration/acceptance.json; controls/*-evaluation/metrics.json; recovery/acceptance.json",
+      "requirement": "Independent development banks and full active heads",
+      "tests": "test_cross_revision_resume_and_v2_evaluation_rejected; parent33 count fixtures"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "../../scripts/remeasure_phase3_v3.py",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "cost-correction/acceptance.json; cost-correction/selection.json",
+      "requirement": "Prospective infrastructure timing disposition",
+      "tests": "tests/test_phase3_costs.py"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "../../scripts/profile_phase3_v3.py",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "profiling/acceptance.json; profiling/jobs.json; profiling/*/profile.json; profiling/*/communication.json",
+      "requirement": "Complete measured CPU jobs, memory, latency and logical serialization",
+      "tests": "tests/test_phase3_profile.py"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "../phase3_analysis/statistics.py",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "../phase3-analysis-v1/acceptance.json; ../phase3-analysis-v1/synthetic-family-example.json",
+      "requirement": "Fixed29 exact paired analysis with unavailable endpoints",
+      "tests": "tests/test_phase3_analysis.py"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "../../scripts/audit_phase3_endpoints.py",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "../phase3-endpoint-audit-v1/audit.json",
+      "requirement": "Independent count arithmetic and development endpoints",
+      "tests": "Eight corrupted-count rejection fixtures"
+    },
+    {
+      "code_under_src_phase3_v3_unless_qualified": "protocol.py; evaluate.py; configs/phase3/cpu-v3.json",
+      "evidence_under_results_phase3_cpu_v3_unless_qualified": "completion.json; failure-inventory.json",
+      "requirement": "Final/GPU seals and remaining qualification",
+      "tests": "test_version_budget_scope_and_parent_unchanged; test_cross_revision_resume_and_v2_evaluation_rejected"
+    }
+  ]
+}

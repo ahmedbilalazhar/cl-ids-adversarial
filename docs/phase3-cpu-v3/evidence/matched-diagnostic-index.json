@@ -1,0 +1,198 @@
+{
+  "additional_independent_replicates": 0,
+  "additional_physical_training_executions": 0,
+  "all_clean_learners_feasible": true,
+  "checks": [],
+  "code_identity": "38830e8b9e156c5c0db8285278de4666fca1c08b1d46e033f2009ef661e9e17c",
+  "completed_diagnostic_rows": 3,
+  "cost_changed_FT_selection": false,
+  "diagnostics": [
+    {
+      "partitions": [
+        {
+          "clean_to_benign": 4,
+          "difference": 9.465513977408973e-05,
+          "poisoned_to_benign": 7,
+          "stage": 2,
+          "support": 31694
+        },
+        {
+          "clean_to_benign": 15601,
+          "difference": 0.24929008645169431,
+          "poisoned_to_benign": 23502,
+          "stage": 3,
+          "support": 31694
+        },
+        {
+          "clean_to_benign": 0,
+          "difference": 0.0,
+          "poisoned_to_benign": 0,
+          "stage": 4,
+          "support": 31694
+        }
+      ],
+      "row_id": "diagnostic-FT-s101-p050",
+      "seed": 101,
+      "status": "valid"
+    },
+    {
+      "partitions": [
+        {
+          "clean_to_benign": 4,
+          "difference": 0.0,
+          "poisoned_to_benign": 4,
+          "stage": 2,
+          "support": 31694
+        },
+        {
+          "clean_to_benign": 4,
+          "difference": 3.155171325802991e-05,
+          "poisoned_to_benign": 5,
+          "stage": 3,
+          "support": 31694
+        },
+        {
+          "clean_to_benign": 0,
+          "difference": 0.0,
+          "poisoned_to_benign": 0,
+          "stage": 4,
+          "support": 31694
+        }
+      ],
+      "row_id": "diagnostic-FT-s102-p050",
+      "seed": 102,
+      "status": "valid"
+    },
+    {
+      "partitions": [
+        {
+          "clean_to_benign": 3,
+          "difference": 0.0,
+          "poisoned_to_benign": 3,
+          "stage": 2,
+          "support": 31694
+        },
+        {
+          "clean_to_benign": 31395,
+          "difference": -0.0008834479712248375,
+          "poisoned_to_benign": 31367,
+          "stage": 3,
+          "support": 31694
+        },
+        {
+          "clean_to_benign": 0,
+          "difference": 0.0,
+          "poisoned_to_benign": 0,
+          "stage": 4,
+          "support": 31694
+        }
+      ],
+      "row_id": "diagnostic-FT-s103-p050",
+      "seed": 103,
+      "status": "valid"
+    }
+  ],
+  "final_test_accessed": false,
+  "gpu_dispatchable": false,
+  "original_completion_sha256": "9806c153a9d72b76c55ccf72957904628af3c33410ea5e7d01153a44250145ed",
+  "rows": [
+    {
+      "alias_of": null,
+      "group": "diagnostic",
+      "logical_identity": "75b43b89a8249602334fd4ca57333c2ff5af6256c38fd9ba5eacfb3d62b334a7",
+      "logical_training_seconds": 107.94576989999041,
+      "metrics": "C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\results\\phase3-cpu-v3\\development\\executions\\diagnostic-FT-s101-p050\\attempt-001\\evaluation-001\\metrics.json",
+      "physical_attempts": 1,
+      "physical_execution": true,
+      "row_id": "diagnostic-FT-s101-p050",
+      "run": "C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\results\\phase3-cpu-v3\\development\\executions\\diagnostic-FT-s101-p050\\attempt-001\\train",
+      "score_exact": [
+        "6617671707281248080677417860668150858160951",
+        "19645664224087417683464333665137204346210560"
+      ],
+      "settings": {
+        "admission": "NONE",
+        "dose": [
+          1,
+          2
+        ],
+        "epochs": 1,
+        "lambda_E": 10.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.5,
+        "learner": "FT",
+        "learning_rate": 0.001,
+        "rounds": 12,
+        "seed": 101
+      },
+      "status": "valid"
+    },
+    {
+      "alias_of": null,
+      "group": "diagnostic",
+      "logical_identity": "82b5fb8171ece5ad09085e46b9b6fc898a6efafd93899ef15b3daa13bbdc5e58",
+      "logical_training_seconds": 107.92717330000596,
+      "metrics": "C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\results\\phase3-cpu-v3\\development\\executions\\diagnostic-FT-s102-p050\\attempt-001\\evaluation-001\\metrics.json",
+      "physical_attempts": 1,
+      "physical_execution": true,
+      "row_id": "diagnostic-FT-s102-p050",
+      "run": "C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\results\\phase3-cpu-v3\\development\\executions\\diagnostic-FT-s102-p050\\attempt-001\\train",
+      "score_exact": [
+        "363080015237540397758230183561746393487877938127459",
+        "1163111549646171237925138869186704460459068799229440"
+      ],
+      "settings": {
+        "admission": "NONE",
+        "dose": [
+          1,
+          2
+        ],
+        "epochs": 1,
+        "lambda_E": 10.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.5,
+        "learner": "FT",
+        "learning_rate": 0.001,
+        "rounds": 12,
+        "seed": 102
+      },
+      "status": "valid"
+    },
+    {
+      "alias_of": null,
+      "group": "diagnostic",
+      "logical_identity": "b83689260849826a914ba7cf92b78e15ca70b2976ad08383eed673780b06ab6b",
+      "logical_training_seconds": 139.41928329999791,
+      "metrics": "C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\results\\phase3-cpu-v3\\development\\executions\\diagnostic-FT-s103-p050\\attempt-001\\evaluation-001\\metrics.json",
+      "physical_attempts": 1,
+      "physical_execution": true,
+      "row_id": "diagnostic-FT-s103-p050",
+      "run": "C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\results\\phase3-cpu-v3\\development\\executions\\diagnostic-FT-s103-p050\\attempt-001\\train",
+      "score_exact": [
+        "14255744539522697676813586007601091235899795908235",
+        "53350728059275440505753925178382961515591546300704"
+      ],
+      "settings": {
+        "admission": "NONE",
+        "dose": [
+          1,
+          2
+        ],
+        "epochs": 1,
+        "lambda_E": 10.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.5,
+        "learner": "FT",
+        "learning_rate": 0.001,
+        "rounds": 12,
+        "seed": 103
+      },
+      "status": "valid"
+    }
+  ],
+  "schema": "phase3-selected-FT-diagnostic-index-v1",
+  "scope": "Same three paired development seeds; original condition diagnostics retained, never counted as extra independent seeds",
+  "selection_sha256": "8aeedcefc7b0b9ec28e516bf7b9a755a7c46c4f095fb5d042e806e6ced0a5771",
+  "source": "original_declared_diagnostics",
+  "status": "complete"
+}

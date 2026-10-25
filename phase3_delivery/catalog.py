@@ -23,6 +23,7 @@ from src.phase3_v2.checkpoint import strict_json
 from src.phase3_v3.protocol import DECISIONS, PROTOCOL
 
 from .import_counts import FINAL_SEEDS, import_counts
+from .io import read_verified_bytes
 
 
 def encoded(value):
@@ -47,6 +48,7 @@ def validate_manifest(value):
     require(type(value['rows']) is list and bool(value['rows']) and type(value['aliases']) is dict,
             'Registry requires physical rows and explicit aliases')
     protocol_sha, decisions_sha = digest(PROTOCOL), digest(DECISIONS)
+    parent_sha = read_json(PROTOCOL)['parent_code_identity']
     rows, conditions = {}, set()
     for row in value['rows']:
         require(type(row) is dict and set(row) == {'run_id', 'arm', 'settings', 'execution',
@@ -69,10 +71,12 @@ def validate_manifest(value):
         if execution.get('study_revision') == 'cpu-v3':
             expected = common | {'code_identity', 'parent_code_identity'}
             code = execution.get('code_identity')
+            require(execution.get('parent_code_identity') == parent_sha, 'CPU parent source identity differs')
         else:
             expected = common | {'frozen_code_identity', 'worker_source_identity', 'final_dispatchable'}
             code = execution.get('frozen_code_identity')
-            allowed = ('synthetic-count-fixture-v1',) if value['kind'] == 'synthetic' else ('kaggle-qualification-v4',)
+            allowed = ('synthetic-count-fixture-v1',) if value['kind'] == 'synthetic' else (
+                'kaggle-qualification-v4', 'kaggle-qualification-v5')
             require(execution.get('study_revision') in allowed and execution.get('final_dispatchable') is False,
                     'Unsupported registry execution revision')
         require(set(execution) == expected and code == FROZEN, 'Invalid source binding fields')
@@ -117,8 +121,7 @@ def connect(database):
 
 def initialize(database, manifest, expected_sha256):
     database = Path(database)
-    payload = Path(manifest).read_bytes()
-    require(hashlib.sha256(payload).hexdigest() == expected_sha256, 'Manifest SHA256 differs')
+    payload = read_verified_bytes(manifest, expected_sha256)
     value = strict_json(payload.decode('utf-8'))
     validate_manifest(value)
     database.parent.mkdir(parents=True, exist_ok=True)
@@ -169,8 +172,7 @@ def store_object(database, path, expected_sha256):
     objects = Path(str(database)+'.objects')
     objects.mkdir(parents=True, exist_ok=True)
     target = objects/expected_sha256
-    payload = Path(path).read_bytes()
-    require(hashlib.sha256(payload).hexdigest() == expected_sha256, 'Import payload hash differs')
+    payload = read_verified_bytes(path, expected_sha256)
     descriptor, temporary = tempfile.mkstemp(prefix='uncommitted-', dir=objects)
     try:
         with os.fdopen(descriptor, 'wb') as stream:
@@ -205,15 +207,19 @@ def ingest(database, expected_sha256, run_id, metric, run_manifest=None):
                                    kind=value['kind'], run_id=parent, seen_ids=set(), seen_conditions=set(),
                                    run_manifest=sidecar)
             packed = canonical(encoded(result))
-            existing = connection.execute('SELECT metric_sha,run_sha,result_json FROM observations WHERE run_id=?',
+            expected_row = (condition_identity(row), row['metric_sha256'], row['run_manifest_sha256'], packed)
+            existing = connection.execute('SELECT condition_id,metric_sha,run_sha,result_json FROM observations WHERE run_id=?',
                                           (parent,)).fetchone()
             if run_id != parent:
-                require(existing == (row['metric_sha256'], row['run_manifest_sha256'], packed),
+                require(existing == expected_row,
                         'Alias parent must be imported and verified first')
-                connection.execute('INSERT OR IGNORE INTO aliases VALUES (?, ?)', (run_id, parent))
+                previous_alias = connection.execute('SELECT parent_id FROM aliases WHERE alias_id=?', (run_id,)).fetchone()
+                require(previous_alias is None or previous_alias == (parent,), 'Existing alias lineage differs')
+                if previous_alias is None:
+                    connection.execute('INSERT INTO aliases VALUES (?, ?)', (run_id, parent))
                 status, added = 'alias_verified', 0
             elif existing is not None:
-                require(existing == (row['metric_sha256'], row['run_manifest_sha256'], packed),
+                require(existing == expected_row,
                         'Existing observation differs')
                 status, added = 'already_imported_verified', 0
             else:

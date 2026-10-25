@@ -5,12 +5,12 @@ import math
 import re
 from dataclasses import asdict, dataclass, fields
 
-from src.phase3.common import ROOT, digest, identity
-from src.phase3_v3.protocol import DECISIONS, PROTOCOL, Settings, code_identity
+from src.phase3.common import ROOT, identity
+from src.phase3_v3.protocol import DECISIONS, PROTOCOL, Settings
 
-from .runtime import FROZEN, source_files
+from .runtime import FROZEN, source_files, verify_frozen_bindings
 
-REVISION = 'kaggle-qualification-v4'
+REVISION = 'kaggle-qualification-v5'
 EXECUTION_KEYS = {'study_revision', 'frozen_code_identity', 'worker_source_identity', 'protocol_sha256',
                   'decisions_sha256', 'taxonomy_sha256', 'settings_identity', 'runtime_identity',
                   'train_manifest_sha256', 'final_dispatchable'}
@@ -55,10 +55,9 @@ class SourceBindings:
 
     @classmethod
     def local(cls):
-        if code_identity() != FROZEN:
-            raise ValueError('Frozen scientific source differs from the accepted numerical engine')
-        return cls(identity(source_files()), digest(PROTOCOL), digest(DECISIONS),
-                   digest(ROOT/'configs/phase3/taxonomy-v1.json'))
+        bindings = verify_frozen_bindings()
+        return cls(identity(source_files()), bindings[PROTOCOL.relative_to(ROOT).as_posix()],
+                   bindings[DECISIONS.relative_to(ROOT).as_posix()], bindings['configs/phase3/taxonomy-v1.json'])
 
 
 @dataclass(frozen=True, slots=True)

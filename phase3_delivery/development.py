@@ -5,10 +5,12 @@ import subprocess
 from pathlib import Path
 
 from scripts.audit_phase3_endpoints import require
-from src.phase3.common import ROOT, digest, identity, read_json
+from src.phase3.common import ROOT, digest, identity
+from src.phase3_v2.checkpoint import strict_json
 
 from .assemble import assemble
 from .catalog import create_output, initialize, ingest, validate_manifest, verify_catalog
+from .io import read_verified_bytes
 
 BASELINE = 'b77a7bbf11c1e4ae7cc06f79e5d7d7d452dbf932'
 
@@ -16,8 +18,7 @@ BASELINE = 'b77a7bbf11c1e4ae7cc06f79e5d7d7d452dbf932'
 def published(path):
     relative = path.relative_to(ROOT).as_posix()
     payload = subprocess.check_output(['git', 'show', BASELINE+':'+relative], cwd=ROOT)
-    require(hashlib.sha256(payload).hexdigest() == digest(path), 'Published evidence changed: '+relative)
-    return read_json(path)
+    return strict_json(read_verified_bytes(path, hashlib.sha256(payload).hexdigest()).decode('utf-8'))
 
 
 def build_manifest():
@@ -35,14 +36,16 @@ def build_manifest():
         execution_root = base/'executions'/row['row_id']
         require(metric.is_relative_to(execution_root) and run.is_relative_to(execution_root),
                 'Receipt paths escape their physical execution')
+        trusted = {}
         for path in (metric, run):
             relative = path.relative_to(execution_root).as_posix()
-            require(receipt['artifact_files'][relative] == digest(path), 'Receipt payload hash mismatch')
-        run_value = read_json(run)
+            trusted[path] = receipt['artifact_files'][relative]
+            read_verified_bytes(path, trusted[path])
+        run_value = strict_json(read_verified_bytes(run, trusted[run]).decode('utf-8'))
         settings = row['settings']
         rows.append({'run_id': row['row_id'], 'arm': settings['learner'] if settings['admission'] == 'NONE'
                      else settings['admission'], 'settings': settings, 'execution': run_value['execution'],
-                     'metric_sha256': digest(metric), 'run_manifest_sha256': digest(run)})
+                     'metric_sha256': trusted[metric], 'run_manifest_sha256': trusted[run]})
         sources[row['row_id']] = (metric, run)
     manifest = {'schema': 'phase3-count-registry-v1', 'kind': 'development',
                 'taxonomy_sha256': digest(ROOT/'configs/phase3/taxonomy-v1.json'),

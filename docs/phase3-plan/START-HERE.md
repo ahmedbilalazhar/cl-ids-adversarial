@@ -1,6 +1,8 @@
-> Continuation v2: the development/synthetic [result registry and analysis assembler](result-registry-contract.md) are implemented and locally tested. The v4 Kaggle candidate and final authorization gates retain their existing scope.
+> Current implementation: [two-hour audit](../phase3-cpu-v3/two-hour-implementation-audit.md), candidate v5. Shared deadlines, committed evaluations, strict metric checks and verified worker import are locally qualified. Actual CUDA, provider durability, final scope and authorization remain blocked. Earlier records follow.
 
-> Current continuation, 2026-10-25: CPU v3 is verified; Kaggle v4 corrects selected-setting binding. Final scope, actual CUDA equivalence and durable Kaggle recovery remain gated. Historical instructions below retain their original scope. See [continuation audit](../phase3-cpu-v3/continuation-audit.md).
+> Earlier continuation v2: the development/synthetic [result registry and analysis assembler](result-registry-contract.md) are implemented and locally tested. The v4 Kaggle candidate and final authorization gates retain their existing scope.
+
+> Earlier continuation v1, 2026-10-25: CPU v3 is verified; Kaggle v4 corrects selected-setting binding. Final scope, actual CUDA equivalence and durable Kaggle recovery remain gated. Historical instructions below retain their original scope. See [continuation audit](../phase3-cpu-v3/continuation-audit.md).
 
 # Recommended Phase 3 plan
 

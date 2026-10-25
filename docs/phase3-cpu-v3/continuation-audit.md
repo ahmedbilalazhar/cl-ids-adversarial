@@ -1,3 +1,5 @@
+> Latest: [two-hour implementation audit](two-hour-implementation-audit.md). Candidate v5 adds shared session budgeting, committed evaluations and verified worker import. Frozen CPU results remain preserved; final release stays blocked. Earlier continuation records follow.
+
 # Continuation audit — 25 October 2026
 
 ## Verdict

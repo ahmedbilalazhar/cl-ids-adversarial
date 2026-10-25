@@ -3,9 +3,11 @@ import copy
 from fractions import Fraction
 
 from scripts.audit_phase3_endpoints import reconstruct, require
-from src.phase3.common import digest
+from src.phase3.common import canonical
 from src.phase3_v2.checkpoint import strict_json
 from src.phase3_v2.data import BASE_DEV
+from .io import read_verified_bytes
+from .reported_metrics import validate_reported_metrics
 
 FINAL_SEEDS = tuple(range(1, 12))+(42,)
 
@@ -20,21 +22,24 @@ def import_counts(path, expected_sha256, expected_settings, expected_execution,
     """
     require(kind in ('synthetic', 'development'), 'Final import is sealed')
     require(isinstance(run_id, str) and bool(run_id) and run_id not in seen_ids, 'Duplicate/invalid run ID')
-    require(digest(path) == expected_sha256, 'Metric payload hash mismatch')
-    metric = strict_json(path.read_text(encoding='utf-8'))
-    require(metric['settings'] == expected_settings, 'Unexpected configuration')
+    metric = strict_json(read_verified_bytes(path, expected_sha256).decode('utf-8'))
+    canonical(metric)  # Reject overflow-to-infinity numbers even in auxiliary fields.
+    require(canonical(metric['settings']) == canonical(expected_settings), 'Unexpected configuration or setting types')
     if metric['schema'] == 'phase3-development-metrics-v3':
         require(run_manifest is not None, 'CPU metric requires its hash-bound run manifest')
-        require(digest(run_manifest) == metric['run_manifest_sha256'], 'CPU run manifest hash mismatch')
-        run = strict_json(run_manifest.read_text(encoding='utf-8'))
+        run = strict_json(read_verified_bytes(run_manifest, metric['run_manifest_sha256']).decode('utf-8'))
+        require(run.get('schema') == 'phase3-run-v2', 'Unsupported CPU run manifest schema')
         require(run['status'] == 'complete' and run['resumed_from'] is None,
                 'CPU import must be a complete from-start trajectory')
-        require(run['settings'] == expected_settings, 'CPU run settings differ')
+        require(canonical(run['settings']) == canonical(expected_settings), 'CPU run settings or types differ')
         execution = run['execution']
     else:
         execution = metric['execution']
-    require(execution == expected_execution, 'Unexpected source/protocol/data/runtime binding')
+    require(canonical(execution) == canonical(expected_execution), 'Unexpected source/protocol/data/runtime binding or types')
     require(metric['final_test_accessed'] is False, 'Final outcomes are sealed')
+    require(metric.get('final_dispatchable', False) is False, 'Contradictory metric release flag')
+    if execution.get('study_revision') == 'kaggle-qualification-v5':
+        require(metric.get('final_dispatchable') is False, 'v5 metric must explicitly retain the release seal')
     if kind == 'development':
         require(metric.get('development_manifest_sha256') == BASE_DEV, 'Development bank manifest differs')
     seed = metric['settings']['seed']
@@ -48,6 +53,7 @@ def import_counts(path, expected_sha256, expected_settings, expected_execution,
                                 'kaggle-qualification-development-metrics-v1'), 'Unknown metric schema')
     translated = copy.deepcopy(metric)
     translated['schema'] = 'phase3-development-metrics-v3'
+    validate_reported_metrics(translated, classes)
     result = reconstruct(translated, classes)
     matrix = metric['R_accuracy_by_stage_and_arrival_cohort']
     require(type(matrix) is list and len(matrix) == 4 and all(type(r) is list and len(r) == 4 for r in matrix),

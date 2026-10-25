@@ -1,0 +1,207 @@
+{
+  "actual_GPU_qualified": false,
+  "baseline_commit": "1869d1b7c9de511ea091fd5b5b639165ffacdc93",
+  "checks": [
+    {
+      "check": "scientific source unchanged",
+      "detail": {
+        "files": 22,
+        "identity": "38830e8b9e156c5c0db8285278de4666fca1c08b1d46e033f2009ef661e9e17c"
+      },
+      "status": "passed"
+    },
+    {
+      "check": "protected payload configs/phase3/cpu-v3.json",
+      "detail": "3943ddfbc04aa8a3b42e2a59118e5c5f666476b2a2c0ab186f445b773cc69ce4",
+      "status": "passed"
+    },
+    {
+      "check": "protected payload docs/phase3-cpu-v3/decisions-2026-10-24.md",
+      "detail": "966cea6e0b290bbd3a3bb1bf1fda2185a2b71d2cc5c3ce822ecf414656d09cbd",
+      "status": "passed"
+    },
+    {
+      "check": "protected payload results/phase3-source-bundle-v1/CPU-delivery/cpu-source.zip",
+      "detail": "d9ae7b516ba484ba1ff9d2c41abd1fdb8030d26079f23d3471c4d07f12bf269e",
+      "status": "passed"
+    },
+    {
+      "check": "protected payload results/phase3-continuation-v1/bundle-final/qualification.zip",
+      "detail": "d53f7619467c4f256a0f3c396009d451de253ceb00a9696fe75197e4718e8146",
+      "status": "passed"
+    },
+    {
+      "check": "no protected tracked edits",
+      "detail": [
+        "src/phase3",
+        "src/phase3_v2",
+        "src/phase3_v3",
+        "src/phase3_analysis",
+        "configs/phase3",
+        "docs/phase3-cpu-v3/decisions-2026-10-24.md"
+      ],
+      "status": "passed"
+    },
+    {
+      "check": "worker-acceptance-final.json",
+      "detail": {
+        "check_groups": 30,
+        "worker_source_identity": "768b1eceb5da05904f2ac3b183df5dab2721dfc73d7f974632e13adb1463c658"
+      },
+      "status": "passed"
+    },
+    {
+      "check": "architecture-final.json",
+      "detail": {
+        "check_groups": 61,
+        "worker_source_identity": "768b1eceb5da05904f2ac3b183df5dab2721dfc73d7f974632e13adb1463c658"
+      },
+      "status": "passed"
+    },
+    {
+      "check": "recovery-review-final.json",
+      "detail": {
+        "check_groups": 5,
+        "worker_source_identity": "768b1eceb5da05904f2ac3b183df5dab2721dfc73d7f974632e13adb1463c658"
+      },
+      "status": "passed"
+    },
+    {
+      "check": "v5 bundle and snapshot",
+      "detail": {
+        "archive_bytes": 51767791,
+        "archive_sha256": "51fa652d5b47de0d2e7935b861988ac7ed7d1abd8526fb2d82196ff23527fa7b",
+        "files_verified": 82,
+        "final_dispatchable": false,
+        "final_test_accessed": false,
+        "frozen_code_identity": "38830e8b9e156c5c0db8285278de4666fca1c08b1d46e033f2009ef661e9e17c",
+        "status": "passed",
+        "train_manifest_sha256": "16255e585081177b79ca7552ff8b3793d1c04918f82a3352c871417734e3b5cd",
+        "uploaded": false,
+        "worker_source_identity": "768b1eceb5da05904f2ac3b183df5dab2721dfc73d7f974632e13adb1463c658"
+      },
+      "status": "passed"
+    },
+    {
+      "check": "notebook budget and seal",
+      "detail": {
+        "full_data_default": false,
+        "notebook_sha256": "54db44c770fc73c7f398ae9fe09220a2383bf65a99a2dcee5af9a4c272a4c214"
+      },
+      "status": "passed"
+    },
+    {
+      "check": "historical development compatibility",
+      "detail": {
+        "aliases": 9,
+        "attempts": 81,
+        "physical": 72
+      },
+      "status": "passed"
+    },
+    {
+      "check": "local pinned suite",
+      "detail": {
+        "passed": 89,
+        "skip": "POSIX FIFO on Windows",
+        "skipped": 1,
+        "tests_run": 90
+      },
+      "status": "passed"
+    },
+    {
+      "check": "nonzero independent endpoint oracle",
+      "detail": {
+        "fabricated_count_trajectories": 240,
+        "family": "all_29",
+        "paired_oracle_assertions": 348
+      },
+      "status": "passed"
+    }
+  ],
+  "evidence_sha256": {
+    "results/phase3-two-hour-audit-v1/bundle-header-reproduction.json": "7ecb07869ff4c810d6c81db23459be241449c50139109258315210c3da93dfd3",
+    "results/phase3-two-hour-audit-v1/candidate-v5/architecture-attempt1.json": "5acf04d2a2cb0a2fc621355ed81b4d3fa263130598ea3de4cb8676888f7cfa3f",
+    "results/phase3-two-hour-audit-v1/candidate-v5/architecture-final.json": "27c8aa9c8efd3fb8f966fdf856640789cc8a0130eee3ecb2eef23a10908bcf47",
+    "results/phase3-two-hour-audit-v1/candidate-v5/bundle-attempt1/acceptance.json": "d0f4c3f524ba8ceb6e4f37c3ab07e5b50734d9551560c10cdd67de57a7deeda7",
+    "results/phase3-two-hour-audit-v1/candidate-v5/bundle-attempt1/snapshot.json": "3bb285d3b25a06c691bef0f8772d4cce812dc2e992f937896ece222583707303",
+    "results/phase3-two-hour-audit-v1/candidate-v5/bundle-final/acceptance.json": "220043d949ef56843fbc110ecb43573306cf4704625bee166bb04b6975e1d1d8",
+    "results/phase3-two-hour-audit-v1/candidate-v5/bundle-final/snapshot.json": "15156ab542a3ffd059b591540a9a5d4153adce4be0db8f30541e7ef883c12de0",
+    "results/phase3-two-hour-audit-v1/candidate-v5/notebook-attempt1/kernel-metadata.json": "ff4a829df4bd2aa608e3733e2509064a7b95b42093b212c357730552f95c559a",
+    "results/phase3-two-hour-audit-v1/candidate-v5/notebook-attempt1/phase3-qualification.ipynb": "433b34899fcf261db5a9d48f74736bf287007e558dad8e6b70450074eb92d5a6",
+    "results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/kernel-metadata.json": "ff4a829df4bd2aa608e3733e2509064a7b95b42093b212c357730552f95c559a",
+    "results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb": "54db44c770fc73c7f398ae9fe09220a2383bf65a99a2dcee5af9a4c272a4c214",
+    "results/phase3-two-hour-audit-v1/candidate-v5/recovery-review-attempt1.json": "6112e6913a17f242fd11bf336f8d6efa6588dbbabc9b3fed9d85bc3632616cc4",
+    "results/phase3-two-hour-audit-v1/candidate-v5/recovery-review-final.json": "663658c263eaefc8f476e60779a90b64ff652dd1fb30a637f244161f775cb343",
+    "results/phase3-two-hour-audit-v1/candidate-v5/worker-acceptance-attempt1.json": "570b3c54df4476414da31c8d3d3d0f23d3cb0fba73ded89719fc65bea530d1f9",
+    "results/phase3-two-hour-audit-v1/candidate-v5/worker-acceptance-final.json": "f79f9c4e0a5b867e4372ce147825239df005d1173222282b367525cd96173d0a",
+    "results/phase3-two-hour-audit-v1/ci-equivalent-final-attempt1.log": "8e4b34da875bc08835e378098025f453ef68a4a213c37cb66e88c73f713de72d",
+    "results/phase3-two-hour-audit-v1/frozen-binding-reproduction.json": "9cc3f1dfe1409ad6992c3e16b238b41d102fc297409bc3f19d73a6ab5dc69e79",
+    "results/phase3-two-hour-audit-v1/hash-parse-race-reproduction.json": "8404fbaf858829613087e1a18b973c8a504b3c33ee13edca95059ced5ca602df",
+    "results/phase3-two-hour-audit-v1/hosted-ci-annotations.json": "7ae0d7a59682c3ed78f726fcdb48c1f0d07e890bb4a53fa74d9ec9d14c9b5043",
+    "results/phase3-two-hour-audit-v1/integrity-regressions-attempt1.log": "17fc398ad511126d1f90ce7be06313b151e448f4d1631e0ca38c077492dd0bf4",
+    "results/phase3-two-hour-audit-v1/legacy-catalog-compatibility-final.json": "4df0b11d791d355c6c2eeae0866b2e8e0681944e49e4806d64cf5229a22cb797",
+    "results/phase3-two-hour-audit-v1/legacy-catalog-compatibility.json": "4df0b11d791d355c6c2eeae0866b2e8e0681944e49e4806d64cf5229a22cb797",
+    "results/phase3-two-hour-audit-v1/nonzero-endpoints-attempt1.log": "c3eae0ba31c33401d28586ae063c502d7fc2a9ec5b04fea645cd89d0b0266cb0",
+    "results/phase3-two-hour-audit-v1/nonzero-oracle-final.json": "811883d21b94297e120b0ba1ad5312739cf82bdd4e8938ad4f74c830b3d20fc1",
+    "results/phase3-two-hour-audit-v1/nonzero-oracle-final.log": "da1d9c0e76ced6a39b710c602fbba4f6f98a8f58f2f2201166d7f1163f0ea5b7",
+    "results/phase3-two-hour-audit-v1/notebook-and-evaluation-attempt1.log": "547ba4eea0449b518f7f3868b07cedd2deb87c0eaecf45686712952ba8be44d5",
+    "results/phase3-two-hour-audit-v1/parent-binding-reproduction.json": "214b9864b28e5e804734471dc2d6af8130fc09dd68ae0a9bc5038b81295586e6",
+    "results/phase3-two-hour-audit-v1/protected-baseline.json": "31dfa4599e0e9e43c23074a8a7adcfcbfeff505c205fb81470f2da9d7e995f33",
+    "results/phase3-two-hour-audit-v1/reported-metrics-reproduction.json": "98e3e63ec41bf622c21c3bf787de7426959c065e5554e9bb9a7f0fe0360ed15e",
+    "results/phase3-two-hour-audit-v1/retry-identity-reproduction.json": "bbe291b92a84a8e1793d149c9918aaa5e27af818366610c3f68ac8ff2b991e67",
+    "results/phase3-two-hour-audit-v1/session-budget-reproduction.json": "b86437945103f5bc255811e1f1084939c9146fe249b535556ddf577c75446396",
+    "results/phase3-two-hour-audit-v1/session-regressions-attempt1.log": "6d6fdd4b48040c977b18a21594cc2e47675f9f8f0cd415321c04cd939e6d8108",
+    "results/phase3-two-hour-audit-v1/session-regressions-attempt2.log": "e56ae7aa8dc5b4012c6427a7263f23c364d9e3f05597cc6fd43fc41c3606e848",
+    "results/phase3-two-hour-audit-v1/transport-and-metrics-attempt1.log": "eb873639364d932f7322c1c18a05c1214c638e6feea01bc48ab38f9ca6980698",
+    "results/phase3-two-hour-audit-v1/typed-metadata-reproduction.json": "de1e4ca7322e4a736c72d9f993ccdf4e30fc4511312a6b0e13e158a7448e34c9",
+    "results/phase3-two-hour-audit-v1/verified-worker-import-attempt1.log": "3599fc2bd783eebef11da31374824883a8b2b81adae3c1175fdb03180254eb89",
+    "results/phase3-two-hour-audit-v1/worker-bindings-attempt1.log": "c39b955a7de5263dea53d729c841690042dc926bfdde1e6eb87bde01d6ec0b0e"
+  },
+  "final_dispatchable": false,
+  "final_test_accessed": false,
+  "frozen_code_identity": "38830e8b9e156c5c0db8285278de4666fca1c08b1d46e033f2009ef661e9e17c",
+  "implementation_files": {
+    "kaggle_worker/__init__.py": "dce881f81860007b29109bad2eeb7efe67ac19bcfc966ba65dc2104a7af8f863",
+    "kaggle_worker/accelerator.py": "4da0965f554655b9e99b71a6dfc70160e872c1c750fd3ebc4f7addc05f9350ce",
+    "kaggle_worker/architecture_checks.py": "a1de4f4b9c2ca0d1c0190648610c6f62ebcec10b2fc996c96653edb915327c30",
+    "kaggle_worker/artifacts.py": "839cbaa9e18307ba3b0e4ee29468ae5277616b186ca2217717de6b7bafae8d32",
+    "kaggle_worker/backends.py": "204fd74058edc1570730919bc42ee6bad5b72b890217d935cb4494c09d7c9514",
+    "kaggle_worker/bootstrap.py": "635082135434b060c199a608a86ae24a8775f5397a915a6d2c2d4a8633421fdc",
+    "kaggle_worker/bundle.py": "377bfd2ec58860aa2eb124cdd5544492010899857c24ecbba3f6738e4b2d69b6",
+    "kaggle_worker/checkpoint.py": "39378df9c84bbfbdec6363757bde349a7e94bd620ee5c9c56353dca8681f5b58",
+    "kaggle_worker/checks.py": "cad7147e85e5f5ab17813865f1765e2a9fbea1131a693be3c1c6414428db4e52",
+    "kaggle_worker/contracts.py": "81ed3742f9586267a1b915cd08cad4016a8759c72ca221de1496c0c03f4b9fae",
+    "kaggle_worker/data.py": "8cbfc27b67582b8025c1869d3fb80e2adc8428be032448dcb5788e6625f4e345",
+    "kaggle_worker/evaluate.py": "0c74cd03c60687f65db74e20069c100607dcde0f938860ef27f1eec4c30a8612",
+    "kaggle_worker/fixture.py": "3620d0d31a98454ef3b0fefdca646b7d6b35ac6f44e00c3cad462657988bab33",
+    "kaggle_worker/handoff.py": "2795fee35c10777b7b0f3a8c999a13d3f70a6264c357d12222251a6bf4025cd0",
+    "kaggle_worker/locks/cpu.in": "e42e3b8ca9dad7a2019f63a56a212ef469b8bd424387c2a9e5108e92813fdea9",
+    "kaggle_worker/locks/cpu.txt": "7c2c24eec023b3238f64798e9ebafa86edb83ee14c2d89b2aa1e3dce96bab8b0",
+    "kaggle_worker/locks/cuda.in": "a3abb878a285ead933edabe190c6542da67eb38d9aa8847b3ba95d481a12ecdb",
+    "kaggle_worker/locks/cuda.txt": "51041fc1d754c3e4f0775358a99d4e67f1d3c37be88be51c442834ab75879dd9",
+    "kaggle_worker/notebook.py": "c685a64df8fd81a7f9386151267cf239e2b23c283dfd8a07cdaae8a9bac0a2f6",
+    "kaggle_worker/planner.py": "c18adc831614c74bff3c08c8fd8a1de6d3435a950bdbbb36237b1ea2616cfe84",
+    "kaggle_worker/preflight.py": "b5540b619b889aee704ebefbfc4d33dca57b8279eb8a79cebaa5d582921e96a2",
+    "kaggle_worker/review_checks.py": "8b65690dd6b8554d3a039565e5ff26f8e0d00d243d2d2ecc35663d4a27ea4b2f",
+    "kaggle_worker/runtime.py": "bdeb9073002e2ff065ce1329174727fc1acfc03db62183459a946e8ccd463da6",
+    "kaggle_worker/selection.py": "d70d8f882808179ced8f3c6a371df5fde37e58eb95b6844c0f87116ac2dbb4e7",
+    "kaggle_worker/session.py": "d3d2b0ed293ca5de4c8641d5ca2272b97ff28d74121b59c1648d34f7f60119fc",
+    "kaggle_worker/simulator.py": "ee79832801f5a8f10dd86ff21eca54aa51338dc4982a5a2bf29fb3807b5b52a3",
+    "kaggle_worker/worker.py": "9b670592f120a0db1d03cc00a65750efbc9569e74ecafd488a9149b7ba82815d",
+    "phase3_delivery/__init__.py": "5dfee024cf9f4cd450888c034d961130b0e2a1ebd38bf6fa8303c3ddfba8ec7b",
+    "phase3_delivery/analysis.py": "10fe2791ebc13e1d96d521044a8ae74e2d61dd017e48660c29a452f47af0d3e5",
+    "phase3_delivery/archive_policy.py": "bd75b5da9a2d9d02c65537a7f4dc6c80827cc56c705d663e011f9ba5f170cc38",
+    "phase3_delivery/assemble.py": "83502567de6f5caf5b7e54696792a3e585b45aa35fda0b480425db80e5f48683",
+    "phase3_delivery/catalog.py": "b1bce0981b23654d14761bde56ab3cd227e3c80508a4a08c3b6838f0e8f73bda",
+    "phase3_delivery/development.py": "f0aee3fe67b0df7ead84dad640d471c86181e9f59712d5dde303ebc1144bb065",
+    "phase3_delivery/import_counts.py": "96f0011a7cd025cc83a96ef5ca935565cf232f8944f237ad5b604820006a4118",
+    "phase3_delivery/io.py": "28bc3436a5913c29851f949ffe0038bff6191e4af235e987773c0db1156172f2",
+    "phase3_delivery/reported_metrics.py": "757e1b63c64d0b28dad97e884379dead6e0f2b42ea97f5ef27406ad54ad031ab",
+    "phase3_delivery/worker_import.py": "88e620cf0b321ee1dcbfeb5b602203275de164fd54fbdaf296da1b09daa00d69"
+  },
+  "schema": "phase3-two-hour-audit-acceptance-v1",
+  "scope": "Local CPU engineering qualification; no final study or provider durability claim",
+  "status": "passed",
+  "worker_source_identity": "768b1eceb5da05904f2ac3b183df5dab2721dfc73d7f974632e13adb1463c658"
+}

@@ -1,0 +1,35 @@
+test_exact_bytes_hash_and_size_limit (tests.test_transport_integrity.TransportIntegrity.test_exact_bytes_hash_and_size_limit) ... ok
+test_fifo_is_rejected_without_waiting_for_writer (tests.test_transport_integrity.TransportIntegrity.test_fifo_is_rejected_without_waiting_for_writer) ... skipped 'POSIX FIFO has no equivalent local Windows fixture'
+test_parse_uses_verified_snapshot_after_source_file_changes (tests.test_transport_integrity.TransportIntegrity.test_parse_uses_verified_snapshot_after_source_file_changes) ... ok
+test_reported_metric_or_label_corruption_rejected (tests.test_reported_metrics.ReportedMetrics.test_reported_metric_or_label_corruption_rejected) ... ok
+test_alias_reimport_rejects_changed_parent (tests.test_audit_integrity.AuditIntegrity.test_alias_reimport_rejects_changed_parent) ... ok
+test_boolean_and_numeric_type_coercion_rejected (tests.test_audit_integrity.AuditIntegrity.test_boolean_and_numeric_type_coercion_rejected) ... ok
+test_cpu_declared_parent_is_bound_to_protocol (tests.test_audit_integrity.AuditIntegrity.test_cpu_declared_parent_is_bound_to_protocol) ... ok
+test_cpu_sidecar_requires_schema_and_exact_setting_types (tests.test_audit_integrity.AuditIntegrity.test_cpu_sidecar_requires_schema_and_exact_setting_types) ... ok
+test_retry_rejects_persisted_condition_corruption (tests.test_audit_integrity.AuditIntegrity.test_retry_rejects_persisted_condition_corruption) ... ok
+test_cli_selection_and_override_guard (tests.test_continuation.Continuation.test_cli_selection_and_override_guard) ... usage: worker [-h] [--device {cpu,cuda:0,cuda:1}] --train-package
+              TRAIN_PACKAGE --train-manifest-sha256 TRAIN_MANIFEST_SHA256
+              --output OUTPUT [--learner {FT,EI,DR}]
+              [--admission {NONE,DM,DC,DQ}] [--seed {101,102,103}]
+              [--dose DOSE DOSE] [--qualification-overrides] [--rounds {3,12}]
+              [--epochs {1,4}] [--learning-rate LEARNING_RATE]
+              [--lambda-E LAMBDA_E] [--lambda-y LAMBDA_Y]
+              [--lambda-z LAMBDA_Z] [--budget-seconds BUDGET_SECONDS]
+              [--reserve-seconds RESERVE_SECONDS]
+              [--transition-bound-seconds TRANSITION_BOUND_SECONDS]
+              [--max-commits MAX_COMMITS]
+worker: error: Non-selected settings require --qualification-overrides
+ok
+test_cpu_metric_requires_bound_run (tests.test_continuation.Continuation.test_cpu_metric_requires_bound_run) ... ok
+test_duplicate_writer_then_normal_release (tests.test_continuation.Continuation.test_duplicate_writer_then_normal_release) ... ok
+test_import_positive_and_duplicate_lineage (tests.test_continuation.Continuation.test_import_positive_and_duplicate_lineage) ... ok
+test_malformed_counts_and_bindings (tests.test_continuation.Continuation.test_malformed_counts_and_bindings) ... ok
+test_preflight_storage_and_declared_limits (tests.test_continuation.Continuation.test_preflight_storage_and_declared_limits) ... ok
+test_seed_summary (tests.test_continuation.Continuation.test_seed_summary) ... ok
+test_selected_settings (tests.test_continuation.Continuation.test_selected_settings) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 22.608s
+
+OK (skipped=1)
+{}

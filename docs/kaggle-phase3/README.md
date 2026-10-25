@@ -1,3 +1,5 @@
+> Current candidate: **v5**, [audit](../phase3-cpu-v3/two-hour-implementation-audit.md) and [notebook](../../results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb). Use its matching 82-payload private bundle. Earlier v1-v4 records below are historical; actual GPU/provider qualification remains required.
+
 > Continuation v2: the development/synthetic [result registry and analysis assembler](../phase3-plan/result-registry-contract.md) are implemented and locally tested. The v4 Kaggle candidate and final authorization gates retain their existing scope.
 
 > Current continuation, 2026-10-25: CPU v3 is verified; Kaggle v4 corrects selected-setting binding. Final scope, actual CUDA equivalence and durable Kaggle recovery remain gated. Historical instructions below retain their original scope. See [continuation audit](../phase3-cpu-v3/continuation-audit.md).
@@ -157,8 +159,8 @@ a final release or an additional final seed.
 
 ## Remaining release gates
 
-Finish and independently verify the current CPU grid/delivery. Establish clean
-feasibility. Run actual Kaggle CPU/CUDA fixtures, independent estimator checks,
+The CPU grid/delivery and its declared clean feasibility gates are verified.
+Run actual Kaggle CPU/CUDA fixtures, independent estimator checks,
 same-runtime fresh-process recovery, complete-worker profiles and selected
 settings confirmations on seeds 101–103. Complete target-runtime corruption and
 matched-control acceptance. Finish any scoped ablation/oracle implementation.

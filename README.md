@@ -139,7 +139,19 @@ correction, hash-locked environments, streaming evaluation and measured syntheti
 memory/target-mapping improvements. Earlier notebook bundles and evidence remain
 preserved under `results/kaggle-readiness-v1/`.
 
-The latest [v3 architecture decision](docs/kaggle-phase3/architecture-v3.md)
+The earlier [v3 architecture decision](docs/kaggle-phase3/architecture-v3.md)
 centralizes job/runtime contracts, checkpoint lineage and receipt validation,
-isolates CPU/CUDA backends, and adds pinned CPU qualification CI. The current
+isolates CPU/CUDA backends, and adds pinned CPU qualification CI. That historical
 notebook delivery is under `results/kaggle-readiness-v3/`; v1/v2 remain preserved.
+
+
+## Current implementation audit and Kaggle v5
+
+The [two-hour audit](docs/phase3-cpu-v3/two-hour-implementation-audit.md) fixes
+shared session budgeting, frozen-input binding, exact-byte import, retry/alias
+identity checks and reported-metric validation. It adds committed evaluation
+reuse and verified worker-export-to-catalog ingestion. See
+[local acceptance](results/phase3-two-hour-audit-v1/acceptance-staged-final.json) and
+the [v5 notebook](results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb).
+The frozen scientific engine and historical results are preserved. Actual Kaggle
+CUDA/recovery qualification, final scope and human release remain outstanding.

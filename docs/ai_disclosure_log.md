@@ -127,3 +127,12 @@ not witnessed; anything reconstructed is marked (reconstructed).
   CPU diagnostic was measured at 122 s and 864 MB sampled peak RSS, then
   archived for pre-v3 provenance. No corrected paired effect or human
   validation is claimed.
+
+
+- 2026-10-25 two-hour audit: an AI coding agent reproduced metadata, transport,
+  retry/alias, metric and notebook-session defects; implemented v5 corrections
+  outside frozen methods; added synthetic transport/orchestration/import and
+  nonzero-count regressions; consulted primary research/library documentation;
+  ran local pinned CPU checks and updated evidence/roadmaps. No human review,
+  actual Kaggle/CUDA result, final study or certification is claimed. Original
+  source/evidence and failed attempts remain preserved.

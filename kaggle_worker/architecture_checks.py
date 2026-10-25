@@ -10,7 +10,7 @@ from dataclasses import asdict
 from pathlib import Path
 from unittest.mock import patch
 
-from .runtime import configure
+from .runtime import FROZEN_FILES, configure
 
 import numpy as np
 
@@ -39,8 +39,13 @@ def run():
         else:
             raise AssertionError('Invalid architecture fixture accepted: '+name)
     assert validate_procedure(valid, bindings) == settings
-    with patch('kaggle_worker.contracts.code_identity', return_value='1'*64):
+    with patch('kaggle_worker.runtime.code_identity', return_value='1'*64):
         rejected('ingestion-rejects-changed-frozen-engine', SourceBindings.local)
+    for name in FROZEN_FILES:
+        def changed_binding(path, name=name):
+            return '0'*64 if str(path).replace('\\', '/').endswith('/'+name) else digest(path)
+        with patch('kaggle_worker.runtime.digest', side_effect=changed_binding):
+            rejected('ingestion-rejects-changed-binding-'+name, SourceBindings.local)
     for field, value in [('seed', 101.), ('seed', True), ('seed', 1), ('seed', 42),
                          ('rounds', 3.), ('epochs', True), ('dose', [True, 2]), ('dose', [1, 0]),
                          ('learning_rate', True), ('lambda_E', float('nan'))]:

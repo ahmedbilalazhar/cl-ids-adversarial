@@ -1,4 +1,4 @@
-# Kaggle execution contract — continuation v1
+# Kaggle execution contract — current v5 qualification
 
 Status: development qualification only. This contract does not authorize final
 seeds, final features, final inference or a GPU grid. It complements the existing
@@ -6,8 +6,8 @@ seeds, final features, final inference or a GPU grid. It complements the existin
 
 ## One execution path
 
-Generate the notebook with `python -m kaggle_worker.notebook`. The v4 candidate is
-[phase3-qualification.ipynb](../../results/phase3-continuation-v1/notebook-final/phase3-qualification.ipynb).
+Generate the notebook with `python -m kaggle_worker.notebook`. The current v5 candidate is
+[phase3-qualification.ipynb](../../results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb).
 It invokes `bootstrap`, `preflight`, `checks`, `worker`, and `evaluate` modules;
 it contains no training equations. CPU `backends.CPUBackend` delegates frozen
 numerical functions. `simulator.execute` is a separately tested transaction
@@ -25,7 +25,7 @@ dispatch APIs. The scientific settings identity excludes unused coefficients.
 
 Job identity binds frozen source, candidate source, protocol, decisions,
 taxonomy, consumed settings, runtime and train manifest. The candidate revision
-is `kaggle-qualification-v4`; old worker receipts must be evaluated with their
+is `kaggle-qualification-v5`; old worker receipts must be evaluated with their
 archived matching source. Hash binding does not authorize a run.
 
 ## Preflight and target-environment evidence
@@ -98,3 +98,23 @@ still **all_29**, one family, alpha .05, two-sided. C1/C2 are question labels,
 not separately corrected families. Exploratory methods must not silently gain
 confirmatory status. Missing endpoints retain explicit missingness; no metric
 imputation or favorable seed replacement is allowed.
+
+
+## v5 session and committed-output contract
+
+`session.SessionBudget` starts before extraction. Read the remaining allowance
+from the actual provider UI; setup, fixtures, training and evaluation consume
+one clock. The 240-second export reserve needs target measurements. Commands
+retain argv, log hashes, wall times and failure/timeout receipts. Their owned
+process group is stopped before failure export. Provider kills can bypass cleanup.
+
+`evaluate --verify-existing` requires an intact commit with matching job, bank,
+runtime, payload inventory and model hashes. Partial attempts are preserved.
+Exports hold worker locks, stream files and recheck inventory/hashes; runtime
+mutex bytes are explicitly excluded. Local ZIP creation is not provider durability.
+
+Use `phase3_delivery.worker_import` for returned v5 development output with an
+externally reviewed registry pin, the exact notebook export SHA256 and an explicit
+run mapping. It validates a private archive snapshot, NPZ size/shape envelopes,
+complete checkpoint lineage, evaluation/model bindings and counts before writes.
+See the [registry contract](result-registry-contract.md). No final import exists.

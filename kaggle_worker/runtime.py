@@ -19,6 +19,23 @@ from src.phase3.common import ROOT, digest, identity
 from src.phase3_v3.protocol import code_identity
 
 FROZEN = '38830e8b9e156c5c0db8285278de4666fca1c08b1d46e033f2009ef661e9e17c'
+FROZEN_FILES = {
+    'configs/phase3/cpu-v2.json': 'd6ec54eb3ea1845177e6df159ae975a9c267200081e03a591fd17c6b81ef085e',
+    'configs/phase3/cpu-v3.json': '3943ddfbc04aa8a3b42e2a59118e5c5f666476b2a2c0ab186f445b773cc69ce4',
+    'configs/phase3/reference74-v1.json': 'a8fc9dc310716d104a1df24f4eef24885af46481d8c6d6c25c6d2a302388127a',
+    'configs/phase3/taxonomy-v1.json': '410b7e3b5709cc58c637496c08fc20200de20911b68a044edd4d420731394561',
+    'docs/phase3-cpu-v2/decisions-2026-10-24.md': '5f333429d3d71f7101d152b87ba9bce251c4cd7632307bc71c2d98fc3e033986',
+    'docs/phase3-cpu-v3/decisions-2026-10-24.md': '966cea6e0b290bbd3a3bb1bf1fda2185a2b71d2cc5c3ce822ecf414656d09cbd',
+}
+
+
+def verify_frozen_bindings():
+    if code_identity() != FROZEN:
+        raise ValueError('Frozen numerical source changed')
+    actual = {name: digest(ROOT/name) for name in FROZEN_FILES}
+    if actual != FROZEN_FILES:
+        raise ValueError('Frozen protocol, taxonomy or decision bytes changed; a new scientific revision is required')
+    return actual
 
 
 def source_files():
@@ -27,8 +44,7 @@ def source_files():
 
 
 def configure(device='cpu'):
-    if code_identity() != FROZEN:
-        raise ValueError('Frozen numerical source changed')
+    verify_frozen_bindings()
     if platform.python_version() != '3.12.14' or np.__version__ != '2.3.5':
         raise RuntimeError('Use Python 3.12.14 and NumPy 2.3.5 in the isolated notebook environment')
     if str(torch.__version__) not in ('2.7.0+cpu', '2.7.0+cu126'):

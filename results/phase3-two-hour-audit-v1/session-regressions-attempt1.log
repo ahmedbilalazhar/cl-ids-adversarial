@@ -1,0 +1,34 @@
+test_commands_record_success_failure_timeout_and_launch_failure (tests.test_notebook_session.NotebookSession.test_commands_record_success_failure_timeout_and_launch_failure) ... ok
+test_export_detects_mutation_and_retains_failed_archive (tests.test_notebook_session.NotebookSession.test_export_detects_mutation_and_retains_failed_archive) ... ok
+test_export_is_repeatable_and_preserves_orphaned_receipt (tests.test_notebook_session.NotebookSession.test_export_is_repeatable_and_preserves_orphaned_receipt) ... ERROR
+test_export_refuses_an_active_writer (tests.test_notebook_session.NotebookSession.test_export_refuses_an_active_writer) ... ERROR
+test_session_budget_decreases_and_keeps_export_reservation (tests.test_notebook_session.NotebookSession.test_session_budget_decreases_and_keeps_export_reservation) ... ok
+
+======================================================================
+ERROR: test_export_is_repeatable_and_preserves_orphaned_receipt (tests.test_notebook_session.NotebookSession.test_export_is_repeatable_and_preserves_orphaned_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\tests\test_notebook_session.py", line 53, in test_export_is_repeatable_and_preserves_orphaned_receipt
+    first = export_outputs(output, exports)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\kaggle_worker\session.py", line 209, in export_outputs
+    while block := source.read(8*1024**2):
+                   ^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+
+======================================================================
+ERROR: test_export_refuses_an_active_writer (tests.test_notebook_session.NotebookSession.test_export_refuses_an_active_writer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\tests\test_notebook_session.py", line 76, in test_export_refuses_an_active_writer
+    self.assertEqual(export_outputs(output, root/'exports')['status'], 'complete_export')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\kaggle_worker\session.py", line 209, in export_outputs
+    while block := source.read(8*1024**2):
+                   ^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.574s
+
+FAILED (errors=2)

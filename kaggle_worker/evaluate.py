@@ -5,12 +5,12 @@ import argparse
 import time
 from pathlib import Path
 
-from .runtime import configure
+from .runtime import configure, safe_output
 
 import numpy as np
 import torch
 
-from src.phase3.common import array_identity, digest, read_json, write_json
+from src.phase3.common import array_identity, canonical, digest, identity, read_json, write_json
 from src.phase3.evaluate import ratio
 from src.phase3.model import ReferenceMLP
 from src.phase3.reference import model_identity
@@ -39,10 +39,50 @@ def stage_snapshots(job, execution, rounds, learner=None):
     return snapshots
 
 
-def evaluate(job, development, output):
+def verify_completed(job, development, output, runtime):
+    marker = read_json(output/'evaluation.commit.json')
+    expected = {'metrics.json'} | {f'E{stage}-predictions.npz' for stage in range(1, 5)}
+    if (set(marker) != {'schema', 'job_manifest_sha256', 'development_manifest_sha256',
+                       'evaluation_runtime_identity', 'files'} or
+            marker['schema'] != 'kaggle-evaluation-commit-v1' or
+            marker['job_manifest_sha256'] != digest(job/'job.json') or
+            marker['development_manifest_sha256'] != BASE_DEV or
+            digest(development/'manifest.json') != BASE_DEV or
+            marker['evaluation_runtime_identity'] != identity(runtime) or
+            set(marker['files']) != expected):
+        raise ValueError('Evaluation commit identity differs')
+    paths = {path.relative_to(output).as_posix(): path for path in output.rglob('*') if path.is_file()}
+    if (set(paths) != expected | {'evaluation.commit.json'} or
+            any(path.is_symlink() or not path.resolve().is_relative_to(output.resolve()) for path in paths.values()) or
+            any(digest(output/name) != sha for name, sha in marker['files'].items())):
+        raise ValueError('Evaluation artifact inventory or hashes differ')
+    procedure, metrics = read_json(job/'job.json'), read_json(output/'metrics.json')
+    settings = validate_procedure(procedure)
+    if (metrics['schema'] != 'kaggle-qualification-development-metrics-v1' or
+            metrics['status'] != 'valid_development_only' or metrics['final_test_accessed'] is not False or
+            metrics['final_dispatchable'] is not False or
+            canonical(metrics['execution']) != canonical(procedure['execution']) or
+            canonical(metrics['settings']) != canonical(procedure['settings']) or
+            canonical(metrics['evaluation_runtime']) != canonical(runtime) or
+            [stage['stage'] for stage in metrics['stages']] != [1, 2, 3, 4]):
+        raise ValueError('Evaluation metadata differs')
+    snapshots = stage_snapshots(job, procedure['execution'], settings.rounds, settings.learner)
+    for stage in metrics['stages']:
+        state = snapshots[stage['stage']]
+        model_hash = identity({'slots': state['slots'],
+                               'weights': {key: array_identity(value) for key, value in state['model'].items()}})
+        if stage['model_sha256'] != model_hash or stage['source_codes_in_slot_order'] != state['slots']:
+            raise ValueError('Evaluation model differs from committed stage state')
+    return {'status': 'existing_evaluation_verified', 'new_inference': False, 'metrics_sha256': digest(output/'metrics.json')}
+
+
+def evaluate(job, development, output, verify_existing=False):
     started = time.perf_counter()
     runtime = configure('cpu')  # One declared evaluation device for every arm.
+    output = safe_output(output)
     if output.exists():
+        if verify_existing:
+            return verify_completed(job, development, output, runtime)
         raise FileExistsError(output)
     procedure = read_json(job/'job.json')
     execution = procedure['execution']
@@ -89,6 +129,11 @@ def evaluate(job, development, output):
               'development_manifest_sha256': BASE_DEV, 'evaluation_seconds': time.perf_counter()-started,
               'final_test_accessed': False, 'final_dispatchable': False}
     write_json(output/'metrics.json', result)
+    files = {'metrics.json'} | {f'E{stage}-predictions.npz' for stage in range(1, 5)}
+    write_json(output/'evaluation.commit.json', {'schema': 'kaggle-evaluation-commit-v1',
+               'job_manifest_sha256': digest(job/'job.json'), 'development_manifest_sha256': BASE_DEV,
+               'evaluation_runtime_identity': identity(runtime),
+               'files': {name: digest(output/name) for name in sorted(files)}})
     return result
 
 
@@ -97,9 +142,10 @@ def main():
     parser.add_argument('--job', type=Path, required=True)
     parser.add_argument('--development-package', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--verify-existing', action='store_true')
     args = parser.parse_args()
-    result = evaluate(args.job, args.development_package, args.output)
-    print({'status': result['status'], 'evaluation_seconds': result['evaluation_seconds']})
+    result = evaluate(args.job, args.development_package, args.output, args.verify_existing)
+    print({key: result[key] for key in ('status', 'evaluation_seconds', 'new_inference') if key in result})
 
 
 if __name__ == '__main__':

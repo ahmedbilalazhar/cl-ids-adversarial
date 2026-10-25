@@ -117,3 +117,33 @@ This completes a development/synthetic registry and assembler. The final registr
 must still be derived from an explicitly adopted scope and target runtime. Actual
 provider durability, GPU qualification, final-grid authorization and final
 artifact/analysis gates remain closed.
+
+
+## Verified v5 worker import
+
+`phase3_delivery.worker_import` is the combined path for returned v5 development
+exports. A reviewed registry must already bind every run, exact metric payload
+and execution identity. Supply a JSON list of objects with exactly `run_id`,
+`job_prefix` and `metrics_path`; for example the registered seed101 FT ID, `FT`,
+and `FT-development/metrics.json`. Do not derive trust pins from incoming metadata.
+
+```powershell
+& $py -m phase3_delivery.worker_import --database tmp/catalog.sqlite --manifest-sha256 REVIEWED_REGISTRY_SHA256 --archive downloaded/output.zip --archive-sha256 NOTEBOOK_EXPORT_SHA256 --mapping reviewed-mapping.json --output results/import-attempt-001.json
+```
+
+The importer verifies one private archive snapshot, bounds JSON/NPZ size and
+shape claims, rejects object arrays, verifies checkpoint lineage and checks
+evaluation commits/model tensors. All mapped counts validate before the first
+write; observations commit independently. An I/O failure identifies already
+accepted IDs for idempotent retry. CLI failures retain a fresh failure receipt.
+
+Count checks now include displayed class/binary/provenance rates and labels.
+Exact canonical comparisons distinguish metadata booleans and integers. CPU
+sidecar schemas/parents, persisted retry conditions and alias parents are checked.
+Hashing and parsing use the same bounded snapshot. All 72 CPU observations and
+nine aliases pass the stricter validator.
+
+The [nonzero fabricated oracle](../../results/phase3-two-hour-audit-v1/nonzero-oracle-final.json)
+verifies 348 paired values in all_29. Removing one FT clean reference leaves
+12 contrasts unavailable without changing family membership. These are software
+fixtures, not research outcomes.

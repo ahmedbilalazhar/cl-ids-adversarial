@@ -631,3 +631,11 @@ One line each: chose / alternative / why. Newest last.
     since stable partitioning needs source ids that legacy tasks lack.
     All 217 configs validate; `grid_status c_f2x` reads 0/36 TODO. No
     spec family yet (prespecified-comparison step) and no runs launched.
+
+
+- 2026-10-25 two-hour audit (AI-authored; human review pending): version worker
+  and notebook as v5 after session/output-lifecycle corrections. Preserve frozen
+  numerical methods and original v4 artifacts. Pin frozen config/decision inputs,
+  parse verified byte snapshots, require evaluation/model commits and retain
+  retry/alias identity and failures. Keep all_29/seeds unchanged. Actual CUDA,
+  provider, scope and human-release gates remain blocked. See the two-hour audit.

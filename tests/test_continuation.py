@@ -21,7 +21,7 @@ def synthetic_metric():
     classes = read_json(ROOT/'configs/phase3/taxonomy-v1.json')['classes']
     arrival = [next(c['arrival_stage'] for c in classes if c['source_code'] == i) for i in range(16)]
     eligible = [c['source_code'] for c in classes if c['scoring_eligible']]
-    names = [str(i) for i in range(16)]
+    names = [next(c['label'] for c in classes if c['source_code'] == i) for i in range(16)]
     stages, matrix = [], [[None]*4 for _ in range(4)]
     for t in range(1, 5):
         slots = [c['source_code'] for c in sorted(classes, key=lambda c: (c['arrival_stage'], c['source_code']))
@@ -118,7 +118,7 @@ class Continuation(unittest.TestCase):
         metric['schema'] = 'phase3-development-metrics-v3'
         with tempfile.TemporaryDirectory() as directory:
             path, run = Path(directory)/'counts.json', Path(directory)/'run.json'
-            run.write_text(json.dumps({'status': 'complete', 'resumed_from': None,
+            run.write_text(json.dumps({'schema': 'phase3-run-v2', 'status': 'complete', 'resumed_from': None,
                                       'settings': metric['settings'], 'execution': execution}))
             metric['run_manifest_sha256'] = digest(run)
             path.write_text(json.dumps(metric))

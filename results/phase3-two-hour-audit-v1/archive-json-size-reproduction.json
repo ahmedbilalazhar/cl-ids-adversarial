@@ -1,0 +1,12 @@
+{
+  "actual_handoff_not_called": true,
+  "case": "oversized JSON before handoff reader",
+  "declared_member_bytes": 34603008,
+  "expected": "reject before JSON allocation/parsing",
+  "observed_before_fix": "incorrectly passed archive resource precheck",
+  "precheck": {
+    "checkpoint_byte_limit": 268435456,
+    "largest_expanded_npz_bytes": 0,
+    "npz_files_checked": 0
+  }
+}

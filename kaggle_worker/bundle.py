@@ -13,7 +13,7 @@ from src.phase3_v2.data import BASE_DEV, TRAIN_FILES, verify_files, verify_train
 from src.phase3_v2.checkpoint import strict_json
 from src.phase3_v3.protocol import Settings, code_files, code_identity
 
-from .runtime import FROZEN, source_files
+from .runtime import FROZEN, FROZEN_FILES, source_files, verify_frozen_bindings
 from .artifacts import valid_name
 from .selection import SELECTION
 
@@ -22,9 +22,36 @@ SOURCE_EXTRA = ['configs/phase3/cpu-v2.json', 'configs/phase3/cpu-v3.json',
                 'docs/phase3-cpu-v2/decisions-2026-10-24.md', 'docs/phase3-cpu-v3/decisions-2026-10-24.md',
                 'docs/phase3-reference/evidence/preparation-rebuild.json',
                 'docs/phase3-plan/experiment-manifest.json', 'docs/phase3-plan/analysis-contrasts.json', SELECTION]
+QUALIFICATION_TRAIN = '16255e585081177b79ca7552ff8b3793d1c04918f82a3352c871417734e3b5cd'
+
+
+def validate_header(manifest, files, frozen_bindings=FROZEN_FILES):
+    expected = {'schema', 'seed', 'dose', 'files', 'frozen_sources', 'worker_sources',
+                'train_manifest_sha256', 'includes_development', 'development_manifest_sha256',
+                'private_upload_only', 'final_test_accessed', 'final_dispatchable'}
+    if (type(manifest) is not dict or set(manifest) != expected or
+            manifest['schema'] != 'kaggle-qualification-snapshot-v1' or
+            manifest['private_upload_only'] is not True or manifest['final_test_accessed'] is not False or
+            manifest['final_dispatchable'] is not False or
+            type(manifest['includes_development']) is not bool or type(manifest['seed']) is not int or
+            manifest['seed'] != 101 or type(manifest['dose']) is not list or manifest['dose'] != [0, 1] or
+            any(type(value) is not int for value in manifest['dose'])):
+        raise ValueError('Qualification boundary/header fields differ')
+    if any(files.get('project/'+name) != sha for name, sha in frozen_bindings.items()):
+        raise ValueError('Frozen protocol/decision/taxonomy payload differs')
+    if (manifest['train_manifest_sha256'] != QUALIFICATION_TRAIN or
+            files.get('project/inputs/train/manifest.json') != QUALIFICATION_TRAIN):
+        raise ValueError('Qualification train manifest binding differs')
+    if manifest['includes_development']:
+        if (manifest['development_manifest_sha256'] != BASE_DEV or
+                files.get('project/inputs/development/manifest.json') != BASE_DEV):
+            raise ValueError('Qualification development manifest binding differs')
+    elif manifest['development_manifest_sha256'] is not None:
+        raise ValueError('Unexpected development bank declaration')
 
 
 def verify(archive_path):
+    frozen_bindings = verify_frozen_bindings()
     with zipfile.ZipFile(archive_path) as archive:
         infos = archive.infolist()
         names = [info.filename for info in infos]
@@ -34,6 +61,7 @@ def verify(archive_path):
             raise ValueError('Unexpected expanded qualification bundle size')
         manifest = strict_json(archive.read('SNAPSHOT.json').decode('utf-8'))
         files = manifest['files']
+        validate_header(manifest, files, frozen_bindings)
         if set(names) != set(files) | {'SNAPSHOT.json'}:
             raise ValueError('Archive inventory differs')
         allowed_source = set(manifest['frozen_sources']) | set(manifest['worker_sources']) | set(SOURCE_EXTRA)
@@ -43,6 +71,14 @@ def verify(archive_path):
             allowed |= {'project/inputs/development/'+name for name in ('manifest.json', 'x.npy', 'y.npy', 'ids.npy', 'cohort.npy', 'attempted.npy')}
         if set(files) != allowed:
             raise ValueError('Unexpected source/data entry')
+        training = strict_json(archive.read('project/inputs/train/manifest.json').decode('utf-8'))
+        if (set(training['files']) != TRAIN_FILES or
+                any(files['project/inputs/train/'+name] != sha for name, sha in training['files'].items())):
+            raise ValueError('Train file hashes differ from the pinned input manifest')
+        if manifest['includes_development']:
+            development = strict_json(archive.read('project/inputs/development/manifest.json').decode('utf-8'))
+            if any(files['project/inputs/development/'+name] != sha for name, sha in development['files'].items()):
+                raise ValueError('Development file hashes differ from the pinned bank manifest')
         if (set(manifest['frozen_sources']) != set(code_files()) or
                 manifest['worker_sources'] != source_files() or
                 identity(manifest['frozen_sources']) != FROZEN or
@@ -69,8 +105,11 @@ def create(output, include_development=True):
         raise FileExistsError(output)
     if code_identity() != FROZEN:
         raise ValueError('Frozen source changed')
+    verify_frozen_bindings()
     train = ROOT/'data/processed/phase3-cpu-v2/s101-p000/train'
     train_hash = digest(train/'manifest.json')
+    if train_hash != QUALIFICATION_TRAIN:
+        raise ValueError('Only the immutable seed101 clean qualification package may be bundled')
     verify_train(train, Settings(seed=101, dose=(0, 1)), train_hash)
     paths = {'project/'+name: ROOT/name for name in set(code_files()) | set(source_files()) | set(SOURCE_EXTRA)}
     paths.update({'project/inputs/train/'+name: train/name for name in TRAIN_FILES | {'manifest.json'}})

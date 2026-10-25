@@ -1,0 +1,630 @@
+{
+  "baseline_commit": "1869d1b7c9de511ea091fd5b5b639165ffacdc93",
+  "excluded": [
+    "tmp scratch/environments",
+    "Private ZIPs and datasets",
+    "Binary checkpoints"
+  ],
+  "files": [
+    {
+      "change": "modified",
+      "file": ".gitattributes",
+      "purpose": "Byte portability and private-artifact inclusion policy",
+      "sha256": "40dea590febb0db908f63560d1d059aef28cf0406d1538a4fb5440ee9d181b52"
+    },
+    {
+      "change": "modified",
+      "file": ".github/workflows/ci.yml",
+      "purpose": "Pinned-runtime regression coverage and CI separation",
+      "sha256": "7833d8018863f6329fcd29dcd41daa9bc8da1699cb20034ac36fc0eb11b8956d"
+    },
+    {
+      "change": "modified",
+      "file": ".github/workflows/kaggle-worker-cpu.yml",
+      "purpose": "Pinned-runtime regression coverage and CI separation",
+      "sha256": "79e73cf946a8de1e26c5239f24939d14db906f956adb27554da1a37e6d3f199f"
+    },
+    {
+      "change": "modified",
+      "file": ".gitignore",
+      "purpose": "Byte portability and private-artifact inclusion policy",
+      "sha256": "4f0062eee743ebb9f9a1eee1e6394ffc3e6b0b2ce43f32ad193f98f735547589"
+    },
+    {
+      "change": "modified",
+      "file": "README.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "d072af8f3462941e747ac058f5d8add800b36c51ee3796ded1ff7d5e03786e5e"
+    },
+    {
+      "change": "modified",
+      "file": "docs/ai_disclosure_log.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "864863c7aa4bb5f89318fffc0fbe80555f296f06b5a3f41f66dbe54a47809c15"
+    },
+    {
+      "change": "modified",
+      "file": "docs/decisions_log.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "25b37f682f41693f1e878dac7734f71f3a98bd1da593803b70108db16f2c4493"
+    },
+    {
+      "change": "modified",
+      "file": "docs/kaggle-phase3/README.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "c6c3442cade64a13bbc1c346ef841521894e8cb1934f2f0d19fd958a34896fb4"
+    },
+    {
+      "change": "modified",
+      "file": "docs/phase3-cpu-v3/README.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "c58d5fc99248e5355c2a12dabda37acdfd57c6b7b06f346f6649046b23b6a5b4"
+    },
+    {
+      "change": "modified",
+      "file": "docs/phase3-cpu-v3/continuation-audit.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "bfec0a14111b871a3e4c913daf49f11cd02d87dda3c5e394d470d6e37cc088ce"
+    },
+    {
+      "change": "added",
+      "file": "docs/phase3-cpu-v3/two-hour-implementation-audit.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "c9172ba47db06ad949402c0f7b4a7ed4caba662115027c3eb2a45f03f4d1f7f3"
+    },
+    {
+      "change": "modified",
+      "file": "docs/phase3-plan/START-HERE.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "a2f882218eb08d74a330c3f3c66d90c22a79310d71982f3635915da1c19a5ef6"
+    },
+    {
+      "change": "modified",
+      "file": "docs/phase3-plan/implementation-work-breakdown.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "d132829461262a45bf808102b8b120382f81d137bf678460c27b6ab0f8255e79"
+    },
+    {
+      "change": "modified",
+      "file": "docs/phase3-plan/kaggle-execution-contract.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "c9a823b4976a1db288a89c0e272541325fe9a407fc1f1d16faee16628953c102"
+    },
+    {
+      "change": "modified",
+      "file": "docs/phase3-plan/planning-validation.json",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "b645206e5df75c3872c38d65525351808a3583be555c73326dbfbf558a91e435"
+    },
+    {
+      "change": "modified",
+      "file": "docs/phase3-plan/research-status.json",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "09adc3c2e3ef2b1ac14d5193db8e89262926cc4184abde3df3c0e9fe31836b12"
+    },
+    {
+      "change": "modified",
+      "file": "docs/phase3-plan/result-registry-contract.md",
+      "purpose": "Authoritative audit findings, evidence, execution contract or roadmap",
+      "sha256": "743e725701635e5f618541603eae14cc7d5e3a9654db577980fbf8c0748222dd"
+    },
+    {
+      "change": "modified",
+      "file": "kaggle_worker/architecture_checks.py",
+      "purpose": "Contract and artifact fault tests; never trains or executes a model.",
+      "sha256": "a1de4f4b9c2ca0d1c0190648610c6f62ebcec10b2fc996c96653edb915327c30"
+    },
+    {
+      "change": "modified",
+      "file": "kaggle_worker/bundle.py",
+      "purpose": "Private notebook qualification bundle: explicit source/train/dev allowlists.",
+      "sha256": "377bfd2ec58860aa2eb124cdd5544492010899857c24ecbba3f6738e4b2d69b6"
+    },
+    {
+      "change": "modified",
+      "file": "kaggle_worker/contracts.py",
+      "purpose": "One strict contract shared by job creation, evaluation and result import.",
+      "sha256": "81ed3742f9586267a1b915cd08cad4016a8759c72ca221de1496c0c03f4b9fae"
+    },
+    {
+      "change": "modified",
+      "file": "kaggle_worker/evaluate.py",
+      "purpose": "Separate development-only evaluator for complete notebook qualification jobs.",
+      "sha256": "0c74cd03c60687f65db74e20069c100607dcde0f938860ef27f1eec4c30a8612"
+    },
+    {
+      "change": "modified",
+      "file": "kaggle_worker/notebook.py",
+      "purpose": "Generate a credential-free private qualification notebook pinned to a bundle.",
+      "sha256": "c685a64df8fd81a7f9386151267cf239e2b23c283dfd8a07cdaae8a9bac0a2f6"
+    },
+    {
+      "change": "modified",
+      "file": "kaggle_worker/review_checks.py",
+      "purpose": "Fault injection and measured synthetic performance checks for candidate v2.",
+      "sha256": "8b65690dd6b8554d3a039565e5ff26f8e0d00d243d2d2ecc35663d4a27ea4b2f"
+    },
+    {
+      "change": "modified",
+      "file": "kaggle_worker/runtime.py",
+      "purpose": "Pinned candidate runtime, separate from the frozen Windows CPU execution.",
+      "sha256": "bdeb9073002e2ff065ce1329174727fc1acfc03db62183459a946e8ccd463da6"
+    },
+    {
+      "change": "added",
+      "file": "kaggle_worker/session.py",
+      "purpose": "Standard-library notebook scheduling, command receipts and consistent exports.",
+      "sha256": "d3d2b0ed293ca5de4c8641d5ca2272b97ff28d74121b59c1648d34f7f60119fc"
+    },
+    {
+      "change": "modified",
+      "file": "kaggle_worker/worker.py",
+      "purpose": "Notebook CLI: development qualification only, no final seed dispatch option.",
+      "sha256": "9b670592f120a0db1d03cc00a65750efbc9569e74ecafd488a9149b7ba82815d"
+    },
+    {
+      "change": "added",
+      "file": "phase3_delivery/archive_policy.py",
+      "purpose": "Inspect NPZ size/shape envelopes before a handoff reader allocates arrays.",
+      "sha256": "4e7b401bb2e332dbc7942a4075f12db262dedb974b5c42e0c59a202c09bb0cd2"
+    },
+    {
+      "change": "modified",
+      "file": "phase3_delivery/catalog.py",
+      "purpose": "Transactional, manifest-bound development/synthetic result registry.",
+      "sha256": "b1bce0981b23654d14761bde56ab3cd227e3c80508a4a08c3b6838f0e8f73bda"
+    },
+    {
+      "change": "modified",
+      "file": "phase3_delivery/development.py",
+      "purpose": "Import the published CPU delivery using Git-bound receipts, without inference.",
+      "sha256": "f0aee3fe67b0df7ead84dad640d471c86181e9f59712d5dde303ebc1144bb065"
+    },
+    {
+      "change": "modified",
+      "file": "phase3_delivery/import_counts.py",
+      "purpose": "Fail-closed development/synthetic count import; final results remain sealed.",
+      "sha256": "fed8830f60f136433252271239a190b0b33fb4808bf8755e5630ba87a37047db"
+    },
+    {
+      "change": "added",
+      "file": "phase3_delivery/io.py",
+      "purpose": "Bounded single-snapshot reads for externally supplied JSON artifacts.",
+      "sha256": "28bc3436a5913c29851f949ffe0038bff6191e4af235e987773c0db1156172f2"
+    },
+    {
+      "change": "added",
+      "file": "phase3_delivery/reported_metrics.py",
+      "purpose": "Independent count-to-report checks beyond the historical endpoint audit.",
+      "sha256": "757e1b63c64d0b28dad97e884379dead6e0f2b42ea97f5ef27406ad54ad031ab"
+    },
+    {
+      "change": "added",
+      "file": "phase3_delivery/worker_import.py",
+      "purpose": "Verify a downloaded worker export before transactional count ingestion.",
+      "sha256": "88e620cf0b321ee1dcbfeb5b602203275de164fd54fbdaf296da1b09daa00d69"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/acceptance-attempt1.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "6ad8405edd22a444988e898f44100c0b62e058362dd51bbf3835a83e43c94a0d"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/acceptance-code-final.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "7c0b76a3320585ddd78ed4a1518a1498e8ed8f22f9e8b93ca39689475c8d98dd"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/acceptance-pre-documentation-failure.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "f8cbe9773713161a2c8fb87638f7ac629c558634df0bb5bb20242f7b82532161"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/all-learner-worker-import-attempt1.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "7b9277b55f1a31b4acc8468bebcf3c8b3c5ae1fcec8dee1be1e5c9958350be5e"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/archive-json-size-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "ffe4c5e39bcc47d613aed598cc8e087335b9a2dc3a974a9c1c746df603ba126c"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/bundle-header-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "7ecb07869ff4c810d6c81db23459be241449c50139109258315210c3da93dfd3"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/architecture-attempt1.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "5acf04d2a2cb0a2fc621355ed81b4d3fa263130598ea3de4cb8676888f7cfa3f"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/architecture-final.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "27c8aa9c8efd3fb8f966fdf856640789cc8a0130eee3ecb2eef23a10908bcf47"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/bundle-attempt1/acceptance.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "d0f4c3f524ba8ceb6e4f37c3ab07e5b50734d9551560c10cdd67de57a7deeda7"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/bundle-attempt1/snapshot.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "3bb285d3b25a06c691bef0f8772d4cce812dc2e992f937896ece222583707303"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/bundle-final/acceptance.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "220043d949ef56843fbc110ecb43573306cf4704625bee166bb04b6975e1d1d8"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/bundle-final/snapshot.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "15156ab542a3ffd059b591540a9a5d4153adce4be0db8f30541e7ef883c12de0"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/notebook-attempt1/kernel-metadata.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "ff4a829df4bd2aa608e3733e2509064a7b95b42093b212c357730552f95c559a"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/notebook-attempt1/phase3-qualification.ipynb",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "433b34899fcf261db5a9d48f74736bf287007e558dad8e6b70450074eb92d5a6"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/kernel-metadata.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "ff4a829df4bd2aa608e3733e2509064a7b95b42093b212c357730552f95c559a"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "54db44c770fc73c7f398ae9fe09220a2383bf65a99a2dcee5af9a4c272a4c214"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/recovery-review-attempt1.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "6112e6913a17f242fd11bf336f8d6efa6588dbbabc9b3fed9d85bc3632616cc4"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/recovery-review-final.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "663658c263eaefc8f476e60779a90b64ff652dd1fb30a637f244161f775cb343"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/worker-acceptance-attempt1.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "570b3c54df4476414da31c8d3d3d0f23d3cb0fba73ded89719fc65bea530d1f9"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/candidate-v5/worker-acceptance-final.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "f79f9c4e0a5b867e4372ce147825239df005d1173222282b367525cd96173d0a"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/change-inventory.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "19f84b1916d707dd06c31fa8d1c4b2003f63b70e234e6933578ba55c1cbd19cb"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/ci-equivalent-final-attempt1.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "8e4b34da875bc08835e378098025f453ef68a4a213c37cb66e88c73f713de72d"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/ci-equivalent-final-attempt2.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "291237ed3388c68eeb5530c90980f4bf82df48d2e6a679c43419fa2e4fef930d"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/ci-equivalent-final-attempt3.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "930668777f61b44c3f41f6242d9d23b591492e2e7b5788505efdac26016e7e92"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/ci-equivalent-final-attempt4.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "e44737d97503e676284ea1d5709c294bfc3d54d0c648eda141e5eb3ba0c2b870"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/ci-equivalent-final-attempt5.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "da8860ba4d45c8d5fdd62d348f1f41df58d8ea1cb1d12a95858306b5ccb15b01"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/ci-equivalent-final-attempt6.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "3328d6744f98fcff211242c3fcd3247e3e9d56c162d1581d319f0ceee85416f9"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/frozen-binding-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "9cc3f1dfe1409ad6992c3e16b238b41d102fc297409bc3f19d73a6ab5dc69e79"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/hash-parse-race-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "8404fbaf858829613087e1a18b973c8a504b3c33ee13edca95059ced5ca602df"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/historical-preservation-final.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "e207a1724773728148b15c74d955b2dd7f4e72d87715423095d1aa5faf7a6c4a"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/historical-preservation-final.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "87190106d5778d75037447453d6d3427b302e946ab079fbd9e04724e6191ec48"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/hosted-ci-annotations.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "7ae0d7a59682c3ed78f726fcdb48c1f0d07e890bb4a53fa74d9ec9d14c9b5043"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/integrity-regressions-attempt1.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "17fc398ad511126d1f90ce7be06313b151e448f4d1631e0ca38c077492dd0bf4"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/legacy-catalog-compatibility-final.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "4df0b11d791d355c6c2eeae0866b2e8e0681944e49e4806d64cf5229a22cb797"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/legacy-catalog-compatibility.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "4df0b11d791d355c6c2eeae0866b2e8e0681944e49e4806d64cf5229a22cb797"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/nonzero-endpoints-attempt1.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "c3eae0ba31c33401d28586ae063c502d7fc2a9ec5b04fea645cd89d0b0266cb0"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/nonzero-oracle-final.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "811883d21b94297e120b0ba1ad5312739cf82bdd4e8938ad4f74c830b3d20fc1"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/nonzero-oracle-final.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "da1d9c0e76ced6a39b710c602fbba4f6f98a8f58f2f2201166d7f1163f0ea5b7"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/notebook-and-evaluation-attempt1.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "547ba4eea0449b518f7f3868b07cedd2deb87c0eaecf45686712952ba8be44d5"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/parent-binding-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "214b9864b28e5e804734471dc2d6af8130fc09dd68ae0a9bc5038b81295586e6"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/planning-final.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "85308fc5ceae919e8b137adaec5b014bb3187309586f48fd35736cff2094f4e9"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/protected-baseline.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "31dfa4599e0e9e43c23074a8a7adcfcbfeff505c205fb81470f2da9d7e995f33"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/reported-metrics-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "98e3e63ec41bf622c21c3bf787de7426959c065e5554e9bb9a7f0fe0360ed15e"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/retry-identity-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "bbe291b92a84a8e1793d149c9918aaa5e27af818366610c3f68ac8ff2b991e67"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/session-budget-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "b86437945103f5bc255811e1f1084939c9146fe249b535556ddf577c75446396"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/session-regressions-attempt1.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "6d6fdd4b48040c977b18a21594cc2e47675f9f8f0cd415321c04cd939e6d8108"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/session-regressions-attempt2.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "e56ae7aa8dc5b4012c6427a7263f23c364d9e3f05597cc6fd43fc41c3606e848"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/static-final-all.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/static-final-imports.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/static-final.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/top-level-seal-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "205203dfd34fd8cebf749b696f01d14b5112a54050eb5e2f9304e3d9f4797fff"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/transport-and-metrics-attempt1.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "eb873639364d932f7322c1c18a05c1214c638e6feea01bc48ab38f9ca6980698"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/typed-metadata-reproduction.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "de1e4ca7322e4a736c72d9f993ccdf4e30fc4511312a6b0e13e158a7448e34c9"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/verification.json",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "1e0b46b387b0681f35a660726d9b6f7685cf472598504210e5b2311dff924f8c"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/verified-worker-import-attempt1.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "3599fc2bd783eebef11da31374824883a8b2b81adae3c1175fdb03180254eb89"
+    },
+    {
+      "change": "added",
+      "file": "results/phase3-two-hour-audit-v1/worker-bindings-attempt1.log",
+      "purpose": "Preserved audit, qualification, reproduction or failure evidence",
+      "sha256": "c39b955a7de5263dea53d729c841690042dc926bfdde1e6eb87bde01d6ec0b0e"
+    },
+    {
+      "change": "added",
+      "file": "scripts/qualify_nonzero_counts.py",
+      "purpose": "Publish fabricated nonzero count/oracle acceptance, never research results.",
+      "sha256": "749d4a527be59b386c600464742bd832dc995c62f14e73de490903499f09b4c5"
+    },
+    {
+      "change": "added",
+      "file": "scripts/verify_historical_payloads.py",
+      "purpose": "Recheck preserved CPU evidence bytes without training or inference.",
+      "sha256": "128df14f25adeca5afbe5f3691ec0311fa5b6aa72ad6718dc7218b4c270a905d"
+    },
+    {
+      "change": "added",
+      "file": "scripts/verify_two_hour_audit.py",
+      "purpose": "Read-only acceptance of the separately identified two-hour audit delivery.",
+      "sha256": "3ab5dc943df1d3171cb849f4ec41d6c041a62b205f8043fc0b0a982191577e7e"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_archive_policy.py",
+      "purpose": "Reject allocation bombs and altered NPZ encodings before loading arrays.",
+      "sha256": "22bfa8267d441a1e0e0ff8ac3f182c36d4aca0273deff8a72396e0f347c4cd82"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_audit_integrity.py",
+      "purpose": "Regressions for reproduced metadata and persisted-lineage weaknesses.",
+      "sha256": "077f7e09749b8ce957e5ff4519160c1a6ba0747f86c74496c5e0751faf79490f"
+    },
+    {
+      "change": "modified",
+      "file": "tests/test_continuation.py",
+      "purpose": "Synthetic boundary tests: no training, data packages or final outcomes.",
+      "sha256": "8b81ed77a8aba4c5e82f6dd8616ff937982bdb2a741b0e02ae064eab4e233a78"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_evaluation_reuse.py",
+      "purpose": "Committed-evaluation reuse checks without model construction or inference.",
+      "sha256": "7d7637540ee9777d0b7027f09dadc3e4677581f45339ba72ec28a04287395bb9"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_notebook_orchestration.py",
+      "purpose": "Execute generated orchestration cells with mocked subprocesses and budgets.",
+      "sha256": "0bd18505e55262491b59a6e76a6a2020c79a57285365dee4b79bdb9502b60019"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_notebook_session.py",
+      "purpose": "Notebook scheduling/export regressions; synthetic commands and files only.",
+      "sha256": "187873c91ba9227ae74c5ff7487e053b65dcf975729a8a26046e564988f8e629"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_reported_metrics.py",
+      "purpose": "Independent rejection tests for previously unchecked displayed metrics.",
+      "sha256": "a83a0ae300b830b3a8d7b7972d1ee13815879c2b4cedbec2686eb6071dbe0036"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_research_endpoints.py",
+      "purpose": "Nonzero fabricated-count oracle for pairing, signs, acquisition and Holm wiring.",
+      "sha256": "a17a4272da99c7bc17554445eda9b250080566289460fccb1188a29e04a98cbe"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_transport_integrity.py",
+      "purpose": "Bounded input and exact-byte parsing tests, including a deterministic race.",
+      "sha256": "48187333dc83ab8cd67bc60853798522188bd7eb9c8c2bc6147a9cf8d67d6685"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_verified_worker_import.py",
+      "purpose": "Toy worker archive integration; no research packages or final bank are used.",
+      "sha256": "7ea7d8fae8dba19384c53dd9e67aee5b3330c9547cdd6e840deae6a0d55a71b3"
+    },
+    {
+      "change": "added",
+      "file": "tests/test_worker_bindings.py",
+      "purpose": "Data-independent frozen-source and qualification-header regressions.",
+      "sha256": "9e30703a04aa27801fad177f8dbbb72a7a55b6163c5f0fe01d0d9101775e0ce5"
+    }
+  ],
+  "final_dispatchable": false,
+  "note": "Fresh inventory after the AST-identical EOF cleanup; excludes itself and subsequent acceptance/closure receipts. Complete delivery is listed by the Git commit."
+}

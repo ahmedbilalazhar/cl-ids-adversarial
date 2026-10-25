@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import textwrap
 from pathlib import Path
 
 from src.phase3.common import read_json, write_json
@@ -27,10 +28,12 @@ import hashlib, json, zipfile, os, subprocess, sys, time
 # Attach the private dataset containing qualification.zip, then set its path.
 BUNDLE = Path('/kaggle/input/CHANGE-TO-YOUR-PRIVATE-DATASET/qualification.zip')
 EXPECTED_SHA256 = {expected!r}
-WORK = Path('/kaggle/working/phase3-v4')
+WORK = Path('/kaggle/working/phase3-v5')
 DEVICE = 'cpu'  # Change to 'cuda:0' for the separate CUDA qualification candidate.
 RUN_FULL_DATA = False  # Selected clean development settings; seed 101 only.
-SESSION_SECONDS = 7200  # Operator-declared bound: verify against the actual session UI.
+SESSION_REMAINING_SECONDS = 7200  # Set the remaining allowance shown by the actual session UI.
+SESSION_STARTED = time.monotonic()
+EXPORT_RESERVE_SECONDS = 240  # Operational estimate; qualify actual export cost.
 MINIMUM_FREE_BYTES = 2*1024**3  # Conservative local reservation, not a measured job size.
 
 def sha(path):
@@ -65,83 +68,111 @@ PROJECT = WORK/'project'
 os.chdir(PROJECT)
 print('Verified frozen source, worker source and train/development input bytes.')
 '''
-    environment = '''# Enable Internet for setup. The candidate uses its own pinned environment.
-ENVIRONMENT = '/kaggle/working/phase3-env-v4-'+DEVICE.replace(':', '-')
+    environment = '''# The notebook kernel orchestrates standard-library helpers only.
+# Scientific commands run in the separate pinned environment.
+from kaggle_worker.session import SessionBudget, run_logged, export_outputs
+SESSION = SessionBudget(SESSION_REMAINING_SECONDS, EXPORT_RESERVE_SECONDS, SESSION_STARTED)
+OUTPUT = Path('/kaggle/working/phase3-results-v5')/DEVICE.replace(':', '-')
+OUTPUT.mkdir(parents=True, exist_ok=True)
+_COMMAND_FAILED = False
+
+def save_outputs(reason):
+    print('Saving retained outputs:', reason, flush=True)
+    exported = export_outputs(OUTPUT, Path('/kaggle/working'))
+    print('Export:', exported['archive'], 'SHA256:', exported['archive_sha256'], flush=True)
+    return exported
+
+def run(module, *args, interpreter=None, process_env=None, minimum=1):
+    global _COMMAND_FAILED
+    _COMMAND_FAILED = False
+    command = [interpreter or PYTHON, '-m', module, *map(str, args)]
+    try:
+        remaining = SESSION.job_seconds(minimum)
+        if remaining == 0:
+            raise RuntimeError('Session allowance exhausted; preserve outputs and resume in a fresh session')
+        receipt = run_logged(command, module, OUTPUT, PROJECT,
+                             process_env if process_env is not None else ENV, remaining)
+        print(receipt, flush=True)
+        return receipt
+    except BaseException:
+        _COMMAND_FAILED = True
+        try:
+            save_outputs('command failed or session allowance exhausted')
+        except Exception as export_error:
+            print('Export failed; original working files remain:', type(export_error).__name__, flush=True)
+        raise
+
+ENVIRONMENT = '/kaggle/working/phase3-env-v5-'+DEVICE.replace(':', '-')
 setup_started = time.perf_counter()
-subprocess.run([sys.executable, '-m', 'kaggle_worker.bootstrap',
-                '--device', 'cuda' if DEVICE.startswith('cuda') else 'cpu',
-                '--output', ENVIRONMENT], check=True)
+run('kaggle_worker.bootstrap', '--device', 'cuda' if DEVICE.startswith('cuda') else 'cpu',
+    '--output', ENVIRONMENT, interpreter=sys.executable, process_env=os.environ.copy())
 PYTHON = ENVIRONMENT+'/bin/python'
 ENV = {**os.environ, 'CUBLAS_WORKSPACE_CONFIG': ':4096:8', 'OMP_NUM_THREADS': '1',
        'MKL_NUM_THREADS': '1', 'OPENBLAS_NUM_THREADS': '1', 'PYTHONPATH': str(PROJECT)}
-OUTPUT = Path('/kaggle/working/phase3-results-v4')/DEVICE.replace(':', '-')
-OUTPUT.mkdir(parents=True, exist_ok=True)
 import shutil
-shutil.copyfile(Path(ENVIRONMENT)/'.phase3-environment.json', OUTPUT/'environment-lock.json')
+environment_receipt = Path(ENVIRONMENT)/'.phase3-environment.json'
+if (OUTPUT/'environment-lock.json').exists():
+    if sha(OUTPUT/'environment-lock.json') != sha(environment_receipt):
+        raise ValueError('Returned environment lock changed')
+else:
+    shutil.copyfile(environment_receipt, OUTPUT/'environment-lock.json')
 setup_receipt = OUTPUT/'setup-cost.json'
 if not setup_receipt.exists():
     setup_receipt.write_text(json.dumps({'environment_setup_seconds': time.perf_counter()-setup_started,
                                         'device_candidate': DEVICE}, indent=2))
-
-def run(module, *args):
-    index = 1
-    while (OUTPUT/f'command-{index:04d}.json').exists() or (OUTPUT/f'command-{index:04d}.log').exists():
-        index += 1
-    log = OUTPUT/f'command-{index:04d}.log'
-    command = [PYTHON, '-m', module, *map(str, args)]
-    print('Running', module, 'log:', log, flush=True)
-    began = time.perf_counter()
-    with log.open('x') as stream:
-        result = subprocess.run(command, cwd=PROJECT, env=ENV, stdout=stream, stderr=subprocess.STDOUT)
-    receipt = {'module': module, 'argv': command, 'returncode': result.returncode,
-               'subprocess_wall_seconds': time.perf_counter()-began,
-               'scope': 'Includes cold interpreter imports, input verification, execution and saving; excludes setup',
-               'log_sha256': sha(log)}
-    (OUTPUT/f'command-{index:04d}.json').write_text(json.dumps(receipt, indent=2))
-    print(receipt)
-    print('\\n'.join(log.read_text().splitlines()[-8:]))
-    result.check_returncode()
-
 preflight = OUTPUT/f'preflight-{time.time_ns()}.json'
 run('kaggle_worker.preflight', '--device', DEVICE, '--output', preflight,
-    '--session-seconds', SESSION_SECONDS, '--minimum-free-bytes', MINIMUM_FREE_BYTES)
+    '--session-seconds', max(1., SESSION_REMAINING_SECONDS-(time.monotonic()-SESSION_STARTED)),
+    '--minimum-free-bytes', MINIMUM_FREE_BYTES)
 acceptance = OUTPUT/'synthetic-acceptance.json'
 run('kaggle_worker.checks', '--device', DEVICE, '--output', acceptance, '--verify-existing')
+'''
+    definitions, setup = environment.split('ENVIRONMENT =', 1)
+    environment = definitions+'try:\n'+textwrap.indent('ENVIRONMENT ='+setup, '    ')+'''except BaseException:
+    if not _COMMAND_FAILED:
+        try:
+            save_outputs('environment setup or integrity check failed')
+        except Exception as export_error:
+            print('Export failed; original working files remain:', type(export_error).__name__, flush=True)
+    raise
 '''
     jobs = '''# Fresh jobs or compatible committed continuations. No final seed CLI exists.
 # The receipt covers train validation, stage/round work, importance and saving.
 # Evaluation uses the same pinned CPU device for every condition.
 if RUN_FULL_DATA:
     for learner in ('FT', 'EI', 'DR'):
+        remaining = SESSION.job_seconds(1080)
+        if remaining == 0:
+            print('Session allowance reserved for export; continue the fixed job order in a fresh session.')
+            break
         job = OUTPUT/learner
         run('kaggle_worker.worker', '--device', DEVICE, '--learner', learner,
             '--train-package', PROJECT/'inputs/train',
             '--train-manifest-sha256', manifest['train_manifest_sha256'],
-            '--output', job, '--budget-seconds', SESSION_SECONDS,
+            '--output', job, '--budget-seconds', remaining,
             '--reserve-seconds', 180, '--transition-bound-seconds', 900)
         receipts = sorted(job.glob('invocation-*.json'))
         if not receipts or json.loads(receipts[-1].read_text())['status'] != 'complete':
             print(learner, 'stopped at a committed boundary; save outputs and resume this job.')
-            continue
+            break
+        if SESSION.job_seconds(60) == 0:
+            print('Evaluation deferred; complete training state is retained for the next session.')
+            break
         metrics = OUTPUT/(learner+'-development')
-        if not metrics.exists():
-            run('kaggle_worker.evaluate', '--job', job,
-                '--development-package', PROJECT/'inputs/development', '--output', metrics)
+        attempt = 1
+        while metrics.exists() and not (metrics/'evaluation.commit.json').exists():
+            metrics = OUTPUT/(learner+f'-development-attempt-{attempt:04d}')
+            attempt += 1
+        run('kaggle_worker.evaluate', '--job', job, '--verify-existing',
+            '--development-package', PROJECT/'inputs/development', '--output', metrics)
 else:
     print('Full-data confirmations are disabled. Enable RUN_FULL_DATA after inspecting fixture evidence.')
 '''
-    export = '''# Save Version / Run All, wait for success, and download these saved outputs.
-# /kaggle/working is the output location; a checkpoint only in a live session is
-# not a durable handoff. Keep failed logs and immutable segments in the export.
-import shutil
-index = 1
-export = Path(f'/kaggle/working/phase3-qualification-output-{index:04d}.zip')
-while export.exists():
-    index += 1
-    export = Path(f'/kaggle/working/phase3-qualification-output-{index:04d}.zip')
-shutil.make_archive(str(export.with_suffix('')), 'zip', OUTPUT)
-print('Output archive:', export, 'SHA256:', sha(export))
-print('These results qualify development execution only; final-study dispatch is still sealed.')
+    export = '''# Save Version / Run All, then download the ZIP and adjacent export receipt.
+# A local archive is not proof of provider durability. Failed command attempts
+# also trigger this export path after the child process stops.
+exported = save_outputs('notebook reached its export cell')
+print('Final-study dispatch remains sealed; inspect the retained qualification receipts.')
 '''
     cells = [cell('markdown', '# Phase 3 Kaggle qualification\n\nPrivate development-only worker. Start with CPU, then use a separate CUDA run and environment for comparison. All five federated clients stay inside one job. Each contributor operates their own account.\n\nNo final-test bank, final seeds, AMP, TF32, DDP or automatic account operation. Actual Kaggle GPU qualification and full-data confirmations remain necessary.\n'),
              cell('code', extraction), cell('markdown', '## Install and verify\n\nThe notebook image is not the experiment environment. The setup cell creates Python 3.12.14, NumPy 2.3.5 and Torch 2.7.0 in a separate environment. CUDA uses the cu126 build; CPU uses the CPU build.\n'),
@@ -154,7 +185,7 @@ print('These results qualify development execution only; final-study dispatch is
     output.mkdir(parents=True)
     path = output/'phase3-qualification.ipynb'
     path.write_text(json.dumps(notebook, indent=2)+'\n', encoding='utf-8')
-    metadata = {'id': 'YOUR-USERNAME/phase3-qualification-v4', 'title': 'Phase 3 development qualification v4',
+    metadata = {'id': 'YOUR-USERNAME/phase3-qualification-v5', 'title': 'Phase 3 development qualification v5',
                 'code_file': path.name, 'language': 'python', 'kernel_type': 'notebook',
                 'is_private': True, 'enable_gpu': False, 'enable_internet': True,
                 'dataset_sources': [], 'competition_sources': [], 'kernel_sources': [], 'model_sources': []}

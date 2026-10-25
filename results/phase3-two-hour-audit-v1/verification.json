@@ -1,0 +1,122 @@
+{
+  "commands": [
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m unittest tests.test_phase3_v2 tests.test_phase3_analysis tests.test_continuation tests.test_delivery_catalog tests.test_archive_policy tests.test_audit_integrity tests.test_evaluation_reuse tests.test_notebook_orchestration tests.test_notebook_session tests.test_reported_metrics tests.test_research_endpoints tests.test_transport_integrity tests.test_verified_worker_import tests.test_worker_bindings -v",
+      "elapsed_seconds": 115.441,
+      "log": "ci-equivalent-final-attempt6.log",
+      "passed": 91,
+      "skipped": 1,
+      "status": "passed",
+      "tests_discovered": 92
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.checks --device cpu --output results\\phase3-two-hour-audit-v1\\candidate-v5\\worker-acceptance-final.json",
+      "elapsed_seconds": 371.8889904000098,
+      "groups": 30,
+      "status": "passed"
+    },
+    {
+      "checks": 61,
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.architecture_checks --output results\\phase3-two-hour-audit-v1\\candidate-v5\\architecture-final.json",
+      "model_executions": 0,
+      "status": "passed"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.review_checks --output results\\phase3-two-hour-audit-v1\\candidate-v5\\recovery-review-final.json",
+      "groups": 5,
+      "status": "passed"
+    },
+    {
+      "aliases": 9,
+      "attempts": 81,
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m phase3_delivery.catalog verify --database tmp/phase3-count-catalog-v2/catalog.sqlite --manifest-sha256 0d262998d0314771eadf50702baa0b2f15082f59d541872a49c9a44b39060f62 --output results\\phase3-two-hour-audit-v1\\legacy-catalog-compatibility-final.json",
+      "physical_observations": 72,
+      "status": "passed"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m scripts.qualify_nonzero_counts --output results\\phase3-two-hour-audit-v1\\nonzero-oracle-final.json",
+      "exact_paired_oracle_checks": 348,
+      "fabricated_trajectories": 240,
+      "family": "all_29",
+      "missing_contrasts_when_clean_reference_removed": 12,
+      "status": "passed"
+    },
+    {
+      "archived_source_payloads": 287,
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m scripts.verify_historical_payloads --output results\\phase3-two-hour-audit-v1\\historical-preservation-final.json",
+      "elapsed_seconds": 159.49911840001005,
+      "status": "passed",
+      "trajectory_payloads": 7200
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.bundle --output results\\phase3-two-hour-audit-v1\\candidate-v5\\bundle-final",
+      "payloads": 82,
+      "private_zip_ignored": true,
+      "status": "passed",
+      "uploaded": false
+    },
+    {
+      "all_code_cells_compile": true,
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m kaggle_worker.notebook --bundle-receipt results\\phase3-two-hour-audit-v1\\candidate-v5\\bundle-final\\acceptance.json --output results\\phase3-two-hour-audit-v1\\candidate-v5\\notebook-final",
+      "full_data_default": false,
+      "status": "passed"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m compileall -q src scripts tests kaggle_worker phase3_delivery",
+      "status": "passed"
+    },
+    {
+      "command": "ruff check src scripts tests kaggle_worker phase3_delivery --select E7,E9,F63,F7,F82",
+      "log": "static-final-all.log",
+      "status": "passed"
+    },
+    {
+      "command": "ruff check kaggle_worker phase3_delivery and the three new verification scripts plus all 12 delivery regression modules --select F401",
+      "log": "static-final-imports.log",
+      "status": "passed"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe docs/phase3-plan/validate_planning_package.py",
+      "log": "planning-final.log",
+      "scope": "Document/manifest consistency only",
+      "status": "passed"
+    },
+    {
+      "command": "C:/Python314/python.exe: yaml.safe_load both .github/workflows/*.yml",
+      "status": "passed",
+      "workflow_files": 2
+    },
+    {
+      "command": "git -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --check",
+      "scope": "Accept CRLF as line endings while checking real trailing whitespace",
+      "status": "passed"
+    },
+    {
+      "command": "gh api repos/ahmedbilalazhar/cl-ids-adversarial/check-runs/121096609599/annotations",
+      "log": "hosted-ci-annotations.json",
+      "reason": "Job did not start because account is locked due to billing",
+      "status": "external_blocker_confirmed"
+    },
+    {
+      "command": "git ls-remote origin refs/heads/main",
+      "remote_main": "b77a7bbf11c1e4ae7cc06f79e5d7d7d452dbf932",
+      "status": "read_only_verified"
+    }
+  ],
+  "failed_attempts_retained": [
+    "session-regressions-attempt1.log",
+    "ci-equivalent-final-attempt4.log",
+    "acceptance-pre-documentation-failure.json"
+  ],
+  "final_dispatchable": false,
+  "new_research_trajectories": 0,
+  "platform_limit": "Local Windows CPU qualification; hosted Linux workflow and actual Kaggle/CUDA not executed",
+  "recorded_utc": "2026-10-25T14:20:50.322509+00:00",
+  "schema": "phase3-two-hour-audit-command-ledger-v1",
+  "unexecuted": [
+    "Final twelve-seed matrix",
+    "Final-test inference/features",
+    "Actual CUDA qualification",
+    "Provider save/end-session/restore acceptance"
+  ]
+}

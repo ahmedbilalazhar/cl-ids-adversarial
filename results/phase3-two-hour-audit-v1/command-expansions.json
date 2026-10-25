@@ -1,0 +1,9 @@
+{
+  "commands": [
+    "ruff check kaggle_worker phase3_delivery scripts/verify_historical_payloads.py scripts/verify_two_hour_audit.py scripts/qualify_nonzero_counts.py tests/test_continuation.py tests/test_delivery_catalog.py tests/test_archive_policy.py tests/test_audit_integrity.py tests/test_evaluation_reuse.py tests/test_notebook_orchestration.py tests/test_notebook_session.py tests/test_reported_metrics.py tests/test_research_endpoints.py tests/test_transport_integrity.py tests/test_verified_worker_import.py tests/test_worker_bindings.py --select F401",
+    "C:\\Python314\\python.exe -c \"import yaml,pathlib; files=list(pathlib.Path('.github/workflows').glob('*.yml')); [yaml.safe_load(p.read_text(encoding='utf-8')) for p in files]; print({'yaml_workflows_parsed': len(files)})\""
+  ],
+  "final_dispatchable": false,
+  "scope": "Exact expansion of the abbreviated F401/YAML entries in verification.json",
+  "status": "passed"
+}

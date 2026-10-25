@@ -1,3 +1,5 @@
+> Current continuation: [two-hour audit](two-hour-implementation-audit.md), [local acceptance](../../results/phase3-two-hour-audit-v1/acceptance-staged-final.json) and [v5 notebook](../../results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb). Historical CPU delivery below retains its scope.
+
 > Current continuation, 2026-10-25: CPU v3 is verified; Kaggle v4 corrects selected-setting binding. Final scope, actual CUDA equivalence and durable Kaggle recovery remain gated. Historical instructions below retain their original scope. See [continuation audit](continuation-audit.md).
 
 # CPU implementation revision v3

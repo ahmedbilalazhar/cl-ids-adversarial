@@ -141,7 +141,8 @@ def run():
     slots = [0, 3, 7, 12, 15]
     labels = generator.choice(np.asarray(slots, dtype=np.int64), size=183045)
     mapping = {code: index for index, code in enumerate(slots)}
-    baseline = lambda: np.array([mapping[int(label)] for label in labels], dtype=np.int64)
+    def baseline():
+        return np.array([mapping[int(label)] for label in labels], dtype=np.int64)
     np.testing.assert_array_equal(baseline(), map_targets(labels, slots))
     old_times, new_times = [], []
     for _ in range(9):

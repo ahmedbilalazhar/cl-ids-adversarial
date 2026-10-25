@@ -125,7 +125,7 @@ phase; none authorizes final data access. See [execution contract](kaggle-execut
 
 | ID / objective | Prerequisites / interfaces | Procedure and acceptance evidence | Failure / downstream |
 |---|---|---|---|
-| K01 Actual runtime qualification | v4 bundle, notebook generator, `runtime.configure`, `checks.run`; actual CUDA allocation | Install pinned environment; run CPU then CUDA fixtures; preserve logs and device/build hashes. Compare primitive tensors using existing tolerances, exact integer/ID state and recovery; independently disposition dropout-stream differences before whole-trajectory claims | Preserve failure; do not relax tolerances. Blocks K02, K04 |
+| K01 Actual runtime qualification | v5 bundle, notebook generator, `runtime.configure`, `checks.run`; actual CUDA allocation | Install pinned environment; run CPU then CUDA fixtures; preserve logs and device/build hashes. Compare primitive tensors using existing tolerances, exact integer/ID state and recovery; independently disposition dropout-stream differences before whole-trajectory claims | Preserve failure; do not relax tolerances. Blocks K02, K04 |
 | K02 Target clean feasibility and cost | K01, `selection.selected_settings`, `worker.run_job`, `evaluate.evaluate`; matching packages for dev101–103 | Execute selected FT/EI/DR clean conditions on actual target runtime. Record component and command costs, mean acquisition gates and every per-seed result. No seed replacement; pass only with intact hashes and declared gates | Keep adverse results. Scientific change needs prospective revision and affected matched reruns. Blocks K04 |
 | K03 Provider durability | K01, worker/checkpoint/handoff modules | Interrupt fixture after committed round; save/download/hash output; end session; restore matching source/runtime; resume; compare full state/predictions to uninterrupted fixture; corrupt payload and duplicate-writer attempts must reject | Keep partial segments and retry lineage; no new replicate. Blocks K04 |
 | K04 Final scope and adapters | K01–K03, `continuation-scope.json`, original manifest, component specification | Explicitly freeze included arms/datasets/doses and intervention semantics; implement separately identified missing FIFO/oracle/other selected adapters with exact single-change and recovery tests; bind final seed/data registry and alias graph | Remain non-dispatchable if scope or numerical semantics unresolved. Blocks K05/K06 |
@@ -143,3 +143,10 @@ persistent development/synthetic import boundary, retries/aliases, exact endpoin
 assembly, and fabricated full-family validation. Acceptance includes two writers,
 process-crash rollback and preserved failures. The final manifest and catalog
 remain blocked by K04; these local results do not adopt a final scope.
+
+
+Two-hour audit: K01 now uses candidate v5. Local session/export/reuse and verified
+development import are implemented with regression evidence. K01-K04/K06 retain
+their blockers. K05 includes an independent nonzero oracle for all348 paired
+values; its final runtime/scope registry remains gated. See the
+[two-hour audit](../phase3-cpu-v3/two-hour-implementation-audit.md).

@@ -1,0 +1,19 @@
+{
+  "case": "full_session_budget_restarted_for_each_job",
+  "observed_calls_before_fix": [
+    {
+      "learner": "FT",
+      "budget_seconds": 7200
+    },
+    {
+      "learner": "EI",
+      "budget_seconds": 7200
+    },
+    {
+      "learner": "DR",
+      "budget_seconds": 7200
+    }
+  ],
+  "expected": "each job receives only the remaining shared session budget after export reservation",
+  "model_executions": 0
+}

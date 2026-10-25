@@ -639,3 +639,11 @@ One line each: chose / alternative / why. Newest last.
   parse verified byte snapshots, require evaluation/model commits and retain
   retry/alias identity and failures. Keep all_29/seeds unchanged. Actual CUDA,
   provider, scope and human-release gates remain blocked. See the two-hour audit.
+
+
+- 2026-10-25 recovery continuation: use a versioned logical snapshot rather than
+  copying an open SQLite file. Preserve the reviewed manifest, exact raw objects,
+  aliases and full attempt history. Reconstruct and validate privately, publish
+  only to a fresh directory and require a completion marker. Reject unsupported
+  schema/counter changes. Validate worker mappings and import physical parents
+  before aliases. Final/GPU release and frozen scientific methods are unchanged.

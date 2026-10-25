@@ -78,7 +78,7 @@ class VerifiedWorkerImport(unittest.TestCase):
     def tearDownClass(cls):
         cls.temporary.cleanup()
 
-    def registry(self, folder, metric_sha=None, learner='FT'):
+    def registry(self, folder, metric_sha=None, learner='FT', aliases=None):
         procedure = self.procedures[learner]
         row = {'run_id': 'toy-'+learner+'-101', 'arm': learner, 'settings': procedure['settings'],
                'execution': procedure['execution'], 'metric_sha256': metric_sha or self.metric_hashes[learner],
@@ -86,7 +86,7 @@ class VerifiedWorkerImport(unittest.TestCase):
         spec = folder/'manifest.json'
         write_json(spec, {'schema': 'phase3-count-registry-v1', 'kind': 'development',
                          'taxonomy_sha256': digest(ROOT/'configs/phase3/taxonomy-v1.json'),
-                         'final_dispatchable': False, 'rows': [row], 'aliases': {}})
+                         'final_dispatchable': False, 'rows': [row], 'aliases': aliases or {}})
         db = folder/'catalog.sqlite'
         initialize(db, spec, digest(spec))
         return db, digest(spec)
@@ -107,6 +107,20 @@ class VerifiedWorkerImport(unittest.TestCase):
                 self.assertEqual(ingest_export(db, pin, self.archive, self.archive_sha, mapping)
                                  ['independent_trajectories_added'], 0)
                 self.assertEqual(len(verify_catalog(db, pin)['records']), 1)
+
+    def test_alias_first_mapping_imports_one_physical_observation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            db, pin = self.registry(Path(directory), aliases={'toy-FT-alias': 'toy-FT-101'})
+            mapping = [{**self.mapping[0], 'run_id': 'toy-FT-alias'}, self.mapping[0]]
+            result = ingest_export(db, pin, self.archive, self.archive_sha, mapping)
+            self.assertEqual(result['independent_trajectories_added'], 1)
+            self.assertEqual([row['run_id'] for row in result['rows']], ['toy-FT-101', 'toy-FT-alias'])
+            self.assertEqual(mapping[0]['run_id'], 'toy-FT-alias')  # Do not mutate caller input.
+            self.assertEqual(ingest_export(db, pin, self.archive, self.archive_sha, mapping)
+                             ['independent_trajectories_added'], 0)
+            verified = verify_catalog(db, pin)
+            self.assertEqual(len(verified['records']), 1)
+            self.assertEqual(verified['aliases'], {'toy-FT-alias': 'toy-FT-101'})
 
     def test_changed_model_binding_rejected_before_catalog_write(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -155,6 +169,9 @@ class VerifiedWorkerImport(unittest.TestCase):
             mapping = [{**self.mapping[0], 'job_prefix': '../FT'}]
             with self.assertRaises(ValueError):
                 ingest_export(db, pin, self.archive, self.archive_sha, mapping)
+            for malformed in ([None], [{}], [{**self.mapping[0], 'run_id': True}], self.mapping*2):
+                with self.subTest(mapping=malformed), self.assertRaises(ValueError):
+                    ingest_export(db, pin, self.archive, self.archive_sha, malformed)
             self.assertEqual(verify_catalog(db, pin)['records'], [])
 
 

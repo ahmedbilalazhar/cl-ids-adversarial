@@ -1,3 +1,5 @@
+> Latest continuation: [verified count-catalog recovery and import improvements](docs/phase3-cpu-v3/recovery-improvements-2026-10-25.md). The v5 worker and frozen scientific engine remain unchanged.
+
 # Continual Learning for Network Security — Adversarial IDS
 
 Research code for studying attacks on continual intrusion detection, including

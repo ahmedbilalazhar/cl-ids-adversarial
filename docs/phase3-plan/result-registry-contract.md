@@ -147,3 +147,19 @@ The [nonzero fabricated oracle](../../results/phase3-two-hour-audit-v1/nonzero-o
 verifies 348 paired values in all_29. Removing one FT clean reference leaves
 12 contrasts unavailable without changing family membership. These are software
 fixtures, not research outcomes.
+
+
+## Portable count-catalog recovery
+
+Use `python -m phase3_delivery.snapshot export` and `restore` for logical
+count-catalog recovery; see the [procedure and evidence](../phase3-cpu-v3/recovery-improvements-2026-10-25.md).
+Snapshots include the reviewed manifest, observations, aliases, all attempts and
+raw objects, including orphans. Restore builds and verifies a fresh catalog,
+retains attempt IDs and adds zero research trajectories. Only
+`restore.commit.json` marks completion; partial destinations are preserved and
+never overwritten. Unknown schema extensions/counters reject. This does not
+replace training-checkpoint recovery or qualify provider/power-loss durability.
+
+Worker mappings now validate before archive work and place physical parents
+before aliases without changing caller input. A missing parent must already
+exist in the catalog or be explicitly included in the batch.

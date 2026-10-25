@@ -1,0 +1,49 @@
+{
+  "actual_GPU_qualified": false,
+  "actual_catalog_recovery": {
+    "aliases": 9,
+    "archive_bytes": 1980850,
+    "attempts": 81,
+    "logical_identity": "595d0667b474c14cd1006e79398525d9bcba1ee56427d9a7f3748a284e30e036",
+    "objects": 144,
+    "physical_observations": 72
+  },
+  "baseline_commit": "8af4460",
+  "commands": {
+    "planning": "python docs/phase3-plan/validate_planning_package.py",
+    "static": "ruff check phase3_delivery tests/test_catalog_snapshot.py tests/test_verified_worker_import.py --select E7,E9,F63,F7,F82,F401",
+    "suite": "python -m unittest tests.test_phase3_v2 tests.test_phase3_analysis tests.test_continuation tests.test_delivery_catalog tests.test_catalog_snapshot tests.test_archive_policy tests.test_audit_integrity tests.test_evaluation_reuse tests.test_notebook_orchestration tests.test_notebook_session tests.test_reported_metrics tests.test_research_endpoints tests.test_transport_integrity tests.test_verified_worker_import tests.test_worker_bindings -v"
+  },
+  "delivery_source_identity": "1175926daf68e69b66ad61fdd2b870fb1d36e0ff81142fccbbff9f0fd48fd43e",
+  "final_dispatchable": false,
+  "final_test_accessed": false,
+  "local_suite": {
+    "log": "ci-equivalent-final-attempt3.log",
+    "passed": 100,
+    "seconds": 311.265,
+    "skipped": 1,
+    "tests_discovered": 101
+  },
+  "new_research_trajectories": 0,
+  "planning_checks": 109,
+  "runtime": "Pinned local Python 3.12.14 / NumPy 2.3.5 / Torch 2.7.0+cpu; Windows",
+  "scientific_and_worker_source_unchanged": true,
+  "scientific_identity": "38830e8b9e156c5c0db8285278de4666fca1c08b1d46e033f2009ef661e9e17c",
+  "source_files": {
+    "phase3_delivery/__init__.py": "5dfee024cf9f4cd450888c034d961130b0e2a1ebd38bf6fa8303c3ddfba8ec7b",
+    "phase3_delivery/analysis.py": "10fe2791ebc13e1d96d521044a8ae74e2d61dd017e48660c29a452f47af0d3e5",
+    "phase3_delivery/archive_policy.py": "4e7b401bb2e332dbc7942a4075f12db262dedb974b5c42e0c59a202c09bb0cd2",
+    "phase3_delivery/assemble.py": "83502567de6f5caf5b7e54696792a3e585b45aa35fda0b480425db80e5f48683",
+    "phase3_delivery/catalog.py": "b1bce0981b23654d14761bde56ab3cd227e3c80508a4a08c3b6838f0e8f73bda",
+    "phase3_delivery/development.py": "f0aee3fe67b0df7ead84dad640d471c86181e9f59712d5dde303ebc1144bb065",
+    "phase3_delivery/import_counts.py": "fed8830f60f136433252271239a190b0b33fb4808bf8755e5630ba87a37047db",
+    "phase3_delivery/io.py": "28bc3436a5913c29851f949ffe0038bff6191e4af235e987773c0db1156172f2",
+    "phase3_delivery/reported_metrics.py": "757e1b63c64d0b28dad97e884379dead6e0f2b42ea97f5ef27406ad54ad031ab",
+    "phase3_delivery/snapshot.py": "d9c4dfeb64a13afdfc4980e078f6b4ae50786b434fe79d8bd37e3fe861b35f1d",
+    "phase3_delivery/worker_import.py": "cad71db4326cfe12168c3316a0fbc0d7b62bb3620b4d046b9e2bced797bed133",
+    "tests/test_catalog_snapshot.py": "88a4ab8b964cfcef7febd0145b064277fe35274c62667236832989bde095bc57",
+    "tests/test_verified_worker_import.py": "efbf7ece1c86fa159eb5209d78a8cd763ec6b5c2fc5cc44adff9179b1bcb589c"
+  },
+  "status": "passed",
+  "worker_source_identity": "768b1eceb5da05904f2ac3b183df5dab2721dfc73d7f974632e13adb1463c658"
+}

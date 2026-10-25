@@ -1,0 +1,29 @@
+test_alias_first_mapping_imports_one_physical_observation (tests.test_verified_worker_import.VerifiedWorkerImport.test_alias_first_mapping_imports_one_physical_observation) ... ERROR
+
+======================================================================
+ERROR: test_alias_first_mapping_imports_one_physical_observation (tests.test_verified_worker_import.VerifiedWorkerImport.test_alias_first_mapping_imports_one_physical_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\phase3_delivery\worker_import.py", line 125, in ingest_export
+    accepted.append({'run_id': run_id, **ingest(database, manifest_sha256, run_id, metric)})
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\phase3_delivery\catalog.py", line 214, in ingest
+    require(existing == expected_row,
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\scripts\audit_phase3_endpoints.py", line 17, in require
+    raise ValueError(message)
+ValueError: Alias parent must be imported and verified first
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\tests\test_verified_worker_import.py", line 115, in test_alias_first_mapping_imports_one_physical_observation
+    result = ingest_export(db, pin, self.archive, self.archive_sha, mapping)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\phase3_delivery\worker_import.py", line 127, in ingest_export
+    raise RuntimeError('Batch stopped after verified rows '+str([r['run_id'] for r in accepted])) from exc
+RuntimeError: Batch stopped after verified rows []
+
+----------------------------------------------------------------------
+Ran 1 test in 42.579s
+
+FAILED (errors=1)

@@ -136,3 +136,11 @@ not witnessed; anything reconstructed is marked (reconstructed).
   ran local pinned CPU checks and updated evidence/roadmaps. No human review,
   actual Kaggle/CUDA result, final study or certification is claimed. Original
   source/evidence and failed attempts remain preserved.
+
+
+- 2026-10-25 30-minute recovery continuation: AI implemented and tested logical
+  count-catalog snapshots/restores and strict parent-before-alias import mapping.
+  It verified a clone of the existing 72-observation catalog without model
+  execution. Test/reporting failures were preserved and corrected. Frozen
+  numerical methods, the v5 worker and final-study gates are unchanged; no human
+  validation, actual Kaggle execution or storage certification is claimed.

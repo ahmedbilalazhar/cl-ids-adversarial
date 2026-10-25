@@ -85,17 +85,33 @@ def validate_evaluation_binding(archive, job_prefix, metrics_path, row):
     return payload
 
 
-def ingest_export(database, manifest_sha256, archive_path, archive_sha256, mapping):
+def prepare_mapping(manifest, rows, existing, mapping):
+    """Validate all map entries, then place physical parents before their aliases."""
     require(type(mapping) is list and bool(mapping), 'Explicit export-to-registry mapping required')
-    require(len({item['run_id'] for item in mapping}) == len(mapping), 'Duplicate run ID in import batch')
-    with connect(database) as connection:
-        manifest, rows = bound_manifest(connection, manifest_sha256)
     require(manifest['kind'] == 'development', 'Worker import accepts development exports only')
+    copied, ids = [], set()
     for item in mapping:
-        require(set(item) == {'run_id', 'job_prefix', 'metrics_path'}, 'Unexpected import mapping fields')
-        parent = manifest['aliases'].get(item['run_id'], item['run_id'])
+        require(type(item) is dict and set(item) == {'run_id', 'job_prefix', 'metrics_path'},
+                'Unexpected import mapping fields')
+        run_id = item['run_id']
+        require(type(run_id) is str and run_id and run_id not in ids, 'Invalid or duplicate mapped run ID')
+        require(valid_name(item['job_prefix']) and valid_name(item['metrics_path']) and
+                item['metrics_path'].endswith('/metrics.json'), 'Unsafe job or evaluation mapping')
+        parent = manifest['aliases'].get(run_id, run_id)
         require(parent in rows and rows[parent]['execution']['study_revision'] == 'kaggle-qualification-v5',
                 'Only a registered v5 development job may use this import path')
+        copied.append(dict(item))
+        ids.add(run_id)
+    require(all(manifest['aliases'][run_id] in ids | existing for run_id in ids if run_id in manifest['aliases']),
+            'Mapped alias needs its physical parent in the batch or catalog')
+    return sorted(copied, key=lambda item: item['run_id'] in manifest['aliases'])
+
+
+def ingest_export(database, manifest_sha256, archive_path, archive_sha256, mapping):
+    with connect(database) as connection:
+        manifest, rows = bound_manifest(connection, manifest_sha256)
+        existing = {row[0] for row in connection.execute('SELECT run_id FROM observations')}
+    mapping = prepare_mapping(manifest, rows, existing, mapping)
     with tempfile.TemporaryDirectory(prefix='verified-worker-export-') as directory:
         root = Path(directory)
         snapshot = root/'worker-output.zip'

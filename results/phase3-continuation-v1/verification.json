@@ -130,6 +130,26 @@
       "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m compileall -q kaggle_worker phase3_delivery tests/test_continuation.py scripts/verify_continuation_delivery.py",
       "outcome": "passed",
       "scope": "Final syntax checks"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m scripts.verify_continuation_delivery --output results/phase3-continuation-v1/release-acceptance.json",
+      "outcome": "passed",
+      "scope": "Final current worker, frozen source, 81 bundle payloads, 4 notebook cells, 12 links and all 648 planning rows; no model execution"
+    },
+    {
+      "command": "git -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --cached --check",
+      "outcome": "reported preserved trailing whitespace in baseline-documents/docs/HANDOVER.md:184",
+      "scope": "Original archived document bytes intentionally retained; not a new source defect"
+    },
+    {
+      "command": "git -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --check HEAD^ HEAD -- . ':!results/phase3-continuation-v1/baseline-documents/**'",
+      "outcome": "passed",
+      "scope": "All continuation changes excluding exact historical document copies"
+    },
+    {
+      "command": "git ls-remote origin refs/heads/main",
+      "outcome": "b77a7bbf11c1e4ae7cc06f79e5d7d7d452dbf932",
+      "scope": "Remote main unchanged; continuation committed locally on dedicated branch"
     }
   ],
   "not_run": [

@@ -89,8 +89,7 @@ CPU metrics additionally require their separately SHA256-bound complete from-sta
 cohort endpoints and the complete lower-triangular accuracy matrix. It rejects
 duplicate run IDs and repeated condition identities before registry mutation.
 The caller must obtain expected bindings from a frozen registry, not from the
-incoming result. This is not yet a multi-contributor persistent catalog or a
-final-results CLI. Those require the final scope and manifest freeze.
+incoming result. The continuation v2 [persistent registry and assembler](result-registry-contract.md) now implements development and fabricated synthetic collection. A final-results mode still requires the final scope, target runtime and manifest freeze.
 
 The existing `src.phase3_analysis.statistics` remains the analysis engine.
 `phase3_delivery.analysis.seed_summary` adds complete-paired-seed mean and sample

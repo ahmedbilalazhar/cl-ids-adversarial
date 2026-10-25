@@ -1,3 +1,5 @@
+> Continuation v2: Codex implemented and locally tested the manifest-bound catalog, fabricated count analysis and Git-bound development importer. No human verification or actual Kaggle/CUDA execution is claimed.
+
 > AI-assisted continuation, 2026-10-25: Codex inspected source/evidence, corrected selected-settings orchestration, added preflight and synthetic import validation, and ran the recorded local checks. No human verification, instructor approval, actual Kaggle run or GPU qualification is claimed. See [continuation audit](phase3-cpu-v3/continuation-audit.md).
 
 # Generative-AI disclosure log (per claude's plan.txt §"How to actually work

@@ -1,0 +1,93 @@
+{
+  "baseline_commit": "b77a7bbf11c1e4ae7cc06f79e5d7d7d452dbf932",
+  "continuation_base_commit": "3a14527",
+  "commands": [
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m unittest tests.test_delivery_catalog -v",
+      "outcome": "intermediate attempt1 stopped after profiling redundant per-row manifest hashing",
+      "evidence": "catalog-tests-attempt1-disposition.txt",
+      "scope": "Fabricated count fixtures only; no research/model workload stopped"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m unittest tests.test_delivery_catalog -v",
+      "outcome": "attempt2: 8 tests, one Windows cleanup error from a test connection left open",
+      "evidence": "catalog-tests-attempt2.log",
+      "scope": "Fixed fixture using explicit connection close; no assertion removed"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m unittest tests.test_delivery_catalog tests.test_continuation tests.test_phase3_analysis -v",
+      "outcome": "attempt3: 27 tests, one missing-bank KeyError instead of validation ValueError",
+      "evidence": "catalog-tests-attempt3.log",
+      "scope": "Fixed missing-field validation; bank identity remains required"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m unittest tests.test_phase3_v2 tests.test_phase3_analysis tests.test_continuation tests.test_delivery_catalog -v",
+      "outcome": "passed 60 tests in 135.650 seconds",
+      "evidence": "ci-equivalent-final.log",
+      "scope": "Local pinned CPU and fabricated fixture tests, not hosted CI or actual CUDA"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m phase3_delivery.development --database tmp/phase3-count-catalog-v1/catalog.sqlite --output results/phase3-continuation-v2/development-attempt1",
+      "outcome": "passed 72 physical observations, 9 aliases, 81 attempts",
+      "evidence": "development-attempt1/acceptance.json",
+      "scope": "Intermediate registry; original artifacts not modified"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m phase3_delivery.development --database tmp/phase3-count-catalog-v2/catalog.sqlite --output results/phase3-continuation-v2/development-final",
+      "outcome": "passed 72 physical observations, 9 aliases, 81 attempts, zero unreferenced objects",
+      "evidence": "development-final/acceptance.json",
+      "scope": "Current source identity; read only Git-bound counts and run manifests; no inference"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m scripts.qualify_result_catalog --output results/phase3-continuation-v2/synthetic-analysis",
+      "outcome": "passed 240 fabricated trajectories, 29 complete contrasts and 12 unavailable contrasts after removing FT clean seed42",
+      "evidence": "synthetic-analysis/acceptance.json",
+      "scope": "Synthetic counts, no final records or models"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe docs/phase3-plan/validate_planning_package.py",
+      "outcome": "passed 109 checks",
+      "evidence": "planning-validation-final.log",
+      "scope": "Document and manifest consistency only"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m scripts.verify_continuation_delivery --output results/phase3-continuation-v2/worker-and-cpu-preservation.json",
+      "outcome": "passed frozen source, v4 worker/bundle/notebook, aliases and planning-row reconciliation",
+      "evidence": "worker-and-cpu-preservation.json",
+      "scope": "Hash/structure verification, no model execution"
+    },
+    {
+      "command": "ruff check kaggle_worker phase3_delivery tests/test_continuation.py tests/test_delivery_catalog.py scripts/qualify_result_catalog.py --select E9,F63,F7,F82,F401",
+      "outcome": "passed",
+      "scope": "Fatal/error lint across current worker and delivery integration"
+    },
+    {
+      "command": "ruff check phase3_delivery tests/test_delivery_catalog.py scripts/qualify_result_catalog.py --select E7,E9,F63,F7,F82,F401",
+      "outcome": "passed",
+      "scope": "Additional style checks on new code"
+    },
+    {
+      "command": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe -m compileall -q phase3_delivery tests/test_delivery_catalog.py scripts/qualify_result_catalog.py",
+      "outcome": "passed",
+      "scope": "Syntax compilation only"
+    },
+    {
+      "command": "C:\\Python314\\python.exe -c \"import yaml; from pathlib import Path; v=yaml.safe_load(Path('.github/workflows/kaggle-worker-cpu.yml').read_text()); assert 'tests.test_delivery_catalog' in str(v); assert v['permissions']=={'contents':'read'}\"",
+      "outcome": "passed",
+      "scope": "Workflow parsing and test registration; not a hosted run"
+    },
+    {
+      "command": "git ls-remote origin refs/heads/main",
+      "outcome": "b77a7bbf11c1e4ae7cc06f79e5d7d7d452dbf932",
+      "scope": "Remote main unchanged"
+    }
+  ],
+  "final_test_accessed": false,
+  "final_dispatchable": false,
+  "not_run": [
+    "actual Kaggle environment installation",
+    "actual CUDA semantic qualification",
+    "provider save/download/fresh-session recovery",
+    "final study or final inference"
+  ]
+}

@@ -136,3 +136,10 @@ Local completed work: immutable selected settings binding, explicit override gua
 resource/session preflight, synthetic count import, complete-seed mean/SD,
 duplicate-writer rejection and continued final-seed rejection. A candidate with
 local tests passed is not equivalent to K01–K03 completed on Kaggle.
+
+
+K05 continuation v2: `phase3_delivery.catalog` and `assemble` now implement the
+persistent development/synthetic import boundary, retries/aliases, exact endpoint
+assembly, and fabricated full-family validation. Acceptance includes two writers,
+process-crash rollback and preserved failures. The final manifest and catalog
+remain blocked by K04; these local results do not adopt a final scope.

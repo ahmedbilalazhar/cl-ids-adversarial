@@ -148,3 +148,34 @@ Use the [execution contract](../phase3-plan/kaggle-execution-contract.md).
 Collect the runtime fingerprint, primitive/state comparison, admission identities,
 component costs and download/restart receipts. A failed or unavailable comparison
 leaves gate6/12 blocked; even a pass does not authorize final execution.
+
+
+## Continuation v2: persistent result collection
+
+The local development/synthetic catalog is now implemented in
+`phase3_delivery/catalog.py`, with endpoint assembly in `assemble.py` and the
+Git-receipt-bound CPU importer in `development.py`. See the
+[result registry contract](../phase3-plan/result-registry-contract.md).
+The catalog serializes competing writers, pins exact manifest/payload bytes,
+records idempotent retries and aliases separately, retains rejected attempts,
+and revalidates stored counts before exporting a summary. Development pilots
+and tuning profiles remain separate; no final statistical analysis runs on them.
+
+The [development import](../../results/phase3-continuation-v2/development-final/acceptance.json)
+contains 72 physical observations, nine aliases and 81 import attempts, with
+zero unreferenced objects and zero model executions. Completion and receipt
+bytes were checked against the published b77a7bb baseline before import.
+The full synthetic fixture uses 240 fabricated count trajectories and exercises
+all29 comparisons plus twelve explicitly missing contrasts after one clean
+reference is removed. These are software fixtures, not final experiments.
+
+The stopped slow intermediate run and two failed regression logs remain under
+`results/phase3-continuation-v2/`. One failure was a Windows test fixture's open
+SQLite handle; the other was the development-bank missing-field exception.
+Neither invalidates or changes historical research trajectories.
+
+K05's local registry and assembler implementation is complete for development
+and synthetic data. Its final-scope/target-runtime registry derivation remains
+blocked. Gates6,10–15 retain their authorization boundaries; no gate is promoted
+merely because local collection software passed. The existing v4 Kaggle notebook
+and worker identity are unchanged by this continuation.

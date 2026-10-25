@@ -1,0 +1,56 @@
+test_abrupt_writer_exit_rolls_back_uncommitted_changes (tests.test_delivery_catalog.Catalog.test_abrupt_writer_exit_rolls_back_uncommitted_changes) ... ok
+test_cli_preserves_failed_receipt_and_does_not_replace_output (tests.test_delivery_catalog.Catalog.test_cli_preserves_failed_receipt_and_does_not_replace_output) ... ok
+test_concurrent_duplicate_import_adds_one_observation (tests.test_delivery_catalog.Catalog.test_concurrent_duplicate_import_adds_one_observation) ... ok
+test_full_synthetic_matrix_and_missing_pair (tests.test_delivery_catalog.Catalog.test_full_synthetic_matrix_and_missing_pair) ... ok
+test_historical_windows_path_relocation_and_escape_rejection (tests.test_delivery_catalog.Catalog.test_historical_windows_path_relocation_and_escape_rejection) ... ok
+test_manifest_rejects_final_seeds_bindings_and_duplicate_conditions (tests.test_delivery_catalog.Catalog.test_manifest_rejects_final_seeds_bindings_and_duplicate_conditions) ... ok
+test_persisted_counts_and_endpoint_tampering_detected (tests.test_delivery_catalog.Catalog.test_persisted_counts_and_endpoint_tampering_detected) ... ok
+test_persistence_idempotency_alias_and_rejections (tests.test_delivery_catalog.Catalog.test_persistence_idempotency_alias_and_rejections) ... ok
+test_cli_selection_and_override_guard (tests.test_continuation.Continuation.test_cli_selection_and_override_guard) ... usage: worker [-h] [--device {cpu,cuda:0,cuda:1}] --train-package
+              TRAIN_PACKAGE --train-manifest-sha256 TRAIN_MANIFEST_SHA256
+              --output OUTPUT [--learner {FT,EI,DR}]
+              [--admission {NONE,DM,DC,DQ}] [--seed {101,102,103}]
+              [--dose DOSE DOSE] [--qualification-overrides] [--rounds {3,12}]
+              [--epochs {1,4}] [--learning-rate LEARNING_RATE]
+              [--lambda-E LAMBDA_E] [--lambda-y LAMBDA_Y]
+              [--lambda-z LAMBDA_Z] [--budget-seconds BUDGET_SECONDS]
+              [--reserve-seconds RESERVE_SECONDS]
+              [--transition-bound-seconds TRANSITION_BOUND_SECONDS]
+              [--max-commits MAX_COMMITS]
+worker: error: Non-selected settings require --qualification-overrides
+ok
+test_cpu_metric_requires_bound_run (tests.test_continuation.Continuation.test_cpu_metric_requires_bound_run) ... ok
+test_duplicate_writer_then_normal_release (tests.test_continuation.Continuation.test_duplicate_writer_then_normal_release) ... ok
+test_import_positive_and_duplicate_lineage (tests.test_continuation.Continuation.test_import_positive_and_duplicate_lineage) ... ok
+test_malformed_counts_and_bindings (tests.test_continuation.Continuation.test_malformed_counts_and_bindings) ... ERROR
+test_preflight_storage_and_declared_limits (tests.test_continuation.Continuation.test_preflight_storage_and_declared_limits) ... ok
+test_seed_summary (tests.test_continuation.Continuation.test_seed_summary) ... ok
+test_selected_settings (tests.test_continuation.Continuation.test_selected_settings) ... ok
+test_acquisition_equal_family_then_equal_stage_not_pooled (tests.test_phase3_analysis.Phase3Analysis.test_acquisition_equal_family_then_equal_stage_not_pooled) ... ok
+test_benign_far_raw_integer_denominator (tests.test_phase3_analysis.Phase3Analysis.test_benign_far_raw_integer_denominator) ... ok
+test_bootstrap_keeps_zero_pairs_in_resampling (tests.test_phase3_analysis.Phase3Analysis.test_bootstrap_keeps_zero_pairs_in_resampling) ... ok
+test_contrast_wiring_no_double_clean_subtraction (tests.test_phase3_analysis.Phase3Analysis.test_contrast_wiring_no_double_clean_subtraction) ... ok
+test_exact_signed_rank_independent_small_sign_counts (tests.test_phase3_analysis.Phase3Analysis.test_exact_signed_rank_independent_small_sign_counts) ... ok
+test_exact_zeros_tied_ranks_and_rational_near_ties (tests.test_phase3_analysis.Phase3Analysis.test_exact_zeros_tied_ranks_and_rational_near_ties) ... ok
+test_holm_exact_full_family_and_monotonicity (tests.test_phase3_analysis.Phase3Analysis.test_holm_exact_full_family_and_monotonicity) ... ok
+test_hulk_integer_endpoints_signs_and_denominator_rejection (tests.test_phase3_analysis.Phase3Analysis.test_hulk_integer_endpoints_signs_and_denominator_rejection) ... ok
+test_resolution_with_twelve_nonzero_pairs (tests.test_phase3_analysis.Phase3Analysis.test_resolution_with_twelve_nonzero_pairs) ... ok
+test_unavailable_contrast_is_not_zero_imputation (tests.test_phase3_analysis.Phase3Analysis.test_unavailable_contrast_is_not_zero_imputation) ... ok
+test_whole_seed_bootstrap_constant_interval_and_fixed_rng (tests.test_phase3_analysis.Phase3Analysis.test_whole_seed_bootstrap_constant_interval_and_fixed_rng) ... ok
+
+======================================================================
+ERROR: test_malformed_counts_and_bindings (tests.test_continuation.Continuation.test_malformed_counts_and_bindings)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\tests\test_continuation.py", line 163, in test_malformed_counts_and_bindings
+    import_counts(path, sha, metric['settings'], metric['execution'], classes,
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\phase3_delivery\import_counts.py", line 39, in import_counts
+    require(metric['development_manifest_sha256'] == BASE_DEV, 'Development bank manifest differs')
+            ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'development_manifest_sha256'
+
+----------------------------------------------------------------------
+Ran 27 tests in 98.314s
+
+FAILED (errors=1)
+{}

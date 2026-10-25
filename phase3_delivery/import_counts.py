@@ -5,6 +5,7 @@ from fractions import Fraction
 from scripts.audit_phase3_endpoints import reconstruct, require
 from src.phase3.common import digest
 from src.phase3_v2.checkpoint import strict_json
+from src.phase3_v2.data import BASE_DEV
 
 FINAL_SEEDS = tuple(range(1, 12))+(42,)
 
@@ -34,6 +35,8 @@ def import_counts(path, expected_sha256, expected_settings, expected_execution,
         execution = metric['execution']
     require(execution == expected_execution, 'Unexpected source/protocol/data/runtime binding')
     require(metric['final_test_accessed'] is False, 'Final outcomes are sealed')
+    if kind == 'development':
+        require(metric.get('development_manifest_sha256') == BASE_DEV, 'Development bank manifest differs')
     seed = metric['settings']['seed']
     require(type(seed) is int and seed in (FINAL_SEEDS if kind == 'synthetic' else (101, 102, 103)),
             'Wrong seed set')

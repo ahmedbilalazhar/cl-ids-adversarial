@@ -1,3 +1,5 @@
+> Parallel execution: [step-by-step contributor and session guide](PARALLEL-RUN-GUIDE.md), with seed assignments, quota checks, recovery and result collection. Final execution remains gated.
+
 > Start here: [four-step Kaggle qualification setup](QUICKSTART.md). Use the byte-preserving upload wrapper; Kaggle expands uploaded archives, so directly mounting the original ZIP is unreliable.
 
 > Author-side delivery update: [26 October reliability audit](../phase3-cpu-v3/reliability-audit-2026-10-26.md). The verified importer additionally checks prediction banks, slots and count marginals. The current v5 notebook/bundle is unchanged.

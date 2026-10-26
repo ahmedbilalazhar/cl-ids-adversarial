@@ -1,3 +1,5 @@
+> Parallel work: [step-by-step contributor and session guide](PARALLEL-RUN-GUIDE.md).
+
 # Run the Phase 3 qualification on Kaggle
 
 **Next action: qualification, before the final twelve-seed experiment.**

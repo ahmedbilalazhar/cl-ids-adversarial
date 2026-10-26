@@ -1,3 +1,5 @@
+> Current reliability work: [26 October audit](reliability-audit-2026-10-26.md). Saved prediction evidence and receipt publication have additional checks; actual Kaggle/CUDA and final release remain gated.
+
 > Latest: [catalog recovery and import improvements](recovery-improvements-2026-10-25.md). New author-side backups preserve raw counts and retry/alias history; final release remains gated.
 
 > Current continuation: [two-hour audit](two-hour-implementation-audit.md), [local acceptance](../../results/phase3-two-hour-audit-v1/acceptance-staged-final.json) and [v5 notebook](../../results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb). Historical CPU delivery below retains its scope.

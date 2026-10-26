@@ -1,0 +1,39 @@
+test_invalid_count_metadata_rejected_before_binning (tests.test_delivery_reliability.PredictionIntegrity.test_invalid_count_metadata_rejected_before_binning) ... ok
+test_marginal_validation_does_not_claim_per_example_label_correctness (tests.test_delivery_reliability.PredictionIntegrity.test_marginal_validation_does_not_claim_per_example_label_correctness) ... ok
+test_prediction_slots_schema_dtype_range_and_source_order_rejected (tests.test_delivery_reliability.PredictionIntegrity.test_prediction_slots_schema_dtype_range_and_source_order_rejected) ... ok
+test_rehashed_bytes_with_inconsistent_prediction_counts_rejected (tests.test_delivery_reliability.PredictionIntegrity.test_rehashed_bytes_with_inconsistent_prediction_counts_rejected) ... ok
+test_source_code_marginals_use_registered_slots_and_no_reference_labels (tests.test_delivery_reliability.PredictionIntegrity.test_source_code_marginals_use_registered_slots_and_no_reference_labels) ... ok
+test_wrong_id_shape_dtype_order_identity_and_duplicates_rejected (tests.test_delivery_reliability.PredictionIntegrity.test_wrong_id_shape_dtype_order_identity_and_duplicates_rejected) ... ok
+test_cleanup_failure_cannot_reclassify_an_already_committed_receipt (tests.test_delivery_reliability.ReceiptPublication.test_cleanup_failure_cannot_reclassify_an_already_committed_receipt) ... ok
+test_flush_failure_leaves_staging_evidence_without_success_path (tests.test_delivery_reliability.ReceiptPublication.test_flush_failure_leaves_staging_evidence_without_success_path) ... ok
+test_restore_marker_flush_failure_never_leaves_a_commit_marker (tests.test_delivery_reliability.ReceiptPublication.test_restore_marker_flush_failure_never_leaves_a_commit_marker) ... ok
+test_serialization_failure_and_existing_path_never_publish_or_overwrite (tests.test_delivery_reliability.ReceiptPublication.test_serialization_failure_and_existing_path_never_publish_or_overwrite) ... ok
+test_two_publishers_racing_commit_one_complete_receipt (tests.test_delivery_reliability.ReceiptPublication.test_two_publishers_racing_commit_one_complete_receipt) ... ok
+test_alias_first_mapping_imports_one_physical_observation (tests.test_verified_worker_import.VerifiedWorkerImport.test_alias_first_mapping_imports_one_physical_observation) ... ok
+test_changed_model_binding_rejected_before_catalog_write (tests.test_verified_worker_import.VerifiedWorkerImport.test_changed_model_binding_rejected_before_catalog_write) ... ok
+test_complete_bound_export_import_and_retry (tests.test_verified_worker_import.VerifiedWorkerImport.test_complete_bound_export_import_and_retry) ... ok
+test_rehashed_prediction_inconsistency_rejected_before_catalog_write (tests.test_verified_worker_import.VerifiedWorkerImport.test_rehashed_prediction_inconsistency_rejected_before_catalog_write) ... FAIL
+test_source_mutation_after_copy_uses_only_verified_snapshot (tests.test_verified_worker_import.VerifiedWorkerImport.test_source_mutation_after_copy_uses_only_verified_snapshot) ... ok
+test_wrong_archive_hash_and_unsafe_mapping_rejected (tests.test_verified_worker_import.VerifiedWorkerImport.test_wrong_archive_hash_and_unsafe_mapping_rejected) ... ok
+test_archive_paths_payloads_and_history_tampering_rejected_before_publication (tests.test_catalog_snapshot.CatalogSnapshot.test_archive_paths_payloads_and_history_tampering_rejected_before_publication) ... ok
+test_cli_preserves_failed_attempt_receipt (tests.test_catalog_snapshot.CatalogSnapshot.test_cli_preserves_failed_attempt_receipt) ... ok
+test_empty_catalog_round_trip (tests.test_catalog_snapshot.CatalogSnapshot.test_empty_catalog_round_trip) ... ok
+test_export_owns_writer_slot_and_does_not_overwrite_archive (tests.test_catalog_snapshot.CatalogSnapshot.test_export_owns_writer_slot_and_does_not_overwrite_archive) ... ok
+test_partial_publication_retains_failure_marker_and_never_claims_completion (tests.test_catalog_snapshot.CatalogSnapshot.test_partial_publication_retains_failure_marker_and_never_claims_completion) ... ok
+test_round_trip_retains_history_aliases_orphans_missingness_and_next_attempt (tests.test_catalog_snapshot.CatalogSnapshot.test_round_trip_retains_history_aliases_orphans_missingness_and_next_attempt) ... ok
+test_unknown_schema_extensions_are_rejected_instead_of_silently_dropped (tests.test_catalog_snapshot.CatalogSnapshot.test_unknown_schema_extensions_are_rejected_instead_of_silently_dropped) ... ok
+test_wrong_pins_and_existing_destinations_never_replace_data (tests.test_catalog_snapshot.CatalogSnapshot.test_wrong_pins_and_existing_destinations_never_replace_data) ... ok
+
+======================================================================
+FAIL: test_rehashed_prediction_inconsistency_rejected_before_catalog_write (tests.test_verified_worker_import.VerifiedWorkerImport.test_rehashed_prediction_inconsistency_rejected_before_catalog_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\University\5. C Net\1. Project\tests\test_verified_worker_import.py", line 188, in test_rehashed_prediction_inconsistency_rejected_before_catalog_write
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 25 tests in 117.737s
+
+FAILED (failures=1)

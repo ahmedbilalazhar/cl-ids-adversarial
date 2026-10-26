@@ -187,8 +187,6 @@ def restore_snapshot(archive_path, archive_sha256, manifest_sha256, destination)
                       'unreferenced_objects': verified['unreferenced_objects'], 'new_research_trajectories': 0,
                       'provider_durability_qualified': False, 'final_test_accessed': False, 'final_dispatchable': False}
             create_output(destination/'restore.commit.json', result)
-            with (destination/'restore.commit.json').open('r+b') as stream:
-                os.fsync(stream.fileno())
         except BaseException as exc:
             create_output(destination/'restore.failed.json', {'status': 'partial_restore_retained',
                           'exception': type(exc).__name__, 'message': str(exc), 'final_dispatchable': False})

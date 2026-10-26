@@ -647,3 +647,30 @@ One line each: chose / alternative / why. Newest last.
   only to a fresh directory and require a completion marker. Reject unsupported
   schema/counter changes. Validate worker mappings and import physical parents
   before aliases. Final/GPU release and frozen scientific methods are unchanged.
+
+
+- 2026-10-26 reliability continuation (AI-authored; human review pending): flush
+  serialized receipt bytes before exclusively publishing their final filename.
+  Preserve failed staging and prevent cleanup errors from reversing commit
+  status. Validate saved development prediction IDs, source-code slots and
+  confusion-column totals before count import; cache only identical immutable
+  evaluations within a single import. Add bounded concurrent recovery stress
+  with fabricated counts and forced uncommitted exits. Frozen methods, v5,
+  statistical families and final/GPU gates remain unchanged. See the
+  [reliability audit](phase3-cpu-v3/reliability-audit-2026-10-26.md).
+
+
+- 2026-10-26 Kaggle transport correction (AI-authored; human review pending):
+  Kaggle documents automatic archive expansion, while the reviewed notebook
+  requires exact original ZIP bytes. Add an author-side Base64 upload preparation
+  tool and standard-library notebook bootstrap. Retain the original ZIP, v5
+  notebook, source identities and hash checks. Include decode time in the same
+  session budget. Local round trip/source extraction are tested; actual Kaggle
+  upload, CUDA and fresh-session durability remain unqualified.
+
+
+- 2026-10-26 measured count-validation optimization: replace a redundant deep
+  copy of freshly decoded local metric data with a top-level copy. Read-only
+  validators preserve identical reconstructed 72-row outputs in alternating
+  benchmark trials. Keep the interrupted long stress attempt and qualify the
+  final source separately; never label an incomplete long run as passed.

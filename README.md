@@ -1,3 +1,7 @@
+> To run the current qualification: [short Kaggle setup and readiness verdict](docs/kaggle-phase3/QUICKSTART.md). The final twelve-seed study remains sealed.
+
+> Latest improvement pass: [delivery reliability audit, 26 October](docs/phase3-cpu-v3/reliability-audit-2026-10-26.md). Atomic receipt publication and prediction/count consistency checks strengthen author-side recovery and import; frozen methods and v5 remain unchanged.
+
 > Latest continuation: [verified count-catalog recovery and import improvements](docs/phase3-cpu-v3/recovery-improvements-2026-10-25.md). The v5 worker and frozen scientific engine remain unchanged.
 
 # Continual Learning for Network Security — Adversarial IDS

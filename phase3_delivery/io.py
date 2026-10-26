@@ -3,9 +3,38 @@ import hashlib
 import os
 import re
 import stat
+import tempfile
 from pathlib import Path
 
 MAX_JSON_BYTES = 32*1024**2
+
+
+def publish_new_bytes(path, payload):
+    """Flush a complete payload before exclusively publishing its final name.
+
+    A failed write/flush/link retains the private staging file for inspection.
+    Hard-link publication never replaces an earlier receipt. Directory/storage
+    durability after sudden power loss is a separate, unqualified property.
+    """
+    path = Path(path)
+    if type(payload) is not bytes:
+        raise TypeError('Publication requires an already serialized byte payload')
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists() or path.is_symlink():
+        raise FileExistsError(path)
+    descriptor, temporary = tempfile.mkstemp(prefix='uncommitted-receipt-', dir=path.parent)
+    temporary = Path(temporary)
+    with os.fdopen(descriptor, 'wb') as stream:
+        stream.write(payload)
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.link(temporary, path)
+    # Publication has committed. A cleanup error must not turn an accepted
+    # receipt into an apparent failure; the redundant staging file is harmless.
+    try:
+        temporary.unlink()
+    except OSError:
+        pass
 
 
 def read_verified_bytes(path, expected_sha256, max_bytes=MAX_JSON_BYTES):

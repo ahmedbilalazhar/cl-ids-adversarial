@@ -1,3 +1,7 @@
+> Start here: [four-step Kaggle qualification setup](QUICKSTART.md). Use the byte-preserving upload wrapper; Kaggle expands uploaded archives, so directly mounting the original ZIP is unreliable.
+
+> Author-side delivery update: [26 October reliability audit](../phase3-cpu-v3/reliability-audit-2026-10-26.md). The verified importer additionally checks prediction banks, slots and count marginals. The current v5 notebook/bundle is unchanged.
+
 > Current candidate: **v5**, [audit](../phase3-cpu-v3/two-hour-implementation-audit.md) and [notebook](../../results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb). Use its matching 82-payload private bundle. Earlier v1-v4 records below are historical; actual GPU/provider qualification remains required.
 
 > Continuation v2: the development/synthetic [result registry and analysis assembler](../phase3-plan/result-registry-contract.md) are implemented and locally tested. The v4 Kaggle candidate and final authorization gates retain their existing scope.
@@ -50,7 +54,9 @@ GPU model, driver/build, precision policy and paired settings must be frozen
 before final dispatch. AMP, TF32, fused Adam, batch-size changes, torch.compile,
 DDP and cross-device client aggregation have not been enabled.
 
-## Private qualification notebook
+## Historical private qualification notebook (v1-v3)
+
+These dated steps describe the archived pilot workflow. For current selected v5 settings and byte-preserving upload, use [QUICKSTART.md](QUICKSTART.md).
 
 The latest reviewed candidate, generated files and bundle receipt are under
 `results/kaggle-readiness-v3/`. The original v1/v2 deliveries are retained as historical
@@ -96,7 +102,7 @@ session options and account quota before assigning work. See
 [GPU usage](https://www.kaggle.com/docs/efficient-gpu-usage). GPU availability and
 speedup have not been measured for this project.
 
-## Local reproduction commands
+## Historical local reproduction commands (v1-v3)
 
 These commands run synthetic checks or package existing data. They do not launch
 the final study or rerun valid local research conditions.

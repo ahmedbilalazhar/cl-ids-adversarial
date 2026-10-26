@@ -6,6 +6,8 @@ seeds, final features, final inference or a GPU grid. It complements the existin
 
 ## One execution path
 
+For the current operator entry point, use the [short Kaggle guide](../kaggle-phase3/QUICKSTART.md) and its prepared upload notebook. Kaggle expands uploaded ZIPs; the author-side Base64 wrapper restores the exact reviewed v5 archive before the existing workflow starts. It changes only the input path and starts the shared session clock before decoding. The original worker, notebook and ZIP remain unchanged; no second training path or final release is introduced.
+
 Generate the notebook with `python -m kaggle_worker.notebook`. The current v5 candidate is
 [phase3-qualification.ipynb](../../results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb).
 It invokes `bootstrap`, `preflight`, `checks`, `worker`, and `evaluate` modules;

@@ -1,3 +1,5 @@
+> Delivery follow-up, 26 October: author-side receipt publication, saved-prediction consistency and sustained catalog recovery qualification are documented in the [reliability audit](../phase3-cpu-v3/reliability-audit-2026-10-26.md). These strengthen W12/W13/W15 without completing target-runtime or final-study gates.
+
 > Current continuation, 2026-10-25: CPU v3 is verified; Kaggle v4 corrects selected-setting binding. Final scope, actual CUDA equivalence and durable Kaggle recovery remain gated. Historical instructions below retain their original scope. See [continuation audit](../phase3-cpu-v3/continuation-audit.md).
 
 # Implementation work breakdown for two authors

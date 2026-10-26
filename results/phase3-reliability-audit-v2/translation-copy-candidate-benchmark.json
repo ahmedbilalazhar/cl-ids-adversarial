@@ -1,0 +1,69 @@
+{
+  "candidate_source_sha256": "3ac11338e1a4c30dc50ca15e027f8d93d071e21617d835dc18d42c649106b73c",
+  "features_accessed": false,
+  "final_dispatchable": false,
+  "final_test_accessed": false,
+  "medians": {
+    "baseline": {
+      "process_cpu_seconds": 3.828125,
+      "wall_seconds": 4.102407400001539
+    },
+    "candidate": {
+      "process_cpu_seconds": 3.59375,
+      "wall_seconds": 3.924994000000879
+    }
+  },
+  "new_inference": false,
+  "physical_observations_per_verification": 72,
+  "production_change_applied": false,
+  "proposed_change": "Replace deep copy of freshly decoded metric with a top-level dict copy; validators are read-only.",
+  "source_database_unchanged": true,
+  "source_sha256": "fed8830f60f136433252271239a190b0b33fb4808bf8755e5630ba87a37047db",
+  "status": "passed_candidate_parity",
+  "timing_limitations": "Local read-only count verification under concurrent stress; descriptive process/wall times, no model or GPU speed claim.",
+  "trials": [
+    {
+      "exact_verification_identity": "8d70528042df2feab794e543d1dbb7f7c3a2d2b6ed3a81cb05fb603134acbfba",
+      "process_cpu_seconds": 3.9375,
+      "trial": 0,
+      "variant": "baseline",
+      "wall_seconds": 4.280215899983887
+    },
+    {
+      "exact_verification_identity": "8d70528042df2feab794e543d1dbb7f7c3a2d2b6ed3a81cb05fb603134acbfba",
+      "process_cpu_seconds": 3.59375,
+      "trial": 0,
+      "variant": "candidate",
+      "wall_seconds": 3.924994000000879
+    },
+    {
+      "exact_verification_identity": "8d70528042df2feab794e543d1dbb7f7c3a2d2b6ed3a81cb05fb603134acbfba",
+      "process_cpu_seconds": 3.546875,
+      "trial": 1,
+      "variant": "candidate",
+      "wall_seconds": 3.7608820000023115
+    },
+    {
+      "exact_verification_identity": "8d70528042df2feab794e543d1dbb7f7c3a2d2b6ed3a81cb05fb603134acbfba",
+      "process_cpu_seconds": 3.640625,
+      "trial": 1,
+      "variant": "baseline",
+      "wall_seconds": 3.763311100017745
+    },
+    {
+      "exact_verification_identity": "8d70528042df2feab794e543d1dbb7f7c3a2d2b6ed3a81cb05fb603134acbfba",
+      "process_cpu_seconds": 3.828125,
+      "trial": 2,
+      "variant": "baseline",
+      "wall_seconds": 4.102407400001539
+    },
+    {
+      "exact_verification_identity": "8d70528042df2feab794e543d1dbb7f7c3a2d2b6ed3a81cb05fb603134acbfba",
+      "process_cpu_seconds": 3.796875,
+      "trial": 2,
+      "variant": "candidate",
+      "wall_seconds": 4.42544680001447
+    }
+  ],
+  "verification_identity": "8d70528042df2feab794e543d1dbb7f7c3a2d2b6ed3a81cb05fb603134acbfba"
+}

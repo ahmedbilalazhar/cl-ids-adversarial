@@ -23,7 +23,7 @@ from src.phase3_v2.checkpoint import strict_json
 from src.phase3_v3.protocol import DECISIONS, PROTOCOL
 
 from .import_counts import FINAL_SEEDS, import_counts
-from .io import read_verified_bytes
+from .io import publish_new_bytes, read_verified_bytes
 
 
 def encoded(value):
@@ -273,12 +273,9 @@ def verify_catalog(database, expected_sha256):
 
 
 def create_output(path, value):
-    """Never replace a previous snapshot or failed verification receipt."""
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open('x', encoding='utf-8', newline='\n') as stream:
-        json.dump(encoded(value), stream, indent=2, sort_keys=True, allow_nan=False)
-        stream.write('\n')
+    """Publish only complete, flushed receipts without replacing prior evidence."""
+    payload = (json.dumps(encoded(value), indent=2, sort_keys=True, allow_nan=False)+'\n').encode('utf-8')
+    publish_new_bytes(path, payload)
 
 
 def main():

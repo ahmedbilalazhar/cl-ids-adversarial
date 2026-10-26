@@ -1,3 +1,5 @@
+> Current delivery reliability: [26 October audit](../phase3-cpu-v3/reliability-audit-2026-10-26.md). Receipt publication and prediction artifact checks improve the local collection boundary; final scope, CUDA and authorization gates are unchanged.
+
 > Current implementation: [two-hour audit](../phase3-cpu-v3/two-hour-implementation-audit.md), candidate v5. Shared deadlines, committed evaluations, strict metric checks and verified worker import are locally qualified. Actual CUDA, provider durability, final scope and authorization remain blocked. Earlier records follow.
 
 > Earlier continuation v2: the development/synthetic [result registry and analysis assembler](result-registry-contract.md) are implemented and locally tested. The v4 Kaggle candidate and final authorization gates retain their existing scope.

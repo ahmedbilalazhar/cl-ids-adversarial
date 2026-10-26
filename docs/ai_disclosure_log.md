@@ -144,3 +144,29 @@ not witnessed; anything reconstructed is marked (reconstructed).
   execution. Test/reporting failures were preserved and corrected. Frozen
   numerical methods, the v5 worker and final-study gates are unchanged; no human
   validation, actual Kaggle execution or storage certification is claimed.
+
+
+- 2026-10-26 reliability continuation: AI reproduced receipt-publication and
+  saved-prediction consistency gaps, implemented author-side corrections,
+  expanded fault-injection and seeded marginal-oracle tests, checked all 288
+  published prediction artifacts without features/labels/new inference, and
+  ran bounded fabricated-count concurrency/recovery stress. It consulted Python
+  and NumPy primary documentation and rechecked GitHub's billing-blocked CI.
+  No independent human review, actual Kaggle/CUDA execution, final study,
+  provider durability or certification is claimed.
+
+
+- 2026-10-26 upload follow-up: AI identified the mismatch between Kaggle's
+  documented automatic ZIP expansion and the notebook's exact-archive check.
+  It generated a private Base64 transport and a notebook wrapper, tested decoding
+  and extraction locally, and wrote a short operator guide. The original worker,
+  notebook and ZIP are retained unchanged. Nothing was uploaded or dispatched;
+  source-only Git does not include the private encoded dataset.
+
+
+- 2026-10-26 final validation follow-up: AI preserved a long stress attempt
+  that stopped without a completion receipt, independently verified 819 completed
+  cycle records and their retained catalog, applied the separately benchmarked
+  count-copy optimization and ran a fresh bounded recovery qualification. The
+  interrupted interval is not claimed as continuous work or a complete 90-minute
+  pass; final source/test evidence is separately identified.

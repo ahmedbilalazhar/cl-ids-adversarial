@@ -21,6 +21,7 @@ from .archive_policy import check_archive_npz
 from .catalog import bound_manifest, connect, create_output, ingest
 from .io import MAX_JSON_BYTES, copy_verified_archive
 from .import_counts import import_counts
+from .prediction_integrity import validate_predictions
 
 
 def archive_json(archive, name):
@@ -82,6 +83,8 @@ def validate_evaluation_binding(archive, job_prefix, metrics_path, row):
                 type(stage['head_width']) is int and stage['head_width'] == len(slots_by_stage[stage['stage']])
                 for stage in metrics['stages']),
             'Reported metrics refer to a different stage model')
+    for stage in metrics['stages']:
+        validate_predictions(archive.read(metric_prefix+f"E{stage['stage']}-predictions.npz"), stage)
     return payload
 
 
@@ -119,13 +122,16 @@ def ingest_export(database, manifest_sha256, archive_path, archive_sha256, mappi
         envelope = check_archive_npz(snapshot)
         handoff = inspect(snapshot, archive_sha256)
         jobs = {job['job']: job for job in handoff['jobs']}
-        planned, seen_ids, seen_conditions = [], set(), set()
+        planned, seen_ids, seen_conditions, evaluated = [], set(), set(), {}
         with zipfile.ZipFile(snapshot) as archive:
             for index, item in enumerate(mapping):
                 job = jobs.get(item['job_prefix']+'/')
                 require(job is not None and job['status'] == 'complete', 'Job is incomplete, unreceipted or has extra commits')
                 parent = manifest['aliases'].get(item['run_id'], item['run_id'])
-                payload = validate_evaluation_binding(archive, item['job_prefix'], item['metrics_path'], rows[parent])
+                key = (parent, item['job_prefix'], item['metrics_path'])
+                if key not in evaluated:
+                    evaluated[key] = validate_evaluation_binding(archive, item['job_prefix'], item['metrics_path'], rows[parent])
+                payload = evaluated[key]
                 metrics = root/f'metrics-{index:04d}.json'
                 metrics.write_bytes(payload)
                 if parent not in seen_ids:
@@ -144,6 +150,9 @@ def ingest_export(database, manifest_sha256, archive_path, archive_sha256, mappi
         return {'schema': 'phase3-verified-worker-import-v1', 'status': 'passed',
                 'archive_sha256': archive_sha256, 'snapshot_bytes': copied, 'envelope': envelope,
                 'manifest_sha256': manifest_sha256, 'rows': accepted, 'handoff': handoff,
+                'unique_evaluations_verified': len(evaluated),
+                'prediction_structure_and_marginals_verified': True,
+                'prediction_reference_labels_accessed': False,
                 'independent_trajectories_added': sum(r['independent_trajectories_added'] for r in accepted),
                 'final_test_accessed': False, 'final_dispatchable': False}
 

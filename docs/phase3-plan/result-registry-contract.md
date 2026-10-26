@@ -163,3 +163,25 @@ replace training-checkpoint recovery or qualify provider/power-loss durability.
 Worker mappings now validate before archive work and place physical parents
 before aliases without changing caller input. A missing parent must already
 exist in the catalog or be explicitly included in the batch.
+
+
+## Receipt publication and saved-prediction consistency
+
+The [26 October reliability audit](../phase3-cpu-v3/reliability-audit-2026-10-26.md)
+adds atomic exclusive publication to delivery receipts: fully serialize and flush
+private staging bytes before exposing a final name. Failures preserve staging;
+only the final committed name is acceptance evidence. Hard-link support on the
+local filesystem is required; provider/power-loss guarantees remain unqualified.
+
+Verified worker imports also validate the saved prediction array inventory,
+canonical uint64 IDs/bank identity, int16 source-code slots, uint8 slot indices
+and confusion-column marginals. They use no reference labels or features and do
+not establish per-example label correctness or repeat model inference. Repeated
+parent/alias mappings reuse validation only for the same immutable archive,
+physical parent and paths; every catalog alias still verifies its own lineage.
+
+`python -m scripts.verify_development_predictions` audits the already published
+Git-bound CPU prediction files without reexecution. `python -m
+scripts.qualify_delivery_recovery` runs a bounded fabricated-count concurrency
+and recovery fixture with retained ledger evidence; see the audit for the exact
+commands and intermediate synthetic snapshot retention policy.

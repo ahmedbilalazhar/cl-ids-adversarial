@@ -1,0 +1,51 @@
+{
+  "additional_checks": "Exact original archive decode/extraction emulation, catalog restoration parity, candidate count-copy parity and source guards are recorded in their separate receipts.",
+  "commands": [
+    {
+      "command": "python -m unittest tests.test_phase3_v2 tests.test_phase3_analysis tests.test_continuation tests.test_delivery_catalog tests.test_catalog_snapshot tests.test_delivery_reliability tests.test_kaggle_upload tests.test_archive_policy tests.test_audit_integrity tests.test_evaluation_reuse tests.test_notebook_orchestration tests.test_notebook_session tests.test_reported_metrics tests.test_research_endpoints tests.test_transport_integrity tests.test_verified_worker_import tests.test_worker_bindings -v",
+      "log": "pinned-suite-final.log",
+      "status": "passed_123_discovered_122_passed_1_skipped"
+    },
+    {
+      "command": "python -m scripts.verify_development_predictions --output results/phase3-reliability-audit-v2/published-prediction-audit.json",
+      "status": "passed_288_prediction_files"
+    },
+    {
+      "command": "python -m scripts.verify_historical_payloads --output results/phase3-reliability-audit-v2/historical-preservation.json",
+      "status": "passed_7200_trajectory_files_287_source_files"
+    },
+    {
+      "command": "python -m scripts.qualify_delivery_recovery --seconds 5400 --output results/phase3-reliability-audit-v2/soak-90min-attempt1 --workspace tmp/phase3-reliability-audit-v2/soak-90min-attempt1",
+      "status": "interrupted_without_completion_receipt_819_completed_cycles_verified"
+    },
+    {
+      "command": "python -m scripts.qualify_delivery_recovery --seconds 120 --fixture-seed 20261027 --output results/phase3-reliability-audit-v2/soak-post-change --workspace tmp/phase3-reliability-audit-v2/soak-post-change",
+      "status": "passed_19_cycles"
+    },
+    {
+      "command": "python -m unittest tests.test_kaggle_upload -v",
+      "logs": [
+        "kaggle-upload-tests-attempt2.log",
+        "kaggle-upload-kernel314-final.log"
+      ],
+      "status": "passed_6_tests_on_local_Python3.12_and3.14"
+    },
+    {
+      "command": "python docs/phase3-plan/validate_planning_package.py",
+      "log": "planning-final.log",
+      "status": "passed_109_checks"
+    },
+    {
+      "command": "ruff check phase3_delivery scripts/qualify_delivery_recovery.py scripts/prepare_kaggle_upload.py scripts/verify_development_predictions.py tests/test_delivery_reliability.py tests/test_kaggle_upload.py tests/test_verified_worker_import.py --select E7,E9,F63,F7,F82,F401",
+      "log": "static-final.log",
+      "status": "passed"
+    },
+    {
+      "command": "python -m compileall -q phase3_delivery scripts/qualify_delivery_recovery.py scripts/prepare_kaggle_upload.py scripts/verify_development_predictions.py tests/test_delivery_reliability.py tests/test_kaggle_upload.py tests/test_verified_worker_import.py",
+      "status": "passed"
+    }
+  ],
+  "final_dispatchable": false,
+  "interpreter": ".\\tmp\\phase3-reference-env\\Scripts\\python.exe",
+  "scope": "Local engineering evidence; no final study, actual Kaggle/CUDA run or hosted CI pass"
+}

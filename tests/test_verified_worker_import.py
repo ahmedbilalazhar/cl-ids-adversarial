@@ -114,6 +114,9 @@ class VerifiedWorkerImport(unittest.TestCase):
             mapping = [{**self.mapping[0], 'run_id': 'toy-FT-alias'}, self.mapping[0]]
             result = ingest_export(db, pin, self.archive, self.archive_sha, mapping)
             self.assertEqual(result['independent_trajectories_added'], 1)
+            self.assertEqual(result['unique_evaluations_verified'], 1)
+            self.assertTrue(result['prediction_structure_and_marginals_verified'])
+            self.assertFalse(result['prediction_reference_labels_accessed'])
             self.assertEqual([row['run_id'] for row in result['rows']], ['toy-FT-101', 'toy-FT-alias'])
             self.assertEqual(mapping[0]['run_id'], 'toy-FT-alias')  # Do not mutate caller input.
             self.assertEqual(ingest_export(db, pin, self.archive, self.archive_sha, mapping)
@@ -160,6 +163,34 @@ class VerifiedWorkerImport(unittest.TestCase):
             self.assertEqual(result['independent_trajectories_added'], 1)
             self.assertNotEqual(digest(incoming), self.archive_sha)
             self.assertEqual(len(verify_catalog(db, pin)['records']), 1)
+
+    def test_rehashed_prediction_inconsistency_rejected_before_catalog_write(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with zipfile.ZipFile(self.archive) as source:
+                payloads = {name: source.read(name) for name in source.namelist()}
+            prediction_name = 'FT-development/E1-predictions.npz'
+            with np.load(io.BytesIO(payloads[prediction_name]), allow_pickle=False) as arrays:
+                values = {name: arrays[name] for name in arrays.files}
+            # Keep the file well-formed and update its hash. The inconsistency
+            # must be found by semantics, rather than a stale transport hash.
+            values['predicted_slots'][0] = (int(values['predicted_slots'][0])+1) % len(values['source_codes_in_slot_order'])
+            fixture = io.BytesIO()
+            np.savez(fixture, **values)
+            payloads[prediction_name] = fixture.getvalue()
+            import hashlib
+            commit_name = 'FT-development/evaluation.commit.json'
+            commit = json.loads(payloads[commit_name])
+            commit['files']['E1-predictions.npz'] = hashlib.sha256(fixture.getvalue()).hexdigest()
+            payloads[commit_name] = json.dumps(commit).encode()
+            altered = root/'rehashed-predictions.zip'
+            with zipfile.ZipFile(altered, 'x') as target:
+                for name, payload in payloads.items():
+                    target.writestr(name, payload)
+            db, pin = self.registry(root)
+            with self.assertRaises(ValueError):
+                ingest_export(db, pin, altered, digest(altered), self.mapping)
+            self.assertEqual(verify_catalog(db, pin)['records'], [])
 
     def test_wrong_archive_hash_and_unsafe_mapping_rejected(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -1,5 +1,4 @@
 """Fail-closed development/synthetic count import; final results remain sealed."""
-import copy
 from fractions import Fraction
 
 from scripts.audit_phase3_endpoints import reconstruct, require
@@ -51,7 +50,7 @@ def import_counts(path, expected_sha256, expected_settings, expected_execution,
     require(condition not in seen_conditions, 'Alias/retry counted as independent trajectory')
     require(metric['schema'] in ('phase3-development-metrics-v3',
                                 'kaggle-qualification-development-metrics-v1'), 'Unknown metric schema')
-    translated = copy.deepcopy(metric)
+    translated = dict(metric)
     translated['schema'] = 'phase3-development-metrics-v3'
     validate_reported_metrics(translated, classes)
     result = reconstruct(translated, classes)

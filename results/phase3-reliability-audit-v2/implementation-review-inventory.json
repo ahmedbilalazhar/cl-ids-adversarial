@@ -1,0 +1,212 @@
+{
+  "files": [
+    {
+      "file": "phase3_delivery/analysis.py",
+      "functions": [
+        "seed_summary"
+      ],
+      "sha256": "10fe2791ebc13e1d96d521044a8ae74e2d61dd017e48660c29a452f47af0d3e5"
+    },
+    {
+      "file": "phase3_delivery/archive_policy.py",
+      "functions": [
+        "check_npz",
+        "check_archive_npz"
+      ],
+      "sha256": "4e7b401bb2e332dbc7942a4075f12db262dedb974b5c42e0c59a202c09bb0cd2"
+    },
+    {
+      "file": "phase3_delivery/assemble.py",
+      "functions": [
+        "assemble",
+        "main"
+      ],
+      "sha256": "83502567de6f5caf5b7e54696792a3e585b45aa35fda0b480425db80e5f48683"
+    },
+    {
+      "file": "phase3_delivery/catalog.py",
+      "functions": [
+        "encoded",
+        "validate_manifest",
+        "condition_identity",
+        "connect",
+        "initialize",
+        "bound_manifest",
+        "approve_manifest",
+        "store_object",
+        "ingest",
+        "verify_catalog",
+        "create_output",
+        "main"
+      ],
+      "sha256": "8ed093009871c0dbc003ee3a4db927b558b2aa9f38d4aeebe42be2a1b7845732"
+    },
+    {
+      "file": "phase3_delivery/development.py",
+      "functions": [
+        "published",
+        "build_manifest",
+        "main",
+        "receipt_path"
+      ],
+      "sha256": "f0aee3fe67b0df7ead84dad640d471c86181e9f59712d5dde303ebc1144bb065"
+    },
+    {
+      "file": "phase3_delivery/import_counts.py",
+      "functions": [
+        "import_counts"
+      ],
+      "sha256": "fed8830f60f136433252271239a190b0b33fb4808bf8755e5630ba87a37047db"
+    },
+    {
+      "file": "phase3_delivery/io.py",
+      "functions": [
+        "publish_new_bytes",
+        "read_verified_bytes",
+        "copy_verified_archive"
+      ],
+      "sha256": "36b1914eb6fca0894d4308510ba3c671a585204958b0af9e4adc9b4adf8e184c"
+    },
+    {
+      "file": "phase3_delivery/prediction_integrity.py",
+      "functions": [
+        "validate_predictions"
+      ],
+      "sha256": "30b9326bc879123106eeec2704e7b4dfcc30bb02ffad0d21b002ccf8244160ed"
+    },
+    {
+      "file": "phase3_delivery/reported_metrics.py",
+      "functions": [
+        "integer",
+        "rate",
+        "validate_reported_metrics"
+      ],
+      "sha256": "757e1b63c64d0b28dad97e884379dead6e0f2b42ea97f5ef27406ad54ad031ab"
+    },
+    {
+      "file": "phase3_delivery/snapshot.py",
+      "functions": [
+        "object_name",
+        "object_inventory",
+        "logical_state",
+        "member",
+        "export_snapshot",
+        "load_snapshot",
+        "restore_snapshot",
+        "main"
+      ],
+      "sha256": "e916970fd907da38af2a2a9d1bd0d5ad8a7ca83c4fa9a8217e82739bcf614e2f"
+    },
+    {
+      "file": "phase3_delivery/worker_import.py",
+      "functions": [
+        "archive_json",
+        "validate_evaluation_binding",
+        "prepare_mapping",
+        "ingest_export",
+        "main"
+      ],
+      "sha256": "f870f1c704f83470feb92740f98cf3e12ae6c5bef0894fd49e08d458de347860"
+    },
+    {
+      "file": "phase3_delivery/__init__.py",
+      "functions": [],
+      "sha256": "5dfee024cf9f4cd450888c034d961130b0e2a1ebd38bf6fa8303c3ddfba8ec7b"
+    },
+    {
+      "file": "scripts/qualify_delivery_recovery.py",
+      "functions": [
+        "resources",
+        "abrupt_writer",
+        "retire_successful_fixture",
+        "qualify",
+        "main",
+        "valid",
+        "rejected"
+      ],
+      "sha256": "07f4fb22f3535a5a411f1218f26f5d56e454f813616b40c24bdc799ce9aaeff1"
+    },
+    {
+      "file": "scripts/prepare_kaggle_upload.py",
+      "functions": [
+        "sha",
+        "bootstrap_source",
+        "adapt_notebook",
+        "prepare",
+        "main"
+      ],
+      "sha256": "470f80a39b4bc810a2cd5d62551aa38b0a0997a807991cf6f6800db2a722ede3"
+    },
+    {
+      "file": "scripts/verify_development_predictions.py",
+      "functions": [
+        "verify",
+        "main"
+      ],
+      "sha256": "aef38fc70afdd506fb79a5f568d7d3e22cef442e19e12a88e09bdc14370bb378"
+    },
+    {
+      "file": "tests/test_delivery_reliability.py",
+      "functions": [
+        "prediction_fixture",
+        "npz_bytes",
+        "test_seeded_marginal_oracle_and_guaranteed_single_prediction_mutations",
+        "test_source_code_marginals_use_registered_slots_and_no_reference_labels",
+        "test_wrong_id_shape_dtype_order_identity_and_duplicates_rejected",
+        "test_prediction_slots_schema_dtype_range_and_source_order_rejected",
+        "test_rehashed_bytes_with_inconsistent_prediction_counts_rejected",
+        "test_invalid_count_metadata_rejected_before_binning",
+        "test_marginal_validation_does_not_claim_per_example_label_correctness",
+        "test_publication_failure_retains_complete_staging_and_prior_files",
+        "test_flush_failure_leaves_staging_evidence_without_success_path",
+        "test_serialization_failure_and_existing_path_never_publish_or_overwrite",
+        "test_two_publishers_racing_commit_one_complete_receipt",
+        "test_cleanup_failure_cannot_reclassify_an_already_committed_receipt",
+        "test_restore_marker_flush_failure_never_leaves_a_commit_marker",
+        "test_one_cycle_counts_only_qualification_and_ledger_chain",
+        "test_invalid_duration_or_overlapping_paths_rejected_before_workspace_creation",
+        "racing_link",
+        "publish",
+        "fail_marker_flush"
+      ],
+      "sha256": "0eb8f62914d35a6055f44b2d517138b8e8e76883dcfe78d58858036dbcf31188"
+    },
+    {
+      "file": "tests/test_kaggle_upload.py",
+      "functions": [
+        "notebook_fixture",
+        "fixture",
+        "bootstrap",
+        "test_exact_multiblock_roundtrip_reuse_and_original_workflow_cells_preserved",
+        "test_changed_truncated_or_appended_upload_rejected_before_archive_publication",
+        "test_existing_wrong_archive_and_original_inputs_never_overwritten",
+        "test_decoder_flush_failure_retains_staging_without_completed_zip",
+        "test_upload_changed_after_preflight_hash_is_rejected_by_used_bytes",
+        "test_input_pins_and_notebook_layout_mismatch_fail_closed",
+        "mutate_then_decode"
+      ],
+      "sha256": "050f28dbf461deb32543ee8cd3bff07cc510f4765be3867648047497c3b41cee"
+    },
+    {
+      "file": "tests/test_verified_worker_import.py",
+      "functions": [
+        "setUpClass",
+        "tearDownClass",
+        "registry",
+        "mapping",
+        "test_complete_bound_export_import_and_retry",
+        "test_alias_first_mapping_imports_one_physical_observation",
+        "test_changed_model_binding_rejected_before_catalog_write",
+        "test_source_mutation_after_copy_uses_only_verified_snapshot",
+        "test_rehashed_prediction_inconsistency_rejected_before_catalog_write",
+        "test_wrong_archive_hash_and_unsafe_mapping_rejected",
+        "toy_bank_digest",
+        "snapshot_then_change"
+      ],
+      "sha256": "15cbae4eb81d881ee999af4a56c29c49d16283f6f4aea505b692a5fdba4b6733"
+    }
+  ],
+  "final_dispatchable": false,
+  "final_test_accessed": false,
+  "status": "read_and_parsed"
+}

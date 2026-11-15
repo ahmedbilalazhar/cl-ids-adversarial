@@ -1,0 +1,7 @@
+component,literature,role here
+FT (sequential fine-tuning),plain continual-learning lower bound,forgetting is expected; baseline everywhere
+EI = EWC-style regularisation,"Kirkpatrick et al., 2017 (EWC); per-example diagonal Fisher here",regularisation-based retention without stored data
+DR = DER++ replay,"Buzzega et al., 2020 (DER++)","memory of raw rows plus logits, per client (500 records)"
+FedAvg aggregation,"McMahan et al., 2017","weighted by admitted rows, 12 rounds per stage"
+Label-flipping poisoning,standard data-poisoning threat model in federated learning,"1, 3 or 5 clients relabel Hulk as benign in E2, then withdraw"
+Admission rules DC / DM / DQ,"this project (class-aware quota, matched-volume ranking, random control)",tests whether protection can avoid blocking legitimate new classes

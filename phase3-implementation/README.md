@@ -22,15 +22,23 @@ This folder holds our own Phase 3 implementation, the complete result of its fin
 2. Run the cells top to bottom. Part A rebuilds the data from the public corrected CICIDS2017 release and verifies every pinned hash; Part B runs the grid (about 2.5 hours on a T4); Part C writes the tables and figures.
 3. For a first check set `QUICK = True` in cell B-2 (about 15 minutes), then set it to `False`.
 
-Settings: three ownership partitions (seeds 101-103, the only development seeds the repository allows) x four training replicates = 12 paired units; 696 runs; development bank only.
+Settings: three ownership partitions (seeds 101-103) x four training replicates = 12 paired units; 696 runs; development bank only.
 
 ## Headline results (see the report for details)
-- Replay (DR) is the only learner that retains earlier attack families (clean macro-F1 0.49 against 0.03-0.05 for FT and EI), but it also keeps poisoned knowledge after the attacker withdraws (persistent damage 0.79 at 50% poisoning, 0.99 at 90%).
-- A single attacker among five clients is diluted by federated averaging.
-- None of the tested admission rules reduced persistent damage. The class-aware quota kept all new-class rows (the global filter kept 9.5% under the strongest attack), but ranking by loss inside the quota lowered acquisition and macro-F1.
+- DR retains more earlier-class capability than the FT/EI variants under this protocol. Targeted persistence and final recall damage are now reported separately; use the corrected report for values.
+- Attack effects depend on client ownership, within-client corruption, and the learner. A one-client arm is not interchangeable with a five-client arm at a similar total corruption volume.
+- At moderate corruption, class-aware random selection is a serious control; at severe corruption all rules show large targeted errors. New-labelled sample retention does not establish successful class acquisition.
 - Ablations: the replay-label term and the memory eviction rule decide both retention and how much poison survives.
 
 ## Notes
-- No final-test data were read; seeds 104 and above stay sealed for the final evaluation.
-- CPU and GPU runs are not bit-identical; all reported runs used the GPU.
+- Final-test rows are excluded. Ownership partitions and training/corruption replicates are not independent captures or sites.
+- Original runs use GPU. The new CPU supplement uses CPU-only clean references; device results are kept separate.
 - Our DR clean macro-F1 (0.434 on the repository's three partitions) is below the repository's committed value (0.655); this difference is reported, not tuned away.
+
+## Corrected submission analysis
+
+Use `../submissions/phase3-report/phase3-report.pdf` and the corrected CSVs there. The original Part C H is final recall damage, distinct from Phase 2 targeted persistence. Statistical claims in the original generated discussion are superseded by the partition-level exploratory analysis. See that folder README for reproduction and the CPU supplement, exact completion status, and reproduction instructions. New experiment results are used only after validation.
+
+## CPU supplement
+
+Run `python scripts/run_phase3_cpu_study.py` from the repository root. The protocol is `../docs/phase3-cpu-supplement-protocol.md`; results and complete identities are in `../results/phase3-cpu-supplement/`. To regenerate corrected evidence, figures, report and ZIP after completion, run `python scripts/reproduce_phase3_submission.py`. The legacy notebook Part C statistics and metric names are historical evidence, superseded by the corrected analysis.

@@ -17,7 +17,7 @@ Network attacks keep changing, so an intrusion detection system (IDS) must keep 
 - **Label poisoning:** a client's training labels are wrong, for example because an automated labelling feed is fooled or compromised.
 
 ## 3. The problem
-Each field has its own answer, but nobody tests them together:
+The reviewed literature motivates testing these mechanisms together under a precisely specified protocol:
 - Continual-learning IDS papers assume **honest participants with clean labels**.
 - Federated poisoning defences are tested with a **fixed set of classes**, and often just single runs.
 - Those defences can throw away **honest but rare or new** evidence together with the poison.
@@ -28,7 +28,7 @@ So it is unknown: (a) how bad a poisoned stage is for a learner that is acquirin
 - Federated class-incremental IDS exist but trust all clients (e.g. the studies tagged P2, P4, P12).
 - Centralised continual-IDS benchmarks compare replay, distillation and EWC on clean data (P8, P9, P13). P9 itself notes its replay could be exploited by attackers.
 - Poisoning work in federated IDS uses a fixed class set (P5, P7, P10, P11). Defences wrongly exclude honest clients (P11 reports 4.6% on CICIDS2017), absorb rare classes into normal traffic (P10), or need a large trusted dataset (P7).
-- The only study poisoning a continual IDS's replay buffer is a single-machine preprint.
+- Prior work on replay poisoning motivates a more specific comparison of federation, acquisition and withdrawal; no exhaustive novelty claim is made.
 - Many studies report single runs, and some tune thresholds on labelled test batches (P6, P11-P13).
 
 ## 5. The research gaps and questions
@@ -47,57 +47,43 @@ So it is unknown: (a) how bad a poisoned stage is for a learner that is acquirin
 - **Measures:** macro-F1 on eligible classes, benign false-alarm rate, Hulk recall, attack success rate, **H** (persistent damage = Hulk recall lost at the end, compared with the same learner without attack), acquisition **A** (how well new classes are learned), backward transfer and forgetting, and cost (time, communication bytes, memory bytes).
 - **Statistics:** results are paired by run. Confirmatory tests are two-sided Wilcoxon signed-rank tests with Holm correction inside each family, plus bootstrap confidence intervals and rank-biserial effect sizes.
 
-## 7. The three phases
-**Phase 1: literature review.** Three 2026 papers on continual learning for network security were reviewed. They revealed three gaps: evaluation data is old or synthetic, nobody attacks the adaptation mechanism itself, and deployment cost is not measured.
+## 7. Implementation and current evidence
 
-**Phase 2: extended literature review and methodology (done).** Ten more 2025-2026 studies were added and checked against the rubric. The Phase 1 gaps were narrowed into G1-G3, with research questions, hypotheses, the experimental design, metrics and the statistical plan. The deliverable is the LaTeX report `phase2_with_claude.tex` (our improved version), based on the repository `ahmedbilalazhar/cl-ids-adversarial`. It contains a design only; no numbers of our own.
+Phase 1 reviewed continual IDS research; Phase 2 specified the methodology. Phase 3 implements a reduced, explicitly amended development study using the corrected CICIDS2017 release and five simulated clients. The submitted Phase 2 document remains the historical design, not a claim that every proposed experiment was completed.
 
-**Phase 3: implementation and experiments (in progress).** The university asks for seven things:
-1. implementation of the proposed methodology,
-2. dataset and preprocessing,
-3. baseline evaluation,
-4. graphical results,
-5. comparison with existing research,
-6. ablation studies,
-7. results analysis and discussion.
+The saved GPU grid is complete: 696 trajectories, including learners, admission conditions, and component ablations. The earlier statement that 108 defense and 258 ablation runs remained missing is obsolete. The canonical report is `../../submissions/phase3-report/phase3-report.pdf`.
 
-How we did it:
-- All compute runs on Kaggle (a free T4 GPU), in a single notebook, `phase3_kaggle_final.ipynb`, with three parts whose results are saved separately:
-  - **Part A:** download and verify the data, rebuild it, check every pinned hash, build one training package per allowed seed.
-  - **Part B:** our own implementation (`p3lib.py`, run in parallel by `p3parallel.py`) runs the experiment grid, one result file per run, resumable.
-  - **Part C:** tables, figures, statistics, comparison with literature and an auto-written discussion with its limits.
-- The repository only allows development seeds 101-103 (higher seeds are sealed for the final evaluation). We use those three ownership partitions times four training replicates, giving 12 paired units.
+A local CPU supplement implements clean/ordinary/oracle-purge/random-deletion replay conditions, a DQ check, and offline pooled references. `../../results/phase3-cpu-supplement/completion.json` records its final executed count. The execution protocol and complete state-parity checks are in `../../docs/phase3-cpu-supplement-protocol.md`. Only completed, validated trajectories enter the final report.
 
-## 8. What we have found so far
-- **First run (3 seeds, a single weak attacker):** the attack did almost nothing. One attacker holds only about 6% of the Hulk rows and the other four clients outvote it. Hulk recall stayed about 0.99-1.00. So the defences showed no benefit and only cost accuracy. We reported this as a finding, then strengthened the threat model: 1, 3 or 5 attacking clients and different poisoning shares.
-- **Second run (stronger attack, RQ1 complete with 12 units):**
-  - DR keeps what it learned (clean macro-F1 0.49); FT and EI collapse (0.03-0.05) and raise false alarms on about 93-98% of benign traffic.
-  - Immediate damage grows with attack strength: DR loses 0.61 of its Hulk recall when 50% of Hulk rows are poisoned, 0.88 at 71%, and all of it at 90%.
-  - The damage persists after the attacker withdraws: persistent damage H is about 0.79 (50%) to 0.99 (90%) for DR.
-  - FT and EI show H = 0 only because they have already forgotten Hulk without any attack; their damage shows in the immediate recall loss.
-  - Six of 30 confirmatory C1 tests are significant after Holm correction (DR versus FT/EI on H in the stronger arms).
-- **RQ2 and RQ3:** only partly run so far, so no conclusion yet. The early partial data suggest that class-aware admission (DC) lowers macro-F1 without reducing persistent damage, but this is not final.
-- **Known difference from the repository's own result:** our DR scores 0.434 where the repository's committed run scores 0.655 (the ranking agrees); this must be reported honestly.
+## 8. Findings and interpretation
 
-## 9. Honest limits
-- One dataset, one attack pattern (Hulk relabelled benign in one stage), development bank only.
-- The 12 units are 3 ownership partitions times 4 training replicates, so replicates within a partition are not fully independent.
-- FT and EI collapse even without attack, so their poisoning damage is bounded by what is left to lose.
-- CPU and GPU runs are not bit-identical; all comparisons use one device type.
+DR retains more earlier-family capability than FT/EI in the original grid, but poisoned training can also produce errors after attacker withdrawal. FT/EI already have weak clean capability, so small additional damage cannot establish security. Initial class acquisition is imperfect as well; the report shows per-family outcomes and an offline learnability reference.
 
-## 10. What remains
-1. Finish the Kaggle run (`QUICK = False`): the defence grid (about 108 runs missing) and the ablations (about 258 runs missing), then re-run Part C. About 1.2 hours.
-2. Write the Phase 3 report using the generated tables, figures and discussion, covering the seven requirements.
-3. Explain the gap to the repository's DR result and the weak FT/EI baselines.
-4. Push the final files to the repository.
+The older summary called final Hulk recall loss H. The corrected report restores Phase 2 H: the mean E3/E4 Hulk-to-benign ASR increase over a matched clean trajectory. Mistaking Hulk for another attack and mistaking it for benign have different operational meanings. Both diagnostics remain available under separate names.
+
+Admission outcomes depend on attack strength. At moderate corruption, random class-aware selection is competitive with loss ranking. Preserving new-labelled rows is a mechanism check, not proof of learning. The report shows acquisition, targeted errors, false alarms and clean capability together.
+
+## 9. Limits and statistical status
+
+The grid uses three ownership partitions times four training/corruption replicates on one fixed development bank. Replicate streams change initialization, minibatches, poison selection and replay while ownership remains fixed. These are not twelve independent captures or deployments.
+
+The expanded attack grid and revised analysis are exploratory. The original separate C1/C2 significance claims are superseded by a combined 47-comparison sensitivity analysis using partition-level effects. Three partition units cannot yield a two-sided exact signed-rank p below .05; absence of significance does not establish equivalence.
+
+The oracle memory intervention uses evaluator knowledge and is not deployable. Its random-deletion control matches volume, not retained class composition. Offline pooled training has future-class and unrestricted historical access and is a sanity reference rather than a matched deployment baseline. Final-test data, adaptive forged updates, live deployment and cross-dataset validation remain outside these executed claims.
+
+## 10. Reproduction and handoff
+
+Run `python scripts/reproduce_phase3_submission.py` from the repository root after the CPU supplement finishes. This verifies evidence, recomputes metrics, regenerates figures and report, renders the PDF, and validates the submission ZIP. `../../submissions/phase3-report/README.md` describes input reconstruction and dependency versions. `defense-notes.md` in the same folder supports the presentation or viva.
 
 ## 11. Glossary
+
 | Term | Meaning |
 |---|---|
-| E1-E4 | the four learning stages, each introducing new attack families |
-| FedAvg | the server averages client model updates, weighted by how much data each client used |
-| H | persistent damage: Hulk recall lost at the end, compared with the same learner with no attack |
-| A | acquisition: how well newly arrived classes are learned |
-| BWT / forgetting | how much earlier classes are lost after later stages |
-| DC / DM / DQ | admission rules: class-aware quota / matched global ranking / random control |
-| Unit | one ownership partition times one training replicate; the unit of pairing in the statistics |
+| E1-E4 | Four stages introducing new annotated attack families |
+| FedAvg | Current-admitted-row-weighted averaging of local model updates |
+| H | Clean-matched targeted Hulk-to-benign error averaged over E3/E4 |
+| Final recall damage | Clean-minus-poisoned Hulk recall at E4 |
+| A | Mean acquisition F1 on untargeted newly arrived eligible classes |
+| DC / DM / DQ | Class-aware loss ranking / matched-volume global ranking / class-aware random selection |
+| Oracle purge | Evaluator-only deletion of marked poison; explanatory intervention |
+| Partition | One simulated component-ownership assignment, not an independent capture |

@@ -1,0 +1,160 @@
+{
+  "schema": "phase3-reference-inference-latency-v1",
+  "status": "development_only_descriptive_latency",
+  "measured_utc": "2026-11-16T23:56:28Z",
+  "protocol_sha256": "a8fc9dc310716d104a1df24f4eef24885af46481d8c6d6c25c6d2a302388127a",
+  "run_manifest_sha256": "9d6fa3c6b862cda6016472fc1140bc22f9c2c00a8e67b99d08b02a12d2b799b8",
+  "development_manifest_sha256": "2d8e209d17777b8ac5b2cc7f32dfb90fd5c358a671b79dcc3715b8368e57f081",
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "torch": "2.7.0+cpu",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "device": "cpu",
+    "threads": 1,
+    "interop_threads": 1,
+    "deterministic_algorithms": true,
+    "amp": false,
+    "default_dtype": "torch.float32",
+    "torch_build": "PyTorch built with:\n  - C++ Version: 201703\n  - MSVC 193833144\n  - Intel(R) oneAPI Math Kernel Library Version 2025.1-Product Build 20250306 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\n  - OpenMP 2019\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX2\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=134179474539648ba7dee1317959529fbd0e7f89, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/pytorch/.ci/pytorch/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DLIBKINETO_NOXPUPTI=ON -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.7.0, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, \n"
+  },
+  "device": "CPU",
+  "timing_scope": "evaluation-mode forward pass only; excludes preprocessing, loading, network and serialization",
+  "batch_sizes": [
+    1,
+    256
+  ],
+  "warmups_per_checkpoint_batch": 10,
+  "measured_calls_per_checkpoint_batch": 100,
+  "checkpoints": [
+    {
+      "stage": 1,
+      "file": "E1-R3.npz",
+      "checkpoint_sha256": "4006ac3c2789632bf69eafcc2487c185992458b2fc77dbaa0856cb940fee15c8",
+      "model_identity": "e183b9bd3b6c16b152dbf75628f32fca43bafde89e2ad90713bb400651fd56af",
+      "checkpoint_bytes": 1161514,
+      "active_head_width": 3
+    },
+    {
+      "stage": 2,
+      "file": "E2-R3.npz",
+      "checkpoint_sha256": "eaa789408f1cd6cc99041dd0babbebf7b5b40345d0afd39e87c960e7eecef6c1",
+      "model_identity": "70836edbdeecea226856ffff95f2e6004ece8ce65a59271741215d2aa1772477",
+      "checkpoint_bytes": 1987078,
+      "active_head_width": 8
+    },
+    {
+      "stage": 3,
+      "file": "E3-R3.npz",
+      "checkpoint_sha256": "0e3a18aba5469503b529a6b5c6ed5a34bda0d4643be185b3ca2e604077a20769",
+      "model_identity": "4bcc3d6748bccb8a8e0cd5cda40e7740b060f74d0babc419cdc1c556ee4e7f30",
+      "checkpoint_bytes": 1236382,
+      "active_head_width": 13
+    },
+    {
+      "stage": 4,
+      "file": "E4-R3.npz",
+      "checkpoint_sha256": "bfad1d460fdd5ecc59d12fc6c49ee45d6e74114f4c809170f05d45202fb7e142",
+      "model_identity": "96c15caa2f4988624a55e4f41731130d4b14ef20163d4a9eef3d0f8e1ca20259",
+      "checkpoint_bytes": 1715334,
+      "active_head_width": 16
+    }
+  ],
+  "summary": [
+    {
+      "stage": 1,
+      "batch_size": 1,
+      "calls": 100,
+      "warmups": 10,
+      "median_seconds_per_batch": 6.4e-05,
+      "p95_seconds_per_batch": 7.175999999999999e-05,
+      "mean_seconds_per_batch": 6.504e-05,
+      "sample_sd_seconds_per_batch": 4.853115213213804e-06,
+      "median_seconds_per_record": 6.4e-05
+    },
+    {
+      "stage": 1,
+      "batch_size": 256,
+      "calls": 100,
+      "warmups": 10,
+      "median_seconds_per_batch": 0.0001855,
+      "p95_seconds_per_batch": 0.00022234499999999996,
+      "mean_seconds_per_batch": 0.000191889,
+      "sample_sd_seconds_per_batch": 1.852663872439473e-05,
+      "median_seconds_per_record": 7.24609375e-07
+    },
+    {
+      "stage": 2,
+      "batch_size": 1,
+      "calls": 100,
+      "warmups": 10,
+      "median_seconds_per_batch": 6.41e-05,
+      "p95_seconds_per_batch": 6.7705e-05,
+      "mean_seconds_per_batch": 6.504300000000001e-05,
+      "sample_sd_seconds_per_batch": 3.931413373217208e-06,
+      "median_seconds_per_record": 6.41e-05
+    },
+    {
+      "stage": 2,
+      "batch_size": 256,
+      "calls": 100,
+      "warmups": 10,
+      "median_seconds_per_batch": 0.00019555,
+      "p95_seconds_per_batch": 0.00022265,
+      "mean_seconds_per_batch": 0.000198443,
+      "sample_sd_seconds_per_batch": 2.009093094061612e-05,
+      "median_seconds_per_record": 7.638671875e-07
+    },
+    {
+      "stage": 3,
+      "batch_size": 1,
+      "calls": 100,
+      "warmups": 10,
+      "median_seconds_per_batch": 6.26e-05,
+      "p95_seconds_per_batch": 7.008499999999999e-05,
+      "mean_seconds_per_batch": 6.502e-05,
+      "sample_sd_seconds_per_batch": 1.2611610811975101e-05,
+      "median_seconds_per_record": 6.26e-05
+    },
+    {
+      "stage": 3,
+      "batch_size": 256,
+      "calls": 100,
+      "warmups": 10,
+      "median_seconds_per_batch": 0.00018805,
+      "p95_seconds_per_batch": 0.000250685,
+      "mean_seconds_per_batch": 0.000198477,
+      "sample_sd_seconds_per_batch": 2.3739554236622377e-05,
+      "median_seconds_per_record": 7.345703125e-07
+    },
+    {
+      "stage": 4,
+      "batch_size": 1,
+      "calls": 100,
+      "warmups": 10,
+      "median_seconds_per_batch": 6.3e-05,
+      "p95_seconds_per_batch": 7.095999999999998e-05,
+      "mean_seconds_per_batch": 6.530300000000001e-05,
+      "sample_sd_seconds_per_batch": 1.3890513113109052e-05,
+      "median_seconds_per_record": 6.3e-05
+    },
+    {
+      "stage": 4,
+      "batch_size": 256,
+      "calls": 100,
+      "warmups": 10,
+      "median_seconds_per_batch": 0.0001807,
+      "p95_seconds_per_batch": 0.00021562,
+      "mean_seconds_per_batch": 0.000187278,
+      "sample_sd_seconds_per_batch": 1.921538514479026e-05,
+      "median_seconds_per_record": 7.05859375e-07
+    }
+  ],
+  "final_test_accessed": false,
+  "limitations": [
+    "One CPU, one thread and one model checkpoint per stage; no device/generalization uncertainty.",
+    "No process RSS, allocation, serialized communication, network delay or energy was measured."
+  ]
+}

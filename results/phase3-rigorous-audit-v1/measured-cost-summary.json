@@ -1,0 +1,142 @@
+{
+  "blocks": {
+    "clean-confirmation": {
+      "elapsed_seconds": {
+        "max": 184.8713230000012,
+        "median": 144.16570449999926,
+        "min": 104.88500340000064,
+        "n": 9,
+        "p90_nearest_rank": 184.8713230000012
+      },
+      "latency_sample_count": 3,
+      "offline_latency_ms": {
+        "1": {
+          "median": {
+            "max": 0.2014,
+            "median": 0.17609999999999998,
+            "min": 0.1689,
+            "n": 3,
+            "p90_nearest_rank": 0.2014
+          },
+          "p95": {
+            "max": 0.21647,
+            "median": 0.19932,
+            "min": 0.18276,
+            "n": 3,
+            "p90_nearest_rank": 0.21647
+          }
+        },
+        "256": {
+          "median": {
+            "max": 0.44735,
+            "median": 0.4111,
+            "min": 0.2442,
+            "n": 3,
+            "p90_nearest_rank": 0.44735
+          },
+          "p95": {
+            "max": 0.47585500000000003,
+            "median": 0.45302000000000003,
+            "min": 0.417345,
+            "n": 3,
+            "p90_nearest_rank": 0.47585500000000003
+          }
+        }
+      },
+      "serialized_four_stage_weight_bytes": {
+        "max": 282547,
+        "median": 282086,
+        "min": 281608,
+        "n": 9,
+        "p90_nearest_rank": 282547
+      },
+      "unique_runs": 9
+    },
+    "core": {
+      "elapsed_seconds": {
+        "max": 232.9501739999978,
+        "median": 159.85793589999957,
+        "min": 101.41987999999947,
+        "n": 240,
+        "p90_nearest_rank": 173.85867390000203
+      },
+      "latency_sample_count": 0,
+      "serialized_four_stage_weight_bytes": {
+        "max": 282780,
+        "median": 282214.0,
+        "min": 281366,
+        "n": 240,
+        "p90_nearest_rank": 282542
+      },
+      "unique_runs": 240
+    },
+    "matched-random": {
+      "elapsed_seconds": {
+        "max": 149.18917820000206,
+        "median": 142.85653830000228,
+        "min": 139.54151949999869,
+        "n": 24,
+        "p90_nearest_rank": 146.59411230000114
+      },
+      "latency_sample_count": 0,
+      "serialized_four_stage_weight_bytes": {
+        "max": 282791,
+        "median": 282275.5,
+        "min": 281880,
+        "n": 24,
+        "p90_nearest_rank": 282671
+      },
+      "unique_runs": 24
+    },
+    "quota": {
+      "elapsed_seconds": {
+        "max": 7804.1696008,
+        "median": 310.38486625000223,
+        "min": 168.4411289999989,
+        "n": 96,
+        "p90_nearest_rank": 424.31917480000266
+      },
+      "latency_sample_count": 0,
+      "serialized_four_stage_weight_bytes": {
+        "max": 282948,
+        "median": 282312.0,
+        "min": 281850,
+        "n": 96,
+        "p90_nearest_rank": 282626
+      },
+      "unique_runs": 96
+    },
+    "replay-loss": {
+      "elapsed_seconds": {
+        "max": 456.22976180000114,
+        "median": 347.9426311000025,
+        "min": 181.95261050000408,
+        "n": 48,
+        "p90_nearest_rank": 412.2858148999949
+      },
+      "latency_sample_count": 0,
+      "serialized_four_stage_weight_bytes": {
+        "max": 282681,
+        "median": 282148.0,
+        "min": 281645,
+        "n": 48,
+        "p90_nearest_rank": 282513
+      },
+      "unique_runs": 48
+    }
+  },
+  "interpretation": "Archived elapsed times are observational and hardware/co-load conditions are not a controlled benchmark. Do not compare as training-only costs. Weight archive size is not communication payload size.",
+  "measured_scope": [
+    "runner elapsed_seconds (includes training, evaluation, serialization and any included oracle continuation)",
+    "compressed NPZ stage-weight file sizes",
+    "per-run inference latency only where latency records exist"
+  ],
+  "not_measured": [
+    "separate training/admission/Fisher/aggregation/evaluation wall times in overnight results",
+    "peak RSS or allocated client state",
+    "serialized upload/download messages including labels, registry and protocol framing",
+    "network delay, edge runtime, energy"
+  ],
+  "schema": "phase3-measured-cost-summary-v1",
+  "unique_result_count": 417
+}

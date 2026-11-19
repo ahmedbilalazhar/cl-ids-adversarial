@@ -1,0 +1,1 @@
+Submission-safe snapshot: 696 verified GPU trajectories and 12 completed, state-parity-validated CPU mechanism trajectories. Additional DQ and pooled CPU experiments are pending and excluded. Upload all ZIP contents to Overleaf and compile main.tex using XeLaTeX. This snapshot is fixed while optional replication continues.

@@ -1,0 +1,79 @@
+{
+  "schema": "phase3-discovery-assignment-summary-v1",
+  "status": "exploratory_development_only",
+  "seeds": [
+    2026,
+    2027,
+    2028
+  ],
+  "policies": {
+    "centroid_radius": {
+      "n_eval_assigned": {
+        "mean": 10028,
+        "sd_across_partitions": 224.1450423275072
+      },
+      "n_novel_eval": {
+        "mean": 12508,
+        "sd_across_partitions": 343.2215028228855
+      },
+      "clustered_attack_rate": {
+        "mean": 0.8426008796587253,
+        "sd_across_partitions": 0.008861232096216583
+      },
+      "cluster_assignment_purity": {
+        "mean": 0.9870046030993006,
+        "sd_across_partitions": 0.0011087473375753737
+      },
+      "cluster_assignment_ari": {
+        "mean": 0.04206004014760672,
+        "sd_across_partitions": 0.0026573540101584477
+      }
+    },
+    "nearest_centroid": {
+      "n_eval_assigned": {
+        "mean": 12508,
+        "sd_across_partitions": 343.2215028228855
+      },
+      "n_novel_eval": {
+        "mean": 12508,
+        "sd_across_partitions": 343.2215028228855
+      },
+      "clustered_attack_rate": {
+        "mean": 1.0,
+        "sd_across_partitions": 0.0
+      },
+      "cluster_assignment_purity": {
+        "mean": 0.9482428572891067,
+        "sd_across_partitions": 0.006826033718382314
+      },
+      "cluster_assignment_ari": {
+        "mean": 0.04176173877138663,
+        "sd_across_partitions": 0.0005247848878803264
+      }
+    }
+  },
+  "paired_differences": {
+    "clustered_attack_rate_nearest_minus_radius": {
+      "mean": 0.15739912034127468,
+      "sd_across_partitions": 0.008861232096216583
+    },
+    "cluster_assignment_purity_nearest_minus_radius": {
+      "mean": -0.03876174581019395,
+      "sd_across_partitions": 0.00782104576414564
+    },
+    "cluster_assignment_ari_nearest_minus_radius": {
+      "mean": -0.0002983013762200906,
+      "sd_across_partitions": 0.0021744356315530353
+    }
+  },
+  "runs": {
+    "2026": "discovery-development-assignment-v1.json",
+    "2027": "discovery-development-assignment-seed-2027.json",
+    "2028": "discovery-development-assignment-seed-2028.json"
+  },
+  "interpretation": [
+    "Comparisons are paired on the same AE, threshold, fitted clusters, and evaluation components within each seed.",
+    "Component partitions overlap; SD is descriptive partition sensitivity, not a confidence interval.",
+    "Novelty detection and benign false-alert rates are invariant because assignment is applied after the frozen threshold step."
+  ]
+}

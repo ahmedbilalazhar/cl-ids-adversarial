@@ -18,6 +18,7 @@ def main():
     def include(folder):
         for p in (ROOT/folder).rglob('*'):
             if p.is_file() and '__pycache__' not in p.parts and not p.name.startswith('preview-'):
+                if p.parent==OUT and p.suffix in ('.pdf','.tex') and p.name not in (pdf.get('pdf','phase3-report.pdf'),'phase3-report.tex'):continue
                 if 'source-review' in p.parts and p.suffix in ('.pdf','.tex'):continue
                 paths.add(p)
     for folder in ('submissions/phase3-report','phase3-implementation',

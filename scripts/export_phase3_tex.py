@@ -93,9 +93,16 @@ def main():
         assert page.get_text().strip()
         page.get_pixmap().save(str(preview/f'page-{i+1:02}.png'))
         checks.append(dict(page=i+1,characters=len(page.get_text()),width=page.rect.width,height=page.rect.height))
-    (OUT/'pdf-validation.json').write_text(json.dumps(dict(pages=len(doc),engine='Tectonic/XeTeX',page_checks=checks),indent=2))
-    final=ROOT/'output/pdf';final.mkdir(parents=True,exist_ok=True);shutil.copy2(compiled,final/'phase3-report-submission.pdf')
-    print('Compiled and rendered current TeX report:',len(doc),'pages')
+    pages=len(doc);doc.close()
+    import hashlib
+    sha=hashlib.sha256(compiled.read_bytes()).hexdigest()
+    current=OUT/('phase3-report-'+sha[:12]+'.pdf');shutil.copy2(compiled,current)
+    for target in (OUT/'phase3-report.pdf',ROOT/'output/pdf/phase3-report-submission.pdf'):
+        target.parent.mkdir(parents=True,exist_ok=True)
+        try:shutil.copy2(compiled,target)
+        except PermissionError:print('Open PDF preserved:',target)
+    (OUT/'pdf-validation.json').write_text(json.dumps(dict(pages=pages,engine='Tectonic/XeTeX',page_checks=checks,pdf=current.name,sha256=sha),indent=2))
+    print('Compiled and rendered current TeX report:',pages,'pages',current)
 
 
 if __name__=='__main__':main()

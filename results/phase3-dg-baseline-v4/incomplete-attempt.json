@@ -1,0 +1,589 @@
+{
+  "schema": "phase3-incomplete-attempt-v1",
+  "status": "incomplete_excluded",
+  "block": "DG global low-loss admission",
+  "attempt": "v4",
+  "reason": "The corrected Phase 2 implementation completed ten full cells, then checkpoint writing failed with OSError 28 (no space left on device). The runner had already queued the matrix; remaining partial/corrupt outputs were preserved but excluded. No cross-method analysis is valid from this incomplete block.",
+  "completed_cell_count": 10,
+  "expected_cell_count": 48,
+  "cells": [
+    {
+      "cell": "dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 1
+      },
+      "result": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/result.json",
+      "result_bytes": 46646,
+      "result_sha256": "f70be55d637f663b43c517aa7b3d7414e360fb716bdc8f9ee301a38034159ecc",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68554,
+          "sha256": "5c5649ae87f9fc15b62971226d187262835a80c1ac07dbf7d74a42d3d7a8ea35"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 69979,
+          "sha256": "7b2db3c8ce32ce3b3c6034155e79dfc60a3cbc074c7c331fdd42ff4e4b40886e"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71270,
+          "sha256": "987c7515804b4f8eba7d4247d38c16d9885fdf8eaa5f4f169059cbae5ec6996f"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72352,
+          "sha256": "ba38b33acb7c063954bb9c63790a52e9db3b5ba04886533b6bd35189002f0a19"
+        }
+      ],
+      "checkpoint_count": 4
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          1,
+          10
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 1
+      },
+      "result": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/result.json",
+      "result_bytes": 130119,
+      "result_sha256": "7342178828172076402beb8410f2500973a8684231c86f1a526f4d5fa7ab27ff",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68554,
+          "sha256": "5c5649ae87f9fc15b62971226d187262835a80c1ac07dbf7d74a42d3d7a8ea35"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 69993,
+          "sha256": "2d57dfd749d15b68a66ef774246e5524cb615c3533d3ec621f71f6b4de76d9a7"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71242,
+          "sha256": "29e752103140454f2629f2e16efdd6b26029d6cd3bff313318832e4006bdf5e5"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72350,
+          "sha256": "b011195a9b8264cb5b72a67d5ce283eb0e444b5ed00fccb8ce3cfac6258428ce"
+        }
+      ],
+      "checkpoint_count": 4
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 2
+      },
+      "result": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/result.json",
+      "result_bytes": 45722,
+      "result_sha256": "8dc9fda6879f72c56033bd83739f9409a8f68677d39aeedd6e6fd787b773b3c6",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68438,
+          "sha256": "c78b2f49d3eee1336097e159d5ea103514ef49fe16dd9ca3ea47055a880b3108"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 70301,
+          "sha256": "889bece168fa02a7e85113ce504ce9545744ac2fadc84259e94be0e1178c0a6b"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71488,
+          "sha256": "64124f02b28918515b37fbf2a1b2422ce3a3bf721f6223356e5166bc9e1184ca"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72292,
+          "sha256": "f0b673ca5089f8c74a00cfe246e8efaeac2ab7a16a3b6dcb7e4f37590e5b990f"
+        }
+      ],
+      "checkpoint_count": 4
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s2-p1of10-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          1,
+          10
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 2
+      },
+      "result": "runs/dg-baseline-DR-DG-s2-p1of10-y1-z0.1-q0.75/result.json",
+      "result_bytes": 87113,
+      "result_sha256": "4d7ccb7e507817d7dec0740b6d7c472685f192f30ad5046fddda63dffcf0d366",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p1of10-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68438,
+          "sha256": "c78b2f49d3eee1336097e159d5ea103514ef49fe16dd9ca3ea47055a880b3108"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p1of10-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 70273,
+          "sha256": "b11a7434a4e5619af71a4ad97241dabda256cfcf837ea53a545b1ec7546fce57"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p1of10-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71477,
+          "sha256": "e9a445cc45f8b779b1b0e0ea740d2c606d428603a21bcbdb518505b0f153d87d"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p1of10-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72324,
+          "sha256": "5bf6ea13d167868a0154d658b7cca65344b4842e5a4cd78c5490b0b9bb508e61"
+        }
+      ],
+      "checkpoint_count": 4
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 3
+      },
+      "result": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/result.json",
+      "result_bytes": 45763,
+      "result_sha256": "daca5ff776658c82917b5dbd9a71ccb55f80fa946da693b29bd0ece9e900b9d1",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68448,
+          "sha256": "7c8c73771e2d7529142aa98df2961d98bc134cd77254a5e5a3fe7edd57651cd0"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 70007,
+          "sha256": "e62a4301e75e257c7ef75f3d4538eb10f19cad352c0c471204e5cba22113bc8d"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71330,
+          "sha256": "27ed2fa814b808bf907b29cd9c222cba21bc4b585444474b802baafb3ac2661d"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72113,
+          "sha256": "3142babb86e86c00f3f6097e2891ff80d551360b5d2f038ba40d8ad972163374"
+        }
+      ],
+      "checkpoint_count": 4
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s3-p1of10-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          1,
+          10
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 3
+      },
+      "result": "runs/dg-baseline-DR-DG-s3-p1of10-y1-z0.1-q0.75/result.json",
+      "result_bytes": 158092,
+      "result_sha256": "c0290d8ebbefcfee84d127aae9556c714f64f6e1e178a1792abc93ff7c5d376e",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p1of10-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68448,
+          "sha256": "7c8c73771e2d7529142aa98df2961d98bc134cd77254a5e5a3fe7edd57651cd0"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p1of10-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 70055,
+          "sha256": "5802d0598da7a8d7788ab670b6fcaaf172a94dad98454d62a6fb190d1fc9a577"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p1of10-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71387,
+          "sha256": "8312bcf86a9960f1e83c1502203f32d89976cacd6a0b4dcc03f44fdd6ba04349"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p1of10-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72095,
+          "sha256": "daf3accd7baa286fbf177178da6019d5220faf839f8b316c685118b51cd0bc2a"
+        }
+      ],
+      "checkpoint_count": 4
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 4
+      },
+      "result": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/result.json",
+      "result_bytes": 46242,
+      "result_sha256": "20bea199422b30aad4aa6e787c2a3b44f606ff9f7e5b963c4aedc9a28800f714",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68577,
+          "sha256": "22303ebdca3d35b8115bc685d24a11868e9824434fddd0fbbad0052399b0ffda"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 70107,
+          "sha256": "188a1ca528848ebb7c8f4a4d296c7e1332589e8a90507aa0713d407751381b1a"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71381,
+          "sha256": "d97ffcf74a23233c12b867ca1643e377c8b5423b5d589b0eb7cf08a1b43978ec"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72113,
+          "sha256": "8b615248616379ec964632fe25288a3c1fc2222a4b7f59adea70d0a5f60943f9"
+        }
+      ],
+      "checkpoint_count": 4
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s4-p1of10-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          1,
+          10
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 4
+      },
+      "result": "runs/dg-baseline-DR-DG-s4-p1of10-y1-z0.1-q0.75/result.json",
+      "result_bytes": 102441,
+      "result_sha256": "772a927eae741472045b4db5342b77852856fbd46f2887eeb166ad28c75f402c",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p1of10-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68577,
+          "sha256": "22303ebdca3d35b8115bc685d24a11868e9824434fddd0fbbad0052399b0ffda"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p1of10-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 70124,
+          "sha256": "896343b138ee0576d7c6281757077991d12a5ff8df4b0fbca830ba99b434e536"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p1of10-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71406,
+          "sha256": "ca87336e9e1a48ba78cf17e18d3a1bfcb260205bf3d388de979bcdeb020d3004"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p1of10-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72107,
+          "sha256": "2aba0bccf1dc146c1d676216ae1e661738c1275309af4fa50b92f42943125987"
+        }
+      ],
+      "checkpoint_count": 4
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 5
+      },
+      "result": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/result.json",
+      "result_bytes": 46332,
+      "result_sha256": "b77006ad8cabacc0980d7690840871d7f4c8f59807c6a730cb64e56a90ebfdae",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68589,
+          "sha256": "84200a866fd85072a46952116f9b9333eb7358b139961e7d03817a015b2b7389"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 70074,
+          "sha256": "b57891af3a058915266d4f930c7790b3e88729b121d8a4d38d09a0102edab0f3"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71501,
+          "sha256": "26738177f5c79e733ef4122c5b0003760c3287ffe0c86732d75f7ca9d8ffd55a"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72121,
+          "sha256": "febac36c1ed732fa13c76ac014fc8bc9cfcd9b868176cf7f1446453e5bd00c4b"
+        }
+      ],
+      "checkpoint_count": 4
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s5-p1of10-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          1,
+          10
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 5
+      },
+      "result": "runs/dg-baseline-DR-DG-s5-p1of10-y1-z0.1-q0.75/result.json",
+      "result_bytes": 48335,
+      "result_sha256": "f66653bec54cc5e31a911187b259d252a5f7a12a171c49b2e673f3ec74e45806",
+      "valid_checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p1of10-y1-z0.1-q0.75/E1-weights.npz",
+          "bytes": 68589,
+          "sha256": "84200a866fd85072a46952116f9b9333eb7358b139961e7d03817a015b2b7389"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p1of10-y1-z0.1-q0.75/E2-weights.npz",
+          "bytes": 70098,
+          "sha256": "9c2e96b380dad18d71679612b3a33c7c88c82ece49f5145bfb9dc9139a798666"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p1of10-y1-z0.1-q0.75/E3-weights.npz",
+          "bytes": 71481,
+          "sha256": "8146f9943372fa64a358b1f9b157b4fd991439e0b2f2dc4e3062c9771f983f5f"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p1of10-y1-z0.1-q0.75/E4-weights.npz",
+          "bytes": 72078,
+          "sha256": "b4dfc22274c30a861e726b2483a501710103f32d7f0bfd28f609fe2459b87f70"
+        }
+      ],
+      "checkpoint_count": 4
+    }
+  ],
+  "orphan_checkpoints": [
+    {
+      "path": "runs/dg-baseline-DR-DG-s10-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+      "bytes": 71,
+      "sha256": "c82eff270eca1659c9c94452965a52a2c8a40d5633ac07c4233a800ffe4f29cb",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s11-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+      "bytes": 71,
+      "sha256": "c82eff270eca1659c9c94452965a52a2c8a40d5633ac07c4233a800ffe4f29cb",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s42-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+      "bytes": 71,
+      "sha256": "c82eff270eca1659c9c94452965a52a2c8a40d5633ac07c4233a800ffe4f29cb",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+      "bytes": 68497,
+      "sha256": "34c787f618f40aa3de6d4d0bf2014a2571cefa66a2f6bf8fec9d553e61fe6757",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+      "bytes": 70195,
+      "sha256": "bc4d39c79739165e1bcb6d97860aeb2ea6da20dbd6dc2d0dea618c694c7239d3",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+      "bytes": 36338,
+      "sha256": "cadaea14bef37209201f1fc5bd9c30ed548e923d70f844419323847c923cf1ef",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s6-p1of10-y1-z0.1-q0.75/E1-weights.npz",
+      "bytes": 68497,
+      "sha256": "34c787f618f40aa3de6d4d0bf2014a2571cefa66a2f6bf8fec9d553e61fe6757",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s6-p1of10-y1-z0.1-q0.75/E2-weights.npz",
+      "bytes": 70157,
+      "sha256": "469b72d199b68d30215e9cb1212e61beddf585f5bdff7d1cc156c02b81ee96e5",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s6-p1of10-y1-z0.1-q0.75/E3-weights.npz",
+      "bytes": 71407,
+      "sha256": "25548384e7185d8c8819702ea72b3c0b5a57b5f4b37cd9578c8d73b1b955341f",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s7-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+      "bytes": 4808,
+      "sha256": "bb6d680337c14feb0e63abcf41b9e4b7e7813089bc5edf7ac34cfb58becefc36",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s8-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+      "bytes": 71,
+      "sha256": "c82eff270eca1659c9c94452965a52a2c8a40d5633ac07c4233a800ffe4f29cb",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s9-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+      "bytes": 68540,
+      "sha256": "c064a3ad643e389fa09a9b0580bf7416a5482f4b514bf4804ed3fc58cbd53f4b",
+      "classification": "partial_or_corrupt_checkpoint"
+    },
+    {
+      "path": "runs/dg-baseline-DR-DG-s9-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+      "bytes": 70368,
+      "sha256": "a2b7c5fcaed9fe56bb76a5450be72d4ad1fdfd42246db6a8966305d1854116f9",
+      "classification": "partial_or_corrupt_checkpoint"
+    }
+  ],
+  "failures": [
+    {
+      "path": "failure-dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75.json",
+      "sha256": "71faeee8986c6e734e78cf2cf3783cf47f377671d8940b4bfd770fac3630bc04",
+      "details": {
+        "error": "concurrent.futures.process._RemoteTraceback: \n\"\"\"\nTraceback (most recent call last):\n  File \"C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\tmp\\phase3-reference-env\\Lib\\site-packages\\numpy\\lib\\_npyio_impl.py\", line 799, in _savez\n    format.write_array(fid, val,\n  File \"C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\tmp\\phase3-reference-env\\Lib\\site-packages\\numpy\\lib\\_format_impl.py\", line 777, in write_array\n    fp.write(chunk.tobytes('C'))\n  File \"C:\\Users\\hp\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\zipfile\\__init__.py\", line 1237, in write\n    self._fileobj.write(data)\nOSError: [Errno 28] No space left on device\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\hp\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\concurrent\\futures\\process.py\", line 264, in _process_worker\n    r = call_item.fn(*call_item.args, **call_item.kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\scripts\\run_phase3_overnight.py\", line 236, in worker\n    stages,memory,ledger,repair=train_suffix(None,clients,[],data,s,1,folder,poison_ids)\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\scripts\\run_phase3_overnight.py\", line 194, in train_suffix\n    np.savez_compressed(folder/f'E{stage}-weights.npz',**{k:v.numpy() for k,v in snapshot(model).items()},source_codes=np.asarray(slots))\n  File \"C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\tmp\\phase3-reference-env\\Lib\\site-packages\\numpy\\lib\\_npyio_impl.py\", line 766, in savez_compressed\n    _savez(file, args, kwds, True, allow_pickle=allow_pickle)\n  File \"C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\tmp\\phase3-reference-env\\Lib\\site-packages\\numpy\\lib\\_npyio_impl.py\", line 798, in _savez\n    with zipf.open(fname, 'w', force_zip64=True) as fid:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hp\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\zipfile\\__init__.py\", line 1249, in close\n    self._fileobj.write(buf)\nOSError: [Errno 28] No space left on device\n\"\"\"\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\scripts\\run_phase3_overnight.py\", line 275, in run_block\n    try:results.append(future.result())\n                       ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hp\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\concurrent\\futures\\_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hp\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\concurrent\\futures\\_base.py\", line 401, in __get_result\n    raise self._exception\nOSError: [Errno 28] No space left on device\n",
+        "settings": {
+          "admission": "DG",
+          "block": "dg-baseline",
+          "dose": [
+            0,
+            1
+          ],
+          "epochs": 1,
+          "eviction_policy": "reservoir",
+          "lambda_E": 100.0,
+          "lambda_y": 1.0,
+          "lambda_z": 0.1,
+          "learner": "DR",
+          "learning_rate": 0.001,
+          "q": 0.75,
+          "rounds": 12,
+          "seed": 6
+        }
+      }
+    }
+  ],
+  "final_test_accessed": false
+}

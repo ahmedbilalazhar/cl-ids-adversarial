@@ -1,0 +1,25 @@
+# Positive implementation and evidence checks
+
+These statements have different strengths: code inspection, synthetic semantic checks, archived artifact checks and exact representative re-execution are named separately. A test's existence alone is not acceptance evidence.
+
+| Phase 2 obligation | Implementation | Executed evidence / scope |
+|---|---|---|
+| Five persistent whole-component Dirichlet(.5) clients | `src/phase3/prepare.py: allocate`; overnight `inputs` | Source read; ownership maps regenerate during archived replay; stored per-seed training identities and component-role checks |
+| E1-E4 supervised current-label registry and trainable appended head | `src/phase3/model.py: ReferenceMLP.expand`; runner `train_suffix` | Model source and all 1,668 stage-weight identities; clean checkpoint confusion parity |
+| Xavier new blocks, old rows retained, independent initializer stream | `ReferenceMLP.initialize_rows`; `src/phase3/common.py: torch_seed` | Semantic head tests in pinned combined suite; representative trajectory exact replay |
+| Reset Adam each broadcast and admitted-current-count FedAvg | `src/phase3_v2/learning.py: train_client, aggregate` | Source inspection, semantic reset/aggregation checks, archived ledger exact replay |
+| Local empirical Fisher, square before averaging, distinct current sample, accumulate, final anchor | `empirical_importance`, `commit_importance`, `expand_importance` | Vectorized-versus-single-example, analytic-gradient, sample-limit and inactive-anchor tests; EI archived replay |
+| 500-slot Algorithm R, first-pass insertion only, separate random streams | `src/phase3/reference.py: new_client, insert_batch`; `learning.train_client` | Reservoir/reference, repeated-pass and teacher-timing semantic tests; DR/DC memory replay |
+| Pre-update teachers, dropout modes, old-width mask and normalization | `learning.train_client`, `dark_loss` | Teacher-value, mask-before-square and short-batch tests; frozen source inspected |
+| One attacker, E2 Hulk-to-benign only, nested .1/.3/.5 and withdrawal | `src/phase3_v2/prepare.py: corrupt`; runner `inputs` | Same attack IDs per seed/dose across methods verified; corruption scope/nesting semantic test; no fresh Hulk E3/E4 in exported label census |
+| Paired E1 across doses and DR admission arms | Runner stored stage hashes | `validation.json: paired_checks`; all relevant E1 model hashes match; full client state is checked only in representative replay, not inferred from weights alone |
+| DC protection, deterministic ties, DM matched per-client totals | `learning.quotas`, `choose_admission`; runner quota adapter | All primary stored DM/DC totals match; exact quota/tie semantic fixtures; changed-q paired blocks present |
+| Frozen benign/Hulk evaluation banks | Runner `evaluate` | Identical per-stage true-row support for all 417 trajectories; 216,158 benign, 31,694 Hulk; all clean checkpoint prediction matrices regenerated |
+| No held-out labels, poison markers or IDs as predictors | `StageInput`, learner functions, model input74 | Source boundary inspection and isolated data fixtures; no claim of a formal whole-program information-flow proof |
+| Exact oracle label repair only, keep zero-survivor cases | Runner `state_hash`, `train_suffix` | 24 retained branches, non-label state assertions, recomputed repair effects; no observed zero-survivor pair; synthetic zero-case retained |
+| Mean clean gates, no outcome-driven seed selection | Runner `gates`; `clean-gates.json` | All original mean checks pass; per-seed FTP failure explicitly disclosed; primary seed list complete |
+| Fixed T0 and split isolation after FP32 transformation | `src/phase3/prepare.py`; `docs/phase3-plan/tools/audit_corrected_source_rows_independent.py`; `docs/phase3-plan/tools/audit_corrected_row_masks_independent.py`; `scripts/verify_phase3_component_graph.py` | Independent parsing matches adopted 74-feature inputs and metadata; independent masks match validity, conflicts, survivor/T0 and retained split membership. Independent connectivity matches frozen 120s components/T0 closure; 60/120/300 sensitivity and zero cross-role components are recorded. SGKF output was reused after exact identity proof rather than rerun; true session boundaries remain conditional on the declared time-gap rule. |
+| One clean subtraction, 29 comparisons, ties/zeros and effect conventions | `scripts/audit_phase3_reliability.py` | Rational endpoint recomputation, exact enumeration, one Holm correction, all29 paired differences and sign sensitivities exported |
+| ACC/BWT/forgetting with fixed benign cohorts | `scripts/verify_phase3_cohort_metrics.py` | 60 clean trajectories x4 checkpoints; 240 confusion parities; stage-cohort R values stored |
+
+Recorded per-file/per-function locations can be resolved in the retained source snapshot; the source-line index in the evidence directory records current line numbers. Historical defects remain in the gap register rather than being concealed by these newer checks.

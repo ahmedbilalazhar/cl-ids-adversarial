@@ -1,0 +1,1 @@
+Reviewed submission snapshot, incorporating the supplied C_NET_Project (3).pdf and TeX: 696 verified GPU trajectories, all 21 required CPU trajectories, nine regenerated figures, and 13 relevant primary references. Additional training-replicate expansion is excluded. Upload ZIP contents to Overleaf and select XeLaTeX; main.tex contains its bibliography and needs no .bib file.

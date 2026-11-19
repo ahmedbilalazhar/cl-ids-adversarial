@@ -1,0 +1,551 @@
+{
+  "schema": "phase3-incomplete-attempt-v1",
+  "status": "incomplete_excluded",
+  "block": "DG global low-loss admission",
+  "attempt": "v3",
+  "reason": "Stopped after finding a Phase 2 formula mismatch: proposal specifies floor(0.75*n + 0.5), while this attempt used ceil(0.75*n); counts differ when n mod 4 == 3. All outputs are retained for audit and excluded from scientific comparison.",
+  "completed_cell_count": 13,
+  "expected_cell_count": 48,
+  "cells": [
+    {
+      "cell": "dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 1
+      },
+      "result": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "a6a40d6889f7d2d591725e9f476a708152a87d176fb399eeca3662f1d0bab3c2",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "5c5649ae87f9fc15b62971226d187262835a80c1ac07dbf7d74a42d3d7a8ea35"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "275d0c082ca36354162d4bf32a32fd02f33754295de5664c60739cec833bae8e"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "3e6c06350a6a4096a0b5920dd2626191d4b91a522c649c645a857b2a030c27ad"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "7d2df34d57178c73a554bb5f10c3047e36b6f79ea46fd6cbc2dcc7d7e9e4031d"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          1,
+          10
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 1
+      },
+      "result": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/result.json",
+      "result_sha256": "f382be7bc49eaf3c9bf6a596eda9b4c5716360c1dbdb1bb671bf456922db6963",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "5c5649ae87f9fc15b62971226d187262835a80c1ac07dbf7d74a42d3d7a8ea35"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "46e048136f7e5df5a6d5c9ff4715644b423e31f7c0e761c47dd03123fe6eca44"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "11bad533445492f57b7d931aadc8f34e2c76dd69bb2d9676bed682bb12be5c0c"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s1-p1of10-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "d67d4d097bf335a47473035d3b24e823e4164c23dde197b1e414215f022e6972"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s10-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 10
+      },
+      "result": "runs/dg-baseline-DR-DG-s10-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "7ceddb4094830596ca57f25ef544f790bfc19847fc7284b504100293939602eb",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s10-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "210d2e01f357a0df10033b0606d9505c475dcc1194bff445e14a7d9156339efe"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s10-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "5fb124fff592f217023d3df9a9c82a0547231923de99eaf31bd0831272c8c716"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s10-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "c764b58d8020b0e1e140fc1ae3b5375c13c3490bb29ac31bec8751c5db632a11"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s10-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "a5936e01aa2e39381e999230e40f40e016782f2ffb3ca48c35e5bdf62ea5fcc0"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s11-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 11
+      },
+      "result": "runs/dg-baseline-DR-DG-s11-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "943f9d8a167f3b4cd62519ddf936de731cc3bd4b88778b9996e3d9ca834e9728",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s11-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "b103e4dc2e7954bfbd91d91d2b64e23ff0b5f95c4e4e9d73f0fa89c9aa6b5d8e"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s11-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "1f7c7cdfcf675ae92f9e2a4e08adb21ba661da6d1439fa13dad2c6e6430f429e"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s11-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "3ef828109e10932cfcca210cd6e1b2e01cf0fdd57fc2b223f4a351e2c4bfa454"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s11-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "f511b6d179d3f2ebae83fceff08845110c7ae5ec820ab938397b4531cbbadd54"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 2
+      },
+      "result": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "714c9d9646b16baca25f628fc67782385f6824e5431120ec2d74235b1791498a",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "c78b2f49d3eee1336097e159d5ea103514ef49fe16dd9ca3ea47055a880b3108"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "fb154e3dc70985f768f9b60ffe2786702f3a90b09f1194eb34413ea0eb80a1f0"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "b4dccb53ed14cfb64715b6e4bdc7747849a07b331b60f42480e997e2c3a76baa"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s2-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "9fb5b5f5c7ccc3f768a006a81c57ea6098e62b2bd7d86828d868ffb64a850a46"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 3
+      },
+      "result": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "7fa686f6f8c4e7216965eefb2c4d1409210652eafe097471bbf536867a6b2e3e",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "7c8c73771e2d7529142aa98df2961d98bc134cd77254a5e5a3fe7edd57651cd0"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "fc7fa51d29171e1b3e55776344e91e3705daebbc406000b1b7b64dbc2eced48b"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "b715a63bdd354e89d457379d4140a0bc7e7c222d319a8dac38cecc10c25cbf5a"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s3-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "404923b0c41e014e89728ac4f75f219cdf5f1a64a9b690f5e2a509aaec40c778"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 4
+      },
+      "result": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "42211ccd5e6d658971122e50f3709c80f50d5e03ff6d73896bcc59d848df7b51",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "22303ebdca3d35b8115bc685d24a11868e9824434fddd0fbbad0052399b0ffda"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "188a1ca528848ebb7c8f4a4d296c7e1332589e8a90507aa0713d407751381b1a"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "36d4a8a98be62d3df892d7b3a7d40b184430b88b4fe964cd8df81850133a7bd8"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s4-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "9adaa0f54c350ac53850146db169568a26c6c53a665dd21892f1c07a74ccebb8"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s42-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 42
+      },
+      "result": "runs/dg-baseline-DR-DG-s42-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "8bbd52b5baa386afb665be633dc9f9798261d4f82838821e43167051d33051f5",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s42-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "42a333186ae287212c8333489975e331cca7c9744039ef52b8f508f2dfee4370"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s42-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "190ba0991dca70a15eb27ea55b5ae574265b9af85137aa540fba12243bb8df68"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s42-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "5e1ff858c27d509d4a21a247a7c1550236d7a5c6d7683a5189b6d6759ebc0a2b"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s42-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "b3718954a549f79f70a5504156b75093f02da95209d9af10f0f3352f88c10334"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 5
+      },
+      "result": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "7f9a1239d8241905a60e4fee5790cbace3d504b49dc984fd82dc98fcfe7ef12e",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "84200a866fd85072a46952116f9b9333eb7358b139961e7d03817a015b2b7389"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "45ceaab52c2152c095b0678047001438edb9c7f4eba1968110306fe02136990c"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "d27f16c6d059075f0e090789369c607aaef3e7a61ab1876714d60615d78964be"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s5-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "299ae2f991d47d5ed53cca7d13ee0822458f91a0543ecf714a501a933275d875"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 6
+      },
+      "result": "runs/dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "2b9d4ea05790e040e4a210aa412d327d28a8490699c3e97aef66742378f01fdd",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "34c787f618f40aa3de6d4d0bf2014a2571cefa66a2f6bf8fec9d553e61fe6757"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "9c79aaac7588c74108b795c1ced05ec90aa56ade1473f249b6db12a9028c9495"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "35450b96b679fabe3c720ee679b08f2217d7322f0145a6c44fcf714356ab1bd6"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s6-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "ba96bf7088e2856ed32feca09957f6433c30746db1cc5e77277e0b47e7b274ff"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s7-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 7
+      },
+      "result": "runs/dg-baseline-DR-DG-s7-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "7df8f4360138abd034597a9fb87e85328946870316266c811bcef960c58fe4e2",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s7-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "62bf92bd46e539dc884c6600d793b2b92c226f0f044644f133926340b8e19871"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s7-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "2839f8d09bf1882092408b8cf057c1fb79723fa71e3e902572164f80ed341ada"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s7-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "a0ef82099aba5bb2f803103a0dd867fbbfa593ddb25882020137ed4002729827"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s7-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "8199cbf46caf7c601156a1133b813ee773abe49a23c55a443507ec7e8f152748"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s8-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 8
+      },
+      "result": "runs/dg-baseline-DR-DG-s8-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "e3c56123ca55e364b6861175dedb9ce756ce24c2b8b19c9aa912bca19414b0a9",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s8-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "361c77bca6020fe81ae46a0ce06aded20f0fe94b6ca6a4fa12ede60b22d5f7d5"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s8-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "d415c34662881d8c820ee7c91350eaf77c3433656f4437fcdd247bc6f13228a2"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s8-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "7e7841bda45913855212e085186f073203eae7425ce0424b11a42cd51e640094"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s8-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "85099ef0037efb18119b1c00fd5798a43b2918da6519d4cbb4c4a6daa3b739d9"
+        }
+      ]
+    },
+    {
+      "cell": "dg-baseline-DR-DG-s9-p0of1-y1-z0.1-q0.75",
+      "settings": {
+        "admission": "DG",
+        "block": "dg-baseline",
+        "dose": [
+          0,
+          1
+        ],
+        "epochs": 1,
+        "eviction_policy": "reservoir",
+        "lambda_E": 100.0,
+        "lambda_y": 1.0,
+        "lambda_z": 0.1,
+        "learner": "DR",
+        "learning_rate": 0.001,
+        "q": 0.75,
+        "rounds": 12,
+        "seed": 9
+      },
+      "result": "runs/dg-baseline-DR-DG-s9-p0of1-y1-z0.1-q0.75/result.json",
+      "result_sha256": "70eb221a2662d59c91c70778e18a6d040eb393545a1cead502d0aceda2ec61b0",
+      "checkpoints": [
+        {
+          "path": "runs/dg-baseline-DR-DG-s9-p0of1-y1-z0.1-q0.75/E1-weights.npz",
+          "sha256": "c064a3ad643e389fa09a9b0580bf7416a5482f4b514bf4804ed3fc58cbd53f4b"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s9-p0of1-y1-z0.1-q0.75/E2-weights.npz",
+          "sha256": "05f0d42275fa354f5a0174980658d87ec1209d7ec9a61dd8c35d969c3bc0e5f9"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s9-p0of1-y1-z0.1-q0.75/E3-weights.npz",
+          "sha256": "cfd11d71281303e5875e9f10aa0fa933ac55ec1ac6eef5a9c3da75e0a1903253"
+        },
+        {
+          "path": "runs/dg-baseline-DR-DG-s9-p0of1-y1-z0.1-q0.75/E4-weights.npz",
+          "sha256": "6420c2461195d434dfa3b84f021f87e3758c5f180726c0ffcce8735a0322b250"
+        }
+      ]
+    }
+  ],
+  "orphan_checkpoints": [
+    {
+      "path": "runs/dg-baseline-DR-DG-s2-p1of10-y1-z0.1-q0.75/E1-weights.npz",
+      "sha256": "c78b2f49d3eee1336097e159d5ea103514ef49fe16dd9ca3ea47055a880b3108"
+    }
+  ],
+  "final_test_accessed": false
+}

@@ -1,0 +1,20 @@
+{
+  "error": "Traceback (most recent call last):\n  File \"C:\\Users\\hp\\Desktop\\University\\5. C Net\\1. Project\\scripts/run_phase3_overnight.py\", line 215, in run_block\n    try:results.append(future.result())\n                       ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hp\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\concurrent\\futures\\_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hp\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\concurrent\\futures\\_base.py\", line 401, in __get_result\n    raise self._exception\nconcurrent.futures.process.BrokenProcessPool: A process in the process pool was terminated abruptly while the future was running or pending.\n",
+  "settings": {
+    "admission": "NONE",
+    "block": "clean-confirmation",
+    "dose": [
+      0,
+      1
+    ],
+    "epochs": 1,
+    "lambda_E": 100.0,
+    "lambda_y": 1.0,
+    "lambda_z": 0.1,
+    "learner": "FT",
+    "learning_rate": 0.001,
+    "q": 0.75,
+    "rounds": 12,
+    "seed": 101
+  }
+}

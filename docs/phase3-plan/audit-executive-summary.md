@@ -2,7 +2,7 @@
 
 24 October 2026. This review extends the earlier 31-item source audit through G64. It combines source inspection, primary research, full public-data acquisition, conditional preprocessing/split/ownership audits, statistical design arithmetic and repeated protocol review. It contains no trained-model results.
 
-**Final source review:** [feature-semantics-and-final-recommendation.md](feature-semantics-and-final-recommendation.md) supersedes the earlier preferred 76-feature candidate with an unselected 74-feature omission amendment. Positive header inconsistencies and benign-annotation provenance are now explicit. Historical candidate tables below keep their original scope.
+**Final source review and later adoption:** [feature-semantics-and-final-recommendation.md](feature-semantics-and-final-recommendation.md) supersedes the earlier 76-feature candidate with the user-adopted 74-feature omission amendment and scenario-class claim boundary. Positive header inconsistencies and benign-annotation provenance are explicit. Historical candidate tables below keep their original scope; final tuning/grid remain gated.
 
 ## Overall assessment
 

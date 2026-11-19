@@ -1,6 +1,6 @@
 """Verified, relevant references; numbers are stable across report exports."""
 REFERENCES = [
- ('lavaur', 'L. Lavaur, Y. Busnel, M.-O. Pahl, and F. Autrel. Investigating the Impact of Label-flipping Attacks against Federated Learning for Collaborative Intrusion Detection. Computers & Security, 156, 104462, 2025.', 'https://doi.org/10.1016/j.cose.2025.104462'),
+ ('lavaur', 'L. Lavaur, Y. Busnel, and F. Autrel. Investigating the Impact of Label-flipping Attacks against Federated Learning for Collaborative Intrusion Detection. Computers & Security, 156, 104462, 2025.', 'https://doi.org/10.1016/j.cose.2025.104462'),
  ('carillo', 'R. Carillo, F. Cerasuolo, G. Bovenzi, D. Ciuonzo, and A. Pescapé. A Federated and Incremental Network Intrusion Detection System for IoT Emerging Threats. IEEE Transactions on Network and Service Management, 23, 3865-3880, 2026.', 'https://doi.org/10.1109/TNSM.2026.3675031'),
  ('der', 'P. Buzzega, M. Boschini, A. Porrello, D. Abati, and S. Calderara. Dark Experience for General Continual Learning: a Strong, Simple Baseline. Advances in Neural Information Processing Systems, 33, 15920-15930, 2020.', 'https://arxiv.org/abs/2004.07211'),
  ('ewc', 'J. Kirkpatrick et al. Overcoming catastrophic forgetting in neural networks. Proceedings of the National Academy of Sciences, 114(13), 3521-3526, 2017.', 'https://doi.org/10.1073/pnas.1611835114'),
@@ -10,7 +10,7 @@ REFERENCES = [
  ('vitter', 'J. S. Vitter. Random sampling with a reservoir. ACM Transactions on Mathematical Software, 11(1), 37-57, 1985.', 'https://doi.org/10.1145/3147.3165'),
  ('holm', 'S. Holm. A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics, 6(2), 65-70, 1979.', 'https://www.jstor.org/stable/4615733'),
  ('guo', 'C. Guo, X. Li, J. Cheng, S. Yang, and H. Gong. Continual Learning for Intrusion Detection Under Evolving Network Threats. Future Internet, 17(10), 456, 2025.', 'https://doi.org/10.3390/fi17100456'),
- ('cerasuolo', 'F. Cerasuolo, G. Bovenzi, D. Ciuonzo, and A. Pescape. Attack-adaptive network intrusion detection systems for IoT networks through class incremental learning. Computer Networks, 263, 111228, 2025.', 'https://doi.org/10.1016/j.comnet.2025.111228'),
+ ('cerasuolo', 'F. Cerasuolo, G. Bovenzi, D. Ciuonzo, and A. Pescapé. Attack-adaptive network intrusion detection systems for IoT networks through class incremental learning. Computer Networks, 263, 111228, 2025.', 'https://doi.org/10.1016/j.comnet.2025.111228'),
  ('banbhrani', 'S. K. Banbhrani, C. Wei, and M. Asad. Trust-Aware Federated Learning for Privacy-Preserving IoT Intrusion Detection. Electronics, 15(20), 4584, 2026.', 'https://doi.org/10.3390/electronics15204584'),
  ('weidetect', 'Sameera K. M., Vinod P., A. Rocha, Rafidha Rehiman K. A., and M. Conti. WeiDetect: Weibull distribution-based defense against poisoning attacks in federated learning for network intrusion detection systems. Journal of Information Security and Applications, 95, 104275, 2025.', 'https://doi.org/10.1016/j.jisa.2025.104275'),
 ]

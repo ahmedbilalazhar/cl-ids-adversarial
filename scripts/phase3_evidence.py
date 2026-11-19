@@ -41,7 +41,7 @@ def signed_rank_enumeration(differences):
     d = np.asarray(differences, float)
     if not np.isfinite(d).all(): raise ValueError('Nonfinite paired effect')
     d = d[d != 0]
-    if not len(d): return dict(p=1., rank_biserial=None, nonzero=0, method='all_zero')
+    if not len(d): return dict(p=1., rank_biserial=0., nonzero=0, method='all_zero')
     if len(d) > 18: raise ValueError('Exact enumeration restricted to small samples')
     ranks = rankdata(abs(d), method='average')
     signed = float(np.dot(np.sign(d), ranks))

@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "source_archive": "submissions/phase3-completed/23I-2568_23I-2581-full-evidence-v26.zip",
+  "source_archive_sha256": "7dd234a9473111b88d047d42dd01cae4917f144cc9e9a3fb10644e5eb03e8bce",
+  "verification_command": "python scripts/verify_phase3_report_clean_rebuild.py",
+  "verifier_sha256": "1c4d90cfc1cf4f11384edf1d8b40905d433afbbaaeac1564bd57c4fca86801ca",
+  "command": "python scripts/build_phase3_audited_report.py",
+  "extraction": "fresh selective extraction from the v26 ZIP; result hashes checked against the completion manifest",
+  "source_files_exact_match": {
+    "phase3-report.tex": true,
+    "source-ledger.json": true,
+    "revision-provenance.json": true,
+    "observed-run-costs.csv": true,
+    "observed-run-costs-summary.json": true
+  },
+  "page_count_current": 9,
+  "page_count_rebuilt": 9,
+  "page_checks": [
+    {
+      "page": 1,
+      "text_equal": true,
+      "rendered_pixels_equal": true
+    },
+    {
+      "page": 2,
+      "text_equal": true,
+      "rendered_pixels_equal": true
+    },
+    {
+      "page": 3,
+      "text_equal": true,
+      "rendered_pixels_equal": true
+    },
+    {
+      "page": 4,
+      "text_equal": true,
+      "rendered_pixels_equal": true
+    },
+    {
+      "page": 5,
+      "text_equal": true,
+      "rendered_pixels_equal": true
+    },
+    {
+      "page": 6,
+      "text_equal": true,
+      "rendered_pixels_equal": true
+    },
+    {
+      "page": 7,
+      "text_equal": true,
+      "rendered_pixels_equal": true
+    },
+    {
+      "page": 8,
+      "text_equal": true,
+      "rendered_pixels_equal": true
+    },
+    {
+      "page": 9,
+      "text_equal": true,
+      "rendered_pixels_equal": true
+    }
+  ],
+  "pdf_sha256_equal": false,
+  "note": "PDF container hashes may differ because generated metadata can vary; page text and rendered pixels are compared independently."
+}

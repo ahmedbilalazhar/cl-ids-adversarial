@@ -4,7 +4,7 @@ Saneedullah (23I-2568) and Ahmed Bilal (23I-2581) | Computer Networks, Phase 3 |
 
 ## Abstract
 
-We implement a five-client federated class-incremental intrusion detector and investigate training-label corruption during acquisition of a new attack family. The main development-bank study contains 696 GPU trajectories across three ownership partitions and four training replicates per partition. A further 21 full-budget CPU trajectories provide a separate completed evaluation of post-attack replay-memory interventions. Additional controls are included below only when completed and validated. DER++-style replay attains clean final eligible macro-F1 0.491, while fine-tuning and the EWC-style variant largely forget earlier classes. The attack produces targeted errors after withdrawal; class protection preserves admission counts without guaranteeing effective acquisition. With identical pre-intervention E2 state, CPU oracle removal of known poisoned replay yields mean targeted persistence H=0.000, versus 0.474 after count-matched random deletion. The oracle is a diagnostic intervention, not a deployable defense. Findings are conditional on one corrected CICIDS2017 split; no final-test or independent-site generalization is claimed.
+We implement a five-client federated class-incremental intrusion detector and investigate training-label corruption during acquisition of a new attack family. The main development-bank study contains 696 GPU trajectories across three ownership partitions and four training replicates per partition. A further 57 full-budget CPU trajectories provide a separate completed evaluation of post-attack replay-memory interventions. Additional controls are included below only when completed and validated. DER++-style replay attains clean final eligible macro-F1 0.491, while fine-tuning and the EWC-style variant largely forget earlier classes. The attack produces targeted errors after withdrawal; class protection preserves admission counts without guaranteeing effective acquisition. With identical pre-intervention E2 state, CPU oracle removal of known poisoned replay yields mean targeted persistence H=0.000, versus 0.621 after count-matched random deletion. The oracle is a diagnostic intervention, not a deployable defense. Findings are conditional on one corrected CICIDS2017 split; no final-test or independent-site generalization is claimed.
 
 ## 1. Research questions and contribution
 
@@ -21,7 +21,7 @@ An intrusion detector must learn newly annotated attack families while retaining
 | Persistence | Restored Phase 2 H: mean E3/E4 targeted-ASR increase. Final recall damage remains a separate diagnostic. |
 | Immediate damage | Poisoned-minus-clean E2 recall; negative values indicate harm, matching Phase 2. |
 | Statistics | 47 amended GPU contrasts use one combined Holm sensitivity correction; this does not recreate the planned 29-test confirmatory study. |
-| CPU extension | 21 separate CPU trajectories; replay intervention uses 1 replicate(s) per partition. |
+| CPU extension | 57 separate CPU trajectories; replay intervention uses 4 replicate(s) per partition. |
 | Feedback | No specific instructor feedback was supplied. Scope decisions are author decisions; instructor approval is not asserted. |
 
 ## 2. Dataset, preprocessing and isolation
@@ -88,7 +88,7 @@ At each stage, the frozen expanded model scores admission before training. DC ad
 | GPU learners | FT/EI/DR x six clean/attack arms x 12 paired units | 216 |
 | GPU admission | DC/DM/DQ on DR x six arms x 12 paired units | 216 |
 | GPU component changes | 11 changed settings x own clean/poisoned twins x 12 units | 264 |
-| CPU mechanism | Four clean/ordinary/oracle/random conditions x three partitions x 1 replicate(s) | 12 |
+| CPU mechanism | Four clean/ordinary/oracle/random conditions x three partitions x 4 replicate(s) | 48 |
 | CPU DQ | Own clean/poisoned twin x three partitions; replicate 0 | 6 |
 | CPU pooled | Three initializations of the same full training inventory | 3 |
 
@@ -209,20 +209,20 @@ Each changed learner has its own clean twin. Removing the replay-label term and 
 
 ## 7. New CPU mechanism and learnability experiments
 
-The supplement completed 21 full-budget CPU trajectories. The main four-condition mechanism experiment uses three ownership partitions x 1 training replicate(s). DQ and offline pooled checks are reported only when all their planned runs have completed; they are otherwise pending and excluded from numerical claims. All comparisons within the supplement use CPU clean references and the same current source/input identity. The runtime and source manifests identify exact software versions, files, configurations and SHA-256 values; each completed result is written atomically and validated before reuse.
+The supplement completed 57 full-budget CPU trajectories. The main four-condition mechanism experiment uses three ownership partitions x 4 training replicate(s). DQ and offline pooled checks are reported only when all their planned runs have completed; they are otherwise pending and excluded from numerical claims. All comparisons within the supplement use CPU clean references and the same current source/input identity. The runtime and source manifests identify exact software versions, files, configurations and SHA-256 values; each completed result is written atomically and validated before reuse.
 
 At five attackers and 50% E2 corruption, ordinary replay, oracle deletion and count-matched random deletion begin from identical end-E2 model parameters, buffer tensors, labels, logits, poison flags and RNG states. State fingerprints and E1/E2 metrics must match exactly or the run is rejected. The oracle deletes evaluator-marked poisoned records; random deletion removes the same number per client using an intervention-only RNG. Both compact all buffer fields, preserve historical proposal counts and refill vacancies on subsequent insertions. This is a memory-content intervention with declared sampling consequences, not standard reservoir sampling of the entire original history after deletion. No new poison is introduced during E3/E4.
 
 | CPU condition | Runs | H | Final F1 | FAR | A |
 | --- | --- | --- | --- | --- | --- |
-| Clean DR | 3 | 0.000 | 0.473 | 0.122 | 0.306 |
-| Poisoned / ordinary | 3 | 0.828 | 0.395 | 0.133 | 0.288 |
-| Poisoned / oracle purge | 3 | 0.000 | 0.468 | 0.227 | 0.291 |
-| Poisoned / random deletion | 3 | 0.474 | 0.377 | 0.254 | 0.289 |
+| Clean DR | 12 | 0.000 | 0.512 | 0.102 | 0.298 |
+| Poisoned / ordinary | 12 | 0.842 | 0.423 | 0.092 | 0.293 |
+| Poisoned / oracle purge | 12 | 0.000 | 0.501 | 0.193 | 0.300 |
+| Poisoned / random deletion | 12 | 0.621 | 0.412 | 0.262 | 0.292 |
 
-For the most direct mechanism contrast, oracle-minus-random H differences by ownership partition are seed 101: -0.689, seed 102: -0.528, seed 103: -0.204. Negative values favor oracle deletion. This comparison tests the contribution of continuing stored poison relative to a count-matched memory-content change. It does not remove damage already present in E2 weights, hold later replay draws identical after composition changes, or establish a deployable purification method. Random deletion matches volume but not retained class composition, so the contrast identifies the targeted removal policy rather than a pure label-only effect. Null or mixed effects remain informative limits.
+For the most direct mechanism contrast, oracle-minus-random H differences by ownership partition are seed 101: -0.583, seed 102: -0.762, seed 103: -0.518. Negative values favor oracle deletion. This comparison tests the contribution of continuing stored poison relative to a count-matched memory-content change. It does not remove damage already present in E2 weights, hold later replay draws identical after composition changes, or establish a deployable purification method. Random deletion matches volume but not retained class composition, so the contrast identifies the targeted removal policy rather than a pure label-only effect. Null or mixed effects remain informative limits.
 
-Across the completed mechanism grid, mean targeted persistence is 0.000 after oracle purge versus 0.474 after matched random deletion. Oracle-minus-random H is negative in 3 of three partition means. Compare final macro-F1 as well: 0.468 for oracle versus 0.377 for random. The result is interpreted within the fixed continuation and the oracle-access boundary, rather than as a general poisoning-removal guarantee.
+Across the completed mechanism grid, mean targeted persistence is 0.000 after oracle purge versus 0.621 after matched random deletion. Oracle-minus-random H is negative in 3 of three partition means. Compare final macro-F1 as well: 0.501 for oracle versus 0.412 for random. The result is interpreted within the fixed continuation and the oracle-access boundary, rather than as a general poisoning-removal guarantee.
 
 ![Figure 5. CPU attack/withdrawal trajectories and memory-intervention outcomes. The intervention follows E2. Dots in the right panels represent partition means, not independent captures.](figures/05-cpu-memory-intervention.png)
 
@@ -313,7 +313,7 @@ The original notebook's Part C metric naming and statistics are historical evide
 
 ## References
 
-[1] L. Lavaur, Y. Busnel, M.-O. Pahl, and F. Autrel. Investigating the Impact of Label-flipping Attacks against Federated Learning for Collaborative Intrusion Detection. Computers & Security, 156, 104462, 2025. https://doi.org/10.1016/j.cose.2025.104462
+[1] L. Lavaur, Y. Busnel, and F. Autrel. Investigating the Impact of Label-flipping Attacks against Federated Learning for Collaborative Intrusion Detection. Computers & Security, 156, 104462, 2025. https://doi.org/10.1016/j.cose.2025.104462
 
 [2] R. Carillo, F. Cerasuolo, G. Bovenzi, D. Ciuonzo, and A. Pescapé. A Federated and Incremental Network Intrusion Detection System for IoT Emerging Threats. IEEE Transactions on Network and Service Management, 23, 3865-3880, 2026. https://doi.org/10.1109/TNSM.2026.3675031
 
@@ -333,7 +333,7 @@ The original notebook's Part C metric naming and statistics are historical evide
 
 [10] C. Guo, X. Li, J. Cheng, S. Yang, and H. Gong. Continual Learning for Intrusion Detection Under Evolving Network Threats. Future Internet, 17(10), 456, 2025. https://doi.org/10.3390/fi17100456
 
-[11] F. Cerasuolo, G. Bovenzi, D. Ciuonzo, and A. Pescape. Attack-adaptive network intrusion detection systems for IoT networks through class incremental learning. Computer Networks, 263, 111228, 2025. https://doi.org/10.1016/j.comnet.2025.111228
+[11] F. Cerasuolo, G. Bovenzi, D. Ciuonzo, and A. Pescapé. Attack-adaptive network intrusion detection systems for IoT networks through class incremental learning. Computer Networks, 263, 111228, 2025. https://doi.org/10.1016/j.comnet.2025.111228
 
 [12] S. K. Banbhrani, C. Wei, and M. Asad. Trust-Aware Federated Learning for Privacy-Preserving IoT Intrusion Detection. Electronics, 15(20), 4584, 2026. https://doi.org/10.3390/electronics15204584
 

@@ -1,0 +1,726 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  10pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{float}
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Poisoning Persistence and Legitimate Adaptation in Federated Continual Intrusion Detection},
+  pdfauthor={Saneedullah (23I-2568) and Ahmed Bilal (23I-2581)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=0.7in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Poisoning Persistence and Legitimate Adaptation in Federated
+Continual Intrusion Detection}
+\author{Saneedullah (23I-2568) and Ahmed Bilal (23I-2581)}
+\date{Computer Networks, Phase 3 \textbar{} 15 November 2026}
+
+\floatplacement{figure}{H}
+\setlength{\emergencystretch}{3em}
+\begin{document}
+\maketitle
+
+\hypertarget{abstract}{%
+\section{Abstract}\label{abstract}}
+
+We implement a five-client federated class-incremental intrusion
+detector and investigate training-label corruption during acquisition of
+a new attack family. The main development-bank study contains 696 GPU
+trajectories across three ownership partitions and four training
+replicates per partition. A further 21 full-budget CPU trajectories
+provide a separate completed evaluation of post-attack replay-memory
+interventions. Additional controls are included below only when
+completed and validated. DER++-style replay attains clean final eligible
+macro-F1 0.491, while fine-tuning and the EWC-style variant largely
+forget earlier classes. The attack produces targeted errors after
+withdrawal; class protection preserves admission counts without
+guaranteeing effective acquisition. The CPU supplement separates
+continuing poisoned replay from the common poisoned stage-E2 model using
+oracle versus count-matched random deletion. Findings are conditional on
+one corrected CICIDS2017 split; no final-test or independent-site
+generalization is claimed.
+
+\hypertarget{research-questions-and-contribution}{%
+\section{1. Research questions and
+contribution}\label{research-questions-and-contribution}}
+
+An intrusion detector must learn newly annotated attack families while
+retaining older ones. Federated learning adds heterogeneous ownership,
+and replay can retain both useful examples and corrupted labels. RQ1
+asks how learning mechanisms differ in immediate source-family damage
+and persistence after attacker withdrawal. RQ2 asks whether class-aware
+admission improves the trade-off between targeted error and legitimate
+acquisition. RQ3 asks which replay and selection mechanisms explain
+these effects. The contribution is a controlled empirical study with
+explicit failure cases, rather than a claim of a generally successful
+defense or exhaustive novelty.
+
+\hypertarget{phase-2-to-phase-3-changes}{%
+\subsubsection{1.1 Phase 2 to Phase 3
+changes}\label{phase-2-to-phase-3-changes}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+\toprule
+Item & Implemented decision and consequence \\
+\midrule
+\endhead
+Data / inputs & Corrected CICIDS2017; 74 numeric inputs; source taxonomy
+retained as 16 classes. \\
+Reduced scope & One capture and one source-to-benign corruption pattern.
+Cross-dataset transfer and unsupervised discovery were not executed. \\
+Attacker grid & Added 1-, 3-, and 5-client arms after weak earlier
+effects; expanded arms are exploratory. \\
+Replications & Three ownership partitions x four training replicates;
+these are not 12 independent partitions or captures. \\
+Persistence & Restored Phase 2 H: mean E3/E4 targeted-ASR increase.
+Final recall damage remains a separate diagnostic. \\
+Immediate damage & Poisoned-minus-clean E2 recall; negative values
+indicate harm, matching Phase 2. \\
+Statistics & 47 amended GPU contrasts use one combined Holm sensitivity
+correction; this does not recreate the planned 29-test confirmatory
+study. \\
+CPU extension & 21 separate CPU trajectories; replay intervention uses 1
+replicate(s) per partition. \\
+Feedback & No specific instructor feedback was supplied. Scope decisions
+are author decisions; instructor approval is not asserted. \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{dataset-preprocessing-and-isolation}{%
+\section{2. Dataset, preprocessing and
+isolation}\label{dataset-preprocessing-and-isolation}}
+
+The source is the authors' corrected CICIDS2017 release, pinned by
+SHA-256. Attempted-category remapping is applied under the adopted
+annotation policy before conflict handling. Invalid/nonfinite features
+are excluded under the named preparation policy; forward and backward
+header-length totals are omitted. A Monday-benign-only min/max transform
+is frozen before later stages, with zero-range denominator one and no
+clipping or later refit. This is an ordered annotated-class benchmark,
+not evidence of live zero-day discovery.
+
+Sessions linked within the declared 120-second interval and
+exact-content links form indivisible connected components. The fixed
+grouped five-fold split assigns folds 2/3/4 to training, fold 1 to
+development, and fold 0 to final test. Persistent whole-component
+ownership assigns five simulated clients using family-skew targets.
+Components do not cross the declared roles; this does not demonstrate
+host, campaign, or site independence. No final-test path is read by the
+supplement. Fresh checks find 183,045 unique training IDs per partition,
+272,506 development rows, and zero training/development ID
+intersections. These ID checks supplement, rather than replace, the
+prior content/component preparation audit.
+
+\hypertarget{class-inventory-and-scoring-support}{%
+\subsubsection{2.1 Class inventory and scoring
+support}\label{class-inventory-and-scoring-support}}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+Annotation & Stage & Train & Development & Headline \\
+\midrule
+\endhead
+Benign & 1 & 14000 & 216158 & Eligible \\
+Bot & 4 & 441 & 148 & Eligible \\
+DDoS & 4 & 57086 & 19029 & Eligible \\
+DoS GoldenEye & 2 & 4540 & 1513 & Eligible \\
+DoS Hulk & 2 & 95080 & 31694 & Eligible \\
+DoS Slowhttptest & 2 & 1037 & 346 & Eligible \\
+DoS Slowloris & 2 & 2071 & 691 & Eligible \\
+FTP-Patator & 1 & 2382 & 795 & Eligible \\
+Heartbleed & 2 & 11 & 0 & Descriptive \\
+Infiltration & 3 & 27 & 5 & Descriptive \\
+Infiltration - Portscan & 3 & 3591 & 1198 & Eligible \\
+PortScan & 4 & 943 & 315 & Eligible \\
+SSH-Patator & 1 & 1776 & 592 & Eligible \\
+Web Attack Brute Force & 3 & 43 & 15 & Descriptive \\
+Web Attack Sql Injection & 3 & 7 & 3 & Descriptive \\
+Web Attack XSS & 3 & 10 & 4 & Descriptive \\
+\bottomrule
+\end{longtable}
+
+All supported annotation classes remain trainable and their logits
+remain active. The fixed scoring-support floor requires at least 50 rows
+and five components per role. Heartbleed has no development positives;
+ordinary Infiltration and web classes are descriptive. Full-inventory
+confusion matrices remain in raw run files. Headline macro-F1 is
+explicitly restricted to eligible classes, and must not be described as
+performance on every source annotation.
+
+\hypertarget{implemented-methodology}{%
+\section{3. Implemented methodology}\label{implemented-methodology}}
+
+The shared classifier is an MLP with 74 inputs, hidden widths 128 and
+64, ReLU and dropout 0.1. Output slots are append-only and expand 3
+-\textgreater{} 8 -\textgreater{} 13 -\textgreater{} 16. Raw source
+codes and output-slot indices are distinct. Five clients train locally
+and the server performs current-admitted-row-weighted FedAvg. Ownership
+persists across stages. At every broadcast Adam is reset, so optimizer
+state is not silently carried between server rounds.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+\toprule
+Setting & Value \\
+\midrule
+\endhead
+Rounds / local epochs & 12 per stage / 1 per round \\
+Learning rate / batch & 0.001 / 256 \\
+DR replay & 500 records/client; replay batch at most 128 \\
+DR objective & Current CE + 1.0 replay-label CE + 0.1 historical-logit
+MSE \\
+Historical logits & Pre-update, evaluation-mode teachers; mask to stored
+head width \\
+Memory & First-pass reservoir proposals; distinct stage records inserted
+once \\
+EI importance & Per-example diagonal Fisher, accumulated across stages;
+penalty weight 100 \\
+Main GPU runtime & Tesla T4; Python 3.13.16; torch 2.11.0+cu130; NumPy
+2.1.3; four workers \\
+CPU supplement & Intel64 Family 6 Model 142 Stepping 12, GenuineIntel;
+Python 3.14.0; torch 2.14.0+cpu; NumPy 2.4.3; one worker/thread \\
+\bottomrule
+\end{longtable}
+
+FT uses only current-stage cross-entropy. EI adds a parameter-importance
+penalty anchored to the previous shared model, with zero importance for
+new head rows. DR combines current data with client-local stored inputs,
+supplied labels, and historical logits. This is a declared DER++-style
+adaptation, not a faithful reproduction of the original visual benchmark
+implementation. EWC-style naming similarly preserves the distinction
+between this Fisher/anchor implementation and every EWC variant.
+
+\hypertarget{threat-and-admission-controls}{%
+\subsubsection{3.1 Threat and admission
+controls}\label{threat-and-admission-controls}}
+
+In E2, seeded nested subsets of DoS Hulk records on selected clients are
+relabelled benign. Training and admission see supplied labels only.
+E3/E4 receive no new corruption; historical poison may survive. Attack
+arms vary both client count and within-client dose, and global flipped
+fractions depend on ownership. A one-client arm cannot be interpreted as
+interchangeable with an equal-size five-client corruption. The threat
+assumes compliant training agents; it does not cover arbitrary forged
+updates, server compromise, or an adaptive filter-aware adversary.
+
+At each stage, the frozen expanded model scores admission before
+training. DC admits all new-labelled and small classes and retains the
+lowest-loss rows within other per-class quotas (default fraction 0.75,
+small-class threshold 20). DM uses global loss ranking with exactly the
+same per-client volume and aggregation weight. DQ uses DC's class quotas
+but selects randomly within class. NONE admits all rows. Poisoned Hulk
+rows bear supplied benign labels and therefore do not receive new-class
+protection. Retaining all honestly new-labelled rows is a construction
+check, not proof of learning.
+
+\hypertarget{metrics-evaluation-population-and-inference}{%
+\section{4. Metrics, evaluation population and
+inference}\label{metrics-evaluation-population-and-inference}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+\toprule
+Measure & Definition / interpretation \\
+\midrule
+\endhead
+ASR(t) & Hulk rows predicted benign / all fixed Hulk-bank rows;
+untriggered targeted error. \\
+Persistence H & Mean over E3 and E4 of poisoned ASR minus matched clean
+ASR; higher is worse. \\
+Immediate recall change & Poisoned E2 Hulk recall minus matched clean
+recall; lower is worse. \\
+Final recall damage & Clean minus poisoned E4 Hulk recall; includes
+errors into other attack labels. \\
+Acquisition A & Average per-stage F1 of eligible newly introduced
+families excluding Hulk, then equal average over E2-E4. \\
+FAR & Benign rows predicted any attack / benign rows. \\
+BWT / forgetting & Cohort-recall backward transfer and maximum previous
+recall minus final recall, as implemented in the archived summary. \\
+\bottomrule
+\end{longtable}
+
+The independent confusion-matrix audit verifies archived accuracy,
+benign FAR, Hulk recall and targeted ASR. The older scorer averaged
+eligible-class F1 while retaining unsupported true-class rows in
+false-positive counts. The corrected scorer restricts true rows to the
+eligible bank but retains every active prediction column: predicting an
+unsupported class still counts as an error. The maximum absolute
+macro-F1 change across all 696 trajectories/stages is 0.001342. Both
+versions and denominators are preserved in metric-population-audit.csv.
+Acquisition is recomputed on the same corrected population.
+
+Every attack outcome uses the clean twin with identical learner,
+admission, component ownership, replicate and variant. GPU and CPU
+comparisons are kept separate. Within a fixed ownership partition, the
+replicate index changes model, minibatch, poisoning and replay random
+streams; it is not solely optimizer noise. For paired sensitivity
+analyses, these replicates are averaged within each ownership partition.
+Three partition-level effects are shown directly; conditional
+signed-rank sign enumeration handles zeros and average-rank ties
+explicitly. It assumes symmetric differences and exchangeable signs and
+does not create independent captures. All-zero effects have p=1 and
+undefined rank-biserial effect. Combined Holm correction covers 47
+amended GPU contrasts, with a separate declared family of 15 CPU
+mechanism contrasts. With only three partition units, two-sided exact
+sign enumeration cannot produce p\textless0.05. Nonsignificance is not
+equivalence, immunity, or evidence of no mechanism. No narrow bootstrap
+confidence claim is made from three partitions.
+
+\hypertarget{clean-baselines-and-poisoning-results}{%
+\section{5. Clean baselines and poisoning
+results}\label{clean-baselines-and-poisoning-results}}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+GPU learner & Final F1 (SD) & Accuracy & FAR & Acquisition \\
+\midrule
+\endhead
+FT & 0.031 (0.012) & 0.084 & 0.984 & 0.184 \\
+EI & 0.046 (0.028) & 0.125 & 0.932 & 0.186 \\
+DR & 0.491 (0.070) & 0.911 & 0.104 & 0.299 \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+Clean learner & E1 FTP recall & E1 SSH recall & E4 FTP recall & E4 SSH
+recall \\
+\midrule
+\endhead
+FT & 0.667 & 0.083 & 0.000 & 0.000 \\
+EI & 0.667 & 0.083 & 0.000 & 0.000 \\
+DR & 0.667 & 0.167 & 0.583 & 0.664 \\
+\bottomrule
+\end{longtable}
+
+Clean viability is imperfect even at the first stage, particularly for
+SSH-Patator. Therefore final collapse is not attributed exclusively to
+forgetting: acquisition, class imbalance, optimization and federation
+can also contribute. This limits how strongly the learner comparison can
+generalize. The offline pooled reference below checks learnability under
+different historical access; it does not repair or tune these baselines
+after observing the attack results.
+
+FT and EI largely forget earlier families even without poisoning. Their
+zero additional final Hulk recall loss is a floor effect, not a
+robustness result. DR retains more earlier-class knowledge, but this
+creates more retained capability for poisoning to damage. Accordingly,
+absolute targeted errors, immediate damage and clean capability are
+reported together.
+
+\begin{figure}
+\centering
+\includegraphics{figures/01-clean-learning.png}
+\caption{Clean GPU trajectories. Shading is training-run
+standard deviation, not a confidence interval; all runs share one
+development bank.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{figures/02-poisoning-effects.png}
+\caption{Immediate signed recall change and targeted
+persistence across attack arms. Each dot averages four replicates within
+one ownership partition; horizontal marks are the three-partition means.
+Attacker topology changes between arms.}
+\end{figure}
+
+\hypertarget{admission-trade-offs}{%
+\subsubsection{5.1 Admission trade-offs}\label{admission-trade-offs}}
+
+\begin{longtable}[]{@{}llllll@{}}
+\toprule
+DR rule & H, 50\% & F1, 50\% & A, 50\% & H, 90\% & A, 90\% \\
+\midrule
+\endhead
+NONE & 0.839 & 0.427 & 0.298 & 0.996 & 0.299 \\
+DC & 0.607 & 0.325 & 0.192 & 0.990 & 0.175 \\
+DM & 0.678 & 0.444 & 0.275 & 0.996 & 0.140 \\
+DQ & 0.282 & 0.451 & 0.258 & 0.996 & 0.269 \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+DR rule, 50\% arm & Poison admitted & New-labelled retained & Final
+poisoned slots \\
+\midrule
+\endhead
+NONE & 1.000 & 1.000 & 630.0 \\
+DC & 0.792 & 1.000 & 542.2 \\
+DM & 1.000 & 0.769 & 672.2 \\
+DQ & 0.750 & 1.000 & 515.2 \\
+\bottomrule
+\end{longtable}
+
+These diagnostics distinguish selection from learning. At moderate
+corruption, DC admits fewer poisoned records than the global ranking but
+can still learn legitimate families less effectively. DQ is a
+volume/class-quota control with different record selection; it must be
+compared on held-out outcomes as well as admitted counts. Poisoned
+memory totals are slots across all five clients.
+
+The moderate and severe arms must be distinguished. Random class-aware
+selection is competitive in the saved moderate arm, so the earlier
+blanket statement that no rule reduces damage was too broad. At severe
+corruption, protecting new-class row counts does not prevent large
+attack effects. DC can reduce acquisition relative to either a
+volume-matched ranking or random control. The relationship between class
+quotas, ranking and held-out discrimination is therefore a measured
+trade-off rather than a successful-defense claim.
+
+\begin{figure}
+\centering
+\includegraphics{figures/03-admission-tradeoffs.png}
+\caption{Acquisition versus targeted persistence at moderate
+and severe corruption. Faint points represent ownership-partition means;
+diamonds represent overall means. Higher acquisition and lower
+persistence are preferable. Both panels use the same axes; severe
+corruption approaches targeted-error saturation.}
+\end{figure}
+
+\hypertarget{component-ablations}{%
+\section{6. Component ablations}\label{component-ablations}}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+Replay variant & Clean F1 & Attacked F1 & H & A \\
+\midrule
+\endhead
+DR reference & 0.491 & 0.427 & 0.839 & 0.298 \\
+No logit matching & 0.453 & 0.401 & 0.657 & 0.270 \\
+No replay-label term & 0.083 & 0.055 & 0.503 & 0.189 \\
+FIFO memory & 0.121 & 0.056 & 0.406 & 0.204 \\
+100 records/client & 0.386 & 0.344 & 0.535 & 0.263 \\
+1000 records/client & 0.522 & 0.471 & 0.794 & 0.301 \\
+\bottomrule
+\end{longtable}
+
+Each changed learner has its own clean twin. Removing the replay-label
+term and replacing reservoir memory with FIFO can substantially reduce
+ordinary retention. A small final recall-damage value in those
+conditions cannot establish protection. The label-only replay arm (no
+logit matching) already supplies an experience-replay comparison.
+Capacity changes alter useful and corrupted memory simultaneously. The
+archived additional quota and Fisher-strength ablations are exploratory;
+nearly identical nmin variants do not establish insensitivity unless
+their class-count thresholds were actually crossed.
+
+\begin{figure}
+\centering
+\includegraphics{figures/04-component-ablations.png}
+\caption{Clean capability beside targeted persistence for the
+same replay component changes. A lower damage outcome must be
+interpreted alongside clean performance.}
+\end{figure}
+
+\hypertarget{new-cpu-mechanism-and-learnability-experiments}{%
+\section{7. New CPU mechanism and learnability
+experiments}\label{new-cpu-mechanism-and-learnability-experiments}}
+
+The supplement completed 21 full-budget CPU trajectories. The main
+four-condition mechanism experiment uses three ownership partitions x 1
+training replicate(s). DQ and offline pooled checks are reported only
+when all their planned runs have completed; they are otherwise pending
+and excluded from numerical claims. All comparisons within the
+supplement use CPU clean references and the same current source/input
+identity. The runtime and source manifests identify exact software
+versions, files, configurations and SHA-256 values; each completed
+result is written atomically and validated before reuse.
+
+At five attackers and 50\% E2 corruption, ordinary replay, oracle
+deletion and count-matched random deletion begin from identical end-E2
+model parameters, buffer tensors, labels, logits, poison flags and RNG
+states. State fingerprints and E1/E2 metrics must match exactly or the
+run is rejected. The oracle deletes evaluator-marked poisoned records;
+random deletion removes the same number per client using an
+intervention-only RNG. Both compact all buffer fields, preserve
+historical proposal counts and refill vacancies on subsequent
+insertions. This is a memory-content intervention with declared sampling
+consequences, not standard reservoir sampling of the entire original
+history after deletion. No new poison is introduced during E3/E4.
+
+\begin{longtable}[]{@{}llllll@{}}
+\toprule
+CPU condition & Runs & H & Final F1 & FAR & A \\
+\midrule
+\endhead
+Clean DR & 3 & 0.000 & 0.473 & 0.122 & 0.306 \\
+Poisoned / ordinary & 3 & 0.828 & 0.395 & 0.133 & 0.288 \\
+Poisoned / oracle purge & 3 & 0.000 & 0.468 & 0.227 & 0.291 \\
+Poisoned / random deletion & 3 & 0.474 & 0.377 & 0.254 & 0.289 \\
+\bottomrule
+\end{longtable}
+
+For the most direct mechanism contrast, oracle-minus-random H
+differences by ownership partition are seed 101: -0.689, seed 102:
+-0.528, seed 103: -0.204. Negative values favor oracle deletion. This
+comparison tests the contribution of continuing stored poison relative
+to a count-matched memory-content change. It does not remove damage
+already present in E2 weights, hold later replay draws identical after
+composition changes, or establish a deployable purification method.
+Random deletion matches volume but not retained class composition, so
+the contrast identifies the targeted removal policy rather than a pure
+label-only effect. Null or mixed effects remain informative limits.
+
+Across the completed mechanism grid, mean targeted persistence is 0.000
+after oracle purge versus 0.474 after matched random deletion.
+Oracle-minus-random H is negative in 3 of three partition means. Compare
+final macro-F1 as well: 0.468 for oracle versus 0.377 for random. The
+result is interpreted within the fixed continuation and the
+oracle-access boundary, rather than as a general poisoning-removal
+guarantee.
+
+\begin{figure}
+\centering
+\includegraphics{figures/05-cpu-memory-intervention.png}
+\caption{CPU attack/withdrawal trajectories and
+memory-intervention outcomes. The intervention follows E2. Dots in the
+right panels represent partition means, not independent captures.}
+\end{figure}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+CPU admission & Clean F1 & Attacked F1 & H & Attacked A \\
+\midrule
+\endhead
+NONE & 0.473 & 0.395 & 0.828 & 0.288 \\
+DQ & 0.418 & 0.431 & 0.154 & 0.246 \\
+\bottomrule
+\end{longtable}
+
+The offline pooled MLP attains final eligible macro-F1 0.871
+(initialization SD 0.003), accuracy 0.992, and FAR 0.009. It sees all
+classes from initialization and makes 12 shuffled full-inventory passes
+with continuous Adam. Its three runs vary initialization, not
+independent datasets or ownership. Per-record current-data exposure is
+approximately matched, but replay compute, federation, optimizer resets,
+memory access and future knowledge are not. It is a learnability sanity
+reference, not a guaranteed mathematical upper bound or a fair
+deployment competitor.
+
+\begin{figure}
+\centering
+\includegraphics{figures/06-memory-and-offline-reference.png}
+\caption{Stored poison trajectories and clean
+offline-reference outcomes. E2 counts are measured before deletion;
+immediate post-deletion counts are separately logged. Offline pooled
+training has future-class and unrestricted history access.}
+\end{figure}
+
+\hypertarget{comparison-with-existing-research}{%
+\section{8. Comparison with existing
+research}\label{comparison-with-existing-research}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.33}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.33}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.33}}@{}}
+\toprule
+Primary work & Setting / finding & Comparison and limitation \\
+\midrule
+\endhead
+Lavaur et al.~(2025) {[}1{]} & NF-V2 versions of CSE-CIC-IDS2018 and
+UNSW-NB15; federated label flipping; attack effects depend strongly on
+settings. & Our overlap is training-label corruption. Our class-growth,
+corrected CICIDS2017 split and targeted persistence definition differ;
+no cross-paper percentage ranking. \\
+Carillo et al.~(2026) {[}2{]} & TON\_IoT, IoT-NID and Edge-IIoTset;
+federated incremental IDS; compares old/new-class outcomes and
+centralized references. & Our overlap is federation plus class
+acquisition. This study adds its particular poisoning/withdrawal
+intervention; data, algorithms and metric populations differ. \\
+Buzzega et al.~(2020) {[}3{]} & DER/DER++ combines replay and
+historical-logit matching in continual-learning benchmarks. & Our DR
+adapts the mechanism to five clients, tabular flows and an expanding
+head. Direct local ablations separate label and logit terms; original
+benchmark scores are not reproduced. \\
+Kirkpatrick et al.~(2017) {[}4{]} & EWC protects important parameters
+during sequential learning. & Our EI uses accumulated diagonal
+importance at shared models; clean failure in this protocol does not
+refute EWC generally. \\
+\bottomrule
+\end{longtable}
+
+Direct quantitative method comparisons use the same local protocol and
+evaluator. The contextual table explains how the study relates to
+published research without mixing incomparable scores. The internal
+repository cross-check (older DR approximately 0.655 versus
+approximately 0.434 for replicate 0 in the newer implementation) is
+reported separately: batch size, runtime and implementation differences
+mean it cannot identify a device effect.
+
+\hypertarget{resource-cost-discussion-and-threats-to-validity}{%
+\section{9. Resource cost, discussion and threats to
+validity}\label{resource-cost-discussion-and-threats-to-validity}}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+GPU learner & Run seconds & Model KB & Exchange MB & Replay KB \\
+\midrule
+\endhead
+DR & 53.1 & 75.6 & 35.53 & 940.0 \\
+EI & 38.0 & 75.6 & 35.53 & 0.0 \\
+FT & 20.3 & 75.6 & 35.53 & 0.0 \\
+\bottomrule
+\end{longtable}
+
+Communication is an analytical float32 parameter-exchange count,
+excluding transport overhead, not measured packet traffic or network
+latency. GPU times come from concurrent workers; CPU times come from
+sequential single-thread runs under a different runtime. Neither
+supports a hardware speedup claim. Replay bytes count stored numeric
+tensors, not total Python/process memory or peak RSS. Real edge latency
+and energy were not measured.
+
+The evidence supports a scoped retention/security trade-off: mechanisms
+that preserve older behavior can also retain attack-associated errors.
+Admission protection alone does not guarantee useful discrimination, and
+low additional damage may reflect already-lost capability.
+Oracle-versus-random deletion improves mechanism identification relative
+to memory-size correlation, but its interpretation remains conditional
+on changed buffer contents and the tested post-withdrawal stream.
+
+Threats include a single historical capture, fixed development bank,
+three simulated ownership partitions, one source/target label pattern,
+outcome-informed expansion of attack severity, and development-only
+evaluation. Shared captures and repeated training do not establish
+independent deployments. Rare annotations have limited or zero
+evaluation support. No adaptive adversary, forged-update defense,
+privacy guarantee, live throughput, cross-dataset robustness, zero-day
+discovery or state-of-the-art superiority is claimed. The final-test
+split was not opened for these experiments.
+
+\hypertarget{reproducibility-and-requirement-coverage}{%
+\section{10. Reproducibility and requirement
+coverage}\label{reproducibility-and-requirement-coverage}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+\toprule
+Phase 3 requirement & Evidence \\
+\midrule
+\endhead
+Methodology implementation & Original p3lib.py and notebook;
+instrumented CPU intervention implementation and identity manifests. \\
+Dataset/preprocessing & Dataset class table; pinned preparation reports;
+fresh ID-isolation audit; frozen feature/split protocol. \\
+Baselines & FT/EI/DR clean tables; DQ control; offline pooled reference
+only if completed and reported above. \\
+Graphical results & Regenerated figure sets with corrected metric names
+and source CSVs; unfinished experiment figures are excluded. \\
+Existing research & Four primary-work comparisons; adapted-method
+identities and fairness limitations. \\
+Ablations & Replay terms, eviction, capacity, quota/Fisher variants; new
+oracle versus random deletion. \\
+Critical discussion & Clean failure, targeted error versus recall,
+random controls, partition effects, cost boundaries and threats to
+validity. \\
+\bottomrule
+\end{longtable}
+
+From the repository root, run python scripts/run\_phase3\_cpu\_study.py
+to execute/resume the CPU supplement on the audited local packages. Then
+run python scripts/rebuild\_submission\_analysis.py, python
+scripts/analyse\_phase3\_cpu.py, python
+scripts/build\_phase3\_figures.py, python
+scripts/write\_phase3\_report.py and python
+scripts/export\_phase3\_pdf.py. The original notebook rebuilds data and
+the larger GPU study; its legacy Part C naming/statistics are superseded
+by this report. Data reconstruction instructions and manifests are
+included, while large local training arrays are not duplicated in the
+submission ZIP. CPU research outcomes require the complete result files,
+not the synthetic test output.
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+{[}1{]} L. Lavaur, Y. Busnel and F. Autrel. Investigating the Impact of
+Label-flipping Attacks against Federated Learning for Collaborative
+Intrusion Detection. Computers \& Security, 156, 104462, 2025.
+\url{https://orbilu.uni.lu/handle/10993/65906}
+
+{[}2{]} R. Carillo et al.~A Federated and Incremental Network Intrusion
+Detection System for IoT Emerging Threats. IEEE Transactions on Network
+and Service Management, 2026.
+\url{https://doi.org/10.1109/TNSM.2026.3675031}
+
+{[}3{]} P. Buzzega et al.~Dark Experience for General Continual
+Learning: a Strong, Simple Baseline. NeurIPS, 2020.
+\url{https://arxiv.org/abs/2004.07211}
+
+{[}4{]} J. Kirkpatrick et al.~Overcoming catastrophic forgetting in
+neural networks. PNAS, 114(13), 3521-3526, 2017.
+\url{https://doi.org/10.1073/pnas.1611835114}
+
+\end{document}

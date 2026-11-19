@@ -1,0 +1,72 @@
+{
+  "schema": "phase3-external-id-isolation-audit-v1",
+  "scope": "identifier arrays only; no feature or label arrays loaded",
+  "feature_arrays_accessed": false,
+  "label_arrays_accessed": false,
+  "cicids_final_test_accessed": false,
+  "datasets": [
+    {
+      "dataset": "UNSW-NB15",
+      "protocol_id": "unsw-standard-v2",
+      "metadata_sha256": "3d5ccc68f005e46b738cc44c07d8d70dccbfee59c398549ff16eba21c3d60554",
+      "task_artifact_sha256": "7512c21e7d01345ac0f9870125799dfe898907fe1b2334898a26bc02584f2e6e",
+      "task_counts": {
+        "train": [
+          54000,
+          65577,
+          36755,
+          19009
+        ],
+        "test": [
+          28121,
+          26444,
+          16835,
+          10932
+        ]
+      },
+      "unique_rows_within_pool": {
+        "train": 175341,
+        "test": 82332
+      },
+      "cross_task_id_collisions": {
+        "train": [],
+        "test": []
+      },
+      "train_task_ids_disjoint": true,
+      "test_task_ids_disjoint": true,
+      "train_test_id_comparison": "not performed: row IDs are positional within separate provider pools and need not share a namespace"
+    },
+    {
+      "dataset": "CICIoT2023",
+      "protocol_id": "iot-capped-v2",
+      "metadata_sha256": "8b48d8730aadc9d28b775b86a1ff01c4f4fd51abf654ec622ad702ac63daf152",
+      "task_artifact_sha256": "176efe377b0349ae27103a62ecc4460c78881cf3f51925ee3ff64e710d779b8b",
+      "task_counts": {
+        "train": [
+          38000,
+          20000,
+          30801,
+          32577
+        ],
+        "test": [
+          14000,
+          8000,
+          11461,
+          11658
+        ]
+      },
+      "unique_rows_within_pool": {
+        "train": 121378,
+        "test": 45119
+      },
+      "cross_task_id_collisions": {
+        "train": [],
+        "test": []
+      },
+      "train_task_ids_disjoint": true,
+      "test_task_ids_disjoint": true,
+      "train_test_id_comparison": "not performed: row IDs are positional within separate provider pools and need not share a namespace"
+    }
+  ],
+  "interpretation_limit": "Disjoint positional IDs establish task assignment uniqueness only. They do not establish component, session, host, campaign, or train/test duplicate-flow isolation."
+}

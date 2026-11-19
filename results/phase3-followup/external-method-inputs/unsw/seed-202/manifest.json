@@ -1,0 +1,35 @@
+{
+  "schema": "phase3-external-method-input-v1",
+  "dataset": "UNSW-NB15",
+  "protocol_id": "unsw-standard-v2",
+  "seed": 202,
+  "task_archive_sha256": "7512c21e7d01345ac0f9870125799dfe898907fe1b2334898a26bc02584f2e6e",
+  "metadata_sha256": "3d5ccc68f005e46b738cc44c07d8d70dccbfee59c398549ff16eba21c3d60554",
+  "support_audit_sha256": "5113d66382257938cd9e66472a0e0faf43e8a84c81e2c547beaba361c5c856fa",
+  "id_audit_sha256": "ec76eeadff04990d7868d631e653ef05c6a34344e7926f37cd5afb02c1b261a5",
+  "input_kind": "training labels and task-local training row IDs only",
+  "artifact_sha256": "629c36f7dac91490310c422a92c17e240fd34cb07f1daa102d2b1aad085fb36d",
+  "n_clients": 5,
+  "dirichlet_alpha": 0.5,
+  "source_label": "Exploits",
+  "source_label_id": 4,
+  "benign_label_id": 0,
+  "attacker_client": 0,
+  "eligible_attacker_clients": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "task1_source_rows_on_attacker": 303,
+  "poisoned_rows": 151,
+  "realized_dose": [
+    151,
+    303
+  ],
+  "train_rows": 175341,
+  "feature_arrays_accessed": false,
+  "test_arrays_accessed": false,
+  "cicids_final_test_accessed": false
+}

@@ -1,0 +1,109 @@
+{
+  "schema": "phase3-external-training-support-audit-v1",
+  "scope": "training-label support only; no external test labels/features or CICIDS final-test data loaded",
+  "test_arrays_accessed": false,
+  "cicids_final_test_accessed": false,
+  "minimum_source_rows": 50,
+  "datasets": [
+    {
+      "dataset": "UNSW-NB15",
+      "protocol_id": "unsw-standard-v2",
+      "metadata_sha256": "3d5ccc68f005e46b738cc44c07d8d70dccbfee59c398549ff16eba21c3d60554",
+      "task_artifact_sha256": "7512c21e7d01345ac0f9870125799dfe898907fe1b2334898a26bc02584f2e6e",
+      "task_train_rows_from_sidecar": [
+        54000,
+        65577,
+        36755,
+        19009
+      ],
+      "observed_train_label_counts": [
+        {
+          "Normal": 14000,
+          "Generic": 40000
+        },
+        {
+          "Normal": 14000,
+          "Exploits": 33393,
+          "Fuzzers": 18184
+        },
+        {
+          "Normal": 14000,
+          "DoS": 12264,
+          "Reconnaissance": 10491
+        },
+        {
+          "Normal": 14000,
+          "Analysis": 2000,
+          "Backdoor": 1746,
+          "Shellcode": 1133,
+          "Worms": 130
+        }
+      ],
+      "candidate_new_attack_labels_t1": [
+        {
+          "label_id": 4,
+          "label": "Exploits",
+          "t1_train_rows": 33393
+        },
+        {
+          "label_id": 5,
+          "label": "Fuzzers",
+          "t1_train_rows": 18184
+        }
+      ],
+      "selected_source_label": "Exploits",
+      "selected_source_label_id": 4,
+      "selected_source_t1_train_rows": 33393,
+      "t1_benign_train_rows": 14000,
+      "selection_rule": "Largest task-1 train support among non-benign labels absent from task 0; minimum 50; ties by ascending label ID.",
+      "feasible_for_source_to_benign_pilot": true
+    },
+    {
+      "dataset": "CICIoT2023",
+      "protocol_id": "iot-capped-v2",
+      "metadata_sha256": "8b48d8730aadc9d28b775b86a1ff01c4f4fd51abf654ec622ad702ac63daf152",
+      "task_artifact_sha256": "176efe377b0349ae27103a62ecc4460c78881cf3f51925ee3ff64e710d779b8b",
+      "task_train_rows_from_sidecar": [
+        38000,
+        20000,
+        30801,
+        32577
+      ],
+      "observed_train_label_counts": [
+        {
+          "Benign": 8000,
+          "DDoS": 30000
+        },
+        {
+          "Benign": 8000,
+          "DoS": 12000
+        },
+        {
+          "Benign": 8000,
+          "Mirai": 9000,
+          "Recon": 13801
+        },
+        {
+          "Benign": 8000,
+          "BruteForce": 3000,
+          "Spoofing": 6000,
+          "Web-based": 15577
+        }
+      ],
+      "candidate_new_attack_labels_t1": [
+        {
+          "label_id": 3,
+          "label": "DoS",
+          "t1_train_rows": 12000
+        }
+      ],
+      "selected_source_label": "DoS",
+      "selected_source_label_id": 3,
+      "selected_source_t1_train_rows": 12000,
+      "t1_benign_train_rows": 8000,
+      "selection_rule": "Largest task-1 train support among non-benign labels absent from task 0; minimum 50; ties by ascending label ID.",
+      "feasible_for_source_to_benign_pilot": true
+    }
+  ],
+  "interpretation_limit": "Support feasibility does not resolve missing persistent ownership, component/session grouping, external task alignment, or full-method comparability. Any simulated-client study is an independent benchmark extension, not a faithful replication."
+}

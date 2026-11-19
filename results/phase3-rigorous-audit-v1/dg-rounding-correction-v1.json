@@ -1,0 +1,25 @@
+{
+  "schema": "phase3-dg-phase2-rounding-correction-v1",
+  "phase2_specification": "floor(0.75*n + 0.5) globally ranked records per client; filters bypassed at E1",
+  "initial_pinned_attempt": "results/phase3-dg-baseline-v3",
+  "initial_attempt_status": "incomplete_excluded",
+  "initial_attempt_cells": 13,
+  "initial_attempt_partial_checkpoints": 1,
+  "reason": "The implementation used ceil(0.75*n), which differs when n mod 4 equals 3. All v3 result cells were retained but excluded.",
+  "corrected_integer_formula": "(3*n + 2) // 4",
+  "changed_files": [
+    "src/phase3_v2/global_filter.py",
+    "scripts/audit_phase3_dg_baseline.py",
+    "tests/test_phase3_overnight.py",
+    "docs/phase3-rigorous-audit-v1/dg-baseline-card.md"
+  ],
+  "focused_synthetic_verification": {
+    "command": "python -m pytest tests/test_phase3_overnight.py::test_DG_global_filter_uses_phase2_rounding_and_breaks_ties_by_id tests/test_phase3_overnight.py::test_DG_admission_executes_through_full_synthetic_simulator -q",
+    "status": "passed",
+    "passed": 2,
+    "failed": 0,
+    "runtime": "system Python 3.14; empirical run remains pinned to Python 3.12.14"
+  },
+  "next_run": "results/phase3-dg-baseline-v5",
+  "final_test_accessed": false
+}

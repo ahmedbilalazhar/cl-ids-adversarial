@@ -1,0 +1,248 @@
+[
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 20,
+    "term": "0.1",
+    "context": "0\n10\n20\n30\n40\nEpochs\n0.0\n0.5\n1.0\nAccuracy\nE = 10\n0\n10\n20\n30\n40\nEpochs\nE = 4\n\u03c4 = 0.0\n\u03c4 = 0.1\n\u03c4 = 0.3\n\u03c4 = 0.5\n\u03c4 = 0.7\n(a) CIC-CSE-IDS2018.\n0\n10\n20\n30\n40\nEpochs\n0.0\n0.5\n1.0\nAccuracy\nE = 10\n0\n10\n20\n30\n40\nEpochs\nE = 4\n\u03c4 = 0.0\n\u03c4 = 0.1\n\u03c4 = 0.3\n\u03c4 = 0.5\n\u03c4 = 0.7\n(b) UNSW-NB15.\nFigure 8: Accuracy of the global model after a label-flipping attack. The data is aligned to\nstart at the last epochs before the attack ends, and the impact is measured over the next 40\nepochs (i.e., 4 or 10 rounds depending on E).\nHowever, when clients have been given "
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 20,
+    "term": "0.1",
+    "context": "0\n10\n20\n30\n40\nEpochs\n0.0\n0.5\n1.0\nAccuracy\nE = 10\n0\n10\n20\n30\n40\nEpochs\nE = 4\n\u03c4 = 0.0\n\u03c4 = 0.1\n\u03c4 = 0.3\n\u03c4 = 0.5\n\u03c4 = 0.7\n(a) CIC-CSE-IDS2018.\n0\n10\n20\n30\n40\nEpochs\n0.0\n0.5\n1.0\nAccuracy\nE = 10\n0\n10\n20\n30\n40\nEpochs\nE = 4\n\u03c4 = 0.0\n\u03c4 = 0.1\n\u03c4 = 0.3\n\u03c4 = 0.5\n\u03c4 = 0.7\n(b) UNSW-NB15.\nFigure 8: Accuracy of the global model after a label-flipping attack. The data is aligned to\nstart at the last epochs before the attack ends, and the impact is measured over the next 40\nepochs (i.e., 4 or 10 rounds depending on E).\nHowever, when clients have been given the time to converge before the at-\ntack, the impact of hyperparameters becomes more visible, particularly for the\nbatch size, as depicte"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 23,
+    "term": "0.1",
+    "context": "e accuracy of the global model.\nFigure 10 presents the RASR of considered label-flipping attacks over time,\nboth for untargeted and targeted attacks.\nThe entire figure emphasizes the\nimportance of the number of attackers in the effectiveness of the attack, as most\nattacks are not impactful while \u03c4 \u22640.3. In particular, with one single attacker\n(\u03c4 = 0.1), the RASR remains well below 0.1, even with a high poisoning rate\n(\u03b1 = 1.0). \u03c4 = 0.5 represents a tipping point in our tests, with RASR values\norders of magnitude higher than with \u03c4 = 0.3.\nMore importantly, we can infer from \u0393 = \u03c4 \u00d7\u03b1 the total quantity of poisoned\ndata due to our IID partitioning. For untargeted attacks in cicids, the RASR\nexceeds 0.5 for \u0393 > 0.5 and approaches 1.0 for \u0393 > 0.67. For targeted attacks,\nthe RASR exceeds 0.5 for"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 23,
+    "term": "0.1",
+    "context": "gure 10 presents the RASR of considered label-flipping attacks over time,\nboth for untargeted and targeted attacks.\nThe entire figure emphasizes the\nimportance of the number of attackers in the effectiveness of the attack, as most\nattacks are not impactful while \u03c4 \u22640.3. In particular, with one single attacker\n(\u03c4 = 0.1), the RASR remains well below 0.1, even with a high poisoning rate\n(\u03b1 = 1.0). \u03c4 = 0.5 represents a tipping point in our tests, with RASR values\norders of magnitude higher than with \u03c4 = 0.3.\nMore importantly, we can infer from \u0393 = \u03c4 \u00d7\u03b1 the total quantity of poisoned\ndata due to our IID partitioning. For untargeted attacks in cicids, the RASR\nexceeds 0.5 for \u0393 > 0.5 and approaches 1.0 for \u0393 > 0.67. For targeted attacks,\nthe RASR exceeds 0.5 for \u0393 > 0.49 and approaches 1.0 for \u0393"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 24,
+    "term": "0.1",
+    "context": "2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\nuntargeted, \u03c4 = 0.1\n0.000\n0.001\n0.002\n0.003\n0.004\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.3\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.7\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\ntargeted, \u03c4 = 0.1\n0.000\n0.005\n0.010\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.3\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.7\n\u03b1 = 10\n\u03b1 = 30\n\u03b1 = 60\n\u03b1 = 70\n\u03b1 = 80\n\u03b1 = 90\n\u03b1 = 95\n\u03b1 = 99\n\u03b1 = 100\n(a) CIC-CSE-IDS2018\n2\n4\n6\n8\n10\nRo"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 24,
+    "term": "0.1",
+    "context": "2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\nuntargeted, \u03c4 = 0.1\n0.000\n0.001\n0.002\n0.003\n0.004\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.3\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.7\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\ntargeted, \u03c4 = 0.1\n0.000\n0.005\n0.010\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.3\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.7\n\u03b1 = 10\n\u03b1 = 30\n\u03b1 = 60\n\u03b1 = 70\n\u03b1 = 80\n\u03b1 = 90\n\u03b1 = 95\n\u03b1 = 99\n\u03b1 = 100\n(a) CIC-CSE-IDS2018\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\nuntargeted, \u03c4 = 0.1\n0.000\n0.001\n0.002\n0.003\n0.004\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.3\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.7\n2\n4\n6\n8\n10\n"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 24,
+    "term": "0.1",
+    "context": "geted, \u03c4 = 0.7\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\ntargeted, \u03c4 = 0.1\n0.000\n0.005\n0.010\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.3\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.7\n\u03b1 = 10\n\u03b1 = 30\n\u03b1 = 60\n\u03b1 = 70\n\u03b1 = 80\n\u03b1 = 90\n\u03b1 = 95\n\u03b1 = 99\n\u03b1 = 100\n(a) CIC-CSE-IDS2018\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\nuntargeted, \u03c4 = 0.1\n0.000\n0.001\n0.002\n0.003\n0.004\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.3\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.7\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\ntargeted, \u03c4 = 0.1\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.3\n0.00\n0.05\n0.10\n0.15\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.7\n\u03b1 = 10\n\u03b1 = 30\n\u03b1 = 60\n\u03b1 = 70\n\u03b1 = 80\n\u03b1 = 90\n\u03b1 = 95\n\u03b1 = 99\n\u03b1 = 100\n(b) UNSW-NB"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 24,
+    "term": "0.1",
+    "context": "= 70\n\u03b1 = 80\n\u03b1 = 90\n\u03b1 = 95\n\u03b1 = 99\n\u03b1 = 100\n(a) CIC-CSE-IDS2018\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\nuntargeted, \u03c4 = 0.1\n0.000\n0.001\n0.002\n0.003\n0.004\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.3\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.7\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\ntargeted, \u03c4 = 0.1\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.3\n0.00\n0.05\n0.10\n0.15\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.7\n\u03b1 = 10\n\u03b1 = 30\n\u03b1 = 60\n\u03b1 = 70\n\u03b1 = 80\n\u03b1 = 90\n\u03b1 = 95\n\u03b1 = 99\n\u03b1 = 100\n(b) UNSW-NB15\nFigure 10: Evolution of the RASR of poisoning attacks over time, depending on the local\npoisoning rate (\u03b1), the proportion of attackers (\u03c4), and the type of attack. The x-axis repre-\nsents the number of rounds. The value fo"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 24,
+    "term": "0.1",
+    "context": "10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\nuntargeted, \u03c4 = 0.1\n0.000\n0.001\n0.002\n0.003\n0.004\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.3\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.7\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\ntargeted, \u03c4 = 0.1\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.3\n0.00\n0.05\n0.10\n0.15\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.7\n\u03b1 = 10\n\u03b1 = 30\n\u03b1 = 60\n\u03b1 = 70\n\u03b1 = 80\n\u03b1 = 90\n\u03b1 = 95\n\u03b1 = 99\n\u03b1 = 100\n(b) UNSW-NB15\nFigure 10: Evolution of the RASR of poisoning attacks over time, depending on the local\npoisoning rate (\u03b1), the proportion of attackers (\u03c4), and the type of attack. The x-axis repre-\nsents the number of rounds. The value for targeted attacks is the mean of the targets, from\nwhich we exclude "
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 24,
+    "term": "0.1",
+    "context": "und\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\nuntargeted, \u03c4 = 0.1\n0.000\n0.001\n0.002\n0.003\n0.004\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.3\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\nuntargeted, \u03c4 = 0.7\n2\n4\n6\n8\n10\nRound\n0.00\n0.25\n0.50\n0.75\n1.00\nRASR\ntargeted, \u03c4 = 0.1\n0.00\n0.01\n0.02\n0.03\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.3\n0.00\n0.05\n0.10\n0.15\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.5\n2\n4\n6\n8\n10\nRound\ntargeted, \u03c4 = 0.7\n\u03b1 = 10\n\u03b1 = 30\n\u03b1 = 60\n\u03b1 = 70\n\u03b1 = 80\n\u03b1 = 90\n\u03b1 = 95\n\u03b1 = 99\n\u03b1 = 100\n(b) UNSW-NB15\nFigure 10: Evolution of the RASR of poisoning attacks over time, depending on the local\npoisoning rate (\u03b1), the proportion of attackers (\u03c4), and the type of attack. The x-axis repre-\nsents the number of rounds. The value for targeted attacks is the mean of the targets, from\nwhich we exclude the u"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 26,
+    "term": "0.1",
+    "context": "ious\n(c) Colluding attackers on CIC-CSE-IDS2018\niid_full\niid_drop_1\niid_drop_2\niid_keep_1\nkmeans_full\nkmeans_drop_1\nkmeans_drop_2\nkmeans_keep_1\nBenign\nMalicious\n(d) Colluding attackers on UNSW-NB15\nFigure 11: 2D projection of gradients using PCA for different partitioning schemes. The top\nrow represents the results for a single attacker (i.e., \u03c4 = 0.1), while the bottom row illustrates\nthe results for colluding attackers (i.e., \u03c4 = 0.5). Results for the 10th round with seed=1128\nand \u03b1 = 1.0.\n25\n"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 29,
+    "term": "0.1",
+    "context": "Learning Research, PMLR, 2017-04-20/2017-04-22, pp. 1273\u2013\n1282.\n[2] T. D. Nguyen, S. Marchal, M. Miettinen, H. Fereidooni, N. Asokan, A.-\nR. Sadeghi, D\u00cfoT: A Federated Self-learning Anomaly Detection System\nfor IoT,\nin:\n2019 IEEE 39th International Conference on Distributed\nComputing Systems (ICDCS), volume 2019-July, IEEE, 2019, pp. 756\u2013767.\ndoi:10.1109/ICDCS.2019.00080.\n[3] H. Liu, S. Zhang, P. Zhang, X. Zhou, X. Shao, G. Pu, Y. Zhang, Blockchain\nand Federated Learning for Collaborative Intrusion Detection in Vehicular\n28\n"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 30,
+    "term": "0.1",
+    "context": " Trans. Veh. Technol. 70 (2021) 6073\u20136084. doi:10.\n1109/TVT.2021.3076780.\n[4] S. Agrawal, S. Sarkar, O. Aouedi, G. Yenduri, K. Piamrat, M. Alazab,\nS. Bhattacharya, P. K. R. Maddikunta, T. R. Gadekallu, Federated Learn-\ning for intrusion detection system: Concepts, challenges and future di-\nrections, Computer Communications 195 (2022) 346\u2013361. doi:10.1016/j.\ncomcom.2022.09.012.\n[5] L. Lavaur, M.-O. Pahl, Y. Busnel, F. Autrel, The Evolution of Federated\nLearning-based Intrusion Detection and Mitigation: A Survey,\nTNSM\n(2022).\n[6] M. Alazab, S. P. R M, P. M, P. Reddy, T. R. Gadekallu, Q.-V. Pham,\nFederated Learning for Cybersecurity: Concepts, Challenges and Future\nDirections, IEEE Trans. Ind. Inf. (2021) 1\u20131. doi:10/gnm4dj.\n[7] E. Fedorchenko, E. Novikova, A. Shulepov, Comparative Review of "
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 30,
+    "term": "0.1",
+    "context": " the\nIntrusion Detection Systems Based on Federated Learning: Advantages\nand Open Challenges, Algorithms 15 (2022) 247. doi:10.3390/a15070247.\n[8] B. Ghimire, D. B. Rawat,\nRecent Advances on Federated Learning for\nCybersecurity and Cybersecurity for Federated Learning for Internet of\nThings, IEEE Internet of Things Journal 9 (2022) 8229\u20138249. doi:10.1109/\nJIOT.2022.3150363.\n[9] E. M. Campos, P. F. Saura, A. Gonz\u00e1lez-Vidal, J. L. Hern\u00e1ndez-Ramos,\nJ. B. Bernab\u00e9, G. Baldini, A. Skarmeta, Evaluating Federated Learning for\nintrusion detection in Internet of Things: Review and challenges, Computer\nNetworks 203 (2022) 108661. doi:10.1016/j.comnet.2021.108661.\n[10] A. N. Bhagoji, S. Chakraborty, P. Mittal, S. Calo, Analyzing Federated\nLearning through an Adversarial Lens, in: Proceedings of the 36"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 30,
+    "term": "0.1",
+    "context": "of\nThings, IEEE Internet of Things Journal 9 (2022) 8229\u20138249. doi:10.1109/\nJIOT.2022.3150363.\n[9] E. M. Campos, P. F. Saura, A. Gonz\u00e1lez-Vidal, J. L. Hern\u00e1ndez-Ramos,\nJ. B. Bernab\u00e9, G. Baldini, A. Skarmeta, Evaluating Federated Learning for\nintrusion detection in Internet of Things: Review and challenges, Computer\nNetworks 203 (2022) 108661. doi:10.1016/j.comnet.2021.108661.\n[10] A. N. Bhagoji, S. Chakraborty, P. Mittal, S. Calo, Analyzing Federated\nLearning through an Adversarial Lens, in: Proceedings of the 36th Inter-\nnational Conference on Machine Learning, PMLR, 2019, pp. 634\u2013643.\n[11] V. Tolpegin, S. Truex, M. E. Gursoy, L. Liu,\nData Poisoning Attacks\nAgainst Federated Learning Systems,\nin:\nL. Chen, N. Li, K. Liang,\nS. Schneider (Eds.), Computer Security \u2013 ESORICS 2020, Lecture Note"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 30,
+    "term": "0.1",
+    "context": "onference on Machine Learning, PMLR, 2019, pp. 634\u2013643.\n[11] V. Tolpegin, S. Truex, M. E. Gursoy, L. Liu,\nData Poisoning Attacks\nAgainst Federated Learning Systems,\nin:\nL. Chen, N. Li, K. Liang,\nS. Schneider (Eds.), Computer Security \u2013 ESORICS 2020, Lecture Notes\nin Computer Science, Springer International Publishing, Cham, 2020, pp.\n480\u2013501. doi:10.1007/978-3-030-58951-6_24.\n[12] D. J. Beutel, T. Topal, A. Mathur, X. Qiu, T. Parcollet, N. D. Lane,\nFlower: A friendly federated learning research framework, arXiv preprint\narXiv:2007.14390 (2020). arXiv:2007.14390.\n[13] O. Yadan, Hydra - A framework for elegantly configuring complex applica-\ntions, Github, 2019.\n29\n"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 31,
+    "term": "0.1",
+    "context": " F. Tram\u00e8r, P. Vepakomma, J. Wang, L. Xiong, Z. Xu, Q. Yang,\nF. X. Yu, H. Yu, S. Zhao,\nAdvances and Open Problems in Federated\nLearning, arXiv:1912.04977 [cs, stat] (2021). arXiv:1912.04977.\n[16] Y. Huang, L. Chu, Z. Zhou, L. Wang, J. Liu, J. Pei, Y. Zhang, Personalized\nCross-Silo Federated Learning on Non-IID Data, AAAI 35 (2021) 7865\u2013\n7873. doi:10.1609/aaai.v35i9.16960.\n[17] L. Lavaur, Y. Busnel, F. Autrel, Demo: Highlighting the limits of federated\nlearning in intrusion detection, in: Proceedings of the 44th International\nConference on Distributed Computing Systems (ICDCS), Jersey City, NJ,\nUSA, 2024.\n[18] N. Rodr\u00edguez-Barroso, D. Jim\u00e9nez-L\u00f3pez, M. V. Luz\u00f3n, F. Herrera,\nE. Mart\u00ednez-C\u00e1mara, Survey on federated learning threats: Concepts, tax-\nonomy on attacks and defences, experimental s"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 31,
+    "term": "0.1",
+    "context": " International\nConference on Distributed Computing Systems (ICDCS), Jersey City, NJ,\nUSA, 2024.\n[18] N. Rodr\u00edguez-Barroso, D. Jim\u00e9nez-L\u00f3pez, M. V. Luz\u00f3n, F. Herrera,\nE. Mart\u00ednez-C\u00e1mara, Survey on federated learning threats: Concepts, tax-\nonomy on attacks and defences, experimental study and challenges, Infor-\nmation Fusion 90 (2023) 148\u2013173. doi:10.1016/j.inffus.2022.09.011.\n[19] L. Lamport, R. Shostak, M. Pease, The Byzantine generals problem, in:\nConcurrency: The Works of Leslie Lamport, Association for Computing\nMachinery, New York, NY, USA, 1982, pp. 203\u2013226.\n[20] J. R. Douceur,\nThe Sybil Attack,\nin:\nP. Druschel, F. Kaashoek,\nA. Rowstron (Eds.), Peer-to-Peer Systems, Lecture Notes in Computer\nScience, Springer, Berlin, Heidelberg, 2002, pp. 251\u2013260. doi:10.1007/\n3-540-45748-8_24.\n[21]"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 31,
+    "term": "0.1",
+    "context": "e Byzantine generals problem, in:\nConcurrency: The Works of Leslie Lamport, Association for Computing\nMachinery, New York, NY, USA, 1982, pp. 203\u2013226.\n[20] J. R. Douceur,\nThe Sybil Attack,\nin:\nP. Druschel, F. Kaashoek,\nA. Rowstron (Eds.), Peer-to-Peer Systems, Lecture Notes in Computer\nScience, Springer, Berlin, Heidelberg, 2002, pp. 251\u2013260. doi:10.1007/\n3-540-45748-8_24.\n[21] C. Fung, C. J. M. Yoon, I. Beschastnikh, The Limitations of Federated\nLearning in Sybil Settings, in: 23rd International Symposium on Research\nin Attacks, Intrusions and Defenses ({RAID} 2020), {USENIX} Associa-\ntion, San Sebastian, 2020, pp. 301\u2013316.\n[22] M. Fang, X. Cao, J. Jia, N. Gong,\nLocal Model Poisoning Attacks to\nByzantine-Robust Federated Learning, in: 29th USENIX Security Sympo-\nsium (USENIX Security 20),"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 32,
+    "term": "0.1",
+    "context": " on federated learning-based network intrusion detec-\ntion system, in: 2022 IEEE 24th Int Conf on High Performance Computing\n& Communications; 8th Int Conf on Data Science & Systems; 20th Int Conf\non Smart City; 8th Int Conf on Dependability in Sensor, Cloud & Big Data\nSystems & Application (HPCC/DSS/SmartCity/DependSys), 2022, pp.\n2235\u20132242. doi:10.1109/HPCC-DSS-SmartCity-DependSys57074.2022.00330.\n[24] M. A. Merzouk, F. Cuppens, N. Boulahia-Cuppens, R. Yaich, Parameter-\nizing poisoning attacks in federated learning-based intrusion detection, in:\nProceedings of the 18th International Conference on Availability, Reliabil-\nity and Security, ARES \u201923, Association for Computing Machinery, New\nYork, NY, USA, 2023, pp. 1\u20138. doi:10.1145/3600160.3605090.\n[25] P. Blanchard, E. M. El Mhamdi, R. Gue"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 32,
+    "term": "0.1",
+    "context": "s57074.2022.00330.\n[24] M. A. Merzouk, F. Cuppens, N. Boulahia-Cuppens, R. Yaich, Parameter-\nizing poisoning attacks in federated learning-based intrusion detection, in:\nProceedings of the 18th International Conference on Availability, Reliabil-\nity and Security, ARES \u201923, Association for Computing Machinery, New\nYork, NY, USA, 2023, pp. 1\u20138. doi:10.1145/3600160.3605090.\n[25] P. Blanchard, E. M. El Mhamdi, R. Guerraoui, J. Stainer, Machine learning\nwith adversaries: Byzantine tolerant gradient descent, Advances in Neural\nInformation Processing Systems 30 (2017).\n[26] D. Yin, Y. Chen, R. Kannan, P. Bartlett, Byzantine-Robust Distributed\nLearning: Towards Optimal Statistical Rates, in: Proceedings of the 35th\nInternational Conference on Machine Learning, PMLR, 2018, pp. 5650\u2013\n5659.\n[27] S. S"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 32,
+    "term": "0.1",
+    "context": "n: Proceedings of the 35th\nInternational Conference on Machine Learning, PMLR, 2018, pp. 5650\u2013\n5659.\n[27] S. Shen, S. Tople, P. Saxena, Auror: Defending against poisoning attacks\nin collaborative deep learning systems, in: Proceedings of the 32nd An-\nnual Conference on Computer Security Applications, ACM, New York, NY,\nUSA, 2016, pp. 508\u2013519. doi:10.1145/2991079.2991125.\n[28] T. D. Nguyen, P. Rieger, H. Chen, H. Yalame, H. M\u00f6llering, H. Fereidooni,\nS. Marchal, M. Miettinen, A. Mirhoseini, S. Zeitouni, F. Koushanfar, A.-R.\nSadeghi, T. Schneider, FLAME: Taming Backdoors in Federated Learning,\nin: 31st USENIX Security Symposium (USENIX Security 22), 2022, pp.\n1415\u20131432.\n[29] S. Awan, B. Luo, F. Li, CONTRA: Defending Against Poisoning Attacks\nin Federated Learning, in: E. Bertino, H. Shulman, "
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 32,
+    "term": "0.1",
+    "context": "1st USENIX Security Symposium (USENIX Security 22), 2022, pp.\n1415\u20131432.\n[29] S. Awan, B. Luo, F. Li, CONTRA: Defending Against Poisoning Attacks\nin Federated Learning, in: E. Bertino, H. Shulman, M. Waidner (Eds.),\nComputer Security \u2013 ESORICS 2021, Lecture Notes in Computer Science,\nSpringer International Publishing, Cham, 2021, pp. 455\u2013475. doi:10.1007/\n978-3-030-88418-5_22.\n[30] L. Zhao, S. Hu, Q. Wang, J. Jiang, C. Shen, X. Luo, P. Hu, Shielding\nCollaborative Learning: Mitigating Poisoning Attacks through Client-Side\nDetection, 2020. arXiv:1910.13111.\n[31] L. Lavaur, P.-M. Lechevalier, Y. Busnel, R. Ludinard, G. Texier, M.-O.\nPahl, RADAR: Model quality assessment for reputation-aware collabora-\ntive federated learning,\nin: Proceedings of the 43rd International Sym-\nposium on Reliable D"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 32,
+    "term": "0.1",
+    "context": "dner (Eds.),\nComputer Security \u2013 ESORICS 2021, Lecture Notes in Computer Science,\nSpringer International Publishing, Cham, 2021, pp. 455\u2013475. doi:10.1007/\n978-3-030-88418-5_22.\n[30] L. Zhao, S. Hu, Q. Wang, J. Jiang, C. Shen, X. Luo, P. Hu, Shielding\nCollaborative Learning: Mitigating Poisoning Attacks through Client-Side\nDetection, 2020. arXiv:1910.13111.\n[31] L. Lavaur, P.-M. Lechevalier, Y. Busnel, R. Ludinard, G. Texier, M.-O.\nPahl, RADAR: Model quality assessment for reputation-aware collabora-\ntive federated learning,\nin: Proceedings of the 43rd International Sym-\nposium on Reliable Distributed Systems (SRDS), Charlotte, NC, USA,\n2024-09, 2024.\n31\n"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 33,
+    "term": "0.1",
+    "context": "[32] F. Nuding, R. Mayer, Data Poisoning in Sequential and Parallel Federated\nLearning, in: Proceedings of the 2022 ACM on International Workshop\non Security and Privacy Analytics, ACM, Baltimore MD USA, 2022, pp.\n24\u201334. doi:10.1145/3510548.3519372.\n[33] G. Sun, Y. Cong, J. Dong, Q. Wang, L. Lyu, J. Liu, Data Poisoning Attacks\non Federated Machine Learning, IEEE Internet of Things Journal 9 (2022)\n11365\u201311375. doi:10.1109/JIOT.2021.3128646.\n[34] T. D. Nguyen, P. Rieger, M. Miettinen, A.-R. Sadeghi, Poisoning Attacks\non Federated Learning-based IoT Intrusion Detection System, in: Proceed-\nings 2020 Workshop on Decentralized IoT Systems and Security, Internet\nSociety, S"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 33,
+    "term": "0.1",
+    "context": "ederated\nLearning, in: Proceedings of the 2022 ACM on International Workshop\non Security and Privacy Analytics, ACM, Baltimore MD USA, 2022, pp.\n24\u201334. doi:10.1145/3510548.3519372.\n[33] G. Sun, Y. Cong, J. Dong, Q. Wang, L. Lyu, J. Liu, Data Poisoning Attacks\non Federated Machine Learning, IEEE Internet of Things Journal 9 (2022)\n11365\u201311375. doi:10.1109/JIOT.2021.3128646.\n[34] T. D. Nguyen, P. Rieger, M. Miettinen, A.-R. Sadeghi, Poisoning Attacks\non Federated Learning-based IoT Intrusion Detection System, in: Proceed-\nings 2020 Workshop on Decentralized IoT Systems and Security, Internet\nSociety, San Diego, CA, 2020. doi:10.14722/diss.2020.23003.\n[35] N. C. Vy, N. H. Quyen, P. T. Duy, V.-H. Pham, Federated Learning-Based\nIntrusion Detection in the Context of IIoT Networks: Poisoning Atta"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 33,
+    "term": "0.1",
+    "context": "earning, IEEE Internet of Things Journal 9 (2022)\n11365\u201311375. doi:10.1109/JIOT.2021.3128646.\n[34] T. D. Nguyen, P. Rieger, M. Miettinen, A.-R. Sadeghi, Poisoning Attacks\non Federated Learning-based IoT Intrusion Detection System, in: Proceed-\nings 2020 Workshop on Decentralized IoT Systems and Security, Internet\nSociety, San Diego, CA, 2020. doi:10.14722/diss.2020.23003.\n[35] N. C. Vy, N. H. Quyen, P. T. Duy, V.-H. Pham, Federated Learning-Based\nIntrusion Detection in the Context of IIoT Networks: Poisoning Attack\nand Defense, in: M. Yang, C. Chen, Y. Liu (Eds.), Network and System\nSecurity, volume 13041, Springer International Publishing, Cham, 2021,\npp. 131\u2013147. doi:10.1007/978-3-030-92708-0_8.\n[36] R. Yang, H. He, Y. Wang, Y. Qu, W. Zhang, Dependable federated learn-\ning for IoT intrus"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 33,
+    "term": "0.1",
+    "context": "iego, CA, 2020. doi:10.14722/diss.2020.23003.\n[35] N. C. Vy, N. H. Quyen, P. T. Duy, V.-H. Pham, Federated Learning-Based\nIntrusion Detection in the Context of IIoT Networks: Poisoning Attack\nand Defense, in: M. Yang, C. Chen, Y. Liu (Eds.), Network and System\nSecurity, volume 13041, Springer International Publishing, Cham, 2021,\npp. 131\u2013147. doi:10.1007/978-3-030-92708-0_8.\n[36] R. Yang, H. He, Y. Wang, Y. Qu, W. Zhang, Dependable federated learn-\ning for IoT intrusion detection against poisoning attacks, Computers &\nSecurity 132 (2023) 103381. doi:10.1016/j.cose.2023.103381.\n[37] M. Tavallaee, E. Bagheri, W. Lu, A. A. Ghorbani, A detailed analysis of\nthe KDD CUP 99 data set, in: 2009 IEEE Symposium on Computational\nIntelligence for Security and Defense Applications, Cisda, IEEE, 2009, pp"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 33,
+    "term": "0.1",
+    "context": ": M. Yang, C. Chen, Y. Liu (Eds.), Network and System\nSecurity, volume 13041, Springer International Publishing, Cham, 2021,\npp. 131\u2013147. doi:10.1007/978-3-030-92708-0_8.\n[36] R. Yang, H. He, Y. Wang, Y. Qu, W. Zhang, Dependable federated learn-\ning for IoT intrusion detection against poisoning attacks, Computers &\nSecurity 132 (2023) 103381. doi:10.1016/j.cose.2023.103381.\n[37] M. Tavallaee, E. Bagheri, W. Lu, A. A. Ghorbani, A detailed analysis of\nthe KDD CUP 99 data set, in: 2009 IEEE Symposium on Computational\nIntelligence for Security and Defense Applications, Cisda, IEEE, 2009, pp.\n1\u20136. doi:10.1109/CISDA.2009.5356528.\n[38] N. Moustafa, J. Slay, UNSW-NB15: A comprehensive data set for network\nintrusion detection systems (UNSW-NB15 network data set),\nin: 2015\nMilitary Communications an"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 33,
+    "term": "0.1",
+    "context": "oT intrusion detection against poisoning attacks, Computers &\nSecurity 132 (2023) 103381. doi:10.1016/j.cose.2023.103381.\n[37] M. Tavallaee, E. Bagheri, W. Lu, A. A. Ghorbani, A detailed analysis of\nthe KDD CUP 99 data set, in: 2009 IEEE Symposium on Computational\nIntelligence for Security and Defense Applications, Cisda, IEEE, 2009, pp.\n1\u20136. doi:10.1109/CISDA.2009.5356528.\n[38] N. Moustafa, J. Slay, UNSW-NB15: A comprehensive data set for network\nintrusion detection systems (UNSW-NB15 network data set),\nin: 2015\nMilitary Communications and Information Systems Conference (MilCIS),\n2015, pp. 1\u20136. doi:10.1109/MilCIS.2015.7348942.\n[39] ACM,\nArtifact\nReview\nand\nBadging\nv1.1,\nhttps://www.acm.org/publications/policies/artifact-review-and-badging-\ncurrent, 2020.\n[40] M. Sarhan, S. Layeghy, M. Por"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 33,
+    "term": "0.1",
+    "context": "tional\nIntelligence for Security and Defense Applications, Cisda, IEEE, 2009, pp.\n1\u20136. doi:10.1109/CISDA.2009.5356528.\n[38] N. Moustafa, J. Slay, UNSW-NB15: A comprehensive data set for network\nintrusion detection systems (UNSW-NB15 network data set),\nin: 2015\nMilitary Communications and Information Systems Conference (MilCIS),\n2015, pp. 1\u20136. doi:10.1109/MilCIS.2015.7348942.\n[39] ACM,\nArtifact\nReview\nand\nBadging\nv1.1,\nhttps://www.acm.org/publications/policies/artifact-review-and-badging-\ncurrent, 2020.\n[40] M. Sarhan, S. Layeghy, M. Portmann, Towards a Standard Feature Set\nfor Network Intrusion Detection System Datasets, Mobile Netw Appl 27\n(2022) 357\u2013370. doi:10.1007/s11036-021-01843-0.\n[41] S. Layeghy, M. Portmann, On Generalisability of Machine Learning-based\nNetwork Intrusion Detection"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 33,
+    "term": "0.1",
+    "context": "(MilCIS),\n2015, pp. 1\u20136. doi:10.1109/MilCIS.2015.7348942.\n[39] ACM,\nArtifact\nReview\nand\nBadging\nv1.1,\nhttps://www.acm.org/publications/policies/artifact-review-and-badging-\ncurrent, 2020.\n[40] M. Sarhan, S. Layeghy, M. Portmann, Towards a Standard Feature Set\nfor Network Intrusion Detection System Datasets, Mobile Netw Appl 27\n(2022) 357\u2013370. doi:10.1007/s11036-021-01843-0.\n[41] S. Layeghy, M. Portmann, On Generalisability of Machine Learning-based\nNetwork Intrusion Detection Systems, 2022. arXiv:2205.04112.\n[42] M. Sarhan, S. Layeghy, M. Portmann, Towards a Standard Feature Set for\nNetwork Intrusion Detection System Datasets, 2021. arXiv:2101.11315.\n[43] ntop, nprobe - an extensible netflow v5/v9/ipfix probe for ipv4/v6, ????\nURL: https://www.ntop.org/products/netflow/nprobe/.\n32\n"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 34,
+    "term": "0.1",
+    "context": "nd\nTechnology Publications, Funchal, Madeira, Portugal, 2018, pp. 108\u2013116.\ndoi:10.5220/0006639801080116.\n[45] S. I. Popoola, G. Gui, B. Adebisi, M. Hammoudeh, H. Gacanin, Federated\nDeep Learning for Collaborative Intrusion Detection in Heterogeneous Net-\nworks, in: 2021 IEEE 94th Vehicular Technology Conference (VTC2021-\nFall), 2021, pp. 1\u20136. doi:10.1109/VTC2021-Fall52928.2021.9625505.\n[46] J. B. W. Webber, A bi-symmetric log transformation for wide-range data,\nMeas. Sci. Technol. 24 (2012) 027001. doi:10.1088/0957-0233/24/2/027001.\n[47] X. Cao, M. Fang, J. Liu, N. Z. Gong, FLTrust: Byzantine-robust Federated\nLearning via Trust Bootstrapping, 2022. doi:10.48550/arXiv.2012.13995.\narXiv:2012.13995.\n33\n"
+  },
+  {
+    "paper": "docs\\papers\\paper-5\\paper-5.pdf",
+    "page": 34,
+    "term": "0.1",
+    "context": "H. Gacanin, Federated\nDeep Learning for Collaborative Intrusion Detection in Heterogeneous Net-\nworks, in: 2021 IEEE 94th Vehicular Technology Conference (VTC2021-\nFall), 2021, pp. 1\u20136. doi:10.1109/VTC2021-Fall52928.2021.9625505.\n[46] J. B. W. Webber, A bi-symmetric log transformation for wide-range data,\nMeas. Sci. Technol. 24 (2012) 027001. doi:10.1088/0957-0233/24/2/027001.\n[47] X. Cao, M. Fang, J. Liu, N. Z. Gong, FLTrust: Byzantine-robust Federated\nLearning via Trust Bootstrapping, 2022. doi:10.48550/arXiv.2012.13995.\narXiv:2012.13995.\n33\n"
+  },
+  {
+    "paper": "docs\\papers\\paper-4\\paper-4.pdf",
+    "page": 11,
+    "term": "79.05",
+    "context": "e on TON_IoT in the S2 scenario\nusing the expanded feature set. For each combination, the\nresults highlight the best synchronization value, corresponding\nto the highest achieved F1all.\nFL Appr.\nCIL Appr.\noptimal R\nF1 Score [%]\nOld\nNew\nAll\nFedAvg\nBiC+\n100\n76.38\n66.48\n72.25\nMEMENTO+\n20\n79.64\n64.32\n73.25\nFedProx\nBiC+\n40\n78.97\n67.47\n74.18\nMEMENTO+\n100\n79.05\n68.10\n74.49\nFedDyn\nBiC+\n200\n79.28\n65.13\n73.38\nMEMENTO+\n100\n78.68\n66.83\n73.74\nedge acquisition, highlighting the need for frequent updates\nas client number and new classes grow.\nWhile no strict trends emerge, F1new generally increases\nand F1old decreases as R grows. Similar to S1, FedDyn\nperforms notably worse at R = {4, 10}, whereas FedProx\nconsistently leads at higher R, followed by FedDyn. Notably,\nFedProx preserves old knowledge comparab"
+  },
+  {
+    "paper": "docs\\papers\\paper-4\\paper-4.pdf",
+    "page": 11,
+    "term": "68.10",
+    "context": "ON_IoT in the S2 scenario\nusing the expanded feature set. For each combination, the\nresults highlight the best synchronization value, corresponding\nto the highest achieved F1all.\nFL Appr.\nCIL Appr.\noptimal R\nF1 Score [%]\nOld\nNew\nAll\nFedAvg\nBiC+\n100\n76.38\n66.48\n72.25\nMEMENTO+\n20\n79.64\n64.32\n73.25\nFedProx\nBiC+\n40\n78.97\n67.47\n74.18\nMEMENTO+\n100\n79.05\n68.10\n74.49\nFedDyn\nBiC+\n200\n79.28\n65.13\n73.38\nMEMENTO+\n100\n78.68\n66.83\n73.74\nedge acquisition, highlighting the need for frequent updates\nas client number and new classes grow.\nWhile no strict trends emerge, F1new generally increases\nand F1old decreases as R grows. Similar to S1, FedDyn\nperforms notably worse at R = {4, 10}, whereas FedProx\nconsistently leads at higher R, followed by FedDyn. Notably,\nFedProx preserves old knowledge comparably to "
+  },
+  {
+    "paper": "docs\\papers\\paper-4\\paper-4.pdf",
+    "page": 11,
+    "term": "74.49",
+    "context": " in the S2 scenario\nusing the expanded feature set. For each combination, the\nresults highlight the best synchronization value, corresponding\nto the highest achieved F1all.\nFL Appr.\nCIL Appr.\noptimal R\nF1 Score [%]\nOld\nNew\nAll\nFedAvg\nBiC+\n100\n76.38\n66.48\n72.25\nMEMENTO+\n20\n79.64\n64.32\n73.25\nFedProx\nBiC+\n40\n78.97\n67.47\n74.18\nMEMENTO+\n100\n79.05\n68.10\n74.49\nFedDyn\nBiC+\n200\n79.28\n65.13\n73.38\nMEMENTO+\n100\n78.68\n66.83\n73.74\nedge acquisition, highlighting the need for frequent updates\nas client number and new classes grow.\nWhile no strict trends emerge, F1new generally increases\nand F1old decreases as R grows. Similar to S1, FedDyn\nperforms notably worse at R = {4, 10}, whereas FedProx\nconsistently leads at higher R, followed by FedDyn. Notably,\nFedProx preserves old knowledge comparably to FedAvg"
+  },
+  {
+    "paper": "docs\\papers\\paper-8\\paper-8.pdf",
+    "page": 16,
+    "term": "95.30",
+    "context": "New\nAll\nOld\nNew\nIoT-23\n25\n10\nbase\n78.49\u00b14.71\n80.33\u00b16.29\n69.29\u00b1 7.40\n63.49\u00b19.13\n64.72\u00b19.74\n57.32\u00b18.66\n984.39\n200\n7\nexpanded\n87.18\u00b11.76\n88.11\u00b11.49\n82.53\u00b112.01\n73.10\u00b18.09\n73.66\u00b19.49\n70.29\u00b19.47\n977.20\n+8.69\n+7.78\n+13.24\n+9.61\n+8.94\n+12.97\n\u22127.19\nTON-IoT\n25\n10\nbase\n92.47\u00b15.21\n94.38\u00b14.15\n77.13\u00b120.54\n90.27\u00b15.51\n90.52\u00b14.81\n88.25\u00b116.20\n3884.40\n50\n9\nexpanded\n95.30\u00b11.46\n96.47\u00b11.18\n85.89\u00b1 7.76\n96.79\u00b12.64\n97.75\u00b12.04\n89.03\u00b118.58\n1615.40\n+2.83\n+3.42\n+8.76\n+6.52\n+7.23\n+0.78\n\u22122269.00\nIoT-NID\n25\n10\nbase\n79.06\u00b114.32\n81.47\u00b113.11\n59.74\u00b135.92\n72.60\u00b113.52\n74.04\u00b114.58\n61.08\u00b113.81\n2546.26\n100\n5\nexpanded\n97.42\u00b1 1.05\n97.80\u00b1 1.20\n94.36\u00b1 8.60\n87.10\u00b1 4.43\n87.67\u00b1 4.36\n82.25\u00b112.43\n2318.89\n+18.36\n+16.33\n+34.62\n+14.50\n+13.63\n+21.17\n\u2212227.36\nEdge-IIoT\n25\n10\nbase\n66.45\u00b18.18\n67.47\u00b17.95\n53.16\u00b135.91\n89.89\u00b19.26\n90.12\u00b18.84\n86.88\u00b119"
+  },
+  {
+    "paper": "docs\\papers\\paper-8\\paper-8.pdf",
+    "page": 16,
+    "term": "96.47",
+    "context": "\nNew\nIoT-23\n25\n10\nbase\n78.49\u00b14.71\n80.33\u00b16.29\n69.29\u00b1 7.40\n63.49\u00b19.13\n64.72\u00b19.74\n57.32\u00b18.66\n984.39\n200\n7\nexpanded\n87.18\u00b11.76\n88.11\u00b11.49\n82.53\u00b112.01\n73.10\u00b18.09\n73.66\u00b19.49\n70.29\u00b19.47\n977.20\n+8.69\n+7.78\n+13.24\n+9.61\n+8.94\n+12.97\n\u22127.19\nTON-IoT\n25\n10\nbase\n92.47\u00b15.21\n94.38\u00b14.15\n77.13\u00b120.54\n90.27\u00b15.51\n90.52\u00b14.81\n88.25\u00b116.20\n3884.40\n50\n9\nexpanded\n95.30\u00b11.46\n96.47\u00b11.18\n85.89\u00b1 7.76\n96.79\u00b12.64\n97.75\u00b12.04\n89.03\u00b118.58\n1615.40\n+2.83\n+3.42\n+8.76\n+6.52\n+7.23\n+0.78\n\u22122269.00\nIoT-NID\n25\n10\nbase\n79.06\u00b114.32\n81.47\u00b113.11\n59.74\u00b135.92\n72.60\u00b113.52\n74.04\u00b114.58\n61.08\u00b113.81\n2546.26\n100\n5\nexpanded\n97.42\u00b1 1.05\n97.80\u00b1 1.20\n94.36\u00b1 8.60\n87.10\u00b1 4.43\n87.67\u00b1 4.36\n82.25\u00b112.43\n2318.89\n+18.36\n+16.33\n+34.62\n+14.50\n+13.63\n+21.17\n\u2212227.36\nEdge-IIoT\n25\n10\nbase\n66.45\u00b18.18\n67.47\u00b17.95\n53.16\u00b135.91\n89.89\u00b19.26\n90.12\u00b18.84\n86.88\u00b119.27\n3692.53"
+  },
+  {
+    "paper": "docs\\papers\\paper-8\\paper-8.pdf",
+    "page": 16,
+    "term": "85.89",
+    "context": "\n25\n10\nbase\n78.49\u00b14.71\n80.33\u00b16.29\n69.29\u00b1 7.40\n63.49\u00b19.13\n64.72\u00b19.74\n57.32\u00b18.66\n984.39\n200\n7\nexpanded\n87.18\u00b11.76\n88.11\u00b11.49\n82.53\u00b112.01\n73.10\u00b18.09\n73.66\u00b19.49\n70.29\u00b19.47\n977.20\n+8.69\n+7.78\n+13.24\n+9.61\n+8.94\n+12.97\n\u22127.19\nTON-IoT\n25\n10\nbase\n92.47\u00b15.21\n94.38\u00b14.15\n77.13\u00b120.54\n90.27\u00b15.51\n90.52\u00b14.81\n88.25\u00b116.20\n3884.40\n50\n9\nexpanded\n95.30\u00b11.46\n96.47\u00b11.18\n85.89\u00b1 7.76\n96.79\u00b12.64\n97.75\u00b12.04\n89.03\u00b118.58\n1615.40\n+2.83\n+3.42\n+8.76\n+6.52\n+7.23\n+0.78\n\u22122269.00\nIoT-NID\n25\n10\nbase\n79.06\u00b114.32\n81.47\u00b113.11\n59.74\u00b135.92\n72.60\u00b113.52\n74.04\u00b114.58\n61.08\u00b113.81\n2546.26\n100\n5\nexpanded\n97.42\u00b1 1.05\n97.80\u00b1 1.20\n94.36\u00b1 8.60\n87.10\u00b1 4.43\n87.67\u00b1 4.36\n82.25\u00b112.43\n2318.89\n+18.36\n+16.33\n+34.62\n+14.50\n+13.63\n+21.17\n\u2212227.36\nEdge-IIoT\n25\n10\nbase\n66.45\u00b18.18\n67.47\u00b17.95\n53.16\u00b135.91\n89.89\u00b19.26\n90.12\u00b18.84\n86.88\u00b119.27\n3692.53\n200\n8\nbase"
+  },
+  {
+    "paper": "docs\\papers\\paper-8\\paper-8.pdf",
+    "page": 18,
+    "term": "95.30",
+    "context": " for which BiC and Scratch differs more than\n5% while red text highlight perturbations with \u226520% F1 Drop.\nF1 Score [%]\nPAUC [%]\nPerturbation\nBiC\nScratch\nBiC\nScratch\nIoT-23\nNone\n87.18\n90.31\n73.10\n82.72\nTimeout\n2.90\n2.93\n10.05\n19.05\nDrop \u2192\nJittering\n22.74\n18.16\n17.91\n21.96\nFlipping\n55.82\n52.52\n21.74\n27.19\nSlicing\n78.38\n80.43\n23.04\n32.77\nTON-IoT\nNone\n95.30\n98.17\n96.79\n99.06\nTimeout\n4.37\n4.12\n1.28\n1.99\nDrop \u2192\nJittering\n13.26\n15.92\n4.21\n4.99\nFlipping\n64.42\n72.93\n29.38\n37.65\nSlicing\n82.33\n80.64\n36.62\n37.34\nIoT-NID\nNone\n97.42\n98.61\n87.10\n94.16\nTimeout\n3.69\n4.58\n10.41\n0.53\nDrop \u2192\nJittering\n0.05\n0\n0.21\n0.26\nFlipping\n77.22\n68.98\n32.98\n35.52\nSlicing\n81.93\n79.74\n34.13\n40.88\nEdge-IIoT\nNone\n72.05\n78.24\n93.99\n98.78\nTimeout\n10.30\n14.68\n23.57\n25.59\nDrop \u2192\nJittering\n25.35\n40.11\n30.10\n26.66\nFlipping\n54.70\n65"
+  }
+]

@@ -1,0 +1,227 @@
+{
+  "schema": "phase3-external-discovery-summary-v1",
+  "status": "exploratory_independent_dataset_replication",
+  "config_sha256": "bc9c83c203639bffd95c65a142487875227374623f00d9a4cbc6b096a8c6c409",
+  "seeds": [
+    1,
+    42,
+    101
+  ],
+  "datasets": {
+    "CICIoT2023": {
+      "aggregation": "equal weight over four tasks; means and SD across three model/calibration seeds",
+      "tasks": {
+        "0": {
+          "attack_flagged_rate": {
+            "mean": 0.0243,
+            "sd_across_seeds": 0.0024062418831031925
+          },
+          "benign_false_alert_rate": {
+            "mean": 0.05225,
+            "sd_across_seeds": 0.006466258578188781
+          },
+          "cluster_assignment_ari": {
+            "mean": 0.3331833175112195,
+            "sd_across_seeds": 0.05292421157942455
+          },
+          "n_external_holdout": 14000,
+          "n_attack_holdout": 10000,
+          "n_benign_holdout": 4000
+        },
+        "1": {
+          "attack_flagged_rate": {
+            "mean": 0.05683333333333333,
+            "sd_across_seeds": 0.0037527767497325675
+          },
+          "benign_false_alert_rate": {
+            "mean": 0.05333333333333333,
+            "sd_across_seeds": 0.0015069284433354283
+          },
+          "cluster_assignment_ari": {
+            "mean": 0.2184258560144126,
+            "sd_across_seeds": 0.002326533510365092
+          },
+          "n_external_holdout": 8000,
+          "n_attack_holdout": 4000,
+          "n_benign_holdout": 4000
+        },
+        "2": {
+          "attack_flagged_rate": {
+            "mean": 0.3094759415627932,
+            "sd_across_seeds": 0.08174760046385472
+          },
+          "benign_false_alert_rate": {
+            "mean": 0.05525,
+            "sd_across_seeds": 0.0035266839949164705
+          },
+          "cluster_assignment_ari": {
+            "mean": 0.04577946608282583,
+            "sd_across_seeds": 0.011905689775200012
+          },
+          "n_external_holdout": 11461,
+          "n_attack_holdout": 7461,
+          "n_benign_holdout": 4000
+        },
+        "3": {
+          "attack_flagged_rate": {
+            "mean": 0.14150779141638373,
+            "sd_across_seeds": 0.031020763998601618
+          },
+          "benign_false_alert_rate": {
+            "mean": 0.04958333333333333,
+            "sd_across_seeds": 0.006857173859056905
+          },
+          "cluster_assignment_ari": {
+            "mean": 0.05192479823966198,
+            "sd_across_seeds": 0.012929504372300098
+          },
+          "n_external_holdout": 11658,
+          "n_attack_holdout": 7658,
+          "n_benign_holdout": 4000
+        }
+      },
+      "equal_task_metrics": {
+        "equal_task_attack_flagged_rate": {
+          "mean": 0.13302926657812758,
+          "sd_across_seeds": 0.02375442999959758
+        },
+        "equal_task_benign_false_alert_rate": {
+          "mean": 0.05260416666666667,
+          "sd_across_seeds": 0.0018139362125866882
+        },
+        "equal_task_cluster_assignment_ari": {
+          "mean": 0.16232835946203,
+          "sd_across_seeds": 0.009026860342584814
+        }
+      },
+      "per_seed": {
+        "1": {
+          "equal_task_attack_flagged_rate": 0.1525941005984668,
+          "equal_task_benign_false_alert_rate": 0.0526875,
+          "equal_task_cluster_assignment_ari": 0.17052264954198026
+        },
+        "42": {
+          "equal_task_attack_flagged_rate": 0.13989575034017757,
+          "equal_task_benign_false_alert_rate": 0.054375,
+          "equal_task_cluster_assignment_ari": 0.15265228843144055
+        },
+        "101": {
+          "equal_task_attack_flagged_rate": 0.10659794879573836,
+          "equal_task_benign_false_alert_rate": 0.050749999999999997,
+          "equal_task_cluster_assignment_ari": 0.16381014041266917
+        }
+      }
+    },
+    "UNSW-NB15": {
+      "aggregation": "equal weight over four tasks; means and SD across three model/calibration seeds",
+      "tasks": {
+        "0": {
+          "attack_flagged_rate": {
+            "mean": 0.07291611467330825,
+            "sd_across_seeds": 0.03833664132890751
+          },
+          "benign_false_alert_rate": {
+            "mean": 0.048396396396396396,
+            "sd_across_seeds": 0.0005954130321390363
+          },
+          "cluster_assignment_ari": {
+            "mean": 0.1936636139448571,
+            "sd_across_seeds": 0.02515549717788349
+          },
+          "n_external_holdout": 28121,
+          "n_attack_holdout": 18871,
+          "n_benign_holdout": 9250
+        },
+        "1": {
+          "attack_flagged_rate": {
+            "mean": 0.7141444690008142,
+            "sd_across_seeds": 0.028274707745341857
+          },
+          "benign_false_alert_rate": {
+            "mean": 0.16846846846846847,
+            "sd_across_seeds": 0.004017977618671376
+          },
+          "cluster_assignment_ari": {
+            "mean": 0.019921764742019007,
+            "sd_across_seeds": 0.016113944668569875
+          },
+          "n_external_holdout": 26444,
+          "n_attack_holdout": 17194,
+          "n_benign_holdout": 9250
+        },
+        "2": {
+          "attack_flagged_rate": {
+            "mean": 0.13768402548890354,
+            "sd_across_seeds": 0.009656111971426929
+          },
+          "benign_false_alert_rate": {
+            "mean": 0.346018018018018,
+            "sd_across_seeds": 0.006718667415730177
+          },
+          "cluster_assignment_ari": {
+            "mean": 0.11037006733863626,
+            "sd_across_seeds": 0.0406088709535396
+          },
+          "n_external_holdout": 16835,
+          "n_attack_holdout": 7585,
+          "n_benign_holdout": 9250
+        },
+        "3": {
+          "attack_flagged_rate": {
+            "mean": 0.004161712247324614,
+            "sd_across_seeds": 0.0
+          },
+          "benign_false_alert_rate": {
+            "mean": 0.03643243243243243,
+            "sd_across_seeds": 0.0018756055754483724
+          },
+          "cluster_assignment_ari": {
+            "mean": 0.007366928802202161,
+            "sd_across_seeds": 0.003128973387962585
+          },
+          "n_external_holdout": 10932,
+          "n_attack_holdout": 1682,
+          "n_benign_holdout": 9250
+        }
+      },
+      "equal_task_metrics": {
+        "equal_task_attack_flagged_rate": {
+          "mean": 0.23222658035258764,
+          "sd_across_seeds": 0.014594300089239814
+        },
+        "equal_task_benign_false_alert_rate": {
+          "mean": 0.14982882882882884,
+          "sd_across_seeds": 0.0016507149951249208
+        },
+        "equal_task_cluster_assignment_ari": {
+          "mean": 0.08283059370692862,
+          "sd_across_seeds": 0.008362565508178542
+        }
+      },
+      "per_seed": {
+        "1": {
+          "equal_task_attack_flagged_rate": 0.24585397481993826,
+          "equal_task_benign_false_alert_rate": 0.14875675675675676,
+          "equal_task_cluster_assignment_ari": 0.07765256577596835
+        },
+        "42": {
+          "equal_task_attack_flagged_rate": 0.23399857966131365,
+          "equal_task_benign_false_alert_rate": 0.15172972972972973,
+          "equal_task_cluster_assignment_ari": 0.07836102977468574
+        },
+        "101": {
+          "equal_task_attack_flagged_rate": 0.21682718657651104,
+          "equal_task_benign_false_alert_rate": 0.149,
+          "equal_task_cluster_assignment_ari": 0.09247818557013178
+        }
+      }
+    }
+  },
+  "pooling": "No cross-dataset pooling; no duplicate flow pooling across seeds.",
+  "limitations": [
+    "Independent refits only; no model or weights transfer across datasets.",
+    "This reproduces only the unsupervised discovery submodule, not the full poisoning/continual-learning claim.",
+    "Source task split conventions differ; component/session disjointness is not established by these metadata.",
+    "All feature units are undocumented; do not compare thresholds or raw scores across datasets."
+  ]
+}

@@ -100,6 +100,10 @@ separate banks. The benign denominator is a fixed cross-period mixture of
 | E3 | 0.3945 | 18.2542% | 253,014 |
 | E4 | 0.3682 | 24.5196% | 272,506 |
 
+![Stage macro-F1 and benign false-alert rate for the single reference trajectory](figures/reference-development-metrics.png)
+
+**Figure.** One clean, untuned DR+DC development trajectory (seed 101). Macro-F1 uses the stage-eligible class bank; benign FAR uses the fixed 216,158-row benign mixture. The four points are sequential checkpoints from one trajectory, not independent runs; uncertainty intervals are unavailable. Regenerate with `python docs/phase3-reference/plot_reference_development.py`.
+
 Untargeted new-annotation acquisition A is 0.2031. E1 SSH recall and E4 Bot
 recall are zero under these settings. High Hulk recall does not establish good
 acquisition across classes or an acceptable benign alert burden.
@@ -122,6 +126,17 @@ would require a prospective amendment and matched development work.
 Complete confusion counts, rare-class missingness, Hulk error partitions, benign
 subgroup counts and continual-learning matrices are in
 [development-metrics.json](evidence/development-metrics.json).
+
+## Comparison with existing research
+
+The [comparability matrix](research-comparability.md) contrasts the adopted
+class-incremental flow-IDS setting with the closest static federated poisoning,
+DER++, and federated continual IDS work. Their datasets, task heads, attack
+capabilities and metric populations differ, so their published scores are
+context only. The earlier 76-feature within-project matrix is also kept
+separate because its model inputs differ from this adopted 74-feature profile.
+The single reference has no matched baseline; it supports no numerical
+superiority claim.
 
 ## Preserved correction
 

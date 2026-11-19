@@ -1,6 +1,14 @@
 # Phase 3 submission and reproduction
 
-Start with `phase3-report.pdf`; editable source is `report.md`. The report distinguishes the original 696 GPU trajectories from the new CPU supplement. Both use development data; no final-test evaluation is claimed.
+**Audited revision (16 November 2026):** the current audited report is
+`../phase3-audited-report/phase3-report.pdf`, with editable TeX and vector figures
+beside it. Read `../../docs/phase3-rigorous-audit-v1/README.md` for the reliability
+assessment, corrected experiment counts, patches, checks and remaining gates.
+The updated roll-number ZIP opens with that report. The variants and reproduction
+instructions below are retained as historical context and do not supersede the
+audited revision or restore the original confirmatory claims.
+
+Start with `phase3-report-updated.pdf`; editable source is `phase3-report.tex` (the reproducible narrative source is `report.md`). The report distinguishes the original 696 GPU trajectories from the new CPU supplement. Both use development data; no final-test evaluation is claimed.
 
 ## Rebuild the evidence and report
 

@@ -1,0 +1,21 @@
+{
+  "schema": "phase3-overnight-analysis-v1",
+  "population": "Frozen development bank; conditional randomization over one historical capture. Not an independent final-test study.",
+  "seeds": [1,2,3,4,5,6,7,8,9,10,11,42],
+  "unit": "one complete ownership-seeded trajectory; pair all methods and doses by seed",
+  "macro_f1": "restrict true rows to scoring-eligible seen classes, retain every predicted column",
+  "H": "mean over E3,E4 of poisoned Hulk-to-benign ASR minus same-method clean ASR",
+  "delta_recall": "poisoned E2 Hulk recall minus same-method clean E2 Hulk recall",
+  "A": "equal mean over E2,E3,E4 of within-stage mean F1 on eligible newly introduced classes excluding Hulk",
+  "family": [
+    {"group":"C1", "endpoints":["H","delta_recall"], "pairs":[["FT","EI"],["FT","DR"],["EI","DR"]], "doses":[0.1,0.3,0.5], "tests":18},
+    {"group":"C2", "endpoints":["A"], "pairs":[["DC","DM"]], "doses":[0.0,0.1,0.3,0.5], "tests":4},
+    {"group":"C2", "endpoints":["H","delta_recall"], "pairs":[["DC","DM"]], "doses":[0.1,0.3,0.5], "tests":6},
+    {"group":"C2", "endpoints":["benign_far"], "pairs":[["DC","DM"]], "doses":[0.0], "tests":1}
+  ],
+  "inference": "two-sided conditional signed-rank sign enumeration with averaged tied ranks and zero removal; Holm across all 29 contrasts; exploratory because development bank",
+  "bootstrap": {"resamples":10000,"seed":20261116,"unit":"whole paired ownership seed","interval":"percentile 95%; not simultaneous"},
+  "oracle": "dose .5 DR and DC only, paired E2 state clone; change replay labels of evaluator poison IDs only; report zero surviving poison without exclusion",
+  "optional": "DQ clean/.5, DC loss removals clean/.5, DM/DC quotas .5/.9 clean/.5; runtime-only full-block selection; exploratory",
+  "missing": "no imputation; incomplete blocks have no aggregate superiority claim"
+}

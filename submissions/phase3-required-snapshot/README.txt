@@ -1,0 +1,1 @@
+Updated fixed submission snapshot: 696 verified GPU trajectories and all 21 required CPU trajectories (12 mechanism, 6 DQ, 3 offline pooled). Additional training-replicate expansion is excluded. Upload this ZIP to Overleaf and compile main.tex with XeLaTeX. All figure files are included.

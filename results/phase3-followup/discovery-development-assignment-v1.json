@@ -1,0 +1,137 @@
+{
+  "schema": "phase3-discovery-development-result-v1",
+  "status": "exploratory_development_only",
+  "config": {
+    "schema": "phase3-component-discovery-development-v1",
+    "status": "exploratory_protocol_frozen_before_execution",
+    "data_manifest_sha256": "2d8e209d17777b8ac5b2cc7f32dfb90fd5c358a671b79dcc3715b8368e57f081",
+    "component_manifest": "data/raw/phase3-feasibility-corrected/no-headers-74/conditional-components-120.npz",
+    "split_manifest": "data/raw/phase3-feasibility-corrected/no-headers-74/conditional-candidate-split.npz",
+    "seed": 2026,
+    "component_partition_fractions": {
+      "autoencoder_fit_and_clustering": 0.6,
+      "benign_calibration": 0.2,
+      "heldout_development_evaluation": 0.2
+    },
+    "autoencoder": {
+      "architecture": "src.models.mlp.Autoencoder",
+      "epochs": 5,
+      "batch_size": 512,
+      "learning_rate": 0.001,
+      "fit_labels": "benign rows only"
+    },
+    "threshold": {
+      "calibration_label": "benign",
+      "quantile": 0.95
+    },
+    "clustering": {
+      "algorithm": "HDBSCAN",
+      "min_cluster_size": 15,
+      "min_samples": 5,
+      "max_fit_candidates": 4000,
+      "candidate_sampling_seed": 2026
+    },
+    "out_of_sample_assignment": "nearest training-cluster centroid within maximum member radius",
+    "evaluation": "held-out development components only; labels used only after frozen predictions",
+    "final_test_access": false
+  },
+  "config_sha256": "2dad811bd424ad64503eca28b3a0c23ed5793f5bb234949dad0cd003f895c266",
+  "development_manifest_sha256": "2d8e209d17777b8ac5b2cc7f32dfb90fd5c358a671b79dcc3715b8368e57f081",
+  "component_counts": {
+    "fit": 135640,
+    "calibration": 45213,
+    "evaluation": 45214
+  },
+  "row_counts": {
+    "fit": 163020,
+    "fit_benign": 129753,
+    "calibration": 54719,
+    "calibration_benign": 43043,
+    "evaluation": 54767
+  },
+  "metrics": {
+    "threshold": 0.0001446215610485524,
+    "assignment_policy": "centroid_radius",
+    "n_clusters": 102,
+    "n_fictitious": null,
+    "discovery_miss_rate": 0.0893467777290662,
+    "benign_false_alert_rate": 0.05550943222176099,
+    "attack_flagged_rate": 0.9106532222709338,
+    "absorbed_attack_rate": null,
+    "absorbed_flagged_attack_rate": null,
+    "clustered_attack_rate": 0.8408434430964761,
+    "noise_rate_attack": 0.15915655690352398,
+    "fictitious_absorption": null,
+    "cluster_assignment_purity": 0.9857749678948928,
+    "cluster_assignment_ari": 0.039491850094086865,
+    "n_attack_flagged": 10386,
+    "n_attack_absorbed": null,
+    "n_poison": null,
+    "n_poison_novel": null,
+    "poison_novel_rate": null,
+    "clean_novel_rate": null,
+    "n_novel_train": 37446,
+    "n_clustered_train": 29685,
+    "n_attack_eval": 11405,
+    "n_benign_eval": 43362,
+    "n_eval_assigned": 10123,
+    "eval_novel_rate": 0.23358957036171418,
+    "eval_noise_rate": 0.2087078871257719,
+    "n_novel_eval": 12793
+  },
+  "assignment_ablation_metrics": {
+    "threshold": 0.0001446215610485524,
+    "assignment_policy": "nearest_centroid",
+    "n_clusters": 102,
+    "n_fictitious": null,
+    "discovery_miss_rate": 0.0893467777290662,
+    "benign_false_alert_rate": 0.05550943222176099,
+    "attack_flagged_rate": 0.9106532222709338,
+    "absorbed_attack_rate": null,
+    "absorbed_flagged_attack_rate": null,
+    "clustered_attack_rate": 1.0,
+    "noise_rate_attack": 0.0,
+    "fictitious_absorption": null,
+    "cluster_assignment_purity": 0.9538810286875635,
+    "cluster_assignment_ari": 0.04140465530158556,
+    "n_attack_flagged": 10386,
+    "n_attack_absorbed": null,
+    "n_poison": null,
+    "n_poison_novel": null,
+    "poison_novel_rate": null,
+    "clean_novel_rate": null,
+    "n_novel_train": 37446,
+    "n_clustered_train": 29685,
+    "n_attack_eval": 11405,
+    "n_benign_eval": 43362,
+    "n_eval_assigned": 12793,
+    "eval_novel_rate": 0.23358957036171418,
+    "eval_noise_rate": 0.0,
+    "n_novel_eval": 12793
+  },
+  "sensitivity_plan": {
+    "schema": "phase3-discovery-exploratory-sensitivity-v1",
+    "parent_config_sha256": "2dad811bd424ad64503eca28b3a0c23ed5793f5bb234949dad0cd003f895c266",
+    "status": "exploratory_grid_declared_before_sensitivity_execution",
+    "seed": 2026,
+    "calibration_quantiles": [
+      0.9,
+      0.95,
+      0.99
+    ],
+    "hdbscan_candidate_caps": [
+      1000,
+      4000
+    ],
+    "selection_policy": "descriptive_only; do not select a new headline setting from this grid"
+  },
+  "sensitivity_plan_sha256": "4a60c33d73f061c7af31a22b13249d820f96282dba8a86f6ce65448b5d8d2bbc",
+  "sensitivity_grid": [],
+  "interpretation_limits": [
+    "Development-only exploratory estimate; not final-test performance.",
+    "One component partition and one seed per run; no population-level claim.",
+    "Sensitivity grid is exploratory and does not select a replacement primary setting.",
+    "Labels are used only for benign-only AE/calibration selection and after frozen clustering for evaluation."
+  ],
+  "final_test_accessed": false
+}

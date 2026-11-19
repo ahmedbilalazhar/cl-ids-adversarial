@@ -1,0 +1,17 @@
+{
+  "schema": "phase3-external-discovery-replication-v1",
+  "status": "exploratory_protocol_frozen_before_external_runs",
+  "datasets": {
+    "UNSW-NB15": {"task_artifact": "data/processed/tasks_unsw.npz", "metadata": "data/processed/tasks_unsw.json", "benign_label": "Normal"},
+    "CICIoT2023": {"task_artifact": "data/processed/tasks_iot.npz", "metadata": "data/processed/tasks_iot.json", "benign_label": "Benign"}
+  },
+  "seeds": [1, 42, 101],
+  "benign_training_calibration_fraction": 0.2,
+  "autoencoder": {"architecture": "src.models.mlp.Autoencoder", "epochs": 5, "batch_size": 512, "learning_rate": 0.001},
+  "threshold_quantile": 0.95,
+  "cluster_fit_rows": "all external train rows except benign calibration rows",
+  "clustering": {"algorithm": "HDBSCAN", "min_cluster_size": 15, "min_samples": 5, "max_fit_candidates": 4000},
+  "out_of_sample_assignment": "nearest training-cluster centroid within maximum member radius",
+  "evaluation": "each dataset's supplied task test split; separate models, thresholds and clusters per dataset",
+  "claims_excluded": ["cross-dataset transfer", "poisoning persistence", "full Phase 3 method replication", "site-independent generalization"]
+}

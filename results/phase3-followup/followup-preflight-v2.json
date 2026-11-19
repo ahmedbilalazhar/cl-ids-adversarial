@@ -1,0 +1,76 @@
+{
+  "scope": "read-only preflight; no feature or label arrays loaded",
+  "external_replication": {
+    "status": "discovery_submodule_replicated_full_method_protocol_required",
+    "datasets": [
+      "UNSW-NB15",
+      "CICIoT2023"
+    ],
+    "features": {
+      "unsw": 194,
+      "iot": 39,
+      "shared_names": 0
+    },
+    "result_summary_present": true,
+    "full_method_compatibility_audit_present": true,
+    "full_method_status": "full_method_external_replication_requires_versioned_protocol_amendment",
+    "full_method_blocker_count": 5,
+    "prospective_extension_status": "train_only_pilot_authorized_test_scoring_gated",
+    "train_label_support_audit_present": true,
+    "source_support_feasible_by_dataset": {
+      "UNSW-NB15": true,
+      "CICIoT2023": true
+    },
+    "task_id_audit_present": true,
+    "train_and_test_task_ids_disjoint_by_dataset": {
+      "UNSW-NB15": true,
+      "CICIoT2023": true
+    },
+    "train_only_method_pilot_summary_present": true,
+    "train_only_method_pilot_status": "complete_train_only_execution_test_scoring_gated",
+    "train_only_method_pilot_completed_arms": 16,
+    "train_only_method_pilot_test_scoring_performed": false,
+    "note": "The full-method adapter has a one-seed train-only simulated-client pilot; no held-out test metrics exist and the protocol remains an external benchmark extension."
+  },
+  "cross_dataset_transfer": {
+    "status": "blocked_pending_semantic_feature_bridge",
+    "shared_feature_names": [],
+    "note": "Both source schemas mark units undocumented; feature-name overlap alone would not prove equivalence."
+  },
+  "unlabeled_discovery": {
+    "status": "development_pilot_sensitivity_assignment_ablation_and_three_partitions_complete",
+    "development_manifest_present": true,
+    "development_sensitivity_result_present": true,
+    "assignment_ablation_result_present": true,
+    "assignment_ablation_three_partition_summary_present": true,
+    "partition_replicate_summary_present": true,
+    "note": "Three component partitions, threshold/cap sensitivity, and one assignment-rule ablation are recorded; all remain exploratory."
+  },
+  "final_test": {
+    "status": "sealed_not_ready",
+    "reported_test_rows_exported": 0,
+    "train_manifest_test_rows": 0,
+    "development_manifest_test_rows": 0,
+    "test_package_directory_present": false,
+    "dispatchable_gpu_grid": false,
+    "final_test_evaluation_authorized": false,
+    "sealed_final_seed_count": 12,
+    "reference_protocol_settings_status": "Untuned implementation reference fixed before its first model outcome; not a selected final synchronization or hyperparameter setting",
+    "reference_protocol_remaining_gates": [
+      "Reference numerical/semantic/recovery acceptance",
+      "FT/EI/DM/DQ and corruption/control acceptance",
+      "GPU runtime confirmation and profiling",
+      "Clean development pilots/tuning and feasibility",
+      "Scope/code/data/runtime/analysis freeze before final-test evaluation"
+    ],
+    "existing_evaluator_scope": "development_only",
+    "blockers": [
+      "No final-test features or labels are exported; no isolated final_test package exists.",
+      "Final-test evaluation is explicitly unauthorized and the GPU grid is not dispatchable.",
+      "The reference74 configuration is an untuned implementation reference, not a selected final setting.",
+      "The available evaluator accepts only the pinned development-only manifest; a separate final evaluator is absent.",
+      "Protocol-listed scientific, scope, runtime, and analysis gates remain unresolved."
+    ],
+    "note": "Metadata and evaluator source only; no final-test package, arrays, or rows were opened."
+  }
+}

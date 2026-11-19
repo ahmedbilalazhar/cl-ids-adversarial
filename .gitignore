@@ -105,3 +105,17 @@ lightning_logs/
 !/results/phase3-recovery-improvements-v1/**/*.log
 # Exact private train/development bundle encoded for Kaggle upload.
 /results/phase3-reliability-audit-v2/kaggle-upload/*.b64
+
+# Ignore large zip submissions exceeding GitHub limits
+submissions/*.zip
+output/
+returns/
+
+
+# Large files blocked by GitHub (>100MB)
+results/phase3-rigorous-audit-v1/baseline-workspace.zip
+results/phase3-rigorous-audit-v1/initial-worktree.patch
+results/phase3-rigorous-audit-v1/pre-audit-*.zip
+submissions/phase3-completed/*.zip
+submissions/phase3-final/*.zip
+

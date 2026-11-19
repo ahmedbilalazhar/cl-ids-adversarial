@@ -1,0 +1,2186 @@
+{
+  "attack": {
+    "attacked_client": 3,
+    "dose": [
+      0,
+      1
+    ],
+    "eligible_clients": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "eligible_hulk": 39779,
+    "full_source_order_sha256": "7f915d883d21bd8d2faebf73218aa20f6672e12840f5334d02d9067d19347ef2",
+    "poison_ids": [],
+    "realized_poison_count": 0,
+    "selector_rng": {
+      "bit_generator": "PCG64",
+      "has_uint32": 1,
+      "state": {
+        "inc": "340158624611113649762843346371928571525",
+        "state": "19683677017460814104361621203183320771"
+      },
+      "uinteger": 3958283717
+    },
+    "source_order_rng": {
+      "bit_generator": "PCG64",
+      "has_uint32": 1,
+      "state": {
+        "inc": "145579015223962114871995677140178339673",
+        "state": "307960128001907620627756858045953950223"
+      },
+      "uinteger": 1367933948
+    },
+    "stage": 2
+  },
+  "elapsed_seconds": 185.44214310000098,
+  "final_test_accessed": false,
+  "input_identity": {
+    "arrays": {
+      "1": {
+        "ids": "7062b95f4c694de62d7c81ef7bda029ef36a3f0d7fe5a2c72ef081c35ee2ec73",
+        "owner": "9b6df51bc9e596cad8a3b9d65273a7a030eb967c454b0fbfe65c7a01c53fbc4a",
+        "x": "93da90090e2c281795078fa5f344717b0bbee8f2834963b2d900d93ce60d5495",
+        "y": "5a80271ab1ce4da8fdc8e291c75e9d3189a0b9359e485d65ce17c87928078f58"
+      },
+      "2": {
+        "ids": "bf02e0627d1d929dd3f7adf60f7eaaffd7a9c06c7f9404db55bf42dc42223fb8",
+        "owner": "371e23d952e6f61aa22b1dbe4909b46597733cfb71da9a5b2abb1871bfd1bcf3",
+        "x": "0ed4c32b7ebf3f65764c8073a85a35d66a72e743e26f7de82078951723c1dee1",
+        "y": "256a2e8f1c0f4a7f630483202f1d39c7e30ce801ae3677adee1818d307f00841"
+      },
+      "3": {
+        "ids": "1b416cbd2792288f581c7c67137edfa91317de3d4ed0435be5c2edfe2752f2de",
+        "owner": "a228b31f6899489a3e8195af2c4384abf1819a2b372fa972086ea649d409733e",
+        "x": "f8603a94696263c1f9eda0f3867a027060f5ccc19b22b45ec960de68dcc3b78c",
+        "y": "21e20ee632e1267a92217b52789dd57d7c8d128cacbe0b0a6ea8c4f7e28ca8d6"
+      },
+      "4": {
+        "ids": "c005fe80f565653dc6963ceaa6a17a80a35e5791b32f994763fce0567dae2b17",
+        "owner": "d3a3bab75a8e7842a54d3b338b488f309668dc8e71b9517eebd5db8887269819",
+        "x": "2e5f11e2da15d08e06c1af0f5f58f75104eecca405b623abf9be7e1fac4ee03d",
+        "y": "b54caeba7faf51ee45116525f740bff55441006f67dafd125535f319066b5390"
+      }
+    },
+    "ownership_objective": 0.4194226558802611,
+    "whole_component_ownership": true
+  },
+  "latency": null,
+  "ledger": [
+    {
+      "clients": [
+        {
+          "admitted": 2442,
+          "admitted_ids_sha256": "710482ef4aa47332f86ad16c01efa18ad89192a576b895194b212331d7c583ee",
+          "client": 0,
+          "quotas": [
+            {
+              "admitted": 1009,
+              "protected": true,
+              "raw": 1009,
+              "source_code": 0
+            },
+            {
+              "admitted": 645,
+              "protected": true,
+              "raw": 645,
+              "source_code": 7
+            },
+            {
+              "admitted": 788,
+              "protected": true,
+              "raw": 788,
+              "source_code": 12
+            }
+          ],
+          "raw": 2442
+        },
+        {
+          "admitted": 779,
+          "admitted_ids_sha256": "dee918dca10b36530286047dc80e5f3042372b121dcab99ec742312ab856287a",
+          "client": 1,
+          "quotas": [
+            {
+              "admitted": 691,
+              "protected": true,
+              "raw": 691,
+              "source_code": 0
+            },
+            {
+              "admitted": 72,
+              "protected": true,
+              "raw": 72,
+              "source_code": 7
+            },
+            {
+              "admitted": 16,
+              "protected": true,
+              "raw": 16,
+              "source_code": 12
+            }
+          ],
+          "raw": 779
+        },
+        {
+          "admitted": 1337,
+          "admitted_ids_sha256": "5a0ad98f2c664760649114a8d4381e0368fbef9501a3310638cfeb6c98ca33f7",
+          "client": 2,
+          "quotas": [
+            {
+              "admitted": 682,
+              "protected": true,
+              "raw": 682,
+              "source_code": 0
+            },
+            {
+              "admitted": 150,
+              "protected": true,
+              "raw": 150,
+              "source_code": 7
+            },
+            {
+              "admitted": 505,
+              "protected": true,
+              "raw": 505,
+              "source_code": 12
+            }
+          ],
+          "raw": 1337
+        },
+        {
+          "admitted": 829,
+          "admitted_ids_sha256": "c79738d647d158125c6f3d4870183ca4447a89227414fff06ac941995e5bcca3",
+          "client": 3,
+          "quotas": [
+            {
+              "admitted": 425,
+              "protected": true,
+              "raw": 425,
+              "source_code": 0
+            },
+            {
+              "admitted": 367,
+              "protected": true,
+              "raw": 367,
+              "source_code": 7
+            },
+            {
+              "admitted": 37,
+              "protected": true,
+              "raw": 37,
+              "source_code": 12
+            }
+          ],
+          "raw": 829
+        },
+        {
+          "admitted": 2271,
+          "admitted_ids_sha256": "d8750f7bead24e3e89e416410b4ca1df81ba1a5b2402d4c025277c3e11c8fa20",
+          "client": 4,
+          "quotas": [
+            {
+              "admitted": 693,
+              "protected": true,
+              "raw": 693,
+              "source_code": 0
+            },
+            {
+              "admitted": 1148,
+              "protected": true,
+              "raw": 1148,
+              "source_code": 7
+            },
+            {
+              "admitted": 430,
+              "protected": true,
+              "raw": 430,
+              "source_code": 12
+            }
+          ],
+          "raw": 2271
+        }
+      ],
+      "expanded_head_width": 3,
+      "kind": "admission",
+      "score_ids_sha256": "7062b95f4c694de62d7c81ef7bda029ef36a3f0d7fe5a2c72ef081c35ee2ec73",
+      "scorer_model_sha256": "05b92bda875c2b318e04b8f905398c2b094393a9373dd4c1d246b53878a2d18a",
+      "scores_sha256": "48e70e97841d941d78959ad2068c4e5605019b0cf062adfc70fdae1a5c4db3fe",
+      "stage": 1
+    },
+    {
+      "clients": [
+        {
+          "admitted": 17353,
+          "admitted_ids_sha256": "e41c2936174d170f6734044d5e6eb2f60ea4e58cc381870023fc752ccd8b2387",
+          "client": 0,
+          "quotas": [
+            {
+              "admitted": 878,
+              "protected": false,
+              "raw": 975,
+              "source_code": 0
+            },
+            {
+              "admitted": 353,
+              "protected": true,
+              "raw": 353,
+              "source_code": 3
+            },
+            {
+              "admitted": 15745,
+              "protected": true,
+              "raw": 15745,
+              "source_code": 4
+            },
+            {
+              "admitted": 368,
+              "protected": true,
+              "raw": 368,
+              "source_code": 5
+            },
+            {
+              "admitted": 9,
+              "protected": true,
+              "raw": 9,
+              "source_code": 6
+            }
+          ],
+          "raw": 17450
+        },
+        {
+          "admitted": 12532,
+          "admitted_ids_sha256": "8c3d98e1677eca50a24a33523a3389015c93aa681d4552184a39c57e37419ef5",
+          "client": 1,
+          "quotas": [
+            {
+              "admitted": 573,
+              "protected": false,
+              "raw": 636,
+              "source_code": 0
+            },
+            {
+              "admitted": 1255,
+              "protected": true,
+              "raw": 1255,
+              "source_code": 3
+            },
+            {
+              "admitted": 10163,
+              "protected": true,
+              "raw": 10163,
+              "source_code": 4
+            },
+            {
+              "admitted": 33,
+              "protected": true,
+              "raw": 33,
+              "source_code": 5
+            },
+            {
+              "admitted": 508,
+              "protected": true,
+              "raw": 508,
+              "source_code": 6
+            }
+          ],
+          "raw": 12595
+        },
+        {
+          "admitted": 4055,
+          "admitted_ids_sha256": "9bd27f3dc4e05e28720185a2407335178b21e60d977a159b34973fe73d893fe4",
+          "client": 2,
+          "quotas": [
+            {
+              "admitted": 566,
+              "protected": false,
+              "raw": 628,
+              "source_code": 0
+            },
+            {
+              "admitted": 1847,
+              "protected": true,
+              "raw": 1847,
+              "source_code": 3
+            },
+            {
+              "admitted": 775,
+              "protected": true,
+              "raw": 775,
+              "source_code": 4
+            },
+            {
+              "admitted": 333,
+              "protected": true,
+              "raw": 333,
+              "source_code": 5
+            },
+            {
+              "admitted": 534,
+              "protected": true,
+              "raw": 534,
+              "source_code": 6
+            }
+          ],
+          "raw": 4117
+        },
+        {
+          "admitted": 41438,
+          "admitted_ids_sha256": "c8127e5a11ad51ebe68b43dd4c5e550524bb9069b3e5b427f1ee98ef0a5e4dea",
+          "client": 3,
+          "quotas": [
+            {
+              "admitted": 562,
+              "protected": false,
+              "raw": 624,
+              "source_code": 0
+            },
+            {
+              "admitted": 23,
+              "protected": true,
+              "raw": 23,
+              "source_code": 3
+            },
+            {
+              "admitted": 39779,
+              "protected": true,
+              "raw": 39779,
+              "source_code": 4
+            },
+            {
+              "admitted": 84,
+              "protected": true,
+              "raw": 84,
+              "source_code": 5
+            },
+            {
+              "admitted": 990,
+              "protected": true,
+              "raw": 990,
+              "source_code": 6
+            }
+          ],
+          "raw": 41500
+        },
+        {
+          "admitted": 30514,
+          "admitted_ids_sha256": "3993f20d2420ea2b72559a3d016bfa5ac71b3c3e2bafbb899c66a9cc74337f15",
+          "client": 4,
+          "quotas": [
+            {
+              "admitted": 574,
+              "protected": false,
+              "raw": 637,
+              "source_code": 0
+            },
+            {
+              "admitted": 1062,
+              "protected": true,
+              "raw": 1062,
+              "source_code": 3
+            },
+            {
+              "admitted": 28618,
+              "protected": true,
+              "raw": 28618,
+              "source_code": 4
+            },
+            {
+              "admitted": 219,
+              "protected": true,
+              "raw": 219,
+              "source_code": 5
+            },
+            {
+              "admitted": 30,
+              "protected": true,
+              "raw": 30,
+              "source_code": 6
+            },
+            {
+              "admitted": 11,
+              "protected": true,
+              "raw": 11,
+              "source_code": 8
+            }
+          ],
+          "raw": 30577
+        }
+      ],
+      "expanded_head_width": 8,
+      "kind": "admission",
+      "score_ids_sha256": "bf02e0627d1d929dd3f7adf60f7eaaffd7a9c06c7f9404db55bf42dc42223fb8",
+      "scorer_model_sha256": "2e427e2c629cd9ef5faf12733198c92c898f9c3892be07f1df2d4641cd7a6a63",
+      "scores_sha256": "c48b990cc65538c165017e34a56400ed3c9de4f40ed3f45d4cac60af98e6cc01",
+      "stage": 2
+    },
+    {
+      "clients": [
+        {
+          "admitted": 2137,
+          "admitted_ids_sha256": "8063925d599989204ead1a99b4921b01834113f082087d9829a450c76d0d340c",
+          "client": 0,
+          "quotas": [
+            {
+              "admitted": 1088,
+              "protected": false,
+              "raw": 1208,
+              "source_code": 0
+            },
+            {
+              "admitted": 2,
+              "protected": true,
+              "raw": 2,
+              "source_code": 9
+            },
+            {
+              "admitted": 1035,
+              "protected": true,
+              "raw": 1035,
+              "source_code": 10
+            },
+            {
+              "admitted": 11,
+              "protected": true,
+              "raw": 11,
+              "source_code": 13
+            },
+            {
+              "admitted": 1,
+              "protected": true,
+              "raw": 1,
+              "source_code": 15
+            }
+          ],
+          "raw": 2257
+        },
+        {
+          "admitted": 1132,
+          "admitted_ids_sha256": "0eed0323060e2a91b8c2b506ed24a7213e2924b24de68f7d03714a92ad09bf0a",
+          "client": 1,
+          "quotas": [
+            {
+              "admitted": 825,
+              "protected": false,
+              "raw": 916,
+              "source_code": 0
+            },
+            {
+              "admitted": 287,
+              "protected": true,
+              "raw": 287,
+              "source_code": 10
+            },
+            {
+              "admitted": 10,
+              "protected": true,
+              "raw": 10,
+              "source_code": 13
+            },
+            {
+              "admitted": 5,
+              "protected": true,
+              "raw": 5,
+              "source_code": 14
+            },
+            {
+              "admitted": 5,
+              "protected": true,
+              "raw": 5,
+              "source_code": 15
+            }
+          ],
+          "raw": 1223
+        },
+        {
+          "admitted": 1906,
+          "admitted_ids_sha256": "432232da7f822c02e9bee2d1aa28ed287d2ce4531a4616903f9f3310093bdd87",
+          "client": 2,
+          "quotas": [
+            {
+              "admitted": 405,
+              "protected": false,
+              "raw": 449,
+              "source_code": 0
+            },
+            {
+              "admitted": 17,
+              "protected": true,
+              "raw": 17,
+              "source_code": 9
+            },
+            {
+              "admitted": 1462,
+              "protected": true,
+              "raw": 1462,
+              "source_code": 10
+            },
+            {
+              "admitted": 21,
+              "protected": true,
+              "raw": 21,
+              "source_code": 13
+            },
+            {
+              "admitted": 1,
+              "protected": true,
+              "raw": 1,
+              "source_code": 14
+            }
+          ],
+          "raw": 1950
+        },
+        {
+          "admitted": 571,
+          "admitted_ids_sha256": "bb2a2582a70ddb90b3664c37368220b176ccae130c3e806a5f9f3d74c24dd8ea",
+          "client": 3,
+          "quotas": [
+            {
+              "admitted": 8,
+              "protected": true,
+              "raw": 8,
+              "source_code": 9
+            },
+            {
+              "admitted": 559,
+              "protected": true,
+              "raw": 559,
+              "source_code": 10
+            },
+            {
+              "admitted": 1,
+              "protected": true,
+              "raw": 1,
+              "source_code": 14
+            },
+            {
+              "admitted": 3,
+              "protected": true,
+              "raw": 3,
+              "source_code": 15
+            }
+          ],
+          "raw": 571
+        },
+        {
+          "admitted": 1085,
+          "admitted_ids_sha256": "b0520ac612fd163cae0c19d21ee7b7709d79231ee016ef6ba8825d3b37a54ffb",
+          "client": 4,
+          "quotas": [
+            {
+              "admitted": 835,
+              "protected": false,
+              "raw": 927,
+              "source_code": 0
+            },
+            {
+              "admitted": 248,
+              "protected": true,
+              "raw": 248,
+              "source_code": 10
+            },
+            {
+              "admitted": 1,
+              "protected": true,
+              "raw": 1,
+              "source_code": 13
+            },
+            {
+              "admitted": 1,
+              "protected": true,
+              "raw": 1,
+              "source_code": 15
+            }
+          ],
+          "raw": 1177
+        }
+      ],
+      "expanded_head_width": 13,
+      "kind": "admission",
+      "score_ids_sha256": "1b416cbd2792288f581c7c67137edfa91317de3d4ed0435be5c2edfe2752f2de",
+      "scorer_model_sha256": "4ace3758e31125f3e179e9238fb72ed2b3f54daf074e26f1a6e4d972bb79ff61",
+      "scores_sha256": "5c432e413bffa5c912f58b057d54cb466254d187e5ed26e563fe93c2b22ad6ff",
+      "stage": 3
+    },
+    {
+      "clients": [
+        {
+          "admitted": 47667,
+          "admitted_ids_sha256": "b1e2e1fe75ae3615a7c9adc6915512af42850cb0d14fa8ae92733033b9653c48",
+          "client": 0,
+          "quotas": [
+            {
+              "admitted": 2413,
+              "protected": false,
+              "raw": 2681,
+              "source_code": 0
+            },
+            {
+              "admitted": 201,
+              "protected": true,
+              "raw": 201,
+              "source_code": 1
+            },
+            {
+              "admitted": 45053,
+              "protected": true,
+              "raw": 45053,
+              "source_code": 2
+            }
+          ],
+          "raw": 47935
+        },
+        {
+          "admitted": 9636,
+          "admitted_ids_sha256": "85a7756f70f202f2543915916a2885507c4dba8cac12e8b39a3cba9692336897",
+          "client": 1,
+          "quotas": [
+            {
+              "admitted": 193,
+              "protected": false,
+              "raw": 214,
+              "source_code": 0
+            },
+            {
+              "admitted": 1,
+              "protected": true,
+              "raw": 1,
+              "source_code": 1
+            },
+            {
+              "admitted": 9420,
+              "protected": true,
+              "raw": 9420,
+              "source_code": 2
+            },
+            {
+              "admitted": 22,
+              "protected": true,
+              "raw": 22,
+              "source_code": 11
+            }
+          ],
+          "raw": 9657
+        },
+        {
+          "admitted": 2468,
+          "admitted_ids_sha256": "123cb1dfb4d87a8ba25f618d39877542027cb07fa40cf015247eb6be486a6e50",
+          "client": 2,
+          "quotas": [
+            {
+              "admitted": 192,
+              "protected": true,
+              "raw": 192,
+              "source_code": 1
+            },
+            {
+              "admitted": 2133,
+              "protected": true,
+              "raw": 2133,
+              "source_code": 2
+            },
+            {
+              "admitted": 143,
+              "protected": true,
+              "raw": 143,
+              "source_code": 11
+            }
+          ],
+          "raw": 2468
+        },
+        {
+          "admitted": 576,
+          "admitted_ids_sha256": "a0974066404e2f9d2f8e98d1dca7d6416853522e2c0f3e167d966ed49c6ea724",
+          "client": 3,
+          "quotas": [
+            {
+              "admitted": 37,
+              "protected": true,
+              "raw": 37,
+              "source_code": 1
+            },
+            {
+              "admitted": 476,
+              "protected": true,
+              "raw": 476,
+              "source_code": 2
+            },
+            {
+              "admitted": 63,
+              "protected": true,
+              "raw": 63,
+              "source_code": 11
+            }
+          ],
+          "raw": 576
+        },
+        {
+          "admitted": 1274,
+          "admitted_ids_sha256": "62bb67a8cfdaab9c058cad784c74369e7f7006ffe78f7f11e7ea67d818a8e4fd",
+          "client": 4,
+          "quotas": [
+            {
+              "admitted": 545,
+              "protected": false,
+              "raw": 605,
+              "source_code": 0
+            },
+            {
+              "admitted": 10,
+              "protected": true,
+              "raw": 10,
+              "source_code": 1
+            },
+            {
+              "admitted": 4,
+              "protected": true,
+              "raw": 4,
+              "source_code": 2
+            },
+            {
+              "admitted": 715,
+              "protected": true,
+              "raw": 715,
+              "source_code": 11
+            }
+          ],
+          "raw": 1334
+        }
+      ],
+      "expanded_head_width": 16,
+      "kind": "admission",
+      "score_ids_sha256": "c005fe80f565653dc6963ceaa6a17a80a35e5791b32f994763fce0567dae2b17",
+      "scorer_model_sha256": "272751c2f1e6f79219956691e700b119b599bcc1394e6cec9cbf5fccde23d5d7",
+      "scores_sha256": "eb3b1c4a54361225fcfad94c2d795d65bb1507d93cf073385b76f5aa94b989c9",
+      "stage": 4
+    }
+  ],
+  "memory": [
+    {
+      "clients": [
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        }
+      ],
+      "stage": 1
+    },
+    {
+      "clients": [
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        }
+      ],
+      "stage": 2
+    },
+    {
+      "clients": [
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        }
+      ],
+      "stage": 3
+    },
+    {
+      "clients": [
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        },
+        {
+          "poison_ids": 0,
+          "poison_label_benign": 0,
+          "size": 500
+        }
+      ],
+      "stage": 4
+    }
+  ],
+  "oracle_label_repair": null,
+  "serialized_stage_weight_bytes": {
+    "E1-weights.npz": 68554,
+    "E2-weights.npz": 69989,
+    "E3-weights.npz": 71305,
+    "E4-weights.npz": 72226
+  },
+  "settings": {
+    "admission": "DC",
+    "block": "quota",
+    "dose": [
+      0,
+      1
+    ],
+    "epochs": 1,
+    "lambda_E": 100.0,
+    "lambda_y": 1.0,
+    "lambda_z": 0.1,
+    "learner": "DR",
+    "learning_rate": 0.001,
+    "q": 0.9,
+    "rounds": 12,
+    "seed": 1
+  },
+  "stages": [
+    {
+      "bank": "development",
+      "benign_provenance": [
+        {
+          "alerts": 4146,
+          "attempted": false,
+          "n": 214589
+        },
+        {
+          "alerts": 389,
+          "attempted": true,
+          "n": 1569
+        }
+      ],
+      "confusion": [
+        [
+          211623,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3374,
+          0,
+          0,
+          0,
+          0,
+          1161,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          795,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          591,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "model_sha256": "303e3d9e88e95f9dfad7e8e58279caeab060e37a75474dad7577a10f12f08be6",
+      "slots": [
+        0,
+        7,
+        12
+      ],
+      "stage": 1
+    },
+    {
+      "bank": "development",
+      "benign_provenance": [
+        {
+          "alerts": 6031,
+          "attempted": false,
+          "n": 214589
+        },
+        {
+          "alerts": 89,
+          "attempted": true,
+          "n": 1569
+        }
+      ],
+      "confusion": [
+        [
+          210038,
+          0,
+          0,
+          902,
+          1350,
+          416,
+          1796,
+          1414,
+          0,
+          0,
+          0,
+          0,
+          242,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1484,
+          22,
+          6,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          2,
+          31687,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          15,
+          0,
+          0,
+          4,
+          0,
+          313,
+          14,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          11,
+          0,
+          0,
+          0,
+          0,
+          5,
+          675,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          795,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          590,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "model_sha256": "1d355b39ddd640d8efdfadfad1eedaa589daf94611572526e3fe54b6c78a73be",
+      "slots": [
+        0,
+        7,
+        12,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "stage": 2
+    },
+    {
+      "bank": "development",
+      "benign_provenance": [
+        {
+          "alerts": 13869,
+          "attempted": false,
+          "n": 214589
+        },
+        {
+          "alerts": 799,
+          "attempted": true,
+          "n": 1569
+        }
+      ],
+      "confusion": [
+        [
+          201490,
+          0,
+          0,
+          525,
+          377,
+          160,
+          285,
+          38,
+          0,
+          0,
+          13129,
+          0,
+          154,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          17,
+          0,
+          0,
+          1471,
+          18,
+          6,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          6,
+          0,
+          0,
+          3,
+          31683,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          53,
+          0,
+          0,
+          7,
+          0,
+          276,
+          8,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          17,
+          0,
+          0,
+          0,
+          0,
+          56,
+          593,
+          0,
+          0,
+          0,
+          25,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          792,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          2,
+          0,
+          0,
+          0
+        ],
+        [
+          26,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1170,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          591,
+          0,
+          0,
+          0
+        ],
+        [
+          15,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "model_sha256": "03e6ade13895416db444ce7f71c9a7de28df83cd0bd0dc404bb3fa86ca66815f",
+      "slots": [
+        0,
+        7,
+        12,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15
+      ],
+      "stage": 3
+    },
+    {
+      "bank": "development",
+      "benign_provenance": [
+        {
+          "alerts": 5343,
+          "attempted": false,
+          "n": 214589
+        },
+        {
+          "alerts": 54,
+          "attempted": true,
+          "n": 1569
+        }
+      ],
+      "confusion": [
+        [
+          210761,
+          1215,
+          426,
+          6,
+          224,
+          276,
+          0,
+          488,
+          0,
+          0,
+          2345,
+          0,
+          417,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          147,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          3,
+          19026,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          132,
+          0,
+          4,
+          1108,
+          245,
+          24,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          7,
+          0,
+          406,
+          0,
+          31281,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          16,
+          0,
+          0,
+          1,
+          0,
+          329,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          244,
+          0,
+          0,
+          0,
+          0,
+          426,
+          0,
+          0,
+          0,
+          0,
+          21,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          795,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          83,
+          5,
+          3,
+          0,
+          0,
+          0,
+          0,
+          19,
+          0,
+          0,
+          1087,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          233,
+          0,
+          0,
+          2,
+          21,
+          0,
+          0,
+          1,
+          0,
+          0,
+          28,
+          0,
+          30,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          589,
+          0,
+          0,
+          0
+        ],
+        [
+          15,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "model_sha256": "8a8f5789a26f884fc3b1764fb062a96eb8ac7581740199f45af2c8c74870bbfd",
+      "slots": [
+        0,
+        7,
+        12,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        1,
+        2,
+        11
+      ],
+      "stage": 4
+    }
+  ],
+  "status": "complete",
+  "study_identity": "1bc37aac2136233f49719052b8e7e59b7c781cb60ddd829b93b079f6e72a7d0d"
+}

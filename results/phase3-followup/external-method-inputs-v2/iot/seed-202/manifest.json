@@ -1,0 +1,34 @@
+{
+  "schema": "phase3-external-method-input-v1",
+  "dataset": "CICIoT2023",
+  "protocol_id": "iot-capped-v2",
+  "seed": 202,
+  "task_archive_sha256": "176efe377b0349ae27103a62ecc4460c78881cf3f51925ee3ff64e710d779b8b",
+  "metadata_sha256": "8b48d8730aadc9d28b775b86a1ff01c4f4fd51abf654ec622ad702ac63daf152",
+  "support_audit_sha256": "5113d66382257938cd9e66472a0e0faf43e8a84c81e2c547beaba361c5c856fa",
+  "id_audit_sha256": "ec76eeadff04990d7868d631e653ef05c6a34344e7926f37cd5afb02c1b261a5",
+  "input_kind": "training labels and task-local training row IDs only",
+  "artifact_sha256": "af8d13b7941b6864013979a7487c3a2a7ae568394c3dd6ca934cbb40c2a8ca8c",
+  "n_clients": 5,
+  "dirichlet_alpha": 0.5,
+  "source_label": "DoS",
+  "source_label_id": 3,
+  "benign_label_id": 0,
+  "attacker_client": 3,
+  "eligible_attacker_clients": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "task1_source_rows_on_attacker": 2984,
+  "poisoned_rows": 1492,
+  "realized_dose": [
+    1492,
+    2984
+  ],
+  "train_rows": 121378,
+  "feature_arrays_accessed": false,
+  "test_arrays_accessed": false,
+  "cicids_final_test_accessed": false
+}

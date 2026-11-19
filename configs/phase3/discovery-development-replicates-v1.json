@@ -1,0 +1,10 @@
+{
+  "schema": "phase3-discovery-development-partition-replicates-v1",
+  "parent_config_sha256": "2dad811bd424ad64503eca28b3a0c23ed5793f5bb234949dad0cd003f895c266",
+  "status": "exploratory_replicate_seeds_frozen_before_additional_runs",
+  "seeds": [2026, 2027, 2028],
+  "partition_rule": "shuffle unique component IDs with NumPy default_rng(seed), then split 60/20/20",
+  "primary_threshold_quantile": 0.95,
+  "primary_candidate_cap": 4000,
+  "selection_policy": "no seed or setting selection from held-out development results"
+}

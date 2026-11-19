@@ -1,0 +1,85 @@
+{
+  "schema": "phase3-external-method-extension-v1",
+  "status": "train_only_pilot_authorized_test_scoring_gated",
+  "study_type": "dataset-specific simulated-client benchmark extension",
+  "datasets": {
+    "UNSW-NB15": {
+      "protocol_id": "unsw-standard-v2",
+      "tasks": 4,
+      "features": 194,
+      "benign": "Normal",
+      "task_1_source": "Exploits"
+    },
+    "CICIoT2023": {
+      "protocol_id": "iot-capped-v2",
+      "tasks": 4,
+      "features": 39,
+      "benign": "Benign",
+      "task_1_source": "DoS"
+    }
+  },
+  "source_selection": {
+    "support_audit": "results/phase3-followup/external-training-support-audit-v1.json",
+    "rule": "Among non-benign labels absent in task 0, choose the task-1 training label with largest support; require at least 50 rows; break ties by ascending label ID.",
+    "test_labels_used_for_selection": false
+  },
+  "identifier_audit": {
+    "artifact": "results/phase3-followup/external-id-isolation-audit-v1.json",
+    "status": "train_and_test_task_ids_unique_within_each_pool",
+    "interpretation_limit": "Pool-local positional IDs do not establish train/test duplicate-flow or component/session independence."
+  },
+  "preprocessing": "Use the dataset-specific, T0-train-fitted imputation and scaling already pinned in each task sidecar; do not transfer parameters across datasets.",
+  "model": {
+    "architecture": "Phase 3 MLP with separately configured native input dimensions; five simulated clients; expand output head in each dataset's native label-ID order.",
+    "hidden": [128, 64],
+    "precision": "FP32"
+  },
+  "training": {
+    "pilot_methods": ["FT", "EI", "DR", "DR+DC"],
+    "paired_conditions": ["clean", "task1_source_to_benign_50pct"],
+    "pilot_seed": 101,
+    "rounds_per_task": 3,
+    "epochs_per_round": 1,
+    "batch_size": 128,
+    "learning_rate": 0.001,
+    "lambda_E": 10.0,
+    "lambda_y": 1.0,
+    "lambda_z": 0.5,
+    "replay_capacity": 500,
+    "runtime": "CPU, one intra-op and one inter-op thread, deterministic algorithms, FP32"
+  },
+  "client_simulation": {
+    "clients": 5,
+    "partition": "Persistent synthetic train-row ownership generated once per dataset and seed using all four tasks' training labels before simulation: for sorted label IDs, draw five-client proportions from Dirichlet(alpha=0.5), multinomially allocate that label's train rows, sort rows by immutable task row ID, then assign a seeded permutation in client blocks. Test rows are never assigned to clients or used in training.",
+    "seeds": [101, 202, 303],
+    "owner_rng": "PCG64 SeedSequence([1, 1, dataset_code, seed]); dataset codes UNSW=1 and CICIoT=2. Attacker selection uses namespace 2; poison row sampling uses namespace 3.",
+    "attacker": "For each seed, uniformly select one client with at least 50 task-1 source-label training rows.",
+    "ownership_provenance": "Synthetic benchmark assignment; not an observed site, host, session, or organization partition."
+  },
+  "intervention": {
+    "source_to_target": "Dataset-specific selected task-1 source label to that dataset's benign label.",
+    "dose": [1, 2],
+    "timing": "Corrupt a deterministic half of the selected client's source-label records during task 1 only; withdraw the attacker before task 2; preserve learner/replay state.",
+    "selection_rng": "Dataset/code/seed-scoped PCG64 namespace 3; source rows sorted by immutable task row ID before sampling."
+  },
+  "arms": ["FT", "EI", "DR", "DR+DC"],
+  "evaluation": {
+    "role": "Use the existing per-task test partitions only after code, protocol, and train-derived selection are frozen.",
+    "seeds": 3,
+    "primary_metrics": ["source-to-benign attack success after task 1", "post-withdrawal persistence delta H at task 2", "new-task acquisition A", "eligible macro-F1", "benign false-alert rate"],
+    "pairing": "Within each dataset, pair clean and attacked arms by seed, ownership, client roster, and all non-intervention settings; do not pool datasets."
+  },
+  "known_noncomparabilities": [
+    "This changes the external estimand to a simulated-client benchmark extension; it is not a faithful replication of the primary CICIDS protocol.",
+    "The datasets have different native dimensions, taxonomies, task construction, and undocumented physical feature units.",
+    "Task sidecars lack persistent real-owner and component/session identifiers; synthetic ownership cannot establish organization or flow independence.",
+    "UNSW task order uses source-row ordering; CICIoT tasks use capped sampling."
+  ],
+  "pretraining_gates": [
+    "Train-only pilot may assess adapter execution and paired learning traces; pilot metrics are exploratory and cannot select final settings.",
+    "Audit train/test row-ID disjointness using IDs only; retain original external test partitions unchanged.",
+    "Freeze code, protocol, runtime, failure handling, raw artifacts, and the held-out analysis before any external test scoring."
+  ],
+  "claims_excluded": ["faithful full-method replication", "cross-dataset transfer", "site-independent generalization"],
+  "cicids_final_test_accessed": false
+}

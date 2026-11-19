@@ -1,6 +1,6 @@
 # Fair comparison with existing research
 
-Use this structure for Phase 3 requirement 5. Populate own metric values only after validated evaluation; no new performance results exist yet.
+This template records the comparison protocol. A validated 74-feature development comparison now exists in `submissions/phase3-overnight/appendix.md`; it is development-bank evidence, not held-out confirmation. See the populated contextual comparison in `docs/phase3-reference/research-comparability.md`.
 
 ## 1. Direct within-protocol table
 
@@ -8,14 +8,14 @@ Every included method uses the same canonical release/split, features, stage sch
 
 | Method | Clean/poisoned absolute source error | H / immediate source damage | Acquisition A / per-family recall | Clean/poisoned benign FAR | ACC/BWT/forgetting | Actual cost |
 |---|---|---|---|---|---|---|
-| FT | Pending validated runs | Pending | Pending | Pending | Pending | Pending |
-| EI | Pending validated runs | Pending | Pending | Pending | Pending | Pending |
-| DR | Pending validated runs | Pending | Pending | Pending | Pending | Pending |
-| DM | Pending validated runs | Pending | Pending | Pending | Pending | Pending |
-| DC | Pending validated runs | Pending | Pending | Pending | Pending | Pending |
-| DQ, if selected | Pending validated runs | Exploratory comparison | Pending | Pending | Pending | Pending |
+| FT | See adopted-profile CPU extension report; development only | See report | See report | See report | See report | Observed run/checkpoint costs only |
+| EI | See adopted-profile CPU extension report; development only | See report | See report | See report | See report | Observed run/checkpoint costs only |
+| DR | See adopted-profile CPU extension report; development only | See report | See report | See report | See report | Observed run/checkpoint costs only |
+| DM | See adopted-profile CPU extension report; development only | See report | See report | See report | See report | Observed run/checkpoint costs only |
+| DC | See adopted-profile CPU extension report; development only | See report | See report | See report | See report | Observed run/checkpoint costs only |
+| DQ | See matched-random adopted-profile CPU extension; development only | Exploratory comparison | See report | See report | See report | Observed run/checkpoint costs only |
 
-Report means/dispersion and raw paired effects with support/denominator references. Do not place an unimplemented method in this table with a number copied from another paper.
+Report means/dispersion and raw paired effects with support/denominator references. DG and the adopted-profile loss/quota/eviction controls remain absent; historical 76-feature ablation results do not transfer.
 
 ## 2. Contextual primary-paper comparison
 
@@ -31,7 +31,7 @@ Report means/dispersion and raw paired effects with support/denominator referenc
 | [AER/ABS, 2024](https://bmva-archive.org.uk/bmvc/2024/papers/Paper_680/paper.pdf) | Multi-epoch noisy-label CIL | Loss separation and contaminated replay | Epoch alternation/restoration and different data/budget | Candidate declared adapter if competitive robustness is claimed |
 | [PuriDivER, 2022](https://openaccess.thecvf.com/content/CVPR2022/papers/Bang_Online_Continual_Learning_on_a_Contaminated_Data_Stream_With_Blurry_CVPR_2022_paper.pdf) | Online blurry noisy streams | Memory purity/diversity and robust replay | Sampling/training scheme and label-noise setting differ | Robust continual-learning context; adapter requires its own specification |
 
-For manuscript submission, shorten this table to the material closest papers and verify full experimental settings again. This planning table records relevance, not a completed systematic review or replication.
+For manuscript submission, shorten this table to the material closest papers and verify full experimental settings again. A web check on 17 November 2026 confirmed the bibliographic record and abstract for Lavaur et al. (2025) and the PMLR record for Neurotoxin; the remaining recent papers and preprints still need primary-source verification. This is a scoped comparison, not a systematic review or replication.
 
 ## 3. What “reproduction” would require
 

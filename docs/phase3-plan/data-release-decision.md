@@ -4,6 +4,8 @@
 
 **Latest recommendation:** the additional [source-semantics review](feature-semantics-and-final-recommendation.md) proposes 74 inputs after identifying positive header inconsistencies. The 76-feature screened results below remain candidate evidence, not the final adopted dataset.
 
+**Subsequent disposition:** on 24 October, the user adopted `corrected_no_headers_74` and its scenario-class claim boundary before development outcomes, then authorized one reference trajectory. The accepted profile and its single reference result are recorded in `../phase3-reference/adoption.json`; GPU grid dispatch and final tuning remain gated. This dated adoption supersedes the historical “neither release selected” recommendation above.
+
 ## 1. What is now available locally
 
 | Candidate | Acquisition evidence | What it does not establish |

@@ -1,0 +1,55 @@
+{
+  "algorithm": "Full SHA256 FP32 grouping + independent sequential interval sweep + SciPy undirected connectivity",
+  "elapsed_seconds": 53.1699757000024,
+  "independently_reparsed_metadata": true,
+  "limitations": [
+    "This connectivity pass consumes the metadata/FP32 cache; separate independent source-row parity covers all rows and inputs",
+    "Operational sessions do not certify true application sessions",
+    "Sensitivity uses the frozen 120s split; alternative splits are not trained or selected from outcomes"
+  ],
+  "results": [
+    {
+      "T0_closure_rows": 469210,
+      "components": 1651365,
+      "content_edges": 386242,
+      "frozen_split_component_overlap": {
+        "0-1": 0,
+        "0-2": 0,
+        "1-2": 0
+      },
+      "gap_seconds": 60,
+      "same_T0_closure": false,
+      "same_partition_as_120": false,
+      "session_edges": 70993
+    },
+    {
+      "T0_closure_rows": 469646,
+      "components": 1464350,
+      "content_edges": 386242,
+      "frozen_split_component_overlap": {
+        "0-1": 0,
+        "0-2": 0,
+        "1-2": 0
+      },
+      "gap_seconds": 120,
+      "same_T0_closure": true,
+      "same_partition_as_120": true,
+      "session_edges": 258127
+    },
+    {
+      "T0_closure_rows": 484184,
+      "components": 1399686,
+      "content_edges": 386242,
+      "frozen_split_component_overlap": {
+        "0-1": 8982,
+        "0-2": 9056,
+        "1-2": 3444
+      },
+      "gap_seconds": 300,
+      "same_T0_closure": false,
+      "same_partition_as_120": false,
+      "session_edges": 326882
+    }
+  ],
+  "source_archive_hash_matches": true
+}

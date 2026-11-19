@@ -37,7 +37,7 @@ def cluster_novel(X_novel: np.ndarray, min_cluster_size: int = 15, min_samples: 
 
 
 def fit_discovery(
-    ae: Autoencoder, threshold: float, X_train: np.ndarray, poison_mask: np.ndarray,
+    ae: Autoencoder, threshold: float, X_train: np.ndarray, poison_mask: np.ndarray | None = None,
     *, device: str = "cpu", min_cluster_size: int = 15,
     max_cluster_candidates: int = 4000, seed: int = 42,
 ) -> dict:
@@ -47,9 +47,10 @@ def fit_discovery(
     maximum training-member Euclidean radius. This is an explicit approximation
     to HDBSCAN membership, not HDBSCAN's own prediction rule.
     """
-    poison_mask = np.asarray(poison_mask, dtype=bool)
-    if len(poison_mask) != len(X_train):
-        raise ValueError("poison mask length does not match training data")
+    if poison_mask is not None:
+        poison_mask = np.asarray(poison_mask, dtype=bool)
+        if len(poison_mask) != len(X_train):
+            raise ValueError("poison mask length does not match training data")
     if max_cluster_candidates < min_cluster_size:
         raise ValueError("max_cluster_candidates must be at least min_cluster_size")
     novel = recon_scores(ae, X_train, device=device) >= threshold
@@ -73,20 +74,39 @@ def fit_discovery(
     fitted_geometry = {"centers": centers, "radii": radii}
     remaining = np.setdiff1d(candidate_index, fit_index, assume_unique=True)
     train_labels[remaining] = assign_clusters(X_train[remaining], fitted_geometry)
-    poison_fraction = {
+    poison_fraction = ({
         int(cluster): float(poison_mask[train_labels == cluster].mean())
         for cluster in centers
-    }
+    } if poison_mask is not None else {})
     return {
         "train_labels": train_labels, "novel_train": novel,
         "poison_mask": poison_mask,
+        "poison_metadata_available": poison_mask is not None,
         "n_fit_candidates": len(fit_index), "n_novel_candidates": len(candidate_index),
         "centers": centers, "radii": radii, "poison_fraction": poison_fraction,
         "fictitious": sorted(c for c, fraction in poison_fraction.items() if fraction >= 0.5),
     }
 
 
-def assign_clusters(X: np.ndarray, fitted: dict, *, batch: int = 4096) -> np.ndarray:
+def fit_discovery_unlabeled(
+    ae: Autoencoder, threshold: float, X_train: np.ndarray,
+    *, device: str = "cpu", min_cluster_size: int = 15,
+    max_cluster_candidates: int = 4000, seed: int = 42,
+) -> dict:
+    """Cluster novel training candidates without labels or poison annotations.
+
+    The anomaly threshold may be calibrated on a separate benign-only split;
+    cluster fitting and frozen assignment geometry use features only.
+    """
+    return fit_discovery(
+        ae, threshold, X_train, None, device=device,
+        min_cluster_size=min_cluster_size,
+        max_cluster_candidates=max_cluster_candidates, seed=seed,
+    )
+
+
+def assign_clusters(X: np.ndarray, fitted: dict, *, batch: int = 4096,
+                    enforce_radius: bool = True) -> np.ndarray:
     """Assign to the nearest frozen training centroid within its radius."""
     result = np.full(len(X), -1, dtype=np.int64)
     ids = sorted(fitted["centers"])
@@ -97,7 +117,8 @@ def assign_clusters(X: np.ndarray, fitted: dict, *, batch: int = 4096) -> np.nda
     for start in range(0, len(X), batch):
         distances = np.linalg.norm(X[start : start + batch, None, :] - centers[None, :, :], axis=2)
         nearest = distances.argmin(axis=1)
-        accepted = distances[np.arange(len(nearest)), nearest] <= radii[nearest]
+        accepted = (distances[np.arange(len(nearest)), nearest] <= radii[nearest]
+                    if enforce_radius else np.ones(len(nearest), dtype=bool))
         result[start : start + len(nearest)][accepted] = np.asarray(ids)[nearest[accepted]]
     return result
 
@@ -114,21 +135,33 @@ def provisional_labels(y_train: np.ndarray, fitted: dict, next_class: int) -> tu
 def evaluate_discovery(
     ae: Autoencoder, threshold: float, fitted: dict, X_test: np.ndarray,
     y_test: np.ndarray, *, device: str = "cpu", benign_label: int = 0,
+    assignment_policy: str = "centroid_radius",
 ) -> dict:
     """Evaluate held-out flows against fixed training clusters, without refit."""
     novel = recon_scores(ae, X_test, device=device) >= threshold
     assigned = np.full(len(X_test), -1, dtype=np.int64)
-    assigned[novel] = assign_clusters(X_test[novel], fitted)
+    if assignment_policy not in {"centroid_radius", "nearest_centroid"}:
+        raise ValueError(f"unknown assignment policy: {assignment_policy}")
+    assigned[novel] = assign_clusters(
+        X_test[novel], fitted, enforce_radius=assignment_policy == "centroid_radius",
+    )
     attack = y_test != benign_label
     benign = ~attack
     flagged_attack = attack & novel
+    has_poison_metadata = fitted.get("poison_mask") is not None
     absorbed = flagged_attack & np.isin(assigned, fitted["fictitious"])
     n_attack = int(attack.sum())
     n_flagged = int(flagged_attack.sum())
     n_benign = int(benign.sum())
-    n_poison = int(fitted["poison_mask"].sum())
-    n_poison_novel = int((fitted["poison_mask"] & fitted["novel_train"]).sum())
-    clean_train = ~fitted["poison_mask"]
+    poison_mask = fitted.get("poison_mask")
+    if poison_mask is None:
+        n_poison = n_poison_novel = None
+        clean_novel_rate = None
+    else:
+        n_poison = int(poison_mask.sum())
+        n_poison_novel = int((poison_mask & fitted["novel_train"]).sum())
+        clean_train = ~poison_mask
+        clean_novel_rate = float(fitted["novel_train"][clean_train].mean()) if clean_train.any() else None
     assigned_mask = assigned >= 0
     n_assigned = int(assigned_mask.sum())
     purity_count = sum(
@@ -136,26 +169,28 @@ def evaluate_discovery(
         for cluster in fitted["centers"] if (assigned == cluster).any()
     )
     return {
-        "threshold": float(threshold), "n_clusters": len(fitted["centers"]),
-        "n_fictitious": len(fitted["fictitious"]),
+        "threshold": float(threshold), "assignment_policy": assignment_policy,
+        "n_clusters": len(fitted["centers"]),
+        "n_fictitious": len(fitted["fictitious"]) if has_poison_metadata else None,
         "discovery_miss_rate": float((~novel[attack]).mean()) if n_attack else None,
         "benign_false_alert_rate": float(novel[benign].mean()) if n_benign else None,
         "attack_flagged_rate": n_flagged / n_attack if n_attack else None,
-        "absorbed_attack_rate": int(absorbed.sum()) / n_attack if n_attack else None,
-        "absorbed_flagged_attack_rate": int(absorbed.sum()) / n_flagged if n_flagged else None,
+        "absorbed_attack_rate": int(absorbed.sum()) / n_attack if has_poison_metadata and n_attack else None,
+        "absorbed_flagged_attack_rate": int(absorbed.sum()) / n_flagged if has_poison_metadata and n_flagged else None,
         "clustered_attack_rate": float((assigned[flagged_attack] >= 0).mean()) if n_flagged else None,
         "noise_rate_attack": float((assigned[flagged_attack] < 0).mean()) if n_flagged else None,
-        "fictitious_absorption": float(np.isin(assigned[benign & novel], fitted["fictitious"]).mean()) if (benign & novel).any() else None,
+        "fictitious_absorption": (float(np.isin(assigned[benign & novel], fitted["fictitious"]).mean())
+                                  if has_poison_metadata and (benign & novel).any() else None),
         "test_novel_rate": float(novel.mean()) if len(novel) else None,
         "test_noise_rate": float((assigned[novel] < 0).mean()) if novel.any() else None,
         "cluster_assignment_purity": purity_count / n_assigned if n_assigned else None,
         "cluster_assignment_ari": float(adjusted_rand_score(y_test[assigned_mask], assigned[assigned_mask])) if n_assigned >= 2 else None,
         "n_test_assigned": n_assigned,
         "n_attack_test": n_attack, "n_benign_test": n_benign,
-        "n_attack_flagged": n_flagged, "n_attack_absorbed": int(absorbed.sum()),
+        "n_attack_flagged": n_flagged, "n_attack_absorbed": int(absorbed.sum()) if has_poison_metadata else None,
         "n_poison": n_poison, "n_poison_novel": n_poison_novel,
         "poison_novel_rate": n_poison_novel / n_poison if n_poison else None,
-        "clean_novel_rate": float(fitted["novel_train"][clean_train].mean()) if clean_train.any() else None,
+        "clean_novel_rate": clean_novel_rate,
         "n_novel_train": int(fitted["novel_train"].sum()),
         "n_clustered_train": int((fitted["train_labels"] >= 0).sum()),
         "n_novel_test": int(novel.sum()),

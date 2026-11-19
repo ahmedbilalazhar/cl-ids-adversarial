@@ -1,6 +1,6 @@
 # Phase 3 implementation and evaluation planning
 
-Status: second audit complete; implementation remains pending. Started 23 October 2026 (Asia/Karachi client date).
+Status: this directory is the original planning package (started 23 October 2026), not a live status report. Subsequent implementation and evaluation evidence is documented in [`../phase3-rigorous-audit-v1/README.md`](../phase3-rigorous-audit-v1/README.md), [`rubric-and-readiness.md`](rubric-and-readiness.md), and [`../../submissions/phase3-overnight/appendix.md`](../../submissions/phase3-overnight/appendix.md). As of 17 November 2026, the adopted 74-feature profile has an independently audited 240-run core, 24 DQ controls, 48 replay-loss ablations, 96 alternative-quota ablations, nine clean confirmations, and 24 oracle continuations. Full Phase 3 remains incomplete: DG has a fixed 75% low-loss implementation but no matched outcomes; FIFO/class-balanced, qualified held-out evaluation, fuller cost measures, and external validation are missing.
 
 **Begin with [START-HERE.md](START-HERE.md).** It gives the recommended 441-row research starter and conditional 513-row external extension. The printable plan is generated under `output/pdf/phase3-research-implementation-plan.pdf`; the detailed contracts below remain the implementation reference.
 
@@ -8,7 +8,7 @@ Status: second audit complete; implementation remains pending. Started 23 Octobe
 
 Begin with [audit-executive-summary.md](audit-executive-summary.md) for the three-hour second audit, then [rubric-and-readiness.md](rubric-and-readiness.md) for completion evidence.
 
-This planning package concerns the revised `submissions/phase2-with-claude.tex` protocol and the seven Phase 3 course requirements supplied in this chat. It does not report executed Phase 3 experiments.
+This planning package concerns the revised `submissions/phase2-with-claude.tex` protocol and the seven Phase 3 course requirements supplied in this chat. Its original planning claims and future-work language are historical snapshots; consult the linked current evidence before treating any status as current.
 
 ## Working assumptions
 
@@ -47,15 +47,15 @@ This planning package concerns the revised `submissions/phase2-with-claude.tex` 
 | [iteration-log.md](iteration-log.md) | Material changes made through repeated critique |
 | [planning-validation.json](planning-validation.json) | Document/manifest consistency audit; not model test results |
 
-No experiments, Kaggle uploads or account changes have been performed for this planning task. Future commands are labelled as existing verified interfaces or proposed interfaces that still need implementation. The manifest is not dispatchable until data, selected settings and code/runtime identities are locked.
+The original planning pass performed no experiments, Kaggle uploads or account changes. Later work performed local CPU experiments; those results are in the current evidence links above. The planning manifest remains a design artifact, not a dispatchable experiment manifest.
 
 ## Planning utilities that actually exist
 
-`validate_planning_package.py` checks document/manifest consistency using the standard library. `build_plan_pdf.py` renders the printable plan with ReportLab and the inspected Windows fonts. `tools/inspect_corrected_archive.py` performs the bounded public archive/header probe; it does not download/audit the complete dataset or train a model. The Phase 3 learner/worker interfaces described in the plan are still future implementation work.
+`validate_planning_package.py` checks document/manifest consistency using the standard library. `build_plan_pdf.py` renders the printable plan with ReportLab and the inspected Windows fonts. `tools/inspect_corrected_archive.py` is a bounded historical archive/header probe, superseded for data and model evidence by the newer audits and CPU extension. The planning learner/worker interfaces are not the same implementation as the later audited CPU runner.
 
 ## Full-source data-audit utilities
 
-See [tools/README.md](tools/README.md) for the actual commands, environment, candidate profiles, evidence files and limitations. Full archives/derived arrays are local Git-ignored working data, not included in the delivery ZIP. The older bounded-header probe remains a historical snapshot; it is superseded for acquisition by the full-source reports.
+See [tools/README.md](tools/README.md) for the original data-audit commands. Current result and provenance evidence is indexed in the rigorous audit, the follow-up independent audit at `results/phase3-rigorous-audit-v1/followup-independent-audit.json`, and the refreshed audited report in `submissions/phase3-audited-report/phase3-report.pdf`. The full-evidence v14 archive contains the refreshed PDF validation, DG implementation and synthetic acceptance evidence and the follow-up manifest, which records 9.07 hours, exceeding the earlier six-hour training ceiling; no additional training is planned.
 
 ## Second audit additions
 
@@ -65,4 +65,4 @@ Read [realized-dose-and-quota-limits.md](realized-dose-and-quota-limits.md), [ca
 
 From the project root, use the recorded document runtime to run `python docs/phase3-plan/build_plan_pdf.py` and `python docs/phase3-plan/build_audit_pdf.py`. Render and visually review changed PDFs before recording delivery. Then run `python docs/phase3-plan/validate_planning_package.py` and `python docs/phase3-plan/package_plan.py`. The packager includes both PDFs, planning sources and PNG/SVG audit figures, verifies archived member digests, and excludes raw datasets/working arrays. Document checks are not learner tests.
 
-**Final source review:** [feature-semantics-and-final-recommendation.md](feature-semantics-and-final-recommendation.md) describes A31/A32, the preferred prospective 74-feature candidate, exact split reuse, annotation provenance and remaining taxonomy gate. Earlier 76-feature evidence remains separately identified.
+**Final source review:** [feature-semantics-and-final-recommendation.md](feature-semantics-and-final-recommendation.md) describes adopted amendments A25/A31/A32, the 74-feature profile, exact split reuse, annotation provenance, the independent source-row/FP32 audit and remaining split/tuning gates. Earlier 76-feature evidence remains separately identified.

@@ -1,6 +1,6 @@
 # Final adversarial review: feature semantics and the preferred candidate
 
-This chapter supersedes the earlier **recommendation** of the 76-feature negative-screened corrected candidate. Its recorded counts remain valid historical candidate evidence. No data profile has been adopted for final execution and no learner was fitted.
+This review supersedes the earlier **recommendation** of the 76-feature negative-screened corrected candidate. Its counts remain historical candidate evidence. On 24 October 2026, the user-adopted data amendment selected the corrected 74-feature profile and resolved the taxonomy as new annotated-class acquisition; the corresponding reference trajectory passed 174 acceptance checks. The separate lambda_z=.5 implementation reference remains untuned and n=1. A later 240-run CPU development extension used the historical selection DR lambda_z=.1; see `submissions/phase3-overnight/appendix.md` and `docs/phase3-plan/phase3-overnight-independent-audit.json`. Final held-out evaluation remains gated. See `docs/phase3-reference/adoption.json` and `configs/phase3/reference74-v1.json`.
 
 ## 1. Positive values can still be corrupted
 
@@ -55,20 +55,26 @@ The combined FAR must also equal the subgroup-denominator-weighted mean when bot
 
 This is an A32 reporting clarification, not a new confirmatory family or a post-hoc threshold. See [annotation-provenance-census.json](annotation-provenance-census.json). Do not transport combined FAR to an operational alert workload without explaining its annotation mixture.
 
-## 6. Taxonomy still needs a scientific decision
+## 6. Independent raw-row reconstruction status
 
-The authors' notebook and downloaded files use Thursday Infiltration-Portscan versus Friday Portscan; the public prose uses inconsistent Friday naming. Use archive/code evidence to describe the actual contract and record the discrepancy. Do not silently merge labels or interpret distinct scenario names as distinct techniques.
+On 17 November 2026 (Asia/Karachi), a separate parser using Python's standard-library `csv` module independently streamed all five corrected archive members. It reconstructed 2,099,976 row identities, 74 projected features, attempted-label mapping and timestamp/endpoint/protocol metadata. All metadata rows matched the candidate cache; independently applying the frozen Monday T0 transform produced zero FP32 model-input cell mismatches across the complete source inventory. Evidence and command are in `corrected-no-headers-74-independent-source-row-audit.json` and `tools/audit_corrected_source_rows_independent.py`.
 
-For the corrected route, the supported E3 question is learning a newly introduced annotated scenario class unless stronger behavioral taxonomy is justified. If the intended claim requires independent new attack techniques and this definition is inadequate, revise the dataset/schedule before development. Neither the source correction nor the 74-feature amendment resolves that question automatically.
+The independent decimal parser and pandas builder differed in binary64 representation for 229,383 feature cells (201,184 rows). None changed the transformed FP32 inputs. This is a parser-rounding difference, not evidence of a feature or row-alignment defect. The independent mask audit also exactly reproduced numeric/domain/metadata validity, raw/final conflicts, survivor selection, T0 fitting, and retained split membership. Combined with the independent connectivity audit, this matches the frozen 120-second graph/T0 closure and gives zero cross-role component overlap. The SGKF allocator was reused from its pinned output after exact input/component identity checks rather than independently rerun. Provider authentication and equivalence between operational and true application sessions remain unresolved. The profile was adopted separately; this source audit does not select numerical settings or make the existing 76-feature learner transferable to it.
 
-## 7. Negative findings and information boundaries
+## 7. Adopted taxonomy and claim boundary
 
-The inspected Active/Idle source ranges do not demonstrate epoch-sized timestamp values. A generic extractor defect report is not proof that it occurs in this archive. The review also did not fit a classifier, optimize a feature subset against final accuracy, search a favorable split, or demonstrate independent reproduction.
+The authors' notebook and downloaded files use Thursday Infiltration-Portscan versus Friday Portscan; the public prose uses inconsistent Friday naming. The adopted protocol preserves these source scenario labels and narrows the claim to new annotated-class acquisition. Do not silently merge labels or interpret distinct scenario names as distinct techniques.
+
+For the corrected route, the supported E3 question is learning a newly introduced annotated scenario class. It does not establish independent new attack techniques or behavioral novelty. That claim boundary is resolved in the adoption record; the mismatch between archive/code and public prose remains disclosed as a provenance limitation.
+
+## 8. Negative findings and information boundaries
+
+The inspected Active/Idle source ranges do not demonstrate epoch-sized timestamp values. A generic extractor defect report is not proof that it occurs in this archive. This source review did not optimize a feature subset against final accuracy, search a favorable split, or demonstrate independent reproduction; a separate single reference trajectory exists and passed the recorded acceptance checks.
 
 Development selection uses the declared complete simulated curriculum, including its later families. Describe that as offline algorithm selection, not future-free operational tuning. Published feature-based annotation rules can create benchmark-specific recognition shortcuts; inspect such relationships on training/development only if adding a diagnostic, and do not mine final feature-label associations to choose a favorable schema or story.
 
-## 8. Adoption checklist
+## 9. Adoption checklist
 
-Before building final runs: adopt or reject A31/A32; settle the class-versus-behavior taxonomy; export the canonical 74-feature worker/evaluator packages; record exclusion/coverage and annotation provenance; implement the reference engine and acceptance work; measure CPU/Kaggle runtime; retune and lock the selected matrix/analysis. The data utilities and exact split alias are evidence toward these steps, not completion of them.
+The independent exclusion/graph/split parity is now complete for the adopted operational data contract, and a 240-run 74-feature development core plus DQ/oracle controls and a reproducible report have been produced. The exact core/metric/checkpoint audit is `phase3-overnight-independent-audit.json`. Preserve the historical selection and clean-gate provenance; do not call the development bank untouched. Remaining gates are the omitted DG and planned ablations, real sealed-test package/evaluation, remaining cost measurements, and external/instructor evidence limits.
 
 A suitable working paper frame is a controlled study of label-poisoning persistence and admission limits under a fixed federated continual classification benchmark. The quota bound and source audits motivate careful experiments; they are not, by themselves, a demonstrated novel defense or a publication guarantee.

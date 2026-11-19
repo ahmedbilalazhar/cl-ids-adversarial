@@ -1,0 +1,59 @@
+{
+  "schema": "phase3-independent-corrected-source-row-audit-v1",
+  "status": "exact_metadata_and_fp32_model_input_parity",
+  "completed_utc": "2026-11-16T19:09:39.340777+00:00",
+  "parser": "Python csv.DictReader; independent of pandas-based cache builder",
+  "archive": "data/raw/phase3-feasibility-corrected/CICIDS2017_improved.zip",
+  "archive_bytes": 343549013,
+  "archive_sha256": "97fdb91d339e2d8cf5627f981b831e5e7e400b981c58181c451a38fd03c48883",
+  "matches_recorded_archive_sha256": true,
+  "projection": "user-adopted corrected_no_headers_74 profile; this source-parity audit contributes no additional model results",
+  "rows_expected": 2099976,
+  "rows_reconstructed": 2099976,
+  "features_per_row": 74,
+  "fp64_parser_rounding_row_mismatches": 201184,
+  "fp64_parser_rounding_cell_mismatches": 229383,
+  "transformed_fp32_model_input_row_mismatches": 0,
+  "transformed_fp32_model_input_cell_mismatches": 0,
+  "metadata_row_mismatches": 0,
+  "first_feature_mismatch": {
+    "row_id": 10,
+    "file": "friday.csv",
+    "archive_row": 10,
+    "columns": [
+      {
+        "index": 21,
+        "name": "Fwd IAT Std",
+        "source": 23778955.278135374,
+        "cache": 23778955.27813537
+      }
+    ]
+  },
+  "first_fp32_model_input_mismatch": null,
+  "first_metadata_mismatch": null,
+  "files": [
+    {
+      "member": "friday.csv",
+      "rows": 547557
+    },
+    {
+      "member": "monday.csv",
+      "rows": 371624
+    },
+    {
+      "member": "thursday.csv",
+      "rows": 362076
+    },
+    {
+      "member": "tuesday.csv",
+      "rows": 322078
+    },
+    {
+      "member": "wednesday.csv",
+      "rows": 496641
+    }
+  ],
+  "reconstructed_feature_stream_sha256": "6b570fb510314a341277bf69fa2dca8b6acb7a395b911e622d6f79ab79dcb066",
+  "reconstructed_metadata_canonical_sha256": "bc2bba471b8e797cc649b037aa2786c13f8976505d42aebbe5e329d09692ea45",
+  "elapsed_seconds": 448.15
+}

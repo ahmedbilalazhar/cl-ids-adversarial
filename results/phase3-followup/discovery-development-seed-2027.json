@@ -1,0 +1,124 @@
+{
+  "schema": "phase3-discovery-development-result-v1",
+  "status": "exploratory_development_only",
+  "config": {
+    "schema": "phase3-component-discovery-development-v1",
+    "status": "exploratory_protocol_frozen_before_execution",
+    "data_manifest_sha256": "2d8e209d17777b8ac5b2cc7f32dfb90fd5c358a671b79dcc3715b8368e57f081",
+    "component_manifest": "data/raw/phase3-feasibility-corrected/no-headers-74/conditional-components-120.npz",
+    "split_manifest": "data/raw/phase3-feasibility-corrected/no-headers-74/conditional-candidate-split.npz",
+    "seed": 2027,
+    "component_partition_fractions": {
+      "autoencoder_fit_and_clustering": 0.6,
+      "benign_calibration": 0.2,
+      "heldout_development_evaluation": 0.2
+    },
+    "autoencoder": {
+      "architecture": "src.models.mlp.Autoencoder",
+      "epochs": 5,
+      "batch_size": 512,
+      "learning_rate": 0.001,
+      "fit_labels": "benign rows only"
+    },
+    "threshold": {
+      "calibration_label": "benign",
+      "quantile": 0.95
+    },
+    "clustering": {
+      "algorithm": "HDBSCAN",
+      "min_cluster_size": 15,
+      "min_samples": 5,
+      "max_fit_candidates": 4000,
+      "candidate_sampling_seed": 2026
+    },
+    "out_of_sample_assignment": "nearest training-cluster centroid within maximum member radius",
+    "evaluation": "held-out development components only; labels used only after frozen predictions",
+    "final_test_access": false
+  },
+  "base_config_sha256": "2dad811bd424ad64503eca28b3a0c23ed5793f5bb234949dad0cd003f895c266",
+  "effective_config_sha256": "a68e5ad3a2d685a81a0b6211d30e80ab8e7c9e1741f57581dfda9c5eeb25fe35",
+  "development_manifest_sha256": "2d8e209d17777b8ac5b2cc7f32dfb90fd5c358a671b79dcc3715b8368e57f081",
+  "component_counts": {
+    "fit": 135640,
+    "calibration": 45213,
+    "evaluation": 45214
+  },
+  "row_counts": {
+    "fit": 163987,
+    "fit_benign": 129557,
+    "calibration": 54021,
+    "calibration_benign": 43434,
+    "evaluation": 54498
+  },
+  "metrics": {
+    "threshold": 0.0001518012722954154,
+    "assignment_policy": "centroid_radius",
+    "n_clusters": 101,
+    "n_fictitious": null,
+    "discovery_miss_rate": 0.1278792692613185,
+    "benign_false_alert_rate": 0.05200732040679223,
+    "attack_flagged_rate": 0.8721207307386815,
+    "absorbed_attack_rate": null,
+    "absorbed_flagged_attack_rate": null,
+    "clustered_attack_rate": 0.8347500505970451,
+    "noise_rate_attack": 0.16524994940295487,
+    "fictitious_absorption": null,
+    "cluster_assignment_purity": 0.9873106835857552,
+    "cluster_assignment_ari": 0.04479838075956072,
+    "n_attack_flagged": 9882,
+    "n_attack_absorbed": null,
+    "n_poison": null,
+    "n_poison_novel": null,
+    "poison_novel_rate": null,
+    "clean_novel_rate": null,
+    "n_novel_train": 36965,
+    "n_clustered_train": 29896,
+    "n_attack_eval": 11331,
+    "n_benign_eval": 43167,
+    "n_eval_assigned": 9772,
+    "eval_novel_rate": 0.2225219274101802,
+    "eval_noise_rate": 0.19419477199637172,
+    "n_novel_eval": 12127
+  },
+  "assignment_ablation_metrics": null,
+  "replicate_plan": {
+    "schema": "phase3-discovery-development-partition-replicates-v1",
+    "parent_config_sha256": "2dad811bd424ad64503eca28b3a0c23ed5793f5bb234949dad0cd003f895c266",
+    "status": "exploratory_replicate_seeds_frozen_before_additional_runs",
+    "seeds": [
+      2026,
+      2027,
+      2028
+    ],
+    "partition_rule": "shuffle unique component IDs with NumPy default_rng(seed), then split 60/20/20",
+    "primary_threshold_quantile": 0.95,
+    "primary_candidate_cap": 4000,
+    "selection_policy": "no seed or setting selection from held-out development results"
+  },
+  "replicate_plan_sha256": "7fb192960a5a96676bef6fa723ff4250bffcdb3ee9da8dc2b05073eabe2b04ee",
+  "sensitivity_plan": {
+    "schema": "phase3-discovery-exploratory-sensitivity-v1",
+    "parent_config_sha256": "2dad811bd424ad64503eca28b3a0c23ed5793f5bb234949dad0cd003f895c266",
+    "status": "exploratory_grid_declared_before_sensitivity_execution",
+    "seed": 2026,
+    "calibration_quantiles": [
+      0.9,
+      0.95,
+      0.99
+    ],
+    "hdbscan_candidate_caps": [
+      1000,
+      4000
+    ],
+    "selection_policy": "descriptive_only; do not select a new headline setting from this grid"
+  },
+  "sensitivity_plan_sha256": "4a60c33d73f061c7af31a22b13249d820f96282dba8a86f6ce65448b5d8d2bbc",
+  "sensitivity_grid": [],
+  "interpretation_limits": [
+    "Development-only exploratory estimate; not final-test performance.",
+    "One component partition and one seed per run; no population-level claim.",
+    "Sensitivity grid is exploratory and does not select a replacement primary setting.",
+    "Labels are used only for benign-only AE/calibration selection and after frozen clustering for evaluation."
+  ],
+  "final_test_accessed": false
+}

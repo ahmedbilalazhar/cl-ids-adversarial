@@ -1,0 +1,80 @@
+{
+  "schema": "phase3-independent-source-mask-audit-v1",
+  "status": "exact_independent_row_exclusion_and_survivor_parity",
+  "completed_utc": "2026-11-16T23:47:26.859030+00:00",
+  "archive_sha256": "97fdb91d339e2d8cf5627f981b831e5e7e400b981c58181c451a38fd03c48883",
+  "matches_recorded_archive_sha256": true,
+  "rows_expected": 2099976,
+  "rows_reconstructed": 2099976,
+  "independent_row_counts": {
+    "finite_numeric": 2099971,
+    "valid_domain": 2099976,
+    "valid_metadata": 2099976,
+    "final_finite": 2099971,
+    "t0_fit": 371621
+  },
+  "row_mismatches_by_field": {
+    "row_ids": 0,
+    "file_index": 0,
+    "labels": 0,
+    "valid_domain": 0,
+    "valid_metadata": 0,
+    "final_finite": 0,
+    "start_us": 0,
+    "t0_fit": 0,
+    "raw_conflict": 0,
+    "final_conflict": 0,
+    "survivor": 0,
+    "kept": 0,
+    "finite_numeric": 0
+  },
+  "first_mismatch_by_field": {
+    "row_ids": null,
+    "file_index": null,
+    "labels": null,
+    "valid_domain": null,
+    "valid_metadata": null,
+    "final_finite": null,
+    "start_us": null,
+    "t0_fit": null,
+    "raw_conflict": null,
+    "final_conflict": null,
+    "survivor": null,
+    "kept": null,
+    "finite_numeric": null
+  },
+  "raw_conflict_groups": 112,
+  "final_conflict_groups": 112,
+  "split_membership_mismatches": 0,
+  "cross_role_component_intersections": {
+    "train_development": 0,
+    "train_test": 0,
+    "development_test": 0
+  },
+  "files": [
+    {
+      "member": "friday.csv",
+      "rows": 547557
+    },
+    {
+      "member": "monday.csv",
+      "rows": 371624
+    },
+    {
+      "member": "thursday.csv",
+      "rows": 362076
+    },
+    {
+      "member": "tuesday.csv",
+      "rows": 322078
+    },
+    {
+      "member": "wednesday.csv",
+      "rows": 496641
+    }
+  ],
+  "not_reconstructed": [
+    "StratifiedGroupKFold fold assignment (role membership only checked against the frozen split)"
+  ],
+  "elapsed_seconds": 355.009
+}

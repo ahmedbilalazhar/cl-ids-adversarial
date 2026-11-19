@@ -29,7 +29,7 @@ def test_eligible_bank_excludes_rare_false_positive_rows_but_keeps_wrong_predict
 
 
 def test_zero_tie_and_all_one_direction_signed_rank():
-    assert signed_rank_enumeration([0, 0, 0])['rank_biserial'] is None
+    assert signed_rank_enumeration([0, 0, 0])['rank_biserial'] == 0.0
     assert signed_rank_enumeration([1, 1, 1])['p'] == .25
     assert signed_rank_enumeration([0, 1, -1])['p'] == 1.
     assert signed_rank_enumeration([-1, -2, -3])['rank_biserial'] == -1.

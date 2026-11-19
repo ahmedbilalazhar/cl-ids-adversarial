@@ -1,0 +1,15 @@
+{
+  "schema": "phase3-component-discovery-development-v1",
+  "status": "exploratory_protocol_frozen_before_execution",
+  "data_manifest_sha256": "2d8e209d17777b8ac5b2cc7f32dfb90fd5c358a671b79dcc3715b8368e57f081",
+  "component_manifest": "data/raw/phase3-feasibility-corrected/no-headers-74/conditional-components-120.npz",
+  "split_manifest": "data/raw/phase3-feasibility-corrected/no-headers-74/conditional-candidate-split.npz",
+  "seed": 2026,
+  "component_partition_fractions": {"autoencoder_fit_and_clustering": 0.6, "benign_calibration": 0.2, "heldout_development_evaluation": 0.2},
+  "autoencoder": {"architecture": "src.models.mlp.Autoencoder", "epochs": 5, "batch_size": 512, "learning_rate": 0.001, "fit_labels": "benign rows only"},
+  "threshold": {"calibration_label": "benign", "quantile": 0.95},
+  "clustering": {"algorithm": "HDBSCAN", "min_cluster_size": 15, "min_samples": 5, "max_fit_candidates": 4000, "candidate_sampling_seed": 2026},
+  "out_of_sample_assignment": "nearest training-cluster centroid within maximum member radius",
+  "evaluation": "held-out development components only; labels used only after frozen predictions",
+  "final_test_access": false
+}

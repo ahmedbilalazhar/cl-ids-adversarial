@@ -10,8 +10,10 @@ from torch.nn import functional as F
 
 from src.phase3.common import array_identity, encode_rng, rng, torch_seed
 from src.phase3.reference import insert_batch, model_identity, new_client, snapshot
+from .eviction import insert_with_eviction
 
 from .data import StageInput
+from .global_filter import choose_global_low_loss
 from .protocol import Settings
 
 
@@ -34,6 +36,11 @@ def client_state(settings, client):
     replay = None
     if settings.learner == 'DR':
         replay = new_client(settings.seed, client)
+        policy = getattr(settings, 'eviction_policy', 'reservoir')
+        if policy != 'reservoir':
+            replay['order'] = np.zeros(500, dtype='<u8')
+            replay['next_order'] = 0
+            replay['policy'] = policy
         for key in ('dropout', 'accepted', 'updates', 'current_exposures', 'replay_exposures'):
             replay.pop(key)
     return ClientState(np.empty(0, dtype='<i8'), generator.get_state().numpy().copy(), replay)
@@ -137,6 +144,8 @@ def quotas(labels, new_codes, stage):
 def choose_admission(data, scores, new_codes, settings):
     if scores.shape != (len(data.y),) or not np.isfinite(scores).all():
         raise FloatingPointError('Invalid admission scores')
+    if settings.admission == 'DG':
+        return choose_global_low_loss(data, scores)
     accepted, rows = [], []
     for i in range(5):
         indexes = np.flatnonzero(data.owner == i)
@@ -269,7 +278,12 @@ def train_client(broadcast, template, client: ClientState, data: StageInput, slo
                     not torch.isfinite(v).all() for state in optimizer.state.values() for v in state.values() if isinstance(v, torch.Tensor)):
                     raise FloatingPointError('Nonfinite optimizer/weight state')
                 if first_pass:
-                    insert_batch(memory, data.x[current], data.y[current], data.ids[current], teachers, len(slots))
+                    policy = getattr(settings, 'eviction_policy', 'reservoir')
+                    if policy == 'reservoir':
+                        insert_batch(memory, data.x[current], data.y[current], data.ids[current], teachers, len(slots))
+                    else:
+                        memory['next_order'] = insert_with_eviction(memory, data.x[current], data.y[current],
+                            data.ids[current], teachers, len(slots), policy, memory['next_order'])
                 updates += 1
                 current_exposures += len(current)
                 replay_exposures += 0 if replay is None else len(replay['y'])
@@ -278,7 +292,7 @@ def train_client(broadcast, template, client: ClientState, data: StageInput, slo
     proposals = 0 if memory is None else memory['seen'] - seen
     expected = len(client.accepted) if memory is not None and round_id == 1 else 0
     if proposals != expected:
-        raise RuntimeError('Reservoir proposals repeated or missing')
+        raise RuntimeError('Replay proposals repeated or missing')
     client.updates += updates
     client.current_exposures += current_exposures
     client.replay_exposures += replay_exposures

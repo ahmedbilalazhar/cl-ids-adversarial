@@ -1,0 +1,23 @@
+{
+  "all_audit_fields_equal_except_worktree_source_inventory": true,
+  "audit_status": "passed",
+  "baseline_current_worktree_source_hash_mismatches": [
+    "scripts/run_phase3_overnight.py",
+    "src/phase3_v2/checkpoint.py",
+    "src/phase3_v2/learning.py"
+  ],
+  "clean_extraction_current_worktree_source_hash_mismatches": [],
+  "command": "python docs/phase3-rigorous-audit-v1/tools/audit_phase3_followup_matrix.py",
+  "completion_inventory_hashes_valid": true,
+  "extraction": "fresh selective extraction; run results/checkpoints and 22 frozen source files extracted from v28 and nested frozen-source archive",
+  "final_test_accessed": false,
+  "frozen_source_files_verified_before_audit": 22,
+  "note": "The audit output records worktree-source mismatches separately. In the isolated extraction, the 22 source files are restored from the frozen nested source archive, so this one environment-dependent list differs from the workspace audit; all scientific, checkpoint, metric, cell and test-access fields must match exactly.",
+  "paired_oracle_checkpoint_model_hashes": 48,
+  "raw_confusion_to_trajectory_metrics_rows": 417,
+  "result_files_extracted": 3546,
+  "source_archive": "submissions/phase3-completed/23I-2568_23I-2581-full-evidence-v28.zip",
+  "status": "passed",
+  "unique_full_runs": 417,
+  "unique_stage_checkpoint_model_hashes": 1668
+}

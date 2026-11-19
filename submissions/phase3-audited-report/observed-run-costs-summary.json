@@ -1,0 +1,128 @@
+{
+  "blocks": {
+    "clean-confirmation": {
+      "compressed_four_stage_checkpoint_bytes": {
+        "max": 282547,
+        "median": 282086,
+        "min": 281608,
+        "n": 9,
+        "p90_nearest_rank": 282547
+      },
+      "elapsed_seconds": {
+        "max": 184.8713230000012,
+        "median": 144.16570449999926,
+        "min": 104.88500340000064,
+        "n": 9,
+        "p90_nearest_rank": 184.8713230000012
+      },
+      "settings": [
+        "DR/NONE",
+        "EI/NONE",
+        "FT/NONE"
+      ],
+      "unique_trajectories": 9
+    },
+    "core": {
+      "compressed_four_stage_checkpoint_bytes": {
+        "max": 282780,
+        "median": 282214.0,
+        "min": 281366,
+        "n": 240,
+        "p90_nearest_rank": 282542
+      },
+      "elapsed_seconds": {
+        "max": 232.9501739999978,
+        "median": 159.85793589999957,
+        "min": 101.41987999999947,
+        "n": 240,
+        "p90_nearest_rank": 173.85867390000203
+      },
+      "settings": [
+        "DR/DC",
+        "DR/DM",
+        "DR/NONE",
+        "EI/NONE",
+        "FT/NONE"
+      ],
+      "unique_trajectories": 240
+    },
+    "matched-random": {
+      "compressed_four_stage_checkpoint_bytes": {
+        "max": 282791,
+        "median": 282275.5,
+        "min": 281880,
+        "n": 24,
+        "p90_nearest_rank": 282671
+      },
+      "elapsed_seconds": {
+        "max": 149.18917820000206,
+        "median": 142.85653830000228,
+        "min": 139.54151949999869,
+        "n": 24,
+        "p90_nearest_rank": 146.59411230000114
+      },
+      "settings": [
+        "DR/DQ"
+      ],
+      "unique_trajectories": 24
+    },
+    "quota": {
+      "compressed_four_stage_checkpoint_bytes": {
+        "max": 282948,
+        "median": 282312.0,
+        "min": 281850,
+        "n": 96,
+        "p90_nearest_rank": 282626
+      },
+      "elapsed_seconds": {
+        "max": 7804.1696008,
+        "median": 310.38486625000223,
+        "min": 168.4411289999989,
+        "n": 96,
+        "p90_nearest_rank": 424.31917480000266
+      },
+      "settings": [
+        "DR/DC",
+        "DR/DM"
+      ],
+      "unique_trajectories": 96
+    },
+    "replay-loss": {
+      "compressed_four_stage_checkpoint_bytes": {
+        "max": 282681,
+        "median": 282148.0,
+        "min": 281645,
+        "n": 48,
+        "p90_nearest_rank": 282513
+      },
+      "elapsed_seconds": {
+        "max": 456.22976180000114,
+        "median": 347.9426311000025,
+        "min": 181.95261050000408,
+        "n": 48,
+        "p90_nearest_rank": 412.2858148999949
+      },
+      "settings": [
+        "DR/DC"
+      ],
+      "unique_trajectories": 48
+    }
+  },
+  "completion_manifest_elapsed_seconds_for_408_run_block": 32655.009162902832,
+  "exact_duplicate_result_copies_collapsed": 273,
+  "frozen_original_submission_sha256": "c219925799b2fe3b1d73e4203e25d1f94987b6c401f0288290f5f0bb67a2311f",
+  "independent_audit_status": "passed",
+  "interpretation": "Per-run elapsed_seconds are observed runner wall time, not training-only time; they may include scoring, checkpoint serialization and orchestration. Compressed four-stage NPZ sizes are stored artifact sizes, not transmitted message sizes. The completion manifest's 32,655.01 seconds covers its 408-run follow-up execution count and is reported separately from the 417 unique result inventory, which also includes nine clean confirmations.",
+  "not_measured": [
+    "training/admission/replay/Fisher/aggregation/evaluation wall time by component",
+    "process peak RSS and complete allocated client state",
+    "serialized upload/download framing, labels, registry and protocol metadata",
+    "network delay, edge device runtime, and energy"
+  ],
+  "result_json_files_in_completion_manifest": 690,
+  "schema": "phase3-adopted-observed-costs-v1",
+  "scope": "adopted 74-feature development trajectories only",
+  "source_completion_manifest_sha256": "8db41c6896af4aee9d6ef48fa5b9f28c9be92f6c69802333de94f52a3789e7b3",
+  "source_independent_audit_sha256": "5f8122245ccc057891685ccd2cb899fda9fd39d398707b7f08b9bc4c951fe5b4",
+  "unique_result_trajectories": 417
+}

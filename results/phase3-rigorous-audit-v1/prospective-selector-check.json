@@ -1,0 +1,24 @@
+{
+  "schema": "focused-implementation-check-v1",
+  "timestamp_utc": "2026-11-17T02:26:54Z",
+  "command": "python -m pytest tests/test_phase3_eviction.py tests/test_phase3_overnight.py::test_eviction_checkpoint_roundtrip_preserves_policy_and_insertion_order tests/test_phase3_overnight.py::test_DG_global_filter_keeps_ceil_75_percent_and_breaks_ties_by_id tests/test_phase3_overnight.py::test_DG_admission_executes_through_full_synthetic_simulator -q",
+  "status": "passed",
+  "pytest_cases_passed": 7,
+  "coverage": [
+    "FIFO and class-balanced insertion/eviction semantics",
+    "checkpoint round-trip for both eviction policies",
+    "corrupted insertion-order rejection",
+    "DG fixed 75% per-client global selection across classes",
+    "ceiling rounding and deterministic ID tie-break",
+    "generic v2 settings and selector integration",
+    "four-stage synthetic DG simulation and exact checkpoint-resumed final identity/ledger"
+  ],
+  "runtime": {
+    "python": "3.14.0",
+    "pytest": "9.1.1",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.3"
+  },
+  "scope_limit": "Synthetic contract and simulator checks only; no CICIDS2017 features, labels, or empirical DG trajectories were run. The validated research runtime for archived results is different.",
+  "initial_test_correction": "An earlier expectation omitted empty outputs for three unpopulated clients. The selector contract correctly returns five client entries; the assertion was corrected and all final cases passed."
+}

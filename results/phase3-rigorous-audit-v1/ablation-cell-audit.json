@@ -1,0 +1,2180 @@
+{
+  "schema": "phase3-ablation-cell-audit-v1",
+  "unique_followup_records": 288,
+  "expected_cells": {
+    "replay_loss": 48,
+    "quota": 96
+  },
+  "audited_cells": 144,
+  "passed_cells": 144,
+  "issues": [],
+  "duplicate_cross_directory_copies": [],
+  "disposition": {
+    "replay_loss": "paired to same-seed/dose DC core; inspect per-cell rows",
+    "quota": "paired within same admission arm and compared to q=.75; inspect per-cell rows",
+    "fifo_class_balanced": "not present; 96 prescribed trajectories remain unrun",
+    "dg_baseline": "not supplied by DQ; historical DG is noncomparable engine"
+  },
+  "cells": [
+    {
+      "block": "replay-loss",
+      "seed": 1,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "0578dc61d44899d32e79858a40516de0f6d2ec4e638dca2db663a1e0886bed06",
+      "reference_sha256": "9b56265040b383545bfbeb0d659fb252634de199beb2c14e8eb2a5218f4a6d41"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 1,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "145ba58938e1755d9dad22ee91269c3274907cb48cfd12fd47767abe44189ab3",
+      "reference_sha256": "9b56265040b383545bfbeb0d659fb252634de199beb2c14e8eb2a5218f4a6d41"
+    },
+    {
+      "block": "quota",
+      "seed": 1,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "ef54e4ccefc8f71515b426e8d820fc4973e08be16459556f78d27ab9dba272f1",
+      "reference_sha256": "cb4dd8e1f89a8f3cc5c357ed8f4759f3cb6842e9c16bc34f63a96f5e7f3e34d7"
+    },
+    {
+      "block": "quota",
+      "seed": 1,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "39e8dbd1f997d518edcc7f8d433248b0f33d7e37edb17d9c8ef4e26b8a5a5a9f",
+      "reference_sha256": "cb4dd8e1f89a8f3cc5c357ed8f4759f3cb6842e9c16bc34f63a96f5e7f3e34d7"
+    },
+    {
+      "block": "quota",
+      "seed": 1,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "e3d9433dd54800cbb503b2abb3925ce605d02e02a60881c8bd74bce770c44c89",
+      "reference_sha256": "9b56265040b383545bfbeb0d659fb252634de199beb2c14e8eb2a5218f4a6d41"
+    },
+    {
+      "block": "quota",
+      "seed": 1,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "9299b43838bb9c9bbf591fe398f58bd97c94ab93b54e2c8a96f1aa985851501e",
+      "reference_sha256": "9b56265040b383545bfbeb0d659fb252634de199beb2c14e8eb2a5218f4a6d41"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 1,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d047ec1781cdbd47fb4d42ad777fbcd917b0902e159baf242ef90b2992d31943",
+      "reference_sha256": "f2409abd6c6631b8ce1583207f051c5342540e1972b9af343a0492c8665725b4"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 1,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d4b68e015f6ec0b63f00965f9d0c8bb7ed54998871578c7d14fe4a59f8376063",
+      "reference_sha256": "f2409abd6c6631b8ce1583207f051c5342540e1972b9af343a0492c8665725b4"
+    },
+    {
+      "block": "quota",
+      "seed": 1,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "b684c7b52af9b1de8dae07ab4792c83f99f574c3a24252881842b299067b3d3a",
+      "reference_sha256": "d6ed3bab53d1c5ca79ca468fe0d189884249bded18cd09950d533b7402926d19"
+    },
+    {
+      "block": "quota",
+      "seed": 1,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "f817fb884ca57873b48859bd4916f77918adb54071f7512e6376eb8f4984f609",
+      "reference_sha256": "d6ed3bab53d1c5ca79ca468fe0d189884249bded18cd09950d533b7402926d19"
+    },
+    {
+      "block": "quota",
+      "seed": 1,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d0267a94bea0893d2b2dac5dfead20c42b1279726f92615d459e75643886bc75",
+      "reference_sha256": "f2409abd6c6631b8ce1583207f051c5342540e1972b9af343a0492c8665725b4"
+    },
+    {
+      "block": "quota",
+      "seed": 1,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "f61f06af406556db9639928688fe0868f8bd1a2c3c8078e989cb94a0240ca58a",
+      "reference_sha256": "f2409abd6c6631b8ce1583207f051c5342540e1972b9af343a0492c8665725b4"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 2,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "7280ad8c15d737e736af4de363874a23ed3083da5f2b9191610a1b0795ee2220",
+      "reference_sha256": "cad5700725bceb936899e901bc9a248195e1afe40bb937570568508077e30607"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 2,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "914199abe5608e79565e3e61840d8e7b3dea9bf9a449adee3c52c8486f615968",
+      "reference_sha256": "cad5700725bceb936899e901bc9a248195e1afe40bb937570568508077e30607"
+    },
+    {
+      "block": "quota",
+      "seed": 2,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "8b61be82cdf742071b8f13285906ef8245cc1544972ff01778e3df2e4bf844e8",
+      "reference_sha256": "2a72d6295652ba5944e7272de919411295c82bc3d35a43599955db2b01375cbd"
+    },
+    {
+      "block": "quota",
+      "seed": 2,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "78aea5350691a1338c1846de96e24155136ca96d52b21bf74cd066940206ab99",
+      "reference_sha256": "2a72d6295652ba5944e7272de919411295c82bc3d35a43599955db2b01375cbd"
+    },
+    {
+      "block": "quota",
+      "seed": 2,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "2de61f115c82e976f7d3557df9fd698373bc1b515127bf9840486d6d55b532b7",
+      "reference_sha256": "cad5700725bceb936899e901bc9a248195e1afe40bb937570568508077e30607"
+    },
+    {
+      "block": "quota",
+      "seed": 2,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "e7e5b4aed27f20aef9fbc575a5fb0914eea5c3bd6f97e1a7a0167f3062b5e987",
+      "reference_sha256": "cad5700725bceb936899e901bc9a248195e1afe40bb937570568508077e30607"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 2,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "941ed0c73dc85c7b981bdadefb4926068e1dc101bc701d2c07f8fd09fa88ed72",
+      "reference_sha256": "1e1083c081d5dfd4c5f427b891a8b4e30780218895fe6fd32e1fb967576f247f"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 2,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "37d0177e48862cdbf6a2d283b15d2c546b2d6de4d93abdb703f28b0eabb821e3",
+      "reference_sha256": "1e1083c081d5dfd4c5f427b891a8b4e30780218895fe6fd32e1fb967576f247f"
+    },
+    {
+      "block": "quota",
+      "seed": 2,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "8948daa15da1c3ea79ff17750ef2503699dfc9f8d082ba954012bd5d33b13617",
+      "reference_sha256": "a4612e5f68747f71e2f241d689d8d69054771c2b195f4ef8d766301d22b02a90"
+    },
+    {
+      "block": "quota",
+      "seed": 2,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "8c49a2710854991b5f38fe217ca7988416977f27befcead9ee91506c54dfe299",
+      "reference_sha256": "a4612e5f68747f71e2f241d689d8d69054771c2b195f4ef8d766301d22b02a90"
+    },
+    {
+      "block": "quota",
+      "seed": 2,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "44d233d0be27901f5c07cd456ac927143db08655ff4c05e8214858a51bb70acb",
+      "reference_sha256": "1e1083c081d5dfd4c5f427b891a8b4e30780218895fe6fd32e1fb967576f247f"
+    },
+    {
+      "block": "quota",
+      "seed": 2,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "459b85e4c9d9e24e1c989ef3cf4c92d9a23db6f9a364fafa07e606c107df6d6b",
+      "reference_sha256": "1e1083c081d5dfd4c5f427b891a8b4e30780218895fe6fd32e1fb967576f247f"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 3,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d64cd86d9a43dc7a0334ff3f32cd79098d6dabd6a44eb73de7ff58629d7b713e",
+      "reference_sha256": "840f5d4d4c34e783b5f4b5cc8868aba8d08d6676c8674c9ba360b16568d01ea4"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 3,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "3bd940841d2a218933b46eb5f4121232f05fc4108b1a9af0532ed9a7d9099e85",
+      "reference_sha256": "840f5d4d4c34e783b5f4b5cc8868aba8d08d6676c8674c9ba360b16568d01ea4"
+    },
+    {
+      "block": "quota",
+      "seed": 3,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "cd12f609759c66e4543c2b2f43508a3c4ac28b3b1bb4f3f3b675193ec0f2e4df",
+      "reference_sha256": "c24e0798387747e3179a4979b2999d81bbac7f6185199f2d4f1ca67c397b0e5c"
+    },
+    {
+      "block": "quota",
+      "seed": 3,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "03e84c7dd66cf0a8900ff25fe7414a26bbe565fd428d64c0a5fa3dda6028d19d",
+      "reference_sha256": "c24e0798387747e3179a4979b2999d81bbac7f6185199f2d4f1ca67c397b0e5c"
+    },
+    {
+      "block": "quota",
+      "seed": 3,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "fe7a4d443259c45c746ecfd65bb5fa7681ffd635b8c07aea61e9e784b98fd053",
+      "reference_sha256": "840f5d4d4c34e783b5f4b5cc8868aba8d08d6676c8674c9ba360b16568d01ea4"
+    },
+    {
+      "block": "quota",
+      "seed": 3,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "f7c04175ebf6b7f8047d2a4dca278f78d30dbddf4d39a1ab6d797929e1004e3f",
+      "reference_sha256": "840f5d4d4c34e783b5f4b5cc8868aba8d08d6676c8674c9ba360b16568d01ea4"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 3,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "fac1cdd2eeeab449af218234028be3df25b0341741cba285d05a32e907b0e4dc",
+      "reference_sha256": "607243e8bf130f54985f716a3ba76fadbadd0d9de06cd455d906645c617ff7cb"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 3,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d340864b9207a37bea816c9a8b254960c2f00ba55a47a25b75cd9b484be8daf5",
+      "reference_sha256": "607243e8bf130f54985f716a3ba76fadbadd0d9de06cd455d906645c617ff7cb"
+    },
+    {
+      "block": "quota",
+      "seed": 3,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "120e7d3cdee76c51de8e234293d07dccbdb5d4002971f338ae53a23152ce43ec",
+      "reference_sha256": "9d8fd0f78dcab754113257cd1746c6a63162f0832e7a291698bd2db102025930"
+    },
+    {
+      "block": "quota",
+      "seed": 3,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "15f7381f5dfe21765969d7e2e1d63840c0ed266f2edd9b165392a62d9f983e65",
+      "reference_sha256": "9d8fd0f78dcab754113257cd1746c6a63162f0832e7a291698bd2db102025930"
+    },
+    {
+      "block": "quota",
+      "seed": 3,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "02c5ff0226bb685bbf998ba5d41a254d5e71209c20e2e11d456f35caa36a0be4",
+      "reference_sha256": "607243e8bf130f54985f716a3ba76fadbadd0d9de06cd455d906645c617ff7cb"
+    },
+    {
+      "block": "quota",
+      "seed": 3,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "7c302f75e8a4b201e93fdbf3f5b793612571b9c285d3ea352a22842989220ad7",
+      "reference_sha256": "607243e8bf130f54985f716a3ba76fadbadd0d9de06cd455d906645c617ff7cb"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 4,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "5ec15229bd7986a2b548b855a2df9d81e151064f4426cac0b3a8d8313ee3ead5",
+      "reference_sha256": "dcdc57e255d69bd117c5ef325e9813a72882153313898679984e6b932bb53a4d"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 4,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "5c0890e3aab692751641f98ee9ad72a6620cafe49e230b25724855eab29de9f3",
+      "reference_sha256": "dcdc57e255d69bd117c5ef325e9813a72882153313898679984e6b932bb53a4d"
+    },
+    {
+      "block": "quota",
+      "seed": 4,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "f5a078d7475e6dbe6f184612fd9574c8b8b09503d6b9a2be5b48a8aaec4cd50a",
+      "reference_sha256": "2120cf7fabf290e9b804008c538652b04e32aaafdec0232cd560994fdc0eb5f6"
+    },
+    {
+      "block": "quota",
+      "seed": 4,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "40b2a41fbbbc0e64f1b0a70dc420b05482551fc170040e01185e4d91277bc4aa",
+      "reference_sha256": "2120cf7fabf290e9b804008c538652b04e32aaafdec0232cd560994fdc0eb5f6"
+    },
+    {
+      "block": "quota",
+      "seed": 4,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "3e5d5601ae7c90c318f31c13bf2b18ba7a8d91a333889e829ddc2e99ed36edaa",
+      "reference_sha256": "dcdc57e255d69bd117c5ef325e9813a72882153313898679984e6b932bb53a4d"
+    },
+    {
+      "block": "quota",
+      "seed": 4,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "4e74b20af0214618a8ac9847975498ad21b59be1c9e5e853cc1bc6d8709e12f0",
+      "reference_sha256": "dcdc57e255d69bd117c5ef325e9813a72882153313898679984e6b932bb53a4d"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 4,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "a24a4d9e4cadd9a855a5f3752f0c2ae7a26e8eaef93cf736752670113d19000e",
+      "reference_sha256": "e8ee3fa2c8f39a180a4266121167ea092bf06e52fc75cc0acacb6fbe9ec6ab98"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 4,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "040f27b3e21ad189c4ad16aa73f98b84af6efd49f7aba79334734908b1a7eea6",
+      "reference_sha256": "e8ee3fa2c8f39a180a4266121167ea092bf06e52fc75cc0acacb6fbe9ec6ab98"
+    },
+    {
+      "block": "quota",
+      "seed": 4,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "6a9c59617fbd8480aa394f5df5cd7bde25eac26f3d41d119ae2b15dd3a61c99d",
+      "reference_sha256": "9c292c6ef40ad18a908432218b0a8674ab8f1fcd63c1fa92c7ff05e6353bc0f1"
+    },
+    {
+      "block": "quota",
+      "seed": 4,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "55df77d955710519c22fd5ec8f9fd8d6e09af0dc63c7839b7c1f38429efa4ec0",
+      "reference_sha256": "9c292c6ef40ad18a908432218b0a8674ab8f1fcd63c1fa92c7ff05e6353bc0f1"
+    },
+    {
+      "block": "quota",
+      "seed": 4,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "0766c8bb18b1fdce5be81f271602b566dd90d628e45715d4be086cf815240134",
+      "reference_sha256": "e8ee3fa2c8f39a180a4266121167ea092bf06e52fc75cc0acacb6fbe9ec6ab98"
+    },
+    {
+      "block": "quota",
+      "seed": 4,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "205600c239041fcb033271be57b7d174c4a0694a03dcfad37fc4c953a2479f0f",
+      "reference_sha256": "e8ee3fa2c8f39a180a4266121167ea092bf06e52fc75cc0acacb6fbe9ec6ab98"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 5,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "bedf22691c2edb6dfa257e2d4814d6745dbb69c23dd7070ac3da92a91c3966cd",
+      "reference_sha256": "e6ae4e969e0037fb513e64433560fedebd97abc19e8657ed0a3f9048e302677f"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 5,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "09be726a1dd4e301cfecf1c9aafa57244476916a872b6a486b5de379136920e9",
+      "reference_sha256": "e6ae4e969e0037fb513e64433560fedebd97abc19e8657ed0a3f9048e302677f"
+    },
+    {
+      "block": "quota",
+      "seed": 5,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "a7d36793cf3e15a0544f268be8fc7611ed62e03bc7693f3d8d35756f35dfdb7c",
+      "reference_sha256": "e518d279c0cc1ee7bb4a0f2282e71fb461e5f91d306d70a7627a8cb99f75c1ab"
+    },
+    {
+      "block": "quota",
+      "seed": 5,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "812f8725a12bfc077f5566e89448fb46402f9ff826acb933b0aeeba25d7911f9",
+      "reference_sha256": "e518d279c0cc1ee7bb4a0f2282e71fb461e5f91d306d70a7627a8cb99f75c1ab"
+    },
+    {
+      "block": "quota",
+      "seed": 5,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "0e61b22238fdffa5f932d82dded1f707b84c1aafcad0d6902b9b8060016dd9b6",
+      "reference_sha256": "e6ae4e969e0037fb513e64433560fedebd97abc19e8657ed0a3f9048e302677f"
+    },
+    {
+      "block": "quota",
+      "seed": 5,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "5c200a77110806eb36c048b5df7ce669d14b2248796bec6caf8158c7b0aacce6",
+      "reference_sha256": "e6ae4e969e0037fb513e64433560fedebd97abc19e8657ed0a3f9048e302677f"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 5,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "2833965517cbf0248957df11ab0f2e805709310eb6019f0cddf24adaad9b0e7f",
+      "reference_sha256": "192cb4eaae9eb74786f592d02e5ad8a583cd3d0e01d4df7b5296a83381a66ba3"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 5,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "33b4d9a160296cb5aa24264bffb73e906a811fa7689cd6d647d45d4b4d2ddc84",
+      "reference_sha256": "192cb4eaae9eb74786f592d02e5ad8a583cd3d0e01d4df7b5296a83381a66ba3"
+    },
+    {
+      "block": "quota",
+      "seed": 5,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "4137f49862a41557fcfb472ef4c6dc66f639b57839809df3862635adfbca52ad",
+      "reference_sha256": "0977ccb2067936870a8e613b6b04b8d520f44acba493a35572b1971798506e79"
+    },
+    {
+      "block": "quota",
+      "seed": 5,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "10bc6438e58edb485c01c98a5a6d66a305924c726f18a52818e2c863dbb9e999",
+      "reference_sha256": "0977ccb2067936870a8e613b6b04b8d520f44acba493a35572b1971798506e79"
+    },
+    {
+      "block": "quota",
+      "seed": 5,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "e2aee2aa279c005a0a119ef576c7618fc1159bddafbf659e1f404b71c26064aa",
+      "reference_sha256": "192cb4eaae9eb74786f592d02e5ad8a583cd3d0e01d4df7b5296a83381a66ba3"
+    },
+    {
+      "block": "quota",
+      "seed": 5,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "ee46df36bdf3c904d6304204b355b8d5784b9ed08dd7bdd7711830ccc3437c1f",
+      "reference_sha256": "192cb4eaae9eb74786f592d02e5ad8a583cd3d0e01d4df7b5296a83381a66ba3"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 6,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "119eacf1afc26ee9b974762d49b51650d055eb60cbb2e8b234b010234cac7103",
+      "reference_sha256": "eb49326b714dc0ea36ea1575d4c02ffb841416439d19ed40f14d0d2ecaa56d4e"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 6,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "6397657980826fb0c066b8466384ac845ebedcec69de05624ce06aa9f18ad9cf",
+      "reference_sha256": "eb49326b714dc0ea36ea1575d4c02ffb841416439d19ed40f14d0d2ecaa56d4e"
+    },
+    {
+      "block": "quota",
+      "seed": 6,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d42babf942fd67c6b870978e842f20f2fc0d40e9f063f32a60336ed1df050eac",
+      "reference_sha256": "29e37a7fdca3fc24e7b6b2d171855b99419ca7f8263433337b156d03325115a1"
+    },
+    {
+      "block": "quota",
+      "seed": 6,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d0f1e8311f10dfe071c3e6bd40006450bb581cccd554b7832dc6b46e53328384",
+      "reference_sha256": "29e37a7fdca3fc24e7b6b2d171855b99419ca7f8263433337b156d03325115a1"
+    },
+    {
+      "block": "quota",
+      "seed": 6,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "6806fb26bd21a074ef99f3f596ee289af8d513ece351b26fd5582e15588e06bf",
+      "reference_sha256": "eb49326b714dc0ea36ea1575d4c02ffb841416439d19ed40f14d0d2ecaa56d4e"
+    },
+    {
+      "block": "quota",
+      "seed": 6,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "5925114bd8d923478251b4f94d59416354c3f76733455724d9b62e374bea45b5",
+      "reference_sha256": "eb49326b714dc0ea36ea1575d4c02ffb841416439d19ed40f14d0d2ecaa56d4e"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 6,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "59e45dc42be7a8939735d6eb41f6ac7b93852186b2b059b7e274b91696962aaf",
+      "reference_sha256": "a635dcdf5fbc40e98e6f513e20694344b3f201967ec0f3b008cd67d05d23ca27"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 6,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "a8b6d897547e4919ca5938445ae695a39b07ead2b1e5453aa0eff0f0598ee5e1",
+      "reference_sha256": "a635dcdf5fbc40e98e6f513e20694344b3f201967ec0f3b008cd67d05d23ca27"
+    },
+    {
+      "block": "quota",
+      "seed": 6,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "302e7a0c20d684b89b283381c3e8ad1f5025e87a470123b5cb27ef4c70761c45",
+      "reference_sha256": "a037f52ae8e1e2b25b8e2ff36b3e2fb4f1b8a296858d7159151f8959e581c331"
+    },
+    {
+      "block": "quota",
+      "seed": 6,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "12ce945542c9f2ada3c2de3fc4df0fe2909a0e8f7f0e5aa7ae11a751a7b79dcc",
+      "reference_sha256": "a037f52ae8e1e2b25b8e2ff36b3e2fb4f1b8a296858d7159151f8959e581c331"
+    },
+    {
+      "block": "quota",
+      "seed": 6,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "71c673316269e8bc2ad3526d312e449e43628dd641d2633f0844d5394a05a39e",
+      "reference_sha256": "a635dcdf5fbc40e98e6f513e20694344b3f201967ec0f3b008cd67d05d23ca27"
+    },
+    {
+      "block": "quota",
+      "seed": 6,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "aa4401d2b786f276e9484c0f9986a59e24b31032f851ef9ced2f05afa2deb629",
+      "reference_sha256": "a635dcdf5fbc40e98e6f513e20694344b3f201967ec0f3b008cd67d05d23ca27"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 7,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "8015bcb5fa59708cde2d9daf2d3b925f7b30b95f71296419b70cf78c17e14bda",
+      "reference_sha256": "8f3e2646fe4d005893a883c582d20ecdf29f23d93f260c5a433322854c4948b3"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 7,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "1d815c95bdae0a52e2e53ea873a3f405f7c7ee97099b6d77011442be43840147",
+      "reference_sha256": "8f3e2646fe4d005893a883c582d20ecdf29f23d93f260c5a433322854c4948b3"
+    },
+    {
+      "block": "quota",
+      "seed": 7,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "37f914157075a531de211049cf09daf6cb92d61cb94dafb3b4eea88e5c70c622",
+      "reference_sha256": "0b733d750109e1001f8a970852c499e602afd42feb98db4b1c61eb6b3b7a446c"
+    },
+    {
+      "block": "quota",
+      "seed": 7,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "f713a70ad008fef25184ed217bc9625601421bd1ff506d1ad508571a3d210506",
+      "reference_sha256": "0b733d750109e1001f8a970852c499e602afd42feb98db4b1c61eb6b3b7a446c"
+    },
+    {
+      "block": "quota",
+      "seed": 7,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "9f04144bc28a6f6bd0265dd96fc9dbf7e79d63b1cf70a93291eebe6b0b14b956",
+      "reference_sha256": "8f3e2646fe4d005893a883c582d20ecdf29f23d93f260c5a433322854c4948b3"
+    },
+    {
+      "block": "quota",
+      "seed": 7,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d8d6cdd3f38d048fe5230943db3c20c63d605f23052b22195a0a1bb359009c47",
+      "reference_sha256": "8f3e2646fe4d005893a883c582d20ecdf29f23d93f260c5a433322854c4948b3"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 7,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "26b4f2ecfc7796a6ac4a68bda9824438b85d4fca968d4af38f362c3a108b9615",
+      "reference_sha256": "80d6ef66630794e942ce40da221bbcd013b9da27595bd23bfd72a359dd301713"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 7,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "320daa58f26b00b1901916897c46574c4f8e02803c76209cea0271c336702b7a",
+      "reference_sha256": "80d6ef66630794e942ce40da221bbcd013b9da27595bd23bfd72a359dd301713"
+    },
+    {
+      "block": "quota",
+      "seed": 7,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "9657415f4213dcd30d95fed70b20cd1dd86dcd4b7103ff8b7fa5a716d64e459d",
+      "reference_sha256": "728804481af96a8ccad229e17665f0b089e9847afa0ade38d1ed7e35f6003562"
+    },
+    {
+      "block": "quota",
+      "seed": 7,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "8dafa090b2d457da73d0a1dc20700534a818070d70d7370413089a37c3120d87",
+      "reference_sha256": "728804481af96a8ccad229e17665f0b089e9847afa0ade38d1ed7e35f6003562"
+    },
+    {
+      "block": "quota",
+      "seed": 7,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "c86a0914641ca1dabccf411fec749ceb0849d42dad6146794464d7d403334a6b",
+      "reference_sha256": "80d6ef66630794e942ce40da221bbcd013b9da27595bd23bfd72a359dd301713"
+    },
+    {
+      "block": "quota",
+      "seed": 7,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "ad407a3b779b2f599c36f055c2509d0c812b448d64a28fcde0b89cdc9afd3200",
+      "reference_sha256": "80d6ef66630794e942ce40da221bbcd013b9da27595bd23bfd72a359dd301713"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 8,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d2e0fdae811e29a3708a867f0460338fc36fea2d9b186e40dbbeac76f8063026",
+      "reference_sha256": "afc8b8769df5bd5852e2b8da108006836fe2e3272f701d3874360b7e59cd7228"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 8,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "dcd6126befa9f77de77e83ca838da2fca62f1780fe5a766485707d25aba1ba5f",
+      "reference_sha256": "afc8b8769df5bd5852e2b8da108006836fe2e3272f701d3874360b7e59cd7228"
+    },
+    {
+      "block": "quota",
+      "seed": 8,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "cb09cc15bb68b7ef000e495545ae65153d79fedeb9feec8c3de55630ebfdd4e5",
+      "reference_sha256": "4a3c0fbd3d17e7c780e4f5a3b66aace2024c0d72c7706e57e79a5073e841b3be"
+    },
+    {
+      "block": "quota",
+      "seed": 8,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "bdd8d21cd6855cf36fc6d8c6126d833ee1cd49db9bb21c1cd7c31b45a65fe51e",
+      "reference_sha256": "4a3c0fbd3d17e7c780e4f5a3b66aace2024c0d72c7706e57e79a5073e841b3be"
+    },
+    {
+      "block": "quota",
+      "seed": 8,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "832dba449b6b3e84ca84277b0a6b2be5f2ed94ed8850a6efa8263b05fda44156",
+      "reference_sha256": "afc8b8769df5bd5852e2b8da108006836fe2e3272f701d3874360b7e59cd7228"
+    },
+    {
+      "block": "quota",
+      "seed": 8,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "663f096316bf14163410316f40daec256887ceb19b770dcbd2117a494ea72c00",
+      "reference_sha256": "afc8b8769df5bd5852e2b8da108006836fe2e3272f701d3874360b7e59cd7228"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 8,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "36c812a2c653ba28009eaaf8fff9dc8b844a1cbfdefc85cf15e6b34196ddafff",
+      "reference_sha256": "852b01b09ec4527640069febcc9e4e9cf53af2ad3973a2050bca4b1d53736115"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 8,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "185b315c61c3f360984269b8185ef465f5088a30e30b5978b1fedc933aef3061",
+      "reference_sha256": "852b01b09ec4527640069febcc9e4e9cf53af2ad3973a2050bca4b1d53736115"
+    },
+    {
+      "block": "quota",
+      "seed": 8,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d1b3b215b00a70030f3a8d6b94bd5272c9596e40dfecd256f4713ca4aa684758",
+      "reference_sha256": "2006cc3298d53f3e61cbf6f1b3349f171e3be49962e313d3f433ad0ebf7c5b17"
+    },
+    {
+      "block": "quota",
+      "seed": 8,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "16ac6c38d002ca416e459ae76f7fb7846d73ad09d794d4dd98a56f3eb88f3ff5",
+      "reference_sha256": "2006cc3298d53f3e61cbf6f1b3349f171e3be49962e313d3f433ad0ebf7c5b17"
+    },
+    {
+      "block": "quota",
+      "seed": 8,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "a0677d13874a9538960d01d9547b95ab0d59aac195c4121d8146a54ddeed82c2",
+      "reference_sha256": "852b01b09ec4527640069febcc9e4e9cf53af2ad3973a2050bca4b1d53736115"
+    },
+    {
+      "block": "quota",
+      "seed": 8,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "cb2190278def9e26b3cd0a2d07df81b47eb103307a6f487c2b21e056453b80db",
+      "reference_sha256": "852b01b09ec4527640069febcc9e4e9cf53af2ad3973a2050bca4b1d53736115"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 9,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "4c42bf5aa3d0b42a1979f9b74cecf64baa9b81f9a6ece4b682dcbfce4aa6ef87",
+      "reference_sha256": "9f369fa7bb72a4f1b296cfd1f6b761ec7f38577af82feb8c472be619a23a3020"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 9,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "20bec0e4d5d21065c7eae537e4353530a82a2734feffe5f9f4837b0fc87cd87f",
+      "reference_sha256": "9f369fa7bb72a4f1b296cfd1f6b761ec7f38577af82feb8c472be619a23a3020"
+    },
+    {
+      "block": "quota",
+      "seed": 9,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "b0cf01e1429833e24ce3b4f8dfe8ac5836db34295fd81db6aabd2c8daec1f272",
+      "reference_sha256": "86a27780f537f75c07ddc660686046637b1719dbd28b73c135907152f8efe9b4"
+    },
+    {
+      "block": "quota",
+      "seed": 9,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "884880d0368feb9ef3a422b10f437395f9d4c41f3d01961f795b17658b33063e",
+      "reference_sha256": "86a27780f537f75c07ddc660686046637b1719dbd28b73c135907152f8efe9b4"
+    },
+    {
+      "block": "quota",
+      "seed": 9,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "879dbd92f469facf7cd108847b03c128a428b4c4fa02ead6cc24cc3042a4cdd6",
+      "reference_sha256": "9f369fa7bb72a4f1b296cfd1f6b761ec7f38577af82feb8c472be619a23a3020"
+    },
+    {
+      "block": "quota",
+      "seed": 9,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "0b6eb0aeb85c60d50da7d170b26cd96cc9bbb9ecdd1c95536c85de1553fa6119",
+      "reference_sha256": "9f369fa7bb72a4f1b296cfd1f6b761ec7f38577af82feb8c472be619a23a3020"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 9,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "3dc7f934f3ad0804c9dbc83ed6a277f49ec25984e070080fc44d8e5bb40890ca",
+      "reference_sha256": "658843697ff8a20eab677993430ccada8ae9e970a02884781f3eea64682cda70"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 9,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "045c5b467f65303869eb4e0e40a8ce459e5738d7db59d7c3096a8bfbe7d7efa3",
+      "reference_sha256": "658843697ff8a20eab677993430ccada8ae9e970a02884781f3eea64682cda70"
+    },
+    {
+      "block": "quota",
+      "seed": 9,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "b0924082aefeb8e8969b720810eee11d0e6063375595596d616174d57b866ce6",
+      "reference_sha256": "4b8e6376ad5aa8504105448458c67c356bcdb46233f719f060c411872efaaaee"
+    },
+    {
+      "block": "quota",
+      "seed": 9,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "ce1efd15668841c4e9c398369801cbd2ed0660b4d2a4a04202a55d52e75334cc",
+      "reference_sha256": "4b8e6376ad5aa8504105448458c67c356bcdb46233f719f060c411872efaaaee"
+    },
+    {
+      "block": "quota",
+      "seed": 9,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "95f145dab3eda80637a35cdc50ada374f42fcced8b031370b42d87562a8b86b1",
+      "reference_sha256": "658843697ff8a20eab677993430ccada8ae9e970a02884781f3eea64682cda70"
+    },
+    {
+      "block": "quota",
+      "seed": 9,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "0b28dc7d6161a11f3c5f64fab2ade8e92cfd4f98e5ba3869ea7a69630597af37",
+      "reference_sha256": "658843697ff8a20eab677993430ccada8ae9e970a02884781f3eea64682cda70"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 10,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "cbb5dc1e9987cc281dff743da16c8f19690d5d14372ced9355a4a722db6f73c1",
+      "reference_sha256": "43e7f0796f202811569c1d91ecaad9ffec7acdfd2587b89d81382fa6f03e1819"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 10,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "18b4b70e84d691b02a32ad588a447e3dcbfcebad9ba5b42bdf355cbd43a2b1c3",
+      "reference_sha256": "43e7f0796f202811569c1d91ecaad9ffec7acdfd2587b89d81382fa6f03e1819"
+    },
+    {
+      "block": "quota",
+      "seed": 10,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "55968201bb9bc0d2a944160c35f735ba68351e0fc71a3aa288bc773e158e6d63",
+      "reference_sha256": "9633d73fa70659cf3493f2aaf14debe3c3bf325f72cf7d66a895aae4ff63605e"
+    },
+    {
+      "block": "quota",
+      "seed": 10,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "5ab1127577075b5f4bf93af5b7974d71e0f5ebcdda343bae7809fd99cab9c08a",
+      "reference_sha256": "9633d73fa70659cf3493f2aaf14debe3c3bf325f72cf7d66a895aae4ff63605e"
+    },
+    {
+      "block": "quota",
+      "seed": 10,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "165eb9987f8a13f0264fa3af4df401524fe065f68b9552e810772ce74177491a",
+      "reference_sha256": "43e7f0796f202811569c1d91ecaad9ffec7acdfd2587b89d81382fa6f03e1819"
+    },
+    {
+      "block": "quota",
+      "seed": 10,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "ec5b613228b88a48903a655bd403cd471a27ba7e2f7fbc9332301dfd260ab9cf",
+      "reference_sha256": "43e7f0796f202811569c1d91ecaad9ffec7acdfd2587b89d81382fa6f03e1819"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 10,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "dd7b8fd0b776ecf486ee1646d35357e4037b32c4be250f3ade30140e2383c31f",
+      "reference_sha256": "3e54af25b070f94dcdfeed6f94d9a14e615aa84e91beb7c10d3db48bd46fece6"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 10,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "5243a8900c5401ed7253cab1cd9b01de55a4be3310707ddcb70c45f26d15339a",
+      "reference_sha256": "3e54af25b070f94dcdfeed6f94d9a14e615aa84e91beb7c10d3db48bd46fece6"
+    },
+    {
+      "block": "quota",
+      "seed": 10,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "bed4cf9ebe0bdec350e684bab8fd32ef1795151f858ef835d5b84165dbeb0791",
+      "reference_sha256": "61fd9ef58d2adb2cd56a699df885b8232a49f57038d312567f82eb50c43e8af1"
+    },
+    {
+      "block": "quota",
+      "seed": 10,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "fd042aa9f2120db1f85fbef8798da5f73958056c2d1d2565000dab7ac012ea05",
+      "reference_sha256": "61fd9ef58d2adb2cd56a699df885b8232a49f57038d312567f82eb50c43e8af1"
+    },
+    {
+      "block": "quota",
+      "seed": 10,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "5ef4a3011de8866b3c70506f9822ecbb1905484969cde74945567a8b377b7618",
+      "reference_sha256": "3e54af25b070f94dcdfeed6f94d9a14e615aa84e91beb7c10d3db48bd46fece6"
+    },
+    {
+      "block": "quota",
+      "seed": 10,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "a25598982e2d7ea1e31fb0be3b003f0e14833a4714294e8e17a4e6e6fb11bf83",
+      "reference_sha256": "3e54af25b070f94dcdfeed6f94d9a14e615aa84e91beb7c10d3db48bd46fece6"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 11,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "b91d5c41b0e31f119ef131c2bfe31b6b0d8f700a73aaa8b2cc8af646f84fd80a",
+      "reference_sha256": "17b7d30af9e97427e222fb6b0d9ae313f6c0772e7e3d57aef397ecbcf30bb30c"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 11,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "8508b6b9c73ddc41cad1ef97f4518c6d60575172d5206a6b4ea1ff75e3af340a",
+      "reference_sha256": "17b7d30af9e97427e222fb6b0d9ae313f6c0772e7e3d57aef397ecbcf30bb30c"
+    },
+    {
+      "block": "quota",
+      "seed": 11,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "e02d62e6a77b3d0c47ea779efe184884c26e9cf94a7ecee0c535b7882eccd515",
+      "reference_sha256": "301da32d184ead803f5b77b19ee5c9f1830fc89dae48ac26eb55eff6e0354e84"
+    },
+    {
+      "block": "quota",
+      "seed": 11,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d4e02a6cb521e307167bf8da9136c656d57526e27cdfe2dc4f46f96d80438cb5",
+      "reference_sha256": "301da32d184ead803f5b77b19ee5c9f1830fc89dae48ac26eb55eff6e0354e84"
+    },
+    {
+      "block": "quota",
+      "seed": 11,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "5e77d89a6dd2429569a7b436e6958cb36a2b931f2eeca6b7025054fc3f9f18d5",
+      "reference_sha256": "17b7d30af9e97427e222fb6b0d9ae313f6c0772e7e3d57aef397ecbcf30bb30c"
+    },
+    {
+      "block": "quota",
+      "seed": 11,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "7a2234d9f4e405ee21ba52bc3974047b5eadf1f51d3f103e27ef631a348d2677",
+      "reference_sha256": "17b7d30af9e97427e222fb6b0d9ae313f6c0772e7e3d57aef397ecbcf30bb30c"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 11,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "f3d2412ba500094a24b651c6c169a1b97302027f79f099aad85b0fdb67fe9777",
+      "reference_sha256": "11fdcb60e207ed30535495171e1b0a798d276238f785bb0b0072f9ddfdec25cb"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 11,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "21c8bb1ee636a5142906ff6b575f7e0de2d527fcc571558ba0a6629c720e023a",
+      "reference_sha256": "11fdcb60e207ed30535495171e1b0a798d276238f785bb0b0072f9ddfdec25cb"
+    },
+    {
+      "block": "quota",
+      "seed": 11,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "7b7b11318486656952ad6960bd074bb7ef43e582487b9770bb3b4c8d20c4b3ab",
+      "reference_sha256": "412a4fac3d4af8a9ed7e354ef5e9f24cd4f9aecf44e0447ef7fb3e2627513efc"
+    },
+    {
+      "block": "quota",
+      "seed": 11,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "af0c81e7f1b3941a48b22f56682b33369e2986d6dc5e7e733f01bc0a8aad41ed",
+      "reference_sha256": "412a4fac3d4af8a9ed7e354ef5e9f24cd4f9aecf44e0447ef7fb3e2627513efc"
+    },
+    {
+      "block": "quota",
+      "seed": 11,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "2c34527bae5d06dbea2208f066d991e5547c3b6aae2c03fb4cd729235d314f28",
+      "reference_sha256": "11fdcb60e207ed30535495171e1b0a798d276238f785bb0b0072f9ddfdec25cb"
+    },
+    {
+      "block": "quota",
+      "seed": 11,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "a1e6c1a2c690a1cb203ec7e8243f3f87921a33790d3c7d94cf4c9b157e928ba7",
+      "reference_sha256": "11fdcb60e207ed30535495171e1b0a798d276238f785bb0b0072f9ddfdec25cb"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 42,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "6fbc2f1c61696a95af73086d51337f9fe07c3e4e8e13969b5debfb766de1df6b",
+      "reference_sha256": "bc087590a95c8ee1989705afa89fa1cc107f90ea1898c3b6a186ba590873a681"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 42,
+      "dose": [
+        0,
+        1
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "b720fe7c1828a9ca03dd04f54b65ae37def00e6e78c2d975b8397778973537dd",
+      "reference_sha256": "bc087590a95c8ee1989705afa89fa1cc107f90ea1898c3b6a186ba590873a681"
+    },
+    {
+      "block": "quota",
+      "seed": 42,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "589eae6b7d20edb171bc17249261a810565e1615388621a8e8d1dc57a31857a5",
+      "reference_sha256": "711470ce6d7b57fe38b4981c27d5d83a8029eec5c231af78f67e9b6353462a1b"
+    },
+    {
+      "block": "quota",
+      "seed": 42,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "9ac9d8ac2c7ffe4edaad43477865db0212df3dd8c0af14af0a72ea4d471befcb",
+      "reference_sha256": "711470ce6d7b57fe38b4981c27d5d83a8029eec5c231af78f67e9b6353462a1b"
+    },
+    {
+      "block": "quota",
+      "seed": 42,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "085cbfdd8dde6485c97e518a463e406d0b8cc0772a19a5813dbf60b0ef5573c0",
+      "reference_sha256": "bc087590a95c8ee1989705afa89fa1cc107f90ea1898c3b6a186ba590873a681"
+    },
+    {
+      "block": "quota",
+      "seed": 42,
+      "dose": [
+        0,
+        1
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "d16bfdc9322d6894f7a5d29f5775bddab4ad57e0a193f97e4994f987f58ba6f8",
+      "reference_sha256": "bc087590a95c8ee1989705afa89fa1cc107f90ea1898c3b6a186ba590873a681"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 42,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 1.0,
+      "lambda_z": 0.0,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "3e90f22e8682d21716b34bca6679aa955f0ec7ab3149a8d52fe86c397cdd3850",
+      "reference_sha256": "9f2101338b0d61901df320a0bb2189f9700fb7c24b25c15e97c2b1104b3fd9bd"
+    },
+    {
+      "block": "replay-loss",
+      "seed": 42,
+      "dose": [
+        1,
+        2
+      ],
+      "lambda_y": 0.0,
+      "lambda_z": 0.1,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "a78cc95083c8ca7147c08529e0fbcf4ad03f25382f9dd5387b2f736cfec8851d",
+      "reference_sha256": "9f2101338b0d61901df320a0bb2189f9700fb7c24b25c15e97c2b1104b3fd9bd"
+    },
+    {
+      "block": "quota",
+      "seed": 42,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "ac3b71e7aabe44eea1d569af15637fb7cbed36198c199b29df998a058e83a5c4",
+      "reference_sha256": "4825db9887c7ee77f7ec3030db11229523101c990e8f061d6615030a7f97f1b8"
+    },
+    {
+      "block": "quota",
+      "seed": 42,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DM",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "071a4315e98d41d45ae2c822fc2893d59e970e0b57178039f39a8a7029f8570c",
+      "reference_sha256": "4825db9887c7ee77f7ec3030db11229523101c990e8f061d6615030a7f97f1b8"
+    },
+    {
+      "block": "quota",
+      "seed": 42,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.5,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "66329b8324675d7ec5208cd356ad4d46c5cd93d659961b437cafe2b4dcdc003b",
+      "reference_sha256": "9f2101338b0d61901df320a0bb2189f9700fb7c24b25c15e97c2b1104b3fd9bd"
+    },
+    {
+      "block": "quota",
+      "seed": 42,
+      "dose": [
+        1,
+        2
+      ],
+      "admission": "DC",
+      "q": 0.9,
+      "present": true,
+      "reference_present": true,
+      "matched_inputs_attack_and_protocol": true,
+      "result_sha256": "ebeccb3bf6ee0be803cb4810cc34ff5ea3c9f48c41b156c208ceca0654217b18",
+      "reference_sha256": "9f2101338b0d61901df320a0bb2189f9700fb7c24b25c15e97c2b1104b3fd9bd"
+    }
+  ]
+}

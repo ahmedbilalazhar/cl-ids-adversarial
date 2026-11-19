@@ -1,0 +1,15 @@
+{
+  "schema": "focused-check-v1",
+  "timestamp_utc": "2026-11-17T01:55:57Z",
+  "command": "python -m pytest tests/test_phase3_eviction.py tests/test_phase3_overnight.py::test_eviction_checkpoint_roundtrip_preserves_policy_and_insertion_order -q",
+  "status": "passed",
+  "pytest_cases_passed": 5,
+  "scope": "Four insertion/eviction unit cases and one synthetic Simulator checkpoint round-trip covering FIFO and class-balanced policies plus rejection of a duplicate insertion-order value.",
+  "runtime": {
+    "python": "3.14.0",
+    "pytest": "9.1.1",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.3"
+  },
+  "limitation": "Synthetic unit/semantic check only; it is not a matched multi-seed eviction ablation and does not close the missing 96-trajectory experiment."
+}

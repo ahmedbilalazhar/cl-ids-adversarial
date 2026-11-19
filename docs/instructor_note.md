@@ -1,4 +1,6 @@
-# Note to instructor (ready to send this week)
+> Historical draft only: this is not instructor feedback, was not sent, and is not evidence of approval. The user confirmed on 17 November 2026 that no specific feedback was given. The statements below belong to an older draft and must not be treated as current Phase 3 findings.
+
+# Unsent Historical Draft — Not Current Instructor Feedback
 
 Subject: Scoping decision — RF-fingerprint drift authentication listed as future work
 

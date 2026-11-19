@@ -26,7 +26,7 @@ class Settings:
     dose: tuple[int, int] = (0, 1)
 
     def validate(self):
-        if self.learner not in {'FT', 'EI', 'DR'} or self.admission not in {'NONE', 'DM', 'DC', 'DQ'}:
+        if self.learner not in {'FT', 'EI', 'DR'} or self.admission not in {'NONE', 'DG', 'DM', 'DC', 'DQ'}:
             raise ValueError('Unsupported learner/admission')
         if self.learner != 'DR' and self.admission != 'NONE':
             raise ValueError('Admission controls use DR settings')

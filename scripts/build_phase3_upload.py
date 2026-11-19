@@ -13,14 +13,20 @@ def main():
     valid=json.loads((report/'cpu-validation.json').read_text())
     assert valid['required_complete'] and valid['all_hashes_valid']
     base=ROOT/'submissions/phase3-submission.zip';assert base.exists()
-    output=ROOT/'submissions'/f'{ROLLS}.zip'
+    output=ROOT/'submissions/phase3-final'/f'{ROLLS}.zip'
+    output.parent.mkdir(parents=True,exist_ok=True)
     study=json.loads((ROOT/'results/phase3-cpu-supplement/identity.json').read_text())
     mapping={};shared={}
     for rel,expected in study['inputs'].items():
+        rel=rel.replace('\\','/')
         if not rel.endswith('.npy'):continue
         assert rel.startswith('data/processed/') and 'test' not in rel.lower()
         source=ROOT/rel;actual=hashlib.sha256(source.read_bytes()).hexdigest();assert actual==expected
         name=f'data/shared/{actual}.npy';mapping[rel]=dict(shared=name,sha256=actual)
+        shared[name]=source
+    for source in sorted((ROOT/'data/processed/phase3-reference74-v1/train').rglob('*.npy')):
+        actual=hashlib.sha256(source.read_bytes()).hexdigest();name=f'data/shared/{actual}.npy'
+        mapping[source.relative_to(ROOT).as_posix()]=dict(shared=name,sha256=actual)
         shared[name]=source
     input_map=dict(schema='phase3-deduplicated-inputs-v1',files=mapping,
         final_test_included=False,unique_files=len(shared),materialize_command='python scripts/materialize_submission_data.py')
@@ -76,7 +82,10 @@ named only with the two roll numbers. No other report drafts are upload entry po
                 if info.filename.endswith('package-inventory.json'):continue
                 write_bytes(z,info.filename,source.read(info.filename))
         write_bytes(z,'START_HERE.md',start.encode())
-        write_bytes(z,'Phase3_Report.pdf',(report/'phase3-report.pdf').read_bytes())
+        pdf_check=json.loads((report/'pdf-validation.json').read_text())
+        pdf_path=report/pdf_check.get('pdf','phase3-report.pdf')
+        assert hashlib.sha256(pdf_path.read_bytes()).hexdigest()==pdf_check['sha256']
+        write_bytes(z,'Phase3_Report.pdf',pdf_path.read_bytes())
         write_bytes(z,'Phase3_Report.tex',(report/'phase3-report.tex').read_bytes())
         for p in sorted((report/'figures').glob('*')):
             if p.suffix in ('.pdf','.png'):write_bytes(z,'figures/'+p.name,p.read_bytes())

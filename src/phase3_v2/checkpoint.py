@@ -65,6 +65,9 @@ def pack(model, clients, metadata):
         if client.replay is not None:
             row['replay'] = {'size': client.replay['size'], 'seen': client.replay['seen'],
                              'draw': encode_rng(client.replay['draw']), 'insert': encode_rng(client.replay['insert'])}
+            if 'order' in client.replay:
+                row['replay'].update(policy=client.replay['policy'], next_order=client.replay['next_order'])
+                arrays[prefix + 'replay.order'] = client.replay['order'].copy()
             for name in REPLAY_ARRAYS:
                 arrays[prefix + 'replay.' + name] = client.replay[name].copy()
         for name, value in client.importance.items():
@@ -137,8 +140,21 @@ def unpack(meta, arrays, settings, stage_loader):
         client.importance_samples = info['importance_samples']
         if settings.learner == 'DR':
             replay = info['replay']
-            if not isinstance(replay, dict) or set(replay) != {'size', 'seen', 'draw', 'insert'} or type(replay['seen']) is not int or replay['seen'] < 0 or replay['size'] != min(500, replay['seen']):
+            policy = getattr(settings, 'eviction_policy', 'reservoir')
+            expected_replay_keys = {'size', 'seen', 'draw', 'insert'} if policy == 'reservoir' else {'size', 'seen', 'draw', 'insert', 'policy', 'next_order'}
+            if not isinstance(replay, dict) or set(replay) != expected_replay_keys or type(replay['seen']) is not int or replay['seen'] < 0 or replay['size'] != min(500, replay['seen']):
                 raise ValueError('Invalid replay occupancy/counter')
+            if policy != 'reservoir':
+                if replay['policy'] != policy or type(replay['next_order']) is not int or replay['next_order'] < 0:
+                    raise ValueError('Eviction policy/counter differs from run settings')
+                order_name = prefix + 'replay.order'
+                order = arrays[order_name]
+                if order.dtype != np.dtype('<u8') or order.shape != (500,):
+                    raise ValueError('Invalid replay insertion-order array')
+                expected[order_name] = client.replay['order']
+                client.replay['order'] = order.copy()
+                client.replay['policy'] = policy
+                client.replay['next_order'] = replay['next_order']
             for key in REPLAY_ARRAYS:
                 name = prefix + 'replay.' + key
                 expected[name] = client.replay[key]
@@ -150,8 +166,18 @@ def unpack(meta, arrays, settings, stage_loader):
             for key in ('draw', 'insert'):
                 client.replay[key] = restore_rng(replay[key])
             client.replay['size'], client.replay['seen'] = size, replay['seen']
-            if replay['seen'] != sum(r['clients'][i].get('proposals', 0) for r in meta['ledger'] if r['kind'] == 'round'):
-                raise ValueError('Reservoir stream count differs from committed proposals')
+            proposals = sum(r['clients'][i].get('proposals', 0) for r in meta['ledger'] if r['kind'] == 'round')
+            if replay['seen'] != proposals:
+                raise ValueError('Replay stream count differs from committed proposals')
+            if policy == 'reservoir':
+                if 'order' in arrays or 'next_order' in replay:
+                    raise ValueError('Reservoir checkpoint contains eviction-only state')
+            else:
+                valid_order = client.replay['order'][:size]
+                if replay['next_order'] != proposals or np.any(valid_order >= replay['next_order']) or len(np.unique(valid_order)) != size:
+                    raise ValueError('Insertion order differs from committed proposal history')
+                if size < 500 and not np.array_equal(valid_order, np.arange(size, dtype='<u8')):
+                    raise ValueError('Unfilled buffer insertion order is not canonical')
         elif info['replay'] is not None or client.replay_exposures:
             raise ValueError('Unexpected replay in non-DR state')
         if settings.learner == 'EI':

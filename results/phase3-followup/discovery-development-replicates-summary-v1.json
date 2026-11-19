@@ -1,0 +1,180 @@
+{
+  "schema": "phase3-discovery-component-replicates-summary-v1",
+  "status": "exploratory_development_only",
+  "seeds": [
+    2026,
+    2027,
+    2028
+  ],
+  "metrics": {
+    "attack_flagged_rate": {
+      "mean": 0.9023023218005068,
+      "sd_across_component_partitions": 0.02699300862619432
+    },
+    "benign_false_alert_rate": {
+      "mean": 0.053112234204886824,
+      "sd_across_component_partitions": 0.0020781471718133893
+    },
+    "cluster_assignment_purity": {
+      "mean": 0.9870046030993006,
+      "sd_across_component_partitions": 0.0011087473375753737
+    },
+    "cluster_assignment_ari": {
+      "mean": 0.04206004014760672,
+      "sd_across_component_partitions": 0.0026573540101584477
+    },
+    "clustered_attack_rate": {
+      "mean": 0.8426008796587253,
+      "sd_across_component_partitions": 0.008861232096216583
+    },
+    "noise_rate_attack": {
+      "mean": 0.15739912034127468,
+      "sd_across_component_partitions": 0.008861232096216608
+    },
+    "eval_novel_rate": {
+      "mean": 0.2292604603515603,
+      "sd_across_component_partitions": 0.00591414991962488
+    }
+  },
+  "runs": {
+    "2026": {
+      "source": "discovery-development-sensitivity-v2.json",
+      "metrics": {
+        "threshold": 0.0001446215610485524,
+        "n_clusters": 102,
+        "n_fictitious": null,
+        "discovery_miss_rate": 0.0893467777290662,
+        "benign_false_alert_rate": 0.05550943222176099,
+        "attack_flagged_rate": 0.9106532222709338,
+        "absorbed_attack_rate": null,
+        "absorbed_flagged_attack_rate": null,
+        "clustered_attack_rate": 0.8408434430964761,
+        "noise_rate_attack": 0.15915655690352398,
+        "fictitious_absorption": null,
+        "cluster_assignment_purity": 0.9857749678948928,
+        "cluster_assignment_ari": 0.039491850094086865,
+        "n_attack_flagged": 10386,
+        "n_attack_absorbed": null,
+        "n_poison": null,
+        "n_poison_novel": null,
+        "poison_novel_rate": null,
+        "clean_novel_rate": null,
+        "n_novel_train": 37446,
+        "n_clustered_train": 29685,
+        "n_attack_eval": 11405,
+        "n_benign_eval": 43362,
+        "n_eval_assigned": 10123,
+        "eval_novel_rate": 0.23358957036171418,
+        "eval_noise_rate": 0.2087078871257719,
+        "n_novel_eval": 12793
+      },
+      "component_counts": {
+        "fit": 135640,
+        "calibration": 45213,
+        "evaluation": 45214
+      },
+      "row_counts": {
+        "fit": 163020,
+        "fit_benign": 129753,
+        "calibration": 54719,
+        "calibration_benign": 43043,
+        "evaluation": 54767
+      }
+    },
+    "2027": {
+      "source": "discovery-development-seed-2027.json",
+      "metrics": {
+        "threshold": 0.0001518012722954154,
+        "assignment_policy": "centroid_radius",
+        "n_clusters": 101,
+        "n_fictitious": null,
+        "discovery_miss_rate": 0.1278792692613185,
+        "benign_false_alert_rate": 0.05200732040679223,
+        "attack_flagged_rate": 0.8721207307386815,
+        "absorbed_attack_rate": null,
+        "absorbed_flagged_attack_rate": null,
+        "clustered_attack_rate": 0.8347500505970451,
+        "noise_rate_attack": 0.16524994940295487,
+        "fictitious_absorption": null,
+        "cluster_assignment_purity": 0.9873106835857552,
+        "cluster_assignment_ari": 0.04479838075956072,
+        "n_attack_flagged": 9882,
+        "n_attack_absorbed": null,
+        "n_poison": null,
+        "n_poison_novel": null,
+        "poison_novel_rate": null,
+        "clean_novel_rate": null,
+        "n_novel_train": 36965,
+        "n_clustered_train": 29896,
+        "n_attack_eval": 11331,
+        "n_benign_eval": 43167,
+        "n_eval_assigned": 9772,
+        "eval_novel_rate": 0.2225219274101802,
+        "eval_noise_rate": 0.19419477199637172,
+        "n_novel_eval": 12127
+      },
+      "component_counts": {
+        "fit": 135640,
+        "calibration": 45213,
+        "evaluation": 45214
+      },
+      "row_counts": {
+        "fit": 163987,
+        "fit_benign": 129557,
+        "calibration": 54021,
+        "calibration_benign": 43434,
+        "evaluation": 54498
+      }
+    },
+    "2028": {
+      "source": "discovery-development-seed-2028.json",
+      "metrics": {
+        "threshold": 0.0001538430224172771,
+        "assignment_policy": "centroid_radius",
+        "n_clusters": 100,
+        "n_fictitious": null,
+        "discovery_miss_rate": 0.07586698760809485,
+        "benign_false_alert_rate": 0.051819949986107255,
+        "attack_flagged_rate": 0.9241330123919052,
+        "absorbed_attack_rate": null,
+        "absorbed_flagged_attack_rate": null,
+        "clustered_attack_rate": 0.8522091452826548,
+        "noise_rate_attack": 0.14779085471734515,
+        "fictitious_absorption": null,
+        "cluster_assignment_purity": 0.9879281578172538,
+        "cluster_assignment_ari": 0.04188988958917257,
+        "n_attack_flagged": 10366,
+        "n_attack_absorbed": null,
+        "n_poison": null,
+        "n_poison_novel": null,
+        "poison_novel_rate": null,
+        "clean_novel_rate": null,
+        "n_novel_train": 38024,
+        "n_clustered_train": 31012,
+        "n_attack_eval": 11217,
+        "n_benign_eval": 43188,
+        "n_eval_assigned": 10189,
+        "eval_novel_rate": 0.2316698832827865,
+        "eval_noise_rate": 0.19160583941605838,
+        "n_novel_eval": 12604
+      },
+      "component_counts": {
+        "fit": 135640,
+        "calibration": 45213,
+        "evaluation": 45214
+      },
+      "row_counts": {
+        "fit": 164024,
+        "fit_benign": 129984,
+        "calibration": 54077,
+        "calibration_benign": 42986,
+        "evaluation": 54405
+      }
+    }
+  },
+  "interpretation": [
+    "Each seed makes a new component-level fit/calibration/evaluation partition and model initialization.",
+    "The partitions overlap in source population; SD is descriptive partition sensitivity, not a confidence interval.",
+    "All evaluation remains within the development role; no final-test data were opened."
+  ]
+}

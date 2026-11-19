@@ -1,0 +1,3449 @@
+{
+  "schema": "phase3-external-method-trainpilot-arm-v1",
+  "dataset": "UNSW-NB15",
+  "protocol_id": "unsw-standard-v2",
+  "dataset_artifact_sha256": "7512c21e7d01345ac0f9870125799dfe898907fe1b2334898a26bc02584f2e6e",
+  "training_input_manifest_sha256": "18d8109b5c342f9e84ac9acc1fd7689024649326b9ca48f56c117df5531951e6",
+  "training_input_artifact_sha256": "629c36f7dac91490310c422a92c17e240fd34cb07f1daa102d2b1aad085fb36d",
+  "protocol_sha256": "8230a7693d597840842d4411955ee28135e1c7b7372d63944791a12e78f09783",
+  "learner": "DR",
+  "admission": "DC",
+  "condition": "clean",
+  "seed": 202,
+  "settings": {
+    "rounds": 3,
+    "epochs": 1,
+    "learning_rate": 0.001,
+    "lambda_E": 10.0,
+    "lambda_y": 1.0,
+    "lambda_z": 0.5
+  },
+  "input_dim": 194,
+  "class_count": 10,
+  "stages": [
+    {
+      "stage": 1,
+      "new_label_ids": [
+        0,
+        6
+      ],
+      "active_slots": [
+        0,
+        6
+      ],
+      "train_rows": 54000,
+      "clean_source_rows": 0,
+      "poisoned_rows": 0,
+      "class_counts_supplied": {
+        "0": 14000,
+        "6": 40000
+      },
+      "owner_rows": [
+        12129,
+        26174,
+        9815,
+        1956,
+        3926
+      ],
+      "admitted_rows": [
+        12129,
+        26174,
+        9815,
+        1956,
+        3926
+      ],
+      "admission_score_sha256": "83fe2ee1e09dda30b582f705437fb2b8d7abdc72581e8e8f9db688422cca4e65",
+      "rounds": [
+        {
+          "round": 1,
+          "broadcast_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+          "aggregate_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+          "weights": [
+            0.22461111843585968,
+            0.4847036898136139,
+            0.18175925314426422,
+            0.036222223192453384,
+            0.07270370423793793
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 12129,
+              "inactive": false,
+              "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+              "adam_reset": true,
+              "optimizer_updates": 95,
+              "current_exposures": 12129,
+              "replay_exposures": 12032,
+              "proposals": 12129,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.14485317060821934,
+                0.13399479930338107,
+                0.22752967618503853,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 26174,
+              "inactive": false,
+              "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+              "adam_reset": true,
+              "optimizer_updates": 205,
+              "current_exposures": 26174,
+              "replay_exposures": 26112,
+              "proposals": 26174,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.10687942917390568,
+                0.09740073288359292,
+                0.17585090216726246,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 9815,
+              "inactive": false,
+              "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+              "adam_reset": true,
+              "optimizer_updates": 77,
+              "current_exposures": 9815,
+              "replay_exposures": 9728,
+              "proposals": 9815,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.12615658894374773,
+                0.11611709211553846,
+                0.22317133010546494,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 1956,
+              "inactive": false,
+              "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+              "adam_reset": true,
+              "optimizer_updates": 16,
+              "current_exposures": 1956,
+              "replay_exposures": 1920,
+              "proposals": 1956,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.40465390123426914,
+                0.3539477176964283,
+                0.1383574471983593,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 3926,
+              "inactive": false,
+              "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+              "adam_reset": true,
+              "optimizer_updates": 31,
+              "current_exposures": 3926,
+              "replay_exposures": 3840,
+              "proposals": 3926,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.26572792616582686,
+                0.2383308131848612,
+                0.26142098229648847,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "broadcast_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+          "aggregate_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+          "weights": [
+            0.22461111843585968,
+            0.4847036898136139,
+            0.18175925314426422,
+            0.036222223192453384,
+            0.07270370423793793
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 12129,
+              "inactive": false,
+              "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+              "adam_reset": true,
+              "optimizer_updates": 95,
+              "current_exposures": 12129,
+              "replay_exposures": 12160,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.07061179127348097,
+                0.06932194217255241,
+                0.17349290063506678,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 26174,
+              "inactive": false,
+              "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+              "adam_reset": true,
+              "optimizer_updates": 205,
+              "current_exposures": 26174,
+              "replay_exposures": 26240,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.05912157060896478,
+                0.05508836353333985,
+                0.11403515471554385,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 9815,
+              "inactive": false,
+              "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+              "adam_reset": true,
+              "optimizer_updates": 77,
+              "current_exposures": 9815,
+              "replay_exposures": 9856,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.06836238938879657,
+                0.06871419714449288,
+                0.1772928180826175,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 1956,
+              "inactive": false,
+              "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+              "adam_reset": true,
+              "optimizer_updates": 16,
+              "current_exposures": 1956,
+              "replay_exposures": 2048,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.16255833487957716,
+                0.16659118421375751,
+                0.3543164059519768,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 3926,
+              "inactive": false,
+              "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+              "adam_reset": true,
+              "optimizer_updates": 31,
+              "current_exposures": 3926,
+              "replay_exposures": 3968,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.10998043898613222,
+                0.10868602173943673,
+                0.3201547880326548,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "broadcast_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+          "aggregate_sha256": "d1553251ce4d19ecfaaa68b6ecfbb00ec1164f66cb6285a3ac56c15f833e2856",
+          "weights": [
+            0.22461111843585968,
+            0.4847036898136139,
+            0.18175925314426422,
+            0.036222223192453384,
+            0.07270370423793793
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 12129,
+              "inactive": false,
+              "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+              "adam_reset": true,
+              "optimizer_updates": 95,
+              "current_exposures": 12129,
+              "replay_exposures": 12160,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.06710122474714329,
+                0.06720527092877188,
+                0.16956170224829725,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 26174,
+              "inactive": false,
+              "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+              "adam_reset": true,
+              "optimizer_updates": 205,
+              "current_exposures": 26174,
+              "replay_exposures": 26240,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.05573072322621578,
+                0.05319144433227981,
+                0.10913610632826642,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 9815,
+              "inactive": false,
+              "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+              "adam_reset": true,
+              "optimizer_updates": 77,
+              "current_exposures": 9815,
+              "replay_exposures": 9856,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.06565434050250363,
+                0.06511731363542668,
+                0.17135008434196572,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 1956,
+              "inactive": false,
+              "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+              "adam_reset": true,
+              "optimizer_updates": 16,
+              "current_exposures": 1956,
+              "replay_exposures": 2048,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.16124290833249688,
+                0.1605726880952716,
+                0.4205285105854273,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 3926,
+              "inactive": false,
+              "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+              "adam_reset": true,
+              "optimizer_updates": 31,
+              "current_exposures": 3926,
+              "replay_exposures": 3968,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.10471189743088137,
+                0.10343797817345589,
+                0.3091870767454947,
+                0.0
+              ]
+            }
+          ]
+        }
+      ],
+      "model_sha256": "d1553251ce4d19ecfaaa68b6ecfbb00ec1164f66cb6285a3ac56c15f833e2856"
+    },
+    {
+      "stage": 2,
+      "new_label_ids": [
+        4,
+        5
+      ],
+      "active_slots": [
+        0,
+        6,
+        4,
+        5
+      ],
+      "train_rows": 65577,
+      "clean_source_rows": 151,
+      "poisoned_rows": 0,
+      "class_counts_supplied": {
+        "0": 14000,
+        "4": 33393,
+        "5": 18184
+      },
+      "owner_rows": [
+        4102,
+        11070,
+        18086,
+        6063,
+        26256
+      ],
+      "admitted_rows": [
+        4081,
+        10399,
+        15600,
+        5758,
+        26241
+      ],
+      "admission_score_sha256": "f26943c223f78998453b5c50a88cb53ad36fd5d71f060bdd03f19fa164834d4e",
+      "rounds": [
+        {
+          "round": 1,
+          "broadcast_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+          "aggregate_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+          "weights": [
+            0.06573881953954697,
+            0.16751235723495483,
+            0.25129270553588867,
+            0.09275278449058533,
+            0.4227033257484436
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 4081,
+              "inactive": false,
+              "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+              "adam_reset": true,
+              "optimizer_updates": 32,
+              "current_exposures": 4081,
+              "replay_exposures": 4096,
+              "proposals": 4081,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.5591320376843214,
+                0.3457288150675595,
+                0.3169316202402115,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 10399,
+              "inactive": false,
+              "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+              "adam_reset": true,
+              "optimizer_updates": 82,
+              "current_exposures": 10399,
+              "replay_exposures": 10496,
+              "proposals": 10399,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.5234072324706287,
+                0.2522131540789837,
+                0.24402874317474482,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 15600,
+              "inactive": false,
+              "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+              "adam_reset": true,
+              "optimizer_updates": 122,
+              "current_exposures": 15600,
+              "replay_exposures": 15616,
+              "proposals": 15600,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.28978584578535593,
+                0.22311737675402984,
+                0.3528414671538306,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 5758,
+              "inactive": false,
+              "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+              "adam_reset": true,
+              "optimizer_updates": 45,
+              "current_exposures": 5758,
+              "replay_exposures": 5760,
+              "proposals": 5758,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.728280387322108,
+                0.5945398595598009,
+                0.4680902659893036,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 26241,
+              "inactive": false,
+              "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+              "adam_reset": true,
+              "optimizer_updates": 206,
+              "current_exposures": 26241,
+              "replay_exposures": 26368,
+              "proposals": 26241,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.46978763895995407,
+                0.3376983962591412,
+                0.3510013744958396,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "broadcast_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+          "aggregate_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+          "weights": [
+            0.06573881953954697,
+            0.16751235723495483,
+            0.25129270553588867,
+            0.09275278449058533,
+            0.4227033257484436
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 4081,
+              "inactive": false,
+              "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+              "adam_reset": true,
+              "optimizer_updates": 32,
+              "current_exposures": 4081,
+              "replay_exposures": 4096,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.30562628293409944,
+                0.21764160692691803,
+                0.34395142877474427,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 10399,
+              "inactive": false,
+              "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+              "adam_reset": true,
+              "optimizer_updates": 82,
+              "current_exposures": 10399,
+              "replay_exposures": 10496,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.27175830431827686,
+                0.1867445860875816,
+                0.2658390851645935,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 15600,
+              "inactive": false,
+              "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+              "adam_reset": true,
+              "optimizer_updates": 122,
+              "current_exposures": 15600,
+              "replay_exposures": 15616,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.1598780848940865,
+                0.15404997399595918,
+                0.3314272357059307,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 5758,
+              "inactive": false,
+              "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+              "adam_reset": true,
+              "optimizer_updates": 45,
+              "current_exposures": 5758,
+              "replay_exposures": 5760,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.3993371023072137,
+                0.37347604764832393,
+                0.4806907282935248,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 26241,
+              "inactive": false,
+              "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+              "adam_reset": true,
+              "optimizer_updates": 206,
+              "current_exposures": 26241,
+              "replay_exposures": 26368,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.3286864649486339,
+                0.2620222461455077,
+                0.2538951610043211,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "broadcast_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+          "aggregate_sha256": "65237d18458fcbbc8fb69eb165becca7fb1af9fe4100f1bde2e69c36f3758b10",
+          "weights": [
+            0.06573881953954697,
+            0.16751235723495483,
+            0.25129270553588867,
+            0.09275278449058533,
+            0.4227033257484436
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 4081,
+              "inactive": false,
+              "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+              "adam_reset": true,
+              "optimizer_updates": 32,
+              "current_exposures": 4081,
+              "replay_exposures": 4096,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.2340556252747774,
+                0.17386308428831398,
+                0.352851131465286,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 10399,
+              "inactive": false,
+              "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+              "adam_reset": true,
+              "optimizer_updates": 82,
+              "current_exposures": 10399,
+              "replay_exposures": 10496,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.23654067770736972,
+                0.16028995057795106,
+                0.2642106246657488,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 15600,
+              "inactive": false,
+              "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+              "adam_reset": true,
+              "optimizer_updates": 122,
+              "current_exposures": 15600,
+              "replay_exposures": 15616,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.14271232229275782,
+                0.1417181074741434,
+                0.3233401535964403,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 5758,
+              "inactive": false,
+              "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+              "adam_reset": true,
+              "optimizer_updates": 45,
+              "current_exposures": 5758,
+              "replay_exposures": 5760,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.338300488392512,
+                0.3152152803209093,
+                0.5418403228123982,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 26241,
+              "inactive": false,
+              "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+              "adam_reset": true,
+              "optimizer_updates": 206,
+              "current_exposures": 26241,
+              "replay_exposures": 26368,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.31215857953122517,
+                0.24016863577863545,
+                0.2511566571384958,
+                0.0
+              ]
+            }
+          ]
+        }
+      ],
+      "model_sha256": "65237d18458fcbbc8fb69eb165becca7fb1af9fe4100f1bde2e69c36f3758b10"
+    },
+    {
+      "stage": 3,
+      "new_label_ids": [
+        3,
+        7
+      ],
+      "active_slots": [
+        0,
+        6,
+        4,
+        5,
+        3,
+        7
+      ],
+      "train_rows": 36755,
+      "clean_source_rows": 0,
+      "poisoned_rows": 0,
+      "class_counts_supplied": {
+        "0": 14000,
+        "3": 12264,
+        "7": 10491
+      },
+      "owner_rows": [
+        2396,
+        4629,
+        21749,
+        1702,
+        6279
+      ],
+      "admitted_rows": [
+        2369,
+        3953,
+        19287,
+        1385,
+        6263
+      ],
+      "admission_score_sha256": "8607762ac206948dd86e6b25b8a07711db75896233c77c530d21d91a1c77cf8a",
+      "rounds": [
+        {
+          "round": 1,
+          "broadcast_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+          "aggregate_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+          "weights": [
+            0.0712331235408783,
+            0.11886219680309296,
+            0.5799380540847778,
+            0.041645366698503494,
+            0.18832126259803772
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 2369,
+              "inactive": false,
+              "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+              "adam_reset": true,
+              "optimizer_updates": 19,
+              "current_exposures": 2369,
+              "replay_exposures": 2432,
+              "proposals": 2369,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                1.3419789420930963,
+                0.3960359567090085,
+                0.48443662179143804,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 3953,
+              "inactive": false,
+              "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+              "adam_reset": true,
+              "optimizer_updates": 31,
+              "current_exposures": 3953,
+              "replay_exposures": 3968,
+              "proposals": 3953,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.6563264641069597,
+                0.41740699641166196,
+                0.38863591128779995,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 19287,
+              "inactive": false,
+              "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+              "adam_reset": true,
+              "optimizer_updates": 151,
+              "current_exposures": 19287,
+              "replay_exposures": 19328,
+              "proposals": 19287,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.5200117558043524,
+                0.47911157454086456,
+                0.44140548402110474,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 1385,
+              "inactive": false,
+              "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+              "adam_reset": true,
+              "optimizer_updates": 11,
+              "current_exposures": 1385,
+              "replay_exposures": 1408,
+              "proposals": 1385,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.875224844975905,
+                0.5060473707589236,
+                0.7423491261222146,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 6263,
+              "inactive": false,
+              "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+              "adam_reset": true,
+              "optimizer_updates": 49,
+              "current_exposures": 6263,
+              "replay_exposures": 6272,
+              "proposals": 6263,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                1.0512350371905737,
+                0.7854169728804608,
+                0.31611616909503937,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "broadcast_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+          "aggregate_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+          "weights": [
+            0.0712331235408783,
+            0.11886219680309296,
+            0.5799380540847778,
+            0.041645366698503494,
+            0.18832126259803772
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 2369,
+              "inactive": false,
+              "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+              "adam_reset": true,
+              "optimizer_updates": 19,
+              "current_exposures": 2369,
+              "replay_exposures": 2432,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.4704156314071856,
+                0.5650173425674438,
+                0.6374998327932859,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 3953,
+              "inactive": false,
+              "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+              "adam_reset": true,
+              "optimizer_updates": 31,
+              "current_exposures": 3953,
+              "replay_exposures": 3968,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.31375426775024784,
+                0.43960954873792585,
+                0.39836421608924866,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 19287,
+              "inactive": false,
+              "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+              "adam_reset": true,
+              "optimizer_updates": 151,
+              "current_exposures": 19287,
+              "replay_exposures": 19328,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.34995972587178087,
+                0.4277262709393407,
+                0.3469596117340176,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 1385,
+              "inactive": false,
+              "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+              "adam_reset": true,
+              "optimizer_updates": 11,
+              "current_exposures": 1385,
+              "replay_exposures": 1408,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.42792894352566113,
+                0.7078305211934176,
+                0.8249843120574951,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 6263,
+              "inactive": false,
+              "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+              "adam_reset": true,
+              "optimizer_updates": 49,
+              "current_exposures": 6263,
+              "replay_exposures": 6272,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.6418778348942192,
+                0.815690388484877,
+                0.3282963229077203,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "broadcast_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+          "aggregate_sha256": "d150e1644675a647646be9dcafc3f71376aba1708efb5eb3aebec99741105a01",
+          "weights": [
+            0.0712331235408783,
+            0.11886219680309296,
+            0.5799380540847778,
+            0.041645366698503494,
+            0.18832126259803772
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 2369,
+              "inactive": false,
+              "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+              "adam_reset": true,
+              "optimizer_updates": 19,
+              "current_exposures": 2369,
+              "replay_exposures": 2432,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.4285399913787842,
+                0.5611789132419386,
+                0.6409311906287545,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 3953,
+              "inactive": false,
+              "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+              "adam_reset": true,
+              "optimizer_updates": 31,
+              "current_exposures": 3953,
+              "replay_exposures": 3968,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.29019096926335364,
+                0.41536034114899173,
+                0.374240372450121,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 19287,
+              "inactive": false,
+              "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+              "adam_reset": true,
+              "optimizer_updates": 151,
+              "current_exposures": 19287,
+              "replay_exposures": 19328,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.32848397292048725,
+                0.3899576883047622,
+                0.35178318649333046,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 1385,
+              "inactive": false,
+              "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+              "adam_reset": true,
+              "optimizer_updates": 11,
+              "current_exposures": 1385,
+              "replay_exposures": 1408,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.3933146135373549,
+                0.7317297187718478,
+                0.8525838851928711,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 6263,
+              "inactive": false,
+              "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+              "adam_reset": true,
+              "optimizer_updates": 49,
+              "current_exposures": 6263,
+              "replay_exposures": 6272,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.6145325789646227,
+                0.8048889162589092,
+                0.3340577741666716,
+                0.0
+              ]
+            }
+          ]
+        }
+      ],
+      "model_sha256": "d150e1644675a647646be9dcafc3f71376aba1708efb5eb3aebec99741105a01"
+    },
+    {
+      "stage": 4,
+      "new_label_ids": [
+        1,
+        2,
+        8,
+        9
+      ],
+      "active_slots": [
+        0,
+        6,
+        4,
+        5,
+        3,
+        7,
+        1,
+        2,
+        8,
+        9
+      ],
+      "train_rows": 19009,
+      "clean_source_rows": 0,
+      "poisoned_rows": 0,
+      "class_counts_supplied": {
+        "0": 14000,
+        "1": 2000,
+        "2": 1746,
+        "8": 1133,
+        "9": 130
+      },
+      "owner_rows": [
+        770,
+        3981,
+        11437,
+        1907,
+        914
+      ],
+      "admitted_rows": [
+        748,
+        3336,
+        8921,
+        1607,
+        900
+      ],
+      "admission_score_sha256": "3cd7cfede6374aa95b8e3a179f717cf4062c9d3cf78c27188fe925d9398ba466",
+      "rounds": [
+        {
+          "round": 1,
+          "broadcast_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+          "aggregate_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+          "weights": [
+            0.04822073131799698,
+            0.2150593101978302,
+            0.5751031637191772,
+            0.10359721630811691,
+            0.058019597083330154
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 748,
+              "inactive": false,
+              "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+              "adam_reset": true,
+              "optimizer_updates": 6,
+              "current_exposures": 748,
+              "replay_exposures": 768,
+              "proposals": 748,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                2.707029660542806,
+                1.8487384120623271,
+                0.7133237719535828,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 3336,
+              "inactive": false,
+              "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+              "adam_reset": true,
+              "optimizer_updates": 27,
+              "current_exposures": 3336,
+              "replay_exposures": 3456,
+              "proposals": 3336,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                1.4526766980135883,
+                0.9837108166129501,
+                0.8023031663011622,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 8921,
+              "inactive": false,
+              "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+              "adam_reset": true,
+              "optimizer_updates": 70,
+              "current_exposures": 8921,
+              "replay_exposures": 8960,
+              "proposals": 8921,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.675058804665293,
+                0.6258083203009197,
+                0.5432165337460382,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 1607,
+              "inactive": false,
+              "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+              "adam_reset": true,
+              "optimizer_updates": 13,
+              "current_exposures": 1607,
+              "replay_exposures": 1664,
+              "proposals": 1607,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                1.952745034144475,
+                1.2595640329214244,
+                1.0375617100642278,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 900,
+              "inactive": false,
+              "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+              "adam_reset": true,
+              "optimizer_updates": 8,
+              "current_exposures": 900,
+              "replay_exposures": 1024,
+              "proposals": 900,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                2.4872008860111237,
+                1.4231517165899277,
+                0.5207776315510273,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "broadcast_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+          "aggregate_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+          "weights": [
+            0.04822073131799698,
+            0.2150593101978302,
+            0.5751031637191772,
+            0.10359721630811691,
+            0.058019597083330154
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 748,
+              "inactive": false,
+              "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+              "adam_reset": true,
+              "optimizer_updates": 6,
+              "current_exposures": 748,
+              "replay_exposures": 768,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                1.444336215655009,
+                1.4741814335187275,
+                1.7295385201772053,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 3336,
+              "inactive": false,
+              "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+              "adam_reset": true,
+              "optimizer_updates": 27,
+              "current_exposures": 3336,
+              "replay_exposures": 3456,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.9413056815112079,
+                0.7427774733967252,
+                0.8150186207559373,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 8921,
+              "inactive": false,
+              "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+              "adam_reset": true,
+              "optimizer_updates": 70,
+              "current_exposures": 8921,
+              "replay_exposures": 8960,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.40283069759607315,
+                0.5289972794907434,
+                0.44731136517865316,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 1607,
+              "inactive": false,
+              "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+              "adam_reset": true,
+              "optimizer_updates": 13,
+              "current_exposures": 1607,
+              "replay_exposures": 1664,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                1.4034312046491182,
+                1.202943769785074,
+                1.1762357720961938,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 900,
+              "inactive": false,
+              "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+              "adam_reset": true,
+              "optimizer_updates": 8,
+              "current_exposures": 900,
+              "replay_exposures": 1024,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                2.395106017589569,
+                1.4385378658771515,
+                1.2839188948273659,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "broadcast_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+          "aggregate_sha256": "f3008c2741786a12379004c515da3c9b8efbe9fd3d424ecf91b53a2186d897d3",
+          "weights": [
+            0.04822073131799698,
+            0.2150593101978302,
+            0.5751031637191772,
+            0.10359721630811691,
+            0.058019597083330154
+          ],
+          "clients": [
+            {
+              "client": 0,
+              "admitted": 748,
+              "inactive": false,
+              "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+              "adam_reset": true,
+              "optimizer_updates": 6,
+              "current_exposures": 748,
+              "replay_exposures": 768,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                1.093945821126302,
+                1.4041539231936138,
+                1.9855200052261353,
+                0.0
+              ]
+            },
+            {
+              "client": 1,
+              "admitted": 3336,
+              "inactive": false,
+              "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+              "adam_reset": true,
+              "optimizer_updates": 27,
+              "current_exposures": 3336,
+              "replay_exposures": 3456,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.8783127069473267,
+                0.7033211964148062,
+                0.8606586765359949,
+                0.0
+              ]
+            },
+            {
+              "client": 2,
+              "admitted": 8921,
+              "inactive": false,
+              "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+              "adam_reset": true,
+              "optimizer_updates": 70,
+              "current_exposures": 8921,
+              "replay_exposures": 8960,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                0.3547045430966786,
+                0.49244910861764635,
+                0.42877935639449527,
+                0.0
+              ]
+            },
+            {
+              "client": 3,
+              "admitted": 1607,
+              "inactive": false,
+              "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+              "adam_reset": true,
+              "optimizer_updates": 13,
+              "current_exposures": 1607,
+              "replay_exposures": 1664,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                1.3258234720963697,
+                1.104992926120758,
+                1.2031402266942537,
+                0.0
+              ]
+            },
+            {
+              "client": 4,
+              "admitted": 900,
+              "inactive": false,
+              "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+              "adam_reset": true,
+              "optimizer_updates": 8,
+              "current_exposures": 900,
+              "replay_exposures": 1024,
+              "proposals": 0,
+              "full_replay_with_short_current_batches": 1,
+              "buffer_occupancy": 500,
+              "mean_losses": [
+                2.3652140498161316,
+                1.4407926499843597,
+                1.3924447447061539,
+                0.0
+              ]
+            }
+          ]
+        }
+      ],
+      "model_sha256": "f3008c2741786a12379004c515da3c9b8efbe9fd3d424ecf91b53a2186d897d3"
+    }
+  ],
+  "ledger": [
+    {
+      "kind": "admission",
+      "stage": 1,
+      "expanded_head_width": 2,
+      "scorer_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+      "score_ids_sha256": "7d6c884e14b436582999a08360dc2edfac00e816f53a22afbda7661d8fa7ad53",
+      "scores_sha256": "83fe2ee1e09dda30b582f705437fb2b8d7abdc72581e8e8f9db688422cca4e65",
+      "clients": [
+        {
+          "client": 0,
+          "raw": 12129,
+          "admitted": 12129,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 118,
+              "admitted": 118,
+              "protected": true
+            },
+            {
+              "source_code": 6,
+              "raw": 12011,
+              "admitted": 12011,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "45508b47748a7b033e07b8b03ec9882f32d49292496946250fa10f9bae70a72e"
+        },
+        {
+          "client": 1,
+          "raw": 26174,
+          "admitted": 26174,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 2790,
+              "admitted": 2790,
+              "protected": true
+            },
+            {
+              "source_code": 6,
+              "raw": 23384,
+              "admitted": 23384,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "577d3670d8ed0d2c7f367174a9b2ed37fba190c6d0f110109b4027d0e581ddba"
+        },
+        {
+          "client": 2,
+          "raw": 9815,
+          "admitted": 9815,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 9815,
+              "admitted": 9815,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "59cec1a342bd59ab63c28585b727d549b18dcb5e67256c5aa64b397b2702e1f4"
+        },
+        {
+          "client": 3,
+          "raw": 1956,
+          "admitted": 1956,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 1233,
+              "admitted": 1233,
+              "protected": true
+            },
+            {
+              "source_code": 6,
+              "raw": 723,
+              "admitted": 723,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "ccc81569790ca266e3ef28d7ef8d2b615c7c2b7b525fc346236bee0b8f59d403"
+        },
+        {
+          "client": 4,
+          "raw": 3926,
+          "admitted": 3926,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 44,
+              "admitted": 44,
+              "protected": true
+            },
+            {
+              "source_code": 6,
+              "raw": 3882,
+              "admitted": 3882,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "130e54d162a1ed89f24452ce6ec3c250df6eb924a1b96df951cbfc089780ed71"
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 1,
+      "round": 1,
+      "broadcast_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+      "aggregate_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+      "weights": [
+        0.22461111843585968,
+        0.4847036898136139,
+        0.18175925314426422,
+        0.036222223192453384,
+        0.07270370423793793
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 12129,
+          "inactive": false,
+          "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+          "adam_reset": true,
+          "optimizer_updates": 95,
+          "current_exposures": 12129,
+          "replay_exposures": 12032,
+          "proposals": 12129,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.14485317060821934,
+            0.13399479930338107,
+            0.22752967618503853,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 26174,
+          "inactive": false,
+          "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+          "adam_reset": true,
+          "optimizer_updates": 205,
+          "current_exposures": 26174,
+          "replay_exposures": 26112,
+          "proposals": 26174,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.10687942917390568,
+            0.09740073288359292,
+            0.17585090216726246,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 9815,
+          "inactive": false,
+          "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+          "adam_reset": true,
+          "optimizer_updates": 77,
+          "current_exposures": 9815,
+          "replay_exposures": 9728,
+          "proposals": 9815,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.12615658894374773,
+            0.11611709211553846,
+            0.22317133010546494,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 1956,
+          "inactive": false,
+          "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+          "adam_reset": true,
+          "optimizer_updates": 16,
+          "current_exposures": 1956,
+          "replay_exposures": 1920,
+          "proposals": 1956,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.40465390123426914,
+            0.3539477176964283,
+            0.1383574471983593,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 3926,
+          "inactive": false,
+          "start_model_sha256": "56fda2ceed21a1caecfffde1470d01faed124d39ecd015c19a3ee8834be6e7c4",
+          "adam_reset": true,
+          "optimizer_updates": 31,
+          "current_exposures": 3926,
+          "replay_exposures": 3840,
+          "proposals": 3926,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.26572792616582686,
+            0.2383308131848612,
+            0.26142098229648847,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 1,
+      "round": 2,
+      "broadcast_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+      "aggregate_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+      "weights": [
+        0.22461111843585968,
+        0.4847036898136139,
+        0.18175925314426422,
+        0.036222223192453384,
+        0.07270370423793793
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 12129,
+          "inactive": false,
+          "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+          "adam_reset": true,
+          "optimizer_updates": 95,
+          "current_exposures": 12129,
+          "replay_exposures": 12160,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.07061179127348097,
+            0.06932194217255241,
+            0.17349290063506678,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 26174,
+          "inactive": false,
+          "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+          "adam_reset": true,
+          "optimizer_updates": 205,
+          "current_exposures": 26174,
+          "replay_exposures": 26240,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.05912157060896478,
+            0.05508836353333985,
+            0.11403515471554385,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 9815,
+          "inactive": false,
+          "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+          "adam_reset": true,
+          "optimizer_updates": 77,
+          "current_exposures": 9815,
+          "replay_exposures": 9856,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.06836238938879657,
+            0.06871419714449288,
+            0.1772928180826175,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 1956,
+          "inactive": false,
+          "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+          "adam_reset": true,
+          "optimizer_updates": 16,
+          "current_exposures": 1956,
+          "replay_exposures": 2048,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.16255833487957716,
+            0.16659118421375751,
+            0.3543164059519768,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 3926,
+          "inactive": false,
+          "start_model_sha256": "c3ca131220f9cce3048aca61252221084eaba8cc7a269bbac8f960b494f35968",
+          "adam_reset": true,
+          "optimizer_updates": 31,
+          "current_exposures": 3926,
+          "replay_exposures": 3968,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.10998043898613222,
+            0.10868602173943673,
+            0.3201547880326548,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 1,
+      "round": 3,
+      "broadcast_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+      "aggregate_sha256": "d1553251ce4d19ecfaaa68b6ecfbb00ec1164f66cb6285a3ac56c15f833e2856",
+      "weights": [
+        0.22461111843585968,
+        0.4847036898136139,
+        0.18175925314426422,
+        0.036222223192453384,
+        0.07270370423793793
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 12129,
+          "inactive": false,
+          "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+          "adam_reset": true,
+          "optimizer_updates": 95,
+          "current_exposures": 12129,
+          "replay_exposures": 12160,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.06710122474714329,
+            0.06720527092877188,
+            0.16956170224829725,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 26174,
+          "inactive": false,
+          "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+          "adam_reset": true,
+          "optimizer_updates": 205,
+          "current_exposures": 26174,
+          "replay_exposures": 26240,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.05573072322621578,
+            0.05319144433227981,
+            0.10913610632826642,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 9815,
+          "inactive": false,
+          "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+          "adam_reset": true,
+          "optimizer_updates": 77,
+          "current_exposures": 9815,
+          "replay_exposures": 9856,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.06565434050250363,
+            0.06511731363542668,
+            0.17135008434196572,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 1956,
+          "inactive": false,
+          "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+          "adam_reset": true,
+          "optimizer_updates": 16,
+          "current_exposures": 1956,
+          "replay_exposures": 2048,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.16124290833249688,
+            0.1605726880952716,
+            0.4205285105854273,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 3926,
+          "inactive": false,
+          "start_model_sha256": "7f4a9b74cf2d712bda004d1a33558360136ab51a06b9a0f53ebd19af600dd853",
+          "adam_reset": true,
+          "optimizer_updates": 31,
+          "current_exposures": 3926,
+          "replay_exposures": 3968,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.10471189743088137,
+            0.10343797817345589,
+            0.3091870767454947,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "admission",
+      "stage": 2,
+      "expanded_head_width": 4,
+      "scorer_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+      "score_ids_sha256": "6e508994d9e52ecd10487f70e7a6c3be429b0ec0961fe62c6d5ce9f52d631052",
+      "scores_sha256": "f26943c223f78998453b5c50a88cb53ad36fd5d71f060bdd03f19fa164834d4e",
+      "clients": [
+        {
+          "client": 0,
+          "raw": 4102,
+          "admitted": 4081,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 85,
+              "admitted": 64,
+              "protected": false
+            },
+            {
+              "source_code": 4,
+              "raw": 303,
+              "admitted": 303,
+              "protected": true
+            },
+            {
+              "source_code": 5,
+              "raw": 3714,
+              "admitted": 3714,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "e12d6c73baea2096371398ef7c28aa3bb9e093638965199f8d60f9d0f795f511"
+        },
+        {
+          "client": 1,
+          "raw": 11070,
+          "admitted": 10399,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 2686,
+              "admitted": 2015,
+              "protected": false
+            },
+            {
+              "source_code": 4,
+              "raw": 6793,
+              "admitted": 6793,
+              "protected": true
+            },
+            {
+              "source_code": 5,
+              "raw": 1591,
+              "admitted": 1591,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "7b1d395fc03f9e64f120f23ed3b3346f54b4cc2d09d271495d5cdd0a1a08001e"
+        },
+        {
+          "client": 2,
+          "raw": 18086,
+          "admitted": 15600,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 9946,
+              "admitted": 7460,
+              "protected": false
+            },
+            {
+              "source_code": 4,
+              "raw": 7621,
+              "admitted": 7621,
+              "protected": true
+            },
+            {
+              "source_code": 5,
+              "raw": 519,
+              "admitted": 519,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "7b21333d306ae223b87f686873b0ba34911d83e6ca6cc0a7abe6170d1e5e2ec4"
+        },
+        {
+          "client": 3,
+          "raw": 6063,
+          "admitted": 5758,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 1220,
+              "admitted": 915,
+              "protected": false
+            },
+            {
+              "source_code": 4,
+              "raw": 1425,
+              "admitted": 1425,
+              "protected": true
+            },
+            {
+              "source_code": 5,
+              "raw": 3418,
+              "admitted": 3418,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "a9cc2fb38e7d1c8ae500a2a8d4d2d202c7daf4c0fb296309ee610963011c2010"
+        },
+        {
+          "client": 4,
+          "raw": 26256,
+          "admitted": 26241,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 63,
+              "admitted": 48,
+              "protected": false
+            },
+            {
+              "source_code": 4,
+              "raw": 17251,
+              "admitted": 17251,
+              "protected": true
+            },
+            {
+              "source_code": 5,
+              "raw": 8942,
+              "admitted": 8942,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "3cec3ace3e5b0dc299b5c67648af10362a7e06407ca39d34e6032819c67bcaa8"
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 2,
+      "round": 1,
+      "broadcast_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+      "aggregate_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+      "weights": [
+        0.06573881953954697,
+        0.16751235723495483,
+        0.25129270553588867,
+        0.09275278449058533,
+        0.4227033257484436
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 4081,
+          "inactive": false,
+          "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+          "adam_reset": true,
+          "optimizer_updates": 32,
+          "current_exposures": 4081,
+          "replay_exposures": 4096,
+          "proposals": 4081,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.5591320376843214,
+            0.3457288150675595,
+            0.3169316202402115,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 10399,
+          "inactive": false,
+          "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+          "adam_reset": true,
+          "optimizer_updates": 82,
+          "current_exposures": 10399,
+          "replay_exposures": 10496,
+          "proposals": 10399,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.5234072324706287,
+            0.2522131540789837,
+            0.24402874317474482,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 15600,
+          "inactive": false,
+          "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+          "adam_reset": true,
+          "optimizer_updates": 122,
+          "current_exposures": 15600,
+          "replay_exposures": 15616,
+          "proposals": 15600,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.28978584578535593,
+            0.22311737675402984,
+            0.3528414671538306,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 5758,
+          "inactive": false,
+          "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+          "adam_reset": true,
+          "optimizer_updates": 45,
+          "current_exposures": 5758,
+          "replay_exposures": 5760,
+          "proposals": 5758,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.728280387322108,
+            0.5945398595598009,
+            0.4680902659893036,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 26241,
+          "inactive": false,
+          "start_model_sha256": "5e68021fc1ac486ff8a8d653ae2d7c402636b7c63d01f4dc19cdcd59fcec6b35",
+          "adam_reset": true,
+          "optimizer_updates": 206,
+          "current_exposures": 26241,
+          "replay_exposures": 26368,
+          "proposals": 26241,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.46978763895995407,
+            0.3376983962591412,
+            0.3510013744958396,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 2,
+      "round": 2,
+      "broadcast_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+      "aggregate_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+      "weights": [
+        0.06573881953954697,
+        0.16751235723495483,
+        0.25129270553588867,
+        0.09275278449058533,
+        0.4227033257484436
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 4081,
+          "inactive": false,
+          "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+          "adam_reset": true,
+          "optimizer_updates": 32,
+          "current_exposures": 4081,
+          "replay_exposures": 4096,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.30562628293409944,
+            0.21764160692691803,
+            0.34395142877474427,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 10399,
+          "inactive": false,
+          "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+          "adam_reset": true,
+          "optimizer_updates": 82,
+          "current_exposures": 10399,
+          "replay_exposures": 10496,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.27175830431827686,
+            0.1867445860875816,
+            0.2658390851645935,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 15600,
+          "inactive": false,
+          "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+          "adam_reset": true,
+          "optimizer_updates": 122,
+          "current_exposures": 15600,
+          "replay_exposures": 15616,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.1598780848940865,
+            0.15404997399595918,
+            0.3314272357059307,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 5758,
+          "inactive": false,
+          "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+          "adam_reset": true,
+          "optimizer_updates": 45,
+          "current_exposures": 5758,
+          "replay_exposures": 5760,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.3993371023072137,
+            0.37347604764832393,
+            0.4806907282935248,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 26241,
+          "inactive": false,
+          "start_model_sha256": "626169ebdeed36f4439307d28ec6404cb6eb1a11778dd6e892f5cfb2378a5e26",
+          "adam_reset": true,
+          "optimizer_updates": 206,
+          "current_exposures": 26241,
+          "replay_exposures": 26368,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.3286864649486339,
+            0.2620222461455077,
+            0.2538951610043211,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 2,
+      "round": 3,
+      "broadcast_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+      "aggregate_sha256": "65237d18458fcbbc8fb69eb165becca7fb1af9fe4100f1bde2e69c36f3758b10",
+      "weights": [
+        0.06573881953954697,
+        0.16751235723495483,
+        0.25129270553588867,
+        0.09275278449058533,
+        0.4227033257484436
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 4081,
+          "inactive": false,
+          "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+          "adam_reset": true,
+          "optimizer_updates": 32,
+          "current_exposures": 4081,
+          "replay_exposures": 4096,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.2340556252747774,
+            0.17386308428831398,
+            0.352851131465286,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 10399,
+          "inactive": false,
+          "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+          "adam_reset": true,
+          "optimizer_updates": 82,
+          "current_exposures": 10399,
+          "replay_exposures": 10496,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.23654067770736972,
+            0.16028995057795106,
+            0.2642106246657488,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 15600,
+          "inactive": false,
+          "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+          "adam_reset": true,
+          "optimizer_updates": 122,
+          "current_exposures": 15600,
+          "replay_exposures": 15616,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.14271232229275782,
+            0.1417181074741434,
+            0.3233401535964403,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 5758,
+          "inactive": false,
+          "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+          "adam_reset": true,
+          "optimizer_updates": 45,
+          "current_exposures": 5758,
+          "replay_exposures": 5760,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.338300488392512,
+            0.3152152803209093,
+            0.5418403228123982,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 26241,
+          "inactive": false,
+          "start_model_sha256": "fdb72a273e3a32720677eb5f44ce2c5502f4b7a8349c0b8414fa0357dbd2b9ab",
+          "adam_reset": true,
+          "optimizer_updates": 206,
+          "current_exposures": 26241,
+          "replay_exposures": 26368,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.31215857953122517,
+            0.24016863577863545,
+            0.2511566571384958,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "admission",
+      "stage": 3,
+      "expanded_head_width": 6,
+      "scorer_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+      "score_ids_sha256": "8a961a4826d742bc0edbc64235fcd9bc93a1ae94f270ad8a00db55ce001e5c25",
+      "scores_sha256": "8607762ac206948dd86e6b25b8a07711db75896233c77c530d21d91a1c77cf8a",
+      "clients": [
+        {
+          "client": 0,
+          "raw": 2396,
+          "admitted": 2369,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 108,
+              "admitted": 81,
+              "protected": false
+            },
+            {
+              "source_code": 3,
+              "raw": 2126,
+              "admitted": 2126,
+              "protected": true
+            },
+            {
+              "source_code": 7,
+              "raw": 162,
+              "admitted": 162,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "48d087610843d226371a038b957474dad88efc2493b884654d61197047532bda"
+        },
+        {
+          "client": 1,
+          "raw": 4629,
+          "admitted": 3953,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 2707,
+              "admitted": 2031,
+              "protected": false
+            },
+            {
+              "source_code": 3,
+              "raw": 197,
+              "admitted": 197,
+              "protected": true
+            },
+            {
+              "source_code": 7,
+              "raw": 1725,
+              "admitted": 1725,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "19816b2c26495dbf8ebd2b059c2e6152501d355e3162a1d6f5226c83e526ced6"
+        },
+        {
+          "client": 2,
+          "raw": 21749,
+          "admitted": 19287,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 9849,
+              "admitted": 7387,
+              "protected": false
+            },
+            {
+              "source_code": 3,
+              "raw": 9009,
+              "admitted": 9009,
+              "protected": true
+            },
+            {
+              "source_code": 7,
+              "raw": 2891,
+              "admitted": 2891,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "6633f01ef20280e476a01200cf5f39364c617af3cc0f1c727b4c87c0a9a8bf16"
+        },
+        {
+          "client": 3,
+          "raw": 1702,
+          "admitted": 1385,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 1270,
+              "admitted": 953,
+              "protected": false
+            },
+            {
+              "source_code": 3,
+              "raw": 129,
+              "admitted": 129,
+              "protected": true
+            },
+            {
+              "source_code": 7,
+              "raw": 303,
+              "admitted": 303,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "115775ba25b6a36fb00384f12c1921a37fec6ec7c0cdec90eb9e4024a46b8916"
+        },
+        {
+          "client": 4,
+          "raw": 6279,
+          "admitted": 6263,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 66,
+              "admitted": 50,
+              "protected": false
+            },
+            {
+              "source_code": 3,
+              "raw": 803,
+              "admitted": 803,
+              "protected": true
+            },
+            {
+              "source_code": 7,
+              "raw": 5410,
+              "admitted": 5410,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "bbda95dd111eaf745e9a993c8017783dc801dba7245911961656602e04505977"
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 3,
+      "round": 1,
+      "broadcast_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+      "aggregate_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+      "weights": [
+        0.0712331235408783,
+        0.11886219680309296,
+        0.5799380540847778,
+        0.041645366698503494,
+        0.18832126259803772
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 2369,
+          "inactive": false,
+          "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+          "adam_reset": true,
+          "optimizer_updates": 19,
+          "current_exposures": 2369,
+          "replay_exposures": 2432,
+          "proposals": 2369,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            1.3419789420930963,
+            0.3960359567090085,
+            0.48443662179143804,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 3953,
+          "inactive": false,
+          "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+          "adam_reset": true,
+          "optimizer_updates": 31,
+          "current_exposures": 3953,
+          "replay_exposures": 3968,
+          "proposals": 3953,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.6563264641069597,
+            0.41740699641166196,
+            0.38863591128779995,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 19287,
+          "inactive": false,
+          "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+          "adam_reset": true,
+          "optimizer_updates": 151,
+          "current_exposures": 19287,
+          "replay_exposures": 19328,
+          "proposals": 19287,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.5200117558043524,
+            0.47911157454086456,
+            0.44140548402110474,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 1385,
+          "inactive": false,
+          "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+          "adam_reset": true,
+          "optimizer_updates": 11,
+          "current_exposures": 1385,
+          "replay_exposures": 1408,
+          "proposals": 1385,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.875224844975905,
+            0.5060473707589236,
+            0.7423491261222146,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 6263,
+          "inactive": false,
+          "start_model_sha256": "6c290d05597a5856adaf0e854ecc2c0952bbf8b912d998e6e4c82cb7df23fae6",
+          "adam_reset": true,
+          "optimizer_updates": 49,
+          "current_exposures": 6263,
+          "replay_exposures": 6272,
+          "proposals": 6263,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            1.0512350371905737,
+            0.7854169728804608,
+            0.31611616909503937,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 3,
+      "round": 2,
+      "broadcast_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+      "aggregate_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+      "weights": [
+        0.0712331235408783,
+        0.11886219680309296,
+        0.5799380540847778,
+        0.041645366698503494,
+        0.18832126259803772
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 2369,
+          "inactive": false,
+          "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+          "adam_reset": true,
+          "optimizer_updates": 19,
+          "current_exposures": 2369,
+          "replay_exposures": 2432,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.4704156314071856,
+            0.5650173425674438,
+            0.6374998327932859,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 3953,
+          "inactive": false,
+          "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+          "adam_reset": true,
+          "optimizer_updates": 31,
+          "current_exposures": 3953,
+          "replay_exposures": 3968,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.31375426775024784,
+            0.43960954873792585,
+            0.39836421608924866,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 19287,
+          "inactive": false,
+          "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+          "adam_reset": true,
+          "optimizer_updates": 151,
+          "current_exposures": 19287,
+          "replay_exposures": 19328,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.34995972587178087,
+            0.4277262709393407,
+            0.3469596117340176,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 1385,
+          "inactive": false,
+          "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+          "adam_reset": true,
+          "optimizer_updates": 11,
+          "current_exposures": 1385,
+          "replay_exposures": 1408,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.42792894352566113,
+            0.7078305211934176,
+            0.8249843120574951,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 6263,
+          "inactive": false,
+          "start_model_sha256": "0361da717a7c7e0c71d8f25766e89e92e7bbe55f6732658686e9a71c97c7ace2",
+          "adam_reset": true,
+          "optimizer_updates": 49,
+          "current_exposures": 6263,
+          "replay_exposures": 6272,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.6418778348942192,
+            0.815690388484877,
+            0.3282963229077203,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 3,
+      "round": 3,
+      "broadcast_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+      "aggregate_sha256": "d150e1644675a647646be9dcafc3f71376aba1708efb5eb3aebec99741105a01",
+      "weights": [
+        0.0712331235408783,
+        0.11886219680309296,
+        0.5799380540847778,
+        0.041645366698503494,
+        0.18832126259803772
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 2369,
+          "inactive": false,
+          "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+          "adam_reset": true,
+          "optimizer_updates": 19,
+          "current_exposures": 2369,
+          "replay_exposures": 2432,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.4285399913787842,
+            0.5611789132419386,
+            0.6409311906287545,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 3953,
+          "inactive": false,
+          "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+          "adam_reset": true,
+          "optimizer_updates": 31,
+          "current_exposures": 3953,
+          "replay_exposures": 3968,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.29019096926335364,
+            0.41536034114899173,
+            0.374240372450121,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 19287,
+          "inactive": false,
+          "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+          "adam_reset": true,
+          "optimizer_updates": 151,
+          "current_exposures": 19287,
+          "replay_exposures": 19328,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.32848397292048725,
+            0.3899576883047622,
+            0.35178318649333046,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 1385,
+          "inactive": false,
+          "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+          "adam_reset": true,
+          "optimizer_updates": 11,
+          "current_exposures": 1385,
+          "replay_exposures": 1408,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.3933146135373549,
+            0.7317297187718478,
+            0.8525838851928711,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 6263,
+          "inactive": false,
+          "start_model_sha256": "7bcad3518f92108141e13ace0dffb770cd2d08d64cf8a1768a7b9c9be0615fc9",
+          "adam_reset": true,
+          "optimizer_updates": 49,
+          "current_exposures": 6263,
+          "replay_exposures": 6272,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.6145325789646227,
+            0.8048889162589092,
+            0.3340577741666716,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "admission",
+      "stage": 4,
+      "expanded_head_width": 10,
+      "scorer_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+      "score_ids_sha256": "13d7312202f89bca34e73518bc07460842a713b06a1cdc90c36e549ae81520ec",
+      "scores_sha256": "3cd7cfede6374aa95b8e3a179f717cf4062c9d3cf78c27188fe925d9398ba466",
+      "clients": [
+        {
+          "client": 0,
+          "raw": 770,
+          "admitted": 748,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 90,
+              "admitted": 68,
+              "protected": false
+            },
+            {
+              "source_code": 1,
+              "raw": 570,
+              "admitted": 570,
+              "protected": true
+            },
+            {
+              "source_code": 2,
+              "raw": 105,
+              "admitted": 105,
+              "protected": true
+            },
+            {
+              "source_code": 8,
+              "raw": 2,
+              "admitted": 2,
+              "protected": true
+            },
+            {
+              "source_code": 9,
+              "raw": 3,
+              "admitted": 3,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "194c035bca7190e11c81db1ac956529d3768e5adb22ab296f92eb9eb5e76b99d"
+        },
+        {
+          "client": 1,
+          "raw": 3981,
+          "admitted": 3336,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 2582,
+              "admitted": 1937,
+              "protected": false
+            },
+            {
+              "source_code": 1,
+              "raw": 505,
+              "admitted": 505,
+              "protected": true
+            },
+            {
+              "source_code": 2,
+              "raw": 529,
+              "admitted": 529,
+              "protected": true
+            },
+            {
+              "source_code": 8,
+              "raw": 358,
+              "admitted": 358,
+              "protected": true
+            },
+            {
+              "source_code": 9,
+              "raw": 7,
+              "admitted": 7,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "e0941772026cd0b5198ff4537b2dcaf6924c8c0ea1f104ad803c5fbadd82971e"
+        },
+        {
+          "client": 2,
+          "raw": 11437,
+          "admitted": 8921,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 10067,
+              "admitted": 7551,
+              "protected": false
+            },
+            {
+              "source_code": 1,
+              "raw": 891,
+              "admitted": 891,
+              "protected": true
+            },
+            {
+              "source_code": 2,
+              "raw": 3,
+              "admitted": 3,
+              "protected": true
+            },
+            {
+              "source_code": 8,
+              "raw": 417,
+              "admitted": 417,
+              "protected": true
+            },
+            {
+              "source_code": 9,
+              "raw": 59,
+              "admitted": 59,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "6fb3c802154fd80baa5f3b5ccf5221c30012d29625308e60a5ccb4a8fc41b9d0"
+        },
+        {
+          "client": 3,
+          "raw": 1907,
+          "admitted": 1607,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 1202,
+              "admitted": 902,
+              "protected": false
+            },
+            {
+              "source_code": 1,
+              "raw": 11,
+              "admitted": 11,
+              "protected": true
+            },
+            {
+              "source_code": 2,
+              "raw": 447,
+              "admitted": 447,
+              "protected": true
+            },
+            {
+              "source_code": 8,
+              "raw": 247,
+              "admitted": 247,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "d5378ac502abc1005331a050366900d4aa918b5c9df9b59a2de888e54895da5a"
+        },
+        {
+          "client": 4,
+          "raw": 914,
+          "admitted": 900,
+          "quotas": [
+            {
+              "source_code": 0,
+              "raw": 59,
+              "admitted": 45,
+              "protected": false
+            },
+            {
+              "source_code": 1,
+              "raw": 23,
+              "admitted": 23,
+              "protected": true
+            },
+            {
+              "source_code": 2,
+              "raw": 662,
+              "admitted": 662,
+              "protected": true
+            },
+            {
+              "source_code": 8,
+              "raw": 109,
+              "admitted": 109,
+              "protected": true
+            },
+            {
+              "source_code": 9,
+              "raw": 61,
+              "admitted": 61,
+              "protected": true
+            }
+          ],
+          "admitted_ids_sha256": "dc18e4974c1b91822846c9bc747fd6d0a33b650626c09048dd6496d59de08b4e"
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 4,
+      "round": 1,
+      "broadcast_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+      "aggregate_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+      "weights": [
+        0.04822073131799698,
+        0.2150593101978302,
+        0.5751031637191772,
+        0.10359721630811691,
+        0.058019597083330154
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 748,
+          "inactive": false,
+          "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+          "adam_reset": true,
+          "optimizer_updates": 6,
+          "current_exposures": 748,
+          "replay_exposures": 768,
+          "proposals": 748,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            2.707029660542806,
+            1.8487384120623271,
+            0.7133237719535828,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 3336,
+          "inactive": false,
+          "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+          "adam_reset": true,
+          "optimizer_updates": 27,
+          "current_exposures": 3336,
+          "replay_exposures": 3456,
+          "proposals": 3336,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            1.4526766980135883,
+            0.9837108166129501,
+            0.8023031663011622,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 8921,
+          "inactive": false,
+          "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+          "adam_reset": true,
+          "optimizer_updates": 70,
+          "current_exposures": 8921,
+          "replay_exposures": 8960,
+          "proposals": 8921,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.675058804665293,
+            0.6258083203009197,
+            0.5432165337460382,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 1607,
+          "inactive": false,
+          "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+          "adam_reset": true,
+          "optimizer_updates": 13,
+          "current_exposures": 1607,
+          "replay_exposures": 1664,
+          "proposals": 1607,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            1.952745034144475,
+            1.2595640329214244,
+            1.0375617100642278,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 900,
+          "inactive": false,
+          "start_model_sha256": "0b3125b4e58f6d08549065ba93ae0eda4c395c1b31bc12752472d04f972ae0bf",
+          "adam_reset": true,
+          "optimizer_updates": 8,
+          "current_exposures": 900,
+          "replay_exposures": 1024,
+          "proposals": 900,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            2.4872008860111237,
+            1.4231517165899277,
+            0.5207776315510273,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 4,
+      "round": 2,
+      "broadcast_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+      "aggregate_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+      "weights": [
+        0.04822073131799698,
+        0.2150593101978302,
+        0.5751031637191772,
+        0.10359721630811691,
+        0.058019597083330154
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 748,
+          "inactive": false,
+          "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+          "adam_reset": true,
+          "optimizer_updates": 6,
+          "current_exposures": 748,
+          "replay_exposures": 768,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            1.444336215655009,
+            1.4741814335187275,
+            1.7295385201772053,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 3336,
+          "inactive": false,
+          "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+          "adam_reset": true,
+          "optimizer_updates": 27,
+          "current_exposures": 3336,
+          "replay_exposures": 3456,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.9413056815112079,
+            0.7427774733967252,
+            0.8150186207559373,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 8921,
+          "inactive": false,
+          "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+          "adam_reset": true,
+          "optimizer_updates": 70,
+          "current_exposures": 8921,
+          "replay_exposures": 8960,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.40283069759607315,
+            0.5289972794907434,
+            0.44731136517865316,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 1607,
+          "inactive": false,
+          "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+          "adam_reset": true,
+          "optimizer_updates": 13,
+          "current_exposures": 1607,
+          "replay_exposures": 1664,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            1.4034312046491182,
+            1.202943769785074,
+            1.1762357720961938,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 900,
+          "inactive": false,
+          "start_model_sha256": "56d2ad8b3ba8599ece57f4f957a2bcafd86d0facf58eb8afc78ecc6ad38de5b7",
+          "adam_reset": true,
+          "optimizer_updates": 8,
+          "current_exposures": 900,
+          "replay_exposures": 1024,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            2.395106017589569,
+            1.4385378658771515,
+            1.2839188948273659,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "round",
+      "stage": 4,
+      "round": 3,
+      "broadcast_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+      "aggregate_sha256": "f3008c2741786a12379004c515da3c9b8efbe9fd3d424ecf91b53a2186d897d3",
+      "weights": [
+        0.04822073131799698,
+        0.2150593101978302,
+        0.5751031637191772,
+        0.10359721630811691,
+        0.058019597083330154
+      ],
+      "clients": [
+        {
+          "client": 0,
+          "admitted": 748,
+          "inactive": false,
+          "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+          "adam_reset": true,
+          "optimizer_updates": 6,
+          "current_exposures": 748,
+          "replay_exposures": 768,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            1.093945821126302,
+            1.4041539231936138,
+            1.9855200052261353,
+            0.0
+          ]
+        },
+        {
+          "client": 1,
+          "admitted": 3336,
+          "inactive": false,
+          "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+          "adam_reset": true,
+          "optimizer_updates": 27,
+          "current_exposures": 3336,
+          "replay_exposures": 3456,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.8783127069473267,
+            0.7033211964148062,
+            0.8606586765359949,
+            0.0
+          ]
+        },
+        {
+          "client": 2,
+          "admitted": 8921,
+          "inactive": false,
+          "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+          "adam_reset": true,
+          "optimizer_updates": 70,
+          "current_exposures": 8921,
+          "replay_exposures": 8960,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            0.3547045430966786,
+            0.49244910861764635,
+            0.42877935639449527,
+            0.0
+          ]
+        },
+        {
+          "client": 3,
+          "admitted": 1607,
+          "inactive": false,
+          "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+          "adam_reset": true,
+          "optimizer_updates": 13,
+          "current_exposures": 1607,
+          "replay_exposures": 1664,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            1.3258234720963697,
+            1.104992926120758,
+            1.2031402266942537,
+            0.0
+          ]
+        },
+        {
+          "client": 4,
+          "admitted": 900,
+          "inactive": false,
+          "start_model_sha256": "4c3603ee9aca3a0befa180ea5afeb6a3c82c3a67f80624f0a251eec027a97147",
+          "adam_reset": true,
+          "optimizer_updates": 8,
+          "current_exposures": 900,
+          "replay_exposures": 1024,
+          "proposals": 0,
+          "full_replay_with_short_current_batches": 1,
+          "buffer_occupancy": 500,
+          "mean_losses": [
+            2.3652140498161316,
+            1.4407926499843597,
+            1.3924447447061539,
+            0.0
+          ]
+        }
+      ]
+    }
+  ],
+  "stage_checkpoints": [
+    {
+      "stage": 1,
+      "model_sha256": "d1553251ce4d19ecfaaa68b6ecfbb00ec1164f66cb6285a3ac56c15f833e2856",
+      "file_sha256": "5706c96f86d561dc033d1d9adf98918384d6727e926542177c9d32265d6e558a"
+    },
+    {
+      "stage": 2,
+      "model_sha256": "65237d18458fcbbc8fb69eb165becca7fb1af9fe4100f1bde2e69c36f3758b10",
+      "file_sha256": "40efaadb7abcf6cc734b64fed94388b94f48dff9d4601268f7be3dfff30d0c36"
+    },
+    {
+      "stage": 3,
+      "model_sha256": "d150e1644675a647646be9dcafc3f71376aba1708efb5eb3aebec99741105a01",
+      "file_sha256": "2c45384a9fa8ff719431e09c22cd2835ad979fcf6eb509540a63081c7e7fb2ca"
+    },
+    {
+      "stage": 4,
+      "model_sha256": "f3008c2741786a12379004c515da3c9b8efbe9fd3d424ecf91b53a2186d897d3",
+      "file_sha256": "259cd9116ee5c4b0794f5ea5a251181884fa4ef2852f2b78ecdf6d477348e695"
+    }
+  ],
+  "runtime": {
+    "python": "3.14.0",
+    "numpy": "2.4.3",
+    "torch": "2.14.0+cpu",
+    "device": "cpu",
+    "threads": 1,
+    "interop_threads": 1,
+    "deterministic_algorithms": true,
+    "amp": false,
+    "dtype": "float32"
+  },
+  "elapsed_seconds": 64.74817890000122,
+  "feature_arrays_accessed": true,
+  "external_test_arrays_accessed": false,
+  "cicids_final_test_accessed": false,
+  "test_metrics_computed": false,
+  "interpretation": "Train-only exploratory adapter pilot; synthetic owners; not a faithful external replication."
+}

@@ -1,5 +1,7 @@
 # Project handoff — 20 November 2026
 
+[Start here](#start-here) · [Experiment records and results](#experiment-by-experiment-reading-guide) · [Remaining work](#remaining-work-for-the-next-agent) · [Copyable prompt](#copyable-prompt-for-another-ai-agent)
+
 ## Start here
 
 This is the Computer Networks research project of Saneedullah (23I-2568) and
@@ -12,6 +14,7 @@ The exact deadline submission is **submissions/Phase3_Submission_23I-2568_23I-25
 Its SHA-256 is `c219925799b2fe3b1d73e4203e25d1f94987b6c401f0288290f5f0bb67a2311f`.
 Inside it, read `Phase3_Submission/phase3-report.pdf` and
 `Phase3_Submission/report-source/phase3-report.tex`. Preserve this archive.
+GitHub also has the [original PDF](submissions/phase3-as-submitted/phase3-report.pdf) and [original TeX](submissions/phase3-as-submitted/phase3-report.tex) extracted from the ZIP.
 
 The revised report is **submissions/phase3-audited-report/phase3-report.pdf**;
 editable TeX, vector figures, provenance and source ledger are alongside it.
@@ -73,9 +76,7 @@ findings. All currently audited efficacy evidence is development-bank evidence
 on a historical capture. A qualified synthetic final evaluator does not establish
 that real held-out evaluation has been performed.
 
-## Remaining work for the next agent
-
-### Experiment-by-experiment reading guide
+## Experiment-by-experiment reading guide
 
 Read the files below rather than inferring results from filenames. Completion
 counts are not effect estimates; verify the actual contrasts and denominators.
@@ -146,7 +147,7 @@ counts are not effect estimates; verify the actual contrasts and denominators.
    75%-low-loss baseline at four doses and twelve seeds. Inspect
    `scripts/audit_phase3_dg_baseline.py` and the execution source named in its
    identity. Earlier v1–v4 attempts and a failure file are not additional replicates.
-   Numerical conclusions and revised-report integration still require inspection.
+   The recomputed means are below. The audited report predates this block.
 10. **Later 48 eviction runs.** `results/phase3-eviction-baseline-v2/` contains
     FIFO/class-balanced × clean/.5 × twelve seeds. Read `completion.json`,
     `identity.json`, `runs/*/result.json`, `scripts/audit_phase3_eviction_block.py`
@@ -170,9 +171,30 @@ counts are not effect estimates; verify the actual contrasts and denominators.
     exploratory evidence. Read `src/phase3_v2/final_evaluate.py` and its qualification
     records: synthetic qualification is not real held-out scoring.
 
+### Development results and coverage checks
+
+The late DG-v5 and DR eviction-v2 checks verified all 96 result-file hashes and 384 checkpoint-file hashes against the two completion manifests. Each cell has the expected twelve seeds and four development stages. The means below were recomputed from their saved confusion matrices using the locked eligible taxonomy. H and E2 recall change subtract each seed's clean run for the same method or policy. Macro F1 and benign FAR are from E4.
+
+| Setting | Dose | Acquisition A | Persistence H | E2 Hulk recall change | E4 macro F1 | E4 benign FAR |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| DG | 0 | .381175 | .000000 | .000000 | .603314 | .040961 |
+| DG | .1 | .386180 | .016495 | -.029422 | .589728 | .046312 |
+| DG | .3 | .377316 | .018154 | -.026985 | .589209 | .045231 |
+| DG | .5 | .365832 | .027550 | -.038985 | .575618 | .044114 |
+| DR class-balanced | 0 | .400329 | .000000 | .000000 | .671250 | .053368 |
+| DR class-balanced | .5 | .386842 | .000167 | -.000089 | .659070 | .059293 |
+| DR FIFO | 0 | .288806 | .000000 | .000000 | .125216 | .304991 |
+| DR FIFO | .5 | .290439 | .095745 | -.000331 | .119851 | .335697 |
+
+The manifest checks establish file integrity and coverage. Full source and model identity checks, matched-reference contrasts with uncertainty, and revised-report integration remain open. Audit the eviction variants against the matching DR/NONE reservoir. Phase 2's separate DC eviction commitment remains open. The eviction audit script defaults to v1. Set `PHASE3_EVICTION_AUDIT_OUT` to `results/phase3-eviction-baseline-v2` and check its local data prerequisites before running it.
+
+The revised report's ablation section already includes replay-loss and quota results. At dose .5 it reports H/A/FAR of .0008/.3469/.0780 for DQ, .0026/.2744/.1852 for DC without logit replay and .0454/.1361/.4679 for DC without replay labels. See [the revised TeX and its ablation table](submissions/phase3-audited-report/phase3-report.tex) and the [quota figure](submissions/phase3-audited-report/figures/quota-ablations.pdf).
+
 For every study, report its source profile, dataset role, experimental unit,
 unique completed cells, effects/uncertainty and missing artifacts. The published
 summaries above are navigation aids; independently verify them against raw evidence.
+
+## Remaining work for the next agent
 
 1. Reconcile this latest checkout with the audit's dated claims. Verify late DG
    and eviction completion, deduplicate records and integrate qualified results.
@@ -194,7 +216,7 @@ Estimate resources and justify additional runs before dispatching them.
 
 ## Large evidence and reproduction
 
-See GitHub Releases for the full-evidence v28 ZIP and its validation manifest.
+See the [Phase 3 evidence release](https://github.com/ahmedbilalazhar/cl-ids-adversarial/releases/tag/phase3-evidence-v28) for the full-evidence v28 ZIP and its validation manifest.
 The recorded SHA-256 is
 `e427c77383923201441f897ef7609986ddeb824cdaf8b018cf15f30d022d126a`.
 It predates the later DG-v5/eviction-v2 completion and must not be described as
@@ -207,6 +229,10 @@ training reproducibility. Use `docs/phase3-rigorous-audit-v1/reproduction.md`,
 configuration locks, dataset manifests and the release evidence inventory.
 
 ## Copyable prompt for another AI agent
+
+```text
+Repository: https://github.com/ahmedbilalazhar/cl-ids-adversarial/tree/main
+Project and evidence map: https://github.com/ahmedbilalazhar/cl-ids-adversarial/blob/main/AGENT_HANDOFF.md
 
 Audit this repository as a skeptical computer-networks researcher and implementation
 engineer. Begin with AGENT_HANDOFF.md and identify your reviewed commit. Read
@@ -247,3 +273,4 @@ and do not invent execution, instructor feedback, data access or completion.
 Deliver a severity-ranked review, traceability table, patches and validation evidence,
 an experiment plan with resource estimates, a revised report/figures and claim ledger,
 and a reproducible artifact map. Explicitly list what remains unverified or omitted.
+```

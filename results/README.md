@@ -9,7 +9,7 @@
 | Primary CPU runs, random controls and oracle continuations | [Completion record](phase3-overnight/completion.json) · [Core outcomes](phase3-rigorous-audit-v1/core-summary.csv) · [Oracle outcomes](phase3-rigorous-audit-v1/oracle-repair.csv) |
 | Replay-loss and alternative-quota ablations | [Completion record](phase3-followup-ablation/completion-followup.json) · [Per-run metrics](phase3-rigorous-audit-v1/trajectory-metrics.csv) · [Matching audit](phase3-rigorous-audit-v1/ablation-cell-audit.json) |
 | Later DG and DR eviction runs | [DG-v5 manifest](phase3-dg-baseline-v5/completion.json) · [Eviction-v2 manifest](phase3-eviction-baseline-v2/completion.json) · [Audited paired findings](../docs/phase3-six-hour-findings.md) |
-| DC eviction extension | [Six-hour protocol and output paths](../docs/phase3-six-hour-extension.md) |
+| DC eviction extension, 24 runs | [Protocol](../docs/phase3-six-hour-extension.md) · [Completion manifest](phase3-dc-eviction-six-seed-v1/completion.json) · [Paired report](phase3-dc-eviction-six-seed-v1/audit/report.md) · [Figure](phase3-dc-eviction-six-seed-v1/audit/eviction-policy-comparison.pdf) |
 | Independent verification and open checks | [Audit evidence](phase3-rigorous-audit-v1/START_HERE.md) · [Completion plan](../docs/phase3-rigorous-audit-v1/phase3-completion-plan.md) |
 
 The follow-up directory includes byte-identical copies of the earlier overnight records. Use the [experiment inventory](../AGENT_HANDOFF.md#experiment-by-experiment-reading-guide) for the correct counts, stage coverage and scope. The [submission index](../submissions/README.md) identifies the report versions and downloads.

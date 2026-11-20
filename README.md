@@ -25,7 +25,7 @@ Computer Networks research by Saneedullah (23I-2568) and Ahmed Bilal (23I-2581).
 | [`phase3_delivery/`](phase3_delivery/) and [`kaggle_worker/`](kaggle_worker/) | Experiment delivery, worker and verification tooling |
 | [`reports/`](reports/), [`research_figures/`](research_figures/) and [`notebooks/`](notebooks/) | Earlier course materials, figures and notebook work |
 
-The audited CPU study contains 417 unique full trajectories and 24 paired oracle continuations. The later DG and DR eviction blocks add 48 trajectories each, and their results are indexed in the handoff. The v28 release predates those two blocks. The real final-test bank remains sealed. [Evidence status and remaining work](AGENT_HANDOFF.md#evidence-status-and-interpretation)
+The audited CPU study contains 417 unique full trajectories and 24 paired oracle continuations. The later DG, DR eviction and DC eviction blocks add 48, 48 and 24 trajectories respectively, bringing the adopted CPU total to 537. The v28 release predates those three blocks. The real final-test bank remains sealed. [Evidence status and remaining work](AGENT_HANDOFF.md#evidence-status-and-interpretation)
 
 ## Local and GitHub copies
 

@@ -10,4 +10,25 @@ The DR/NONE eviction audit verified 48 FIFO and class-balanced trajectories and 
 
 ## New DC eviction study
 
-See the [frozen six-hour plan](phase3-six-hour-extension.md) for the six-seed exploratory DC design, matched reservoir controls and compute cap. After completion, the local study directory `results/phase3-dc-eviction-six-seed-v1/` contains `completion.json` and `audit/summary.json` for integrity and scope, `audit/paired-comparisons.csv` for estimates and intervals, and `audit/eviction-policy-comparison.pdf` for the figure. Interpret these outcomes in the context of DC. With DC held fixed, a different replay policy can change subsequent model-based ranks and therefore the admitted IDs. The audit checks fixed admission counts and E1 identity and tracks divergence in later stages.
+The audit verified all 24 trajectories and 96 checkpoints for six paired
+ownership seeds. At dose .5, the table shows each policy minus the matched
+DC reservoir. Differences and descriptive 95% bootstrap intervals are in
+percentage points. Higher acquisition and macro F1 are favorable. Lower
+persistent error and benign false alarms are favorable.
+
+| Metric | FIFO | Class-balanced |
+| --- | ---: | ---: |
+| Acquisition A | −15.86 [−21.12, −11.51] | −3.77 [−9.03, +0.95] |
+| Persistent error H | +5.95 [−0.06, +17.75] | +0.04 [−0.01, +0.09] |
+| E4 eligible macro F1 | −37.83 [−42.37, −34.26] | −0.03 [−7.15, +6.64] |
+| E4 benign false-alarm rate | +29.04 [+10.83, +48.80] | +2.42 [−3.59, +8.65] |
+
+FIFO showed worse acquisition, final macro F1 and false alarms on this
+development bank. Class-balanced eviction offered no clear improvement over
+reservoir under DC. Admission counts matched, while admitted IDs differed
+from reservoir in 72 stage comparisons. The contrast measures the total
+effect of the replay policy, including changes in which records the scorer
+admits. The other six planned ownership seeds and real held-out evaluation
+remain open.
+
+[Frozen protocol](phase3-six-hour-extension.md) · [Audit summary](../results/phase3-dc-eviction-six-seed-v1/audit/summary.json) · [Paired effects for both doses](../results/phase3-dc-eviction-six-seed-v1/audit/paired-comparisons.csv) · [Figure](../results/phase3-dc-eviction-six-seed-v1/audit/eviction-policy-comparison.pdf)

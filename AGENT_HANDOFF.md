@@ -1,4 +1,4 @@
-# Project handoff — 20 November 2026
+# Computer Networks project handoff for Saneedullah
 
 [Start here](#start-here) · [Experiment records and results](#experiment-by-experiment-reading-guide) · [Remaining work](#remaining-work-for-the-next-agent) · [Reproduction](#large-evidence-and-reproduction) · [Copyable prompt](#copyable-prompt-for-another-ai-agent)
 
@@ -30,6 +30,26 @@ For a first pass, record the branch and commit, compare the Phase 2 proposal wit
 the report as submitted, and open the revised report beside its claim ledger.
 Then inspect the open work below. This sequence is usable from GitHub before
 downloading the large evidence archive or obtaining dataset access.
+
+## What changed after submission
+
+Your GPU notebook, report and figures are preserved with the deadline submission.
+The later work audited that evidence against Phase 2, recorded the methodology
+amendments, built the 74-feature CPU reference, and reran the core learner and
+admission comparisons with paired ownership seeds. It added matched random
+admission, replay loss and quota controls, oracle repair continuations, the global
+DG baseline, and eviction comparisons under both unfiltered DR and DC. The
+audited report covers the CPU core and initial ablations. The newest three blocks
+are documented in the [report supplement](docs/phase3-six-hour-findings.md).
+
+The three research questions concern immediate and persistent source-family
+damage (RQ1), the acquisition and false-alarm effects of class-aware admission
+compared with an equal-volume global filter (RQ2), and how replay choices and
+cost contribute (RQ3). In the tables, A is F1 averaged over untargeted new
+families and stages. H is average excess Hulk-to-benign error after withdrawal
+relative to the matching clean run. E2 recall change measures immediate damage.
+E4 benign FAR measures false alarms on benign development flows. Interpret these
+alongside E4 eligible macro F1 and the underlying family supports.
 
 ## Folder map
 
@@ -68,6 +88,7 @@ and review notes in `docs/`.
 | `results/phase3-followup-ablation/` | Completed loss/quota ablations plus copied reference records |
 | `results/phase3-dg-baseline-v5/` | Later DG block: completion manifest reports 48 completed trajectories |
 | `results/phase3-eviction-baseline-v2/` | Later eviction block: completion manifest reports 48 completed trajectories |
+| [`results/phase3-dc-eviction-six-seed-v1/`](results/phase3-dc-eviction-six-seed-v1/) | Completed DC eviction ablation, 24 trajectories and 96 verified checkpoints |
 | `scripts/` | Training dispatch, audits, analysis, plotting, report and archive tools |
 | `tests/` | Scientific semantics and execution-contract checks |
 | `data/` | Acquisition/rebuild documentation; raw/prepared payloads are generally excluded from Git |
@@ -93,6 +114,12 @@ The [late results table](#development-results-and-coverage-checks) records the
 means computed from confusion matrices. The later paired audits, plots and
 interpretation are linked in the [Phase 3 extension findings](docs/phase3-six-hour-findings.md).
 Consult earlier attempts only to explain failure and recovery.
+
+The DC eviction extension adds 24 distinct trajectories, giving 537 adopted
+CPU trajectories across the main and three later study blocks. The 24 oracle
+continuations are additional branches. The DC study has six paired ownership
+seeds at clean and .5 dose. Its comparison uses the matching DC reservoir runs
+already counted in the 240-run core.
 
 The documented CPU findings include adverse DC acquisition and false-alarm
 behavior relative to DM, and weak single-attacker effects. Preserve negative
@@ -210,7 +237,21 @@ The late DG-v5 and DR eviction-v2 checks verified all 96 result-file hashes and 
 | DR FIFO | 0 | .288806 | .000000 | .000000 | .125216 | .304991 |
 | DR FIFO | .5 | .290439 | .095745 | -.000331 | .119851 | .335697 |
 
-The manifest checks establish file integrity and coverage. The [extension findings](docs/phase3-six-hour-findings.md) provide the later audited matched-reference contrasts, uncertainty and remaining limits. Phase 2's separate DC eviction comparison is addressed by a [fixed six-seed exploratory extension](docs/phase3-six-hour-extension.md). Check that study's completion and audit records before using its outcomes.
+The manifest checks establish file integrity and coverage. The [extension findings](docs/phase3-six-hour-findings.md) provide the later audited matched-reference contrasts, uncertainty and remaining limits.
+
+**DC eviction extension.** All 24 new runs and 96 model checkpoints passed the
+audit. At dose .5, FIFO reduced A by 15.86 percentage points and E4 macro F1 by
+37.83 points, and raised E4 benign FAR by 29.04 points relative to reservoir.
+Class-balanced eviction changed E4 macro F1 by −0.03 points, with a descriptive
+95% interval of −7.15 to +6.64 points. Its H estimate was +0.04 points, with
+an interval of −0.01 to +0.09 points. These are exploratory results from one
+development bank. The same admission rule and counts allow admitted IDs to
+change as replay changes the scoring model. See the
+[protocol](docs/phase3-six-hour-extension.md),
+[run manifest](results/phase3-dc-eviction-six-seed-v1/completion.json),
+[per-run metrics](results/phase3-dc-eviction-six-seed-v1/audit/cell-metrics.csv),
+[paired report](results/phase3-dc-eviction-six-seed-v1/audit/report.md), and
+[figure](results/phase3-dc-eviction-six-seed-v1/audit/eviction-policy-comparison.pdf).
 
 The revised report's ablation section already includes replay-loss and quota results. At dose .5 it reports H/A/FAR of .0008/.3469/.0780 for DQ, .0026/.2744/.1852 for DC without logit replay and .0454/.1361/.4679 for DC without replay labels. See [the revised TeX and its ablation table](submissions/phase3-audited-report/phase3-report.tex) and the [quota figure](submissions/phase3-audited-report/figures/quota-ablations.pdf).
 
@@ -222,8 +263,8 @@ summaries above are navigation aids; independently verify them against raw evide
 
 | Priority | Gap and next action | Acceptance evidence |
 | --- | --- | --- |
-| 1 | Carry the completed DG-v5 and DR eviction-v2 paired audits into the next report revision. | Use the [extension findings](docs/phase3-six-hour-findings.md) for per-seed effects, uncertainty and limitations. Keep both blocks in the development evidence. |
-| 2 | Verify and report the new [six-seed DC eviction study](docs/phase3-six-hour-extension.md). | Require the complete paired matrix and passing audit before interpretation. Limit the result to the six-seed exploratory design. The other six seeds remain open. |
+| 1 | Carry all three completed late studies into the next PDF revision. | Use the [extension findings](docs/phase3-six-hour-findings.md) and cite the paired effect estimates, uncertainty and development scope. |
+| 2 | Complete Phase 2's twelve-seed DC eviction grid if more compute is allocated. | Run seeds 7–11 and 42 with both policies and doses against their matched reservoir controls. Preserve the six-seed analysis and disclose the later expansion. |
 | 3 | Resolve the real final-test gate if held-out confirmation is required. | The [readiness record](docs/phase3-plan/final-test-readiness.md) still records the real test as sealed. Review the [synthetic qualification](results/phase3-rigorous-audit-v1/final-evaluator-qualification-v1.json), verify actual role and component isolation, and freeze the method, checkpoints, analysis, and release decision before access. |
 | 4 | Close cost and reproducibility gaps. | Report what wall time and checkpoint sizes measure. Benchmark serialization, registry traffic and peak process memory if the report needs those claims. Record whether a clean checkout can reproduce the report, recompute evidence, and rerun training as three separate checks. |
 | 5 | Decide whether the optional external replication is feasible. | Establish schema, provenance, stage support and evaluator isolation before launching a full-method run. Otherwise document the justified omission and keep the train-only and discovery results in their stated scope. |
@@ -237,9 +278,8 @@ inputs as blockers for the specific checks that depend on them.
 See the [Phase 3 evidence release](https://github.com/ahmedbilalazhar/cl-ids-adversarial/releases/tag/phase3-evidence-v28) for the full-evidence v28 ZIP and its validation manifest.
 The recorded SHA-256 is
 `e427c77383923201441f897ef7609986ddeb824cdaf8b018cf15f30d022d126a`.
-It predates the later DG-v5/eviction-v2 completion and must not be described as
-containing those late results without checking its inventory. Latest late result
-records and available checkpoints are in the repository paths above.
+The v28 ZIP predates the DG-v5 and both eviction blocks. Their completion
+manifests, results and available checkpoints are in the repository paths above.
 
 The repository excludes local Python environments, raw dataset payloads, caches
 and selected oversized archives. A GitHub clone alone is not proof of full offline
@@ -268,7 +308,8 @@ deliverable is a review of existing evidence. Start with:
 - Revised report: submissions/phase3-audited-report/phase3-report.pdf and its TeX.
 - Prior audit and open issues: docs/phase3-rigorous-audit-v1/.
 - Core CPU runs: results/phase3-overnight/ and results/phase3-followup-ablation/.
-- Late blocks: results/phase3-dg-baseline-v5/ and results/phase3-eviction-baseline-v2/.
+- Late blocks: results/phase3-dg-baseline-v5/, results/phase3-eviction-baseline-v2/
+  and results/phase3-dc-eviction-six-seed-v1/.
 - Real held-out gate: docs/phase3-plan/final-test-readiness.md.
 
 EXPERIMENT INVENTORY AND REPORTED OUTCOMES
@@ -342,8 +383,7 @@ the benign false-alarm rate. Final macro F1 here uses the eligible class set.
     .000167/.386842/.659070/.059293 for class-balanced. At zero dose, E4 macro F1
     is .125216 and .671250 respectively. See results/phase3-eviction-baseline-v2/
     completion.json, identity.json and runs/*/result.json. Use the matching
-    DR/NONE reservoir as the comparison. The proposed DC-specific experiment
-    remains a separate scope gap. The audited report predates these runs.
+    DR/NONE reservoir as the comparison. The audited report predates these runs.
 11. Admission and replay diagnostics — 192 paired DM/DC stage comparisons
     had identical per-client class quotas. At dose .5, 109/240 client-stage pairs
     had different admitted-ID hashes. Mean stored poisoned IDs at E2 were
@@ -367,17 +407,26 @@ the benign false-alarm rate. Final macro F1 here uses the eligible class set.
     The real final-test bank remains sealed. Synthetic qualification evidence:
     results/phase3-rigorous-audit-v1/final-evaluator-qualification-v1.json.
 
+14. DC eviction six-seed extension — 24 trajectories and 96 verified checkpoints.
+    FIFO and class-balanced eviction cross clean and .5 dose at seeds 1–6.
+    At .5, FIFO minus reservoir is −.1586 A, −.3783 E4 macro F1 and +.2904 FAR.
+    Class-balanced minus reservoir is −.0377 A, −.0003 macro F1, +.0004 H and
+    +.0242 FAR. Read results/phase3-dc-eviction-six-seed-v1/audit/report.md for
+    intervals, paired-comparisons.csv for both doses and per-seed effects,
+    replay-exposure-and-occupancy.csv for mechanism evidence, and completion.json
+    for the raw file inventory. Seeds 7–11 and 42 remain open.
+
 Run accounting: the follow-up directory contains 417 full records, including
 273 byte-identical copies of the overnight directory and 144 new ablation
-records. The 24 oracle suffixes are separate from the full-run count. The 96
-late DG and DR eviction records are outside this 417-run inventory. The v28
-release is an evidence snapshot that predates those two blocks. Keep historical
+records. The 24 oracle suffixes are separate from the full-run count. The 120
+late DG and eviction records bring the adopted CPU total to 537. The v28
+release predates those three late blocks. Keep historical
 76-feature outcomes and the adopted 74-feature runs in their separate profiles.
 
 Report the reviewed commit and access mode. If you cannot download or inspect a
 file, state which checks it prevents and continue with accessible evidence.
-Distinguish the deadline report, audited revision and later evidence. The late
-eviction runs used DR/NONE. Assess the original DC eviction commitment separately.
+Distinguish the deadline report, audited revision and later evidence. Assess the
+twelve-seed DR/NONE and six-seed DC eviction blocks under their own conditions.
 
 Assess the seven Phase 3 obligations: faithful methodology with disclosed amendments;
 dataset/preprocessing/splits; fair baselines and essential metrics; informative

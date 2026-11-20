@@ -86,6 +86,41 @@ def bootstrap(differences, rng, draws=20000):
     return float(x.mean()), float(np.median(x)), float(np.quantile(samples, .025)), float(np.quantile(samples, .975))
 
 
+def write_report(path, summary, comparisons):
+    """Write a reading copy of the verified, dose-.5 reservoir contrasts."""
+    endpoints = {
+        'A': 'Acquisition A', 'H': 'Targeted persistence H',
+        'delta_rec': 'E2 Hulk recall change', 'eligible_macro_f1_E4': 'E4 eligible macro F1',
+        'benign_far_E4': 'E4 benign FAR',
+    }
+    rows = [r for r in comparisons if float(r['dose']) == .5
+            and r['contrast'].endswith('-reservoir') and r['metric'] in endpoints]
+    if len(rows) != len(endpoints) * len(POLICIES):
+        raise ValueError('Missing report contrasts')
+    names = {'fifo-reservoir': 'FIFO', 'class_balanced-reservoir': 'Class-balanced'}
+    lines = [
+        '# Replay eviction comparison', '',
+        f"The audit verified {summary['result_count']} trajectories and {summary['checkpoint_count']} "
+        f"checkpoints across {len(summary['seeds'])} paired ownership seeds under {summary['admission']} admission.",
+        'Outcomes use the development bank of one historical capture.', '',
+        'Effects below subtract the matched reservoir outcome at dose .5. The 95% bootstrap intervals '
+        'resample whole seeds and are descriptive. Higher A and macro F1 are favorable. Lower H and FAR are favorable.', '',
+        '| Policy | Metric | Mean difference | 95% interval |', '| --- | --- | ---: | ---: |',
+    ]
+    for row in rows:
+        lines.append(
+            f"| {names[row['contrast']]} | {endpoints[row['metric']]} | {float(row['mean_difference']):+.4f} | "
+            f"{float(row['whole_seed_bootstrap95_low']):+.4f} to {float(row['whole_seed_bootstrap95_high']):+.4f} |"
+        )
+    if summary['admission'] == 'DC':
+        lines.extend(['', f"Admitted IDs diverged from reservoir in "
+                      f"{summary['stages_with_different_admitted_ids_from_reservoir']} stage comparisons. "
+                      'This is a downstream effect of the replay policy through the DC scoring model.'])
+    lines.extend(['', '[Per-run metrics](cell-metrics.csv) · [Paired effects](paired-comparisons.csv) · '
+                  '[Comparison figure](eviction-policy-comparison.pdf) · [Audit summary](summary.json)', ''])
+    path.write_text('\n'.join(lines), encoding='utf-8')
+
+
 def main():
     completion = read_json(OUT / 'completion.json')
     study = read_json(OUT / 'identity.json')
@@ -313,6 +348,7 @@ def main():
         'interpretation_limit': ('All policies use identical unfiltered admission when admission=NONE; E1 may still differ because memory policies are active from the first stage. '
                                  'This estimates the eviction-policy effect under the matched admission setting, not across all admission mechanisms.'),
     }
+    write_report(audit / 'report.md', summary, compare_rows)
     (audit / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(summary, indent=2))
 

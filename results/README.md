@@ -1,5 +1,20 @@
 # Results
 
+## Phase 3 evidence index
+
+| Study | Completion and results |
+| --- | --- |
+| Original GPU submission | [Historical implementation and evidence](../phase3-implementation/) |
+| CPU intervention supplement | [Completion record](phase3-cpu-supplement/completion.json) · [Summary](../submissions/phase3-report/cpu-summary.csv) |
+| Primary CPU runs, random controls and oracle continuations | [Completion record](phase3-overnight/completion.json) · [Core outcomes](phase3-rigorous-audit-v1/core-summary.csv) · [Oracle outcomes](phase3-rigorous-audit-v1/oracle-repair.csv) |
+| Replay-loss and alternative-quota ablations | [Completion record](phase3-followup-ablation/completion-followup.json) · [Per-run metrics](phase3-rigorous-audit-v1/trajectory-metrics.csv) · [Matching audit](phase3-rigorous-audit-v1/ablation-cell-audit.json) |
+| Later DG and DR eviction runs | [DG-v5 manifest](phase3-dg-baseline-v5/completion.json) · [Eviction-v2 manifest](phase3-eviction-baseline-v2/completion.json) · [Descriptive outcomes](../AGENT_HANDOFF.md#development-results-and-coverage-checks) |
+| Independent verification and open checks | [Audit evidence](phase3-rigorous-audit-v1/START_HERE.md) · [Completion plan](../docs/phase3-rigorous-audit-v1/phase3-completion-plan.md) |
+
+The follow-up directory includes byte-identical copies of the earlier overnight records. Use the [experiment inventory](../AGENT_HANDOFF.md#experiment-by-experiment-reading-guide) for the correct counts, stage coverage and scope. The [submission index](../submissions/README.md) identifies the report versions and downloads.
+
+## Historical result notes
+
 As of 2026-09-28, only a per-seed completion manifest with matching hashes
 for R, summary, task NPZ, and task sidecar makes a seed validated. Historical
 summary/R pairs remain executed-only, not counted by table/status/stat readers.

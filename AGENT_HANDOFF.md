@@ -33,7 +33,10 @@ downloading the large evidence archive or obtaining dataset access.
 
 ## Folder map
 
-Use the root README and this handoff as the entry points. Start with
+Use the [root README](README.md), [submission index](submissions/README.md),
+and [results index](results/README.md) to navigate locally or on GitHub. The
+[workspace guide](docs/workspace-layout.md) describes local data and archives.
+Start with
 [`submissions/phase3-as-submitted/`](submissions/phase3-as-submitted/) for the
 deadline version, [`submissions/phase3-audited-report/`](submissions/phase3-audited-report/)
 for the revised paper, [`docs/phase3-rigorous-audit-v1/`](docs/phase3-rigorous-audit-v1/)

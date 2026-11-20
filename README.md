@@ -1,167 +1,34 @@
-> **Current project handoff (20 November 2026):** Read [AGENT_HANDOFF.md](AGENT_HANDOFF.md) for the full experiment inventory, exact submitted report, current source paths and remaining work. Older dated status sections below are historical. See [GitHub Releases](https://github.com/ahmedbilalazhar/cl-ids-adversarial/releases) for large evidence archives.
+# Continual Learning for Network Security
 
-> Parallel Kaggle planning: [operator guide](docs/kaggle-phase3/PARALLEL-RUN-GUIDE.md). Twelve paired blocks on eight qualified contributors take two whole-block waves; final release remains pending.
+Computer Networks research by Saneedullah (23I-2568) and Ahmed Bilal (23I-2581). The project studies retention and adaptation in an offline federated intrusion-detection simulation.
 
-> To run the current qualification: [short Kaggle setup and readiness verdict](docs/kaggle-phase3/QUICKSTART.md). The final twelve-seed study remains sealed.
+| If you want to… | Start here |
+| --- | --- |
+| Understand or review the whole project | [Agent handoff and experiment inventory](AGENT_HANDOFF.md) |
+| Read the original methodology and deadline submission | [Submission index](submissions/README.md) |
+| Read the latest audited report and rebuild its PDF | [Audited report](submissions/phase3-audited-report/phase3-report.pdf) · [Build guide](submissions/phase3-audited-report/BUILD.md) |
+| Find raw runs, checkpoints, summaries and open work | [Results index](results/README.md) · [Scientific audit](docs/phase3-rigorous-audit-v1/README.md) |
+| Download the full evidence snapshot | [Phase 3 evidence release](https://github.com/ahmedbilalazhar/cl-ids-adversarial/releases/tag/phase3-evidence-v28) |
 
-> Latest improvement pass: [delivery reliability audit, 26 October](docs/phase3-cpu-v3/reliability-audit-2026-10-26.md). Atomic receipt publication and prediction/count consistency checks strengthen author-side recovery and import; frozen methods and v5 remain unchanged.
+## Project layout
 
-> Latest continuation: [verified count-catalog recovery and import improvements](docs/phase3-cpu-v3/recovery-improvements-2026-10-25.md). The v5 worker and frozen scientific engine remain unchanged.
+| Folder | What belongs there |
+| --- | --- |
+| [`src/`](src/) | Model, training, data preparation and evaluation code |
+| [`configs/`](configs/) | Protocol, taxonomy, experiment settings and environment locks |
+| [`scripts/`](scripts/) and [`tests/`](tests/) | Runners, audits, plotting, packaging and implementation checks |
+| [`data/`](data/) | Data documentation and manifests, with raw and prepared payloads kept locally |
+| [`results/`](results/) | Versioned runs, checkpoints, derived tables and verification records |
+| [`submissions/`](submissions/) | Phase 1–3 documents, the exact deadline archive and the audited revision |
+| [`docs/`](docs/) | Methods, decisions, audits and reproduction guidance |
+| [`phase3-implementation/`](phase3-implementation/) | Historical Phase 3 implementation, notebook and original run exports |
+| [`phase3_delivery/`](phase3_delivery/) and [`kaggle_worker/`](kaggle_worker/) | Experiment delivery, worker and verification tooling |
+| [`reports/`](reports/), [`research_figures/`](research_figures/) and [`notebooks/`](notebooks/) | Earlier course materials, figures and notebook work |
 
-# Continual Learning for Network Security — Adversarial IDS
+The audited CPU study contains 417 unique full trajectories and 24 paired oracle continuations. The later DG and DR eviction blocks add 48 trajectories each, and their results are indexed in the handoff. The v28 release predates those two blocks. The real final-test bank remains sealed. [Evidence status and remaining work](AGENT_HANDOFF.md#evidence-status-and-interpretation)
 
-Research code for studying attacks on continual intrusion detection, including
-single-node learning, simulated federation, and a train-only novelty-discovery
-stage. This is an offline simulation, not a deployed intrusion detector.
+## Local and GitHub copies
 
-**Members:** Saneedullah (23I-2568) and Ahmed Bilal (23I-2581).
+A clone provides the tracked code, reports and evidence inventory. Local data, Python environments, temporary output and archived exports use the paths described in the [workspace guide](docs/workspace-layout.md). Run commands from the repository root. Use the [scientific reproduction guide](docs/phase3-rigorous-audit-v1/reproduction.md) for the inputs and runtime needed for each step.
 
-## Current Phase 3 work (2026-10-24)
-
-**Data amendments and the 16-class taxonomy are now adopted.** Start with the
-[Phase 3 reference implementation](docs/phase3-reference/README.md) and
-[methodology amendment](submissions/phase3-methodology-amendment.md).
-The reference uses the corrected 74-feature profile and a clean development
-trajectory. The final GPU grid remains gated.
-
-The authoritative methodology for the current course submission is
-[phase2-with-claude.tex](submissions/phase2-with-claude.tex). Begin with the
-[Phase 3 implementation and evaluation plan](docs/phase3-plan/START-HERE.md)
-and its [source-level implementation gap audit](docs/phase3-plan/implementation-gap-audit.md).
-The revised four-stage, five-client protocol has **29 confirmatory contrasts**.
-The narrow DR+DC reference is implemented under `src/phase3/`; the full
-learner/worker grid and final results remain pending. The legacy commands and
-analysis specification below do not implement that protocol.
-
-The earlier audit documents/PDFs preserve the data-only evidence available when
-they were written. The separate adoption record selects corrected data for the
-current reference; it is not independent external replication. Planning-manifest
-counts are not completed experiments.
-
-## Historical implementation status (2026-09-28)
-
-The improvement program is in [docs/plan.md](docs/plan.md), with phase gates
-and resumable commands in [docs/roadmap.md](docs/roadmap.md). The working tree
-contains uncommitted repair work. The plan's reference commit is `9e635ae`;
-current `main` is `a4558b5`.
-
-| Area | Status |
-|---|---|
-| Result integrity | New runs use completion manifests; version 3 fingerprints the runtime `src/*.py` tree. `results/runs/` has zero manifests and the main aggregate CSVs have zero data rows. Historical runs are executed artifacts, not validated paper evidence. |
-| Data | The CICIDS2017 duplicate-disjoint and T0-only v2 task artifacts rebuild bit-identically. The former audits at zero exact train/test content matches. UNSW-NB15 and CICIoT2023 retain 3,723 and 604 cross-pool exact matches and are excluded from final claims. |
-| E1/E2/E3 | Six manifest-v2 finetune diagnostic seeds (three per CICIDS sensitivity arm) are exploratory. No 12-seed paired headline is complete. The E3 trigger and eligible ASR calculation were repaired, but packet-to-flow validation and corrected dataset runs remain pending. Prior E3 ASR claims are invalid. |
-| E4/E5 | E4 now clusters training candidates only and feeds provisional labels into classifier training. Nine three-arm E4 seeds are exploratory; their source-locked copies are archived after a later code change. T1 detection ranking is weak and the clustering cap changes decisions. Historical E4/E5 claims were invalidated; no corrected paired effect exists. |
-| Federation and inference | Per-client accounting and inactive-client exclusion are implemented and synthetically tested. Matched clean aggregator, stable-client, and round controls remain pending. A versioned inference-bundle contract exists, but no trained-bundle benchmark or real federation has been demonstrated. |
-| Inference and release | [docs/analysis_spec.json](docs/analysis_spec.json) prespecifies 27 Holm families and 200 pairs. None is complete. Strict lint, dependency pinning, clean reproduction, and manuscript reconciliation remain open. |
-
-See the [claim ledger](docs/claim_ledger.md), [invalidation table](docs/invalidation_table.md),
-[task audit](docs/task_audit.md), and [results guide](results/README.md) before
-using a number in a report. An undefined ASR or unmeasured FWT is **N/A**,
-never zero. The joint model is a future-data oracle. Twelve paired seeds on
-one capture estimate seed variation, not performance across network sites.
-
-## Legacy implementation quick start
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python -m pytest -q
-python -m ruff check src scripts tests --select E7,E9,F63,F7,F82
-python scripts/smoke_test.py
-```
-
-The tests and smoke test do not require the full dataset. Raw data and derived
-tasks are not committed; see [data/README.md](data/README.md). Configurations
-for the audited CICIDS sensitivity arms use
-`data/processed/tasks_chrono_dedup.npz` and
-`data/processed/tasks_chrono_t0.npz`. Existing task artifacts must be archived
-before rebuilding; builders do not overwrite them. The old `make data-primary`
-target builds `tasks_chrono.npz`, which is a legacy protocol with known test
-exposure, so it is not the current primary evidence path.
-
-For a single seed after its task artifact is available:
-
-```powershell
-$env:CL_THREADS = "2"
-python -m src.run_experiment --config configs/baselines/e1_finetune_dedup.yaml --seed 1 --results-dir results/diagnostics --resume
-```
-
-`--resume` checks the manifest and provenance rather than a summary file's
-existence. On the CPU laptop, run one seed at a time. The prepared 12-seed
-loops and their prerequisites are in [docs/roadmap.md](docs/roadmap.md); they
-have not been launched as a final comparison. Rebuild tables and statistics
-only from validated runs:
-
-```powershell
-python -m src.run_experiment --rebuild-table --results-dir results
-python scripts/stats_summary.py --results-dir results
-```
-
-## Project map
-
-| Path | Contents |
-|---|---|
-| [configs/](configs/) | Experiment configurations and protocol variants |
-| [src/](src/) | Data, attacks, continual-learning and federated runners, reporting, and inference contract |
-| [scripts/](scripts/) | Audits, experiment orchestration, statistics, and figures |
-| [tests/](tests/) | Synthetic and integration checks |
-| [docs/](docs/) | Plan, roadmap, methods, audits, claim ledger, and paper drafts |
-| [results/](results/) | Manifest-checked run outputs, exploratory diagnostics, and preserved archives |
-
-Git-ignored archives and source snapshots must be included explicitly in a
-release bundle; [docs/release_bundle_contents.md](docs/release_bundle_contents.md)
-lists them. Figures and historical numeric prose must be regenerated from
-compatible validated runs before they can support a new claim.
-
-## Verified Phase 3 CPU development delivery
-
-The [executed CPU report](docs/phase3-cpu-v3/report.md) records 81 valid logical
-development rows: 78 clean rows (69 physical conditions and nine exact aliases)
-and three paired FT corruption diagnostics. The selected common schedule is
-12 rounds with one epoch per round. All three learners pass the declared mean
-acquisition gates; seed 103 still has zero FTP recall. Selected settings are
-LR 0.001 for all learners, EI lambda_E 100, and DR lambda_y 1 / lambda_z 0.1.
-
-The [completion record](results/phase3-cpu-v3/completion.json),
-[independent delivery audit](results/phase3-cpu-v3/independent-delivery-audit.json)
-and [source-only bundle acceptance](results/phase3-source-bundle-v1/CPU-delivery/acceptance.json)
-link the preserved source, checks, count audit, timing corrections, matched
-controls and exact recovery evidence. All nine delivery steps passed. Complete
-local CPU jobs took 263.81 s (FT), 312.47 s (EI) and 346.38 s (DR), with measured
-process peaks of 368.0–375.2 MiB. Dependency installation and network transfer
-costs are unmeasured. Weak and adverse diagnostic outcomes remain reported.
-These development results do not qualify the full poisoned/filter matrix,
-the twelve final seeds, final-test inference or a GPU release.
-
-## Kaggle Phase 3 qualification candidate
-
-The separate [notebook workflow](docs/kaggle-phase3/README.md) prepares private,
-hash-verified development inputs, stage caching, a candidate FP32 CUDA backend,
-bounded round-checkpoint recovery, output integrity checks and whole-seed
-assignments for one to eight distinct contributors. The completed CPU grid and its
-frozen scientific source are preserved. Actual Kaggle runtime qualification,
-complete-worker measurements and selected-setting confirmations remain required;
-the twelve final seeds and final-test inference stay sealed.
-
-The [v2 weakness review](docs/kaggle-phase3/review-v2.md) records the crash-recovery
-correction, hash-locked environments, streaming evaluation and measured synthetic
-memory/target-mapping improvements. Earlier notebook bundles and evidence remain
-preserved under `results/kaggle-readiness-v1/`.
-
-The earlier [v3 architecture decision](docs/kaggle-phase3/architecture-v3.md)
-centralizes job/runtime contracts, checkpoint lineage and receipt validation,
-isolates CPU/CUDA backends, and adds pinned CPU qualification CI. That historical
-notebook delivery is under `results/kaggle-readiness-v3/`; v1/v2 remain preserved.
-
-
-## Current implementation audit and Kaggle v5
-
-The [two-hour audit](docs/phase3-cpu-v3/two-hour-implementation-audit.md) fixes
-shared session budgeting, frozen-input binding, exact-byte import, retry/alias
-identity checks and reported-metric validation. It adds committed evaluation
-reuse and verified worker-export-to-catalog ingestion. See
-[local acceptance](results/phase3-two-hour-audit-v1/acceptance-staged-final.json) and
-the [v5 notebook](results/phase3-two-hour-audit-v1/candidate-v5/notebook-final/phase3-qualification.ipynb).
-The frozen scientific engine and historical results are preserved. Actual Kaggle
-CUDA/recovery qualification, final scope and human release remain outstanding.
+For earlier status snapshots, commands and Kaggle qualification history, see [Project history](docs/project-history.md).

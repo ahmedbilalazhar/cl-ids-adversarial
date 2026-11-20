@@ -1,6 +1,8 @@
 # Docs
 
-Start here: `proposal.md` → `threat_model.md` → `results_overview.md`.
+For current Phase 3 work, open the [scientific audit](phase3-rigorous-audit-v1/README.md), [agent handoff](../AGENT_HANDOFF.md), or [workspace layout](workspace-layout.md). The [project history](project-history.md) preserves earlier status and commands.
+
+For the original project framing, read [the proposal](proposal.md), [threat model](threat_model.md) and [historical results overview](results_overview.md).
 
 | Document | Contents |
 |----------|----------|

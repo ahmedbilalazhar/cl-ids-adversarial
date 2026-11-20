@@ -33,6 +33,17 @@ downloading the large evidence archive or obtaining dataset access.
 
 ## Folder map
 
+Use the root README and this handoff as the entry points. Start with
+[`submissions/phase3-as-submitted/`](submissions/phase3-as-submitted/) for the
+deadline version, [`submissions/phase3-audited-report/`](submissions/phase3-audited-report/)
+for the revised paper, [`docs/phase3-rigorous-audit-v1/`](docs/phase3-rigorous-audit-v1/)
+for the rationale and audit, and the run folders below for original evidence.
+Keep published and hashed run artifacts at their existing paths so manifests,
+reproduction scripts and citations continue to resolve. Add future runs under a
+new versioned directory in `results/`, with configuration, completion manifest,
+raw results and a pointer from the handoff. Put report material in `submissions/`
+and review notes in `docs/`.
+
 | Path | Purpose |
 | --- | --- |
 | `submissions/phase1.tex` | Phase 1 background |
@@ -256,6 +267,109 @@ deliverable is a review of existing evidence. Start with:
 - Core CPU runs: results/phase3-overnight/ and results/phase3-followup-ablation/.
 - Late blocks: results/phase3-dg-baseline-v5/ and results/phase3-eviction-baseline-v2/.
 - Real held-out gate: docs/phase3-plan/final-test-readiness.md.
+
+EXPERIMENT INVENTORY AND REPORTED OUTCOMES
+
+All paths are relative to the repository root. Rounded results below are
+orientation values. Use the linked tables and raw records for exact numbers,
+individual seeds, uncertainty and provenance. A is untargeted new-family F1,
+averaged within then across E2–E4. H is mean E3/E4 Hulk-to-benign error change
+against the paired clean run. E2 recall change is poisoned minus clean. FAR is
+the benign false-alarm rate. Final macro F1 here uses the eligible class set.
+
+1. Historical GPU submission — 696 trajectories, including exploratory
+   multi-client settings. Clean final macro F1 was about .031 FT, .046 EI and
+   .491 DR. Read phase3-implementation/results/final-run/analysis/all-runs.csv
+   and the table-baselines, table-dose-response, table-admission, table-ablations
+   and table-confirmatory-tests CSVs in that same directory. The part-a/b/c ZIPs
+   are beside analysis/. The historical significance and general-defense claims
+   were withdrawn. See docs/phase3-rigorous-audit-v1/gap-register.md.
+2. CPU intervention supplement — 57 full trajectories combining ordinary
+   continuation, oracle purge, matched random deletion, DQ controls and a pooled
+   reference. Mean H for DR/NONE was .842 under ordinary poisoned continuation,
+   .0000263 after oracle purge and .621 for random deletion. The pooled reference
+   reached .8714 macro F1. Read submissions/phase3-report/cpu-summary.csv,
+   cpu-runs.csv and cpu-memory-trajectory.csv in the same folder. Raw records:
+   results/phase3-cpu-supplement/runs/. Runner: scripts/run_phase3_cpu_study.py.
+3. Clean development selection and confirmations — historical tuning is in
+   results/phase3-cpu-v3/development/tuning-selection.json. The adopted extension
+   uses 12 rounds, one epoch, Adam .001, EI coefficient 100 and DR label/logit
+   weights 1/.1. Nine confirmations use seeds 101–103. Group mean gates pass,
+   while some individual FTP recall values are zero. See
+   results/phase3-overnight/clean-gates.json and its clean-confirmation runs.
+4. Adopted 74-feature primary study — FT, EI, DR, DM, DC × doses 0/.1/.3/.5 ×
+   seeds 1–11 and 42 = 240 full runs. Clean final macro F1 is .1063/.1113/
+   .6272/.5892/.5047 in that method order. Clean DC vs DM acquisition is
+   .2957 vs .3988 and FAR .1137 vs .0561. At dose .5 DR H is .00865 and its
+   immediate recall change is −.00064. Read results/phase3-rigorous-audit-v1/
+   core-summary.csv, comparisons-29.csv, trajectory-metrics.csv and
+   family-metrics.csv. The raw per-stage confusion matrices and checkpoints are
+   under results/phase3-overnight/runs/core-*/. The runner is
+   scripts/run_phase3_overnight.py and the analysis lock is
+   configs/phase3/overnight-analysis.json.
+5. Exact oracle repair — 24 paired DR/DC continuations at .5. The intervention
+   repairs stored labels while preserving the cloned E2 state otherwise. Mean
+   repair-minus-ordinary targeted error is about −.0087 for DR and −.0003 for DC.
+   Read results/phase3-rigorous-audit-v1/oracle-repair.csv and the matching
+   results/phase3-overnight/runs/core-*/result.json oracle_label_repair fields.
+   These suffixes are paired interventions. The earlier purge is a separate study.
+6. DQ matched random selection — 24 runs at 0/.5. At .5, H/A/FAR is
+   .0008/.3469/.0780. See results/phase3-overnight/runs/matched-random-*/result.json
+   and the ablation table in submissions/phase3-audited-report/phase3-report.tex.
+7. Replay-loss ablations — 48 runs, two DC variants × 0/.5 × twelve seeds.
+   At .5, H/A/FAR is .0026/.2744/.1852 without logits and .0454/.1361/.4679
+   without replay labels. Read results/phase3-followup-ablation/runs/replay-loss-*/
+   result.json and results/phase3-rigorous-audit-v1/ablation-cell-audit.json.
+8. Matched quotas — 96 new runs, DC/DM × q .5/.9 × dose 0/.5 × twelve seeds.
+   The q .75 reference comes from the primary matrix. Check per-cell matching
+   in results/phase3-rigorous-audit-v1/ablation-cell-audit.json, per-run outcomes
+   in results/phase3-rigorous-audit-v1/trajectory-metrics.csv, and plotted
+   means in submissions/phase3-audited-report/figures/quota-ablations.pdf.
+   Raw records are in results/phase3-followup-ablation/runs/quota-*/result.json.
+   Derive conclusions from paired contrasts and own-clean H, rather than a
+   single universal quota recommendation.
+9. DG-v5 — 48 runs, global 75% low-loss admission, four doses × twelve seeds.
+   At doses 0/.1/.3/.5, A is .3812/.3862/.3773/.3658, H is
+   .0000/.0165/.0182/.0276 and E4 macro F1 is .6033/.5897/.5892/.5756.
+   See results/phase3-dg-baseline-v5/completion.json, identity.json, executed-source/
+   and runs/*/result.json. AGENT_HANDOFF.md has the full late-results table,
+   including E2 recall changes and E4 FAR. The audited report predates these runs.
+10. DR/NONE eviction-v2 — 48 runs, FIFO/class-balanced × 0/.5 × twelve seeds.
+    At .5, H/A/E4 macro F1/FAR is .095745/.290439/.119851/.335697 for FIFO and
+    .000167/.386842/.659070/.059293 for class-balanced. At zero dose, E4 macro F1
+    is .125216 and .671250 respectively. See results/phase3-eviction-baseline-v2/
+    completion.json, identity.json and runs/*/result.json. Use the matching
+    DR/NONE reservoir as the comparison. The proposed DC-specific experiment
+    remains a separate scope gap. The audited report predates these runs.
+11. Admission and replay diagnostics — 192 paired DM/DC stage comparisons
+    had identical per-client class quotas. At dose .5, 109/240 client-stage pairs
+    had different admitted-ID hashes. Mean stored poisoned IDs at E2 were
+    131.0 DC versus 163.1 DM. Read results/phase3-rigorous-audit-v1/
+    admission-mechanism-v1/summary.json, admission-class-counts.csv,
+    poison-memory-occupancy.csv and family-f1-effects.csv. Occupancy alone gives
+    no direct estimate of replay exposure or causal mediation.
+12. Discovery diagnostics — three development partitions, a six-cell threshold/
+    cap sensitivity on one partition and a paired assignment-rule comparison.
+    The headline pilot had 91.07% detection, 5.55% benign false alerts, 98.58%
+    assigned purity and .0395 ARI. Unrestricted centroid assignment increased
+    flagged-attack coverage by 15.74 percentage points, reduced purity by 3.88
+    points and changed ARI by −.0003 across the three partitions. See
+    docs/phase3-plan/discovery-development-results.md and
+    results/phase3-followup/discovery-development-replicates-summary-v1.json,
+    discovery-development-sensitivity-v2.json and discovery-development-assignment-summary-v1.json.
+13. External and held-out evaluation — one seed, 16 external training-only arms
+    and 64 task-stage checkpoints. No external test metric was computed for those
+    arms. Read docs/phase3-plan/external-method-training-pilot-results.md and
+    results/phase3-followup/external-method-training-pilot-summary-v1.json.
+    The real final-test bank remains sealed. Synthetic qualification evidence:
+    results/phase3-rigorous-audit-v1/final-evaluator-qualification-v1.json.
+
+Run accounting: the follow-up directory contains 417 full records, including
+273 byte-identical copies of the overnight directory and 144 new ablation
+records. The 24 oracle suffixes are separate from the full-run count. The 96
+late DG and DR eviction records are outside this 417-run inventory. The v28
+release is an evidence snapshot that predates those two blocks. Keep historical
+76-feature outcomes and the adopted 74-feature runs in their separate profiles.
 
 Report the reviewed commit and access mode. If you cannot download or inspect a
 file, state which checks it prevents and continue with accessible evidence.

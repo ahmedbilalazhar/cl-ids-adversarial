@@ -1,0 +1,15 @@
+# Six-hour Phase 3 evidence extension
+
+The highest-priority new run is the original DC-specific replay eviction comparison. The earlier 48-run eviction block used DR without admission and took 5.91 hours, so it supplies neither the missing DC contrast nor a reliable estimate for finishing a full new twelve-seed block with analysis time. This extension uses a fixed six-seed exploratory subset. It leaves the other six seeds for a later budget.
+
+| Order | Work | Acceptance |
+| --- | --- | --- |
+| 1 | Audit the existing DG-v5 and DR/NONE eviction-v2 runs. Use the saved manifests, checkpoints and paired historical baselines. | Verify integrity and paired inputs. Produce per-seed results, paired effects and development-only figures, with any failed check recorded. |
+| 2 | Run 24 new DC trajectories, crossing FIFO and class-balanced eviction with clean and dose .5 for the predeclared seed IDs 1–6. Use one CPU worker. | Complete all four cells per seed. Compare to the same-seed, same-dose DC reservoir from `results/phase3-overnight/`. Keep the admitted-count aggregation, 500-slot capacity, dataset, budget and loss coefficients fixed. |
+| 3 | Verify the new cells and produce the development comparison. | Check result/checkpoint hashes, input/assignment alignment and model hashes. Report per-run A, H, immediate recall change, E4 macro F1 and FAR, alongside paired whole-seed descriptive intervals. |
+
+The question is whether eviction policy changes acquisition or targeted persistence when class-aware admission is fixed. A practical improvement should reduce H without a decline in A or an increase in FAR. The primary unit is a paired ownership seed. Report each effect and its uncertainty, including adverse and small effects. These six seeds are the first six IDs in the original ordered seed list, selected without consulting outcomes. The evaluation uses development data. E1 may diverge because replay policy starts in E1. Subsequent admitted records can diverge through scoring, so the contrast captures the policy's total downstream effect under DC.
+
+Allocate up to 5.25 hours for the run and reserve 45 minutes for analysis and packaging. The runner checks the historical matched-reference P90 estimate before starting, then checks the budget before each complete seed block using observed runtimes and a conservative floor. A running seed block may take longer than forecast. Existing atomically written cells can resume when source and input identities still match. No aggregate comparison is made on an incomplete matrix. The real final-test bank stays sealed, and the original deadline submission is preserved.
+
+Start from the repository root with the pinned CPU environment and `python scripts/run_phase3_dc_eviction_extension.py`. On completion, run `scripts/audit_phase3_eviction_block.py` with `PHASE3_EVICTION_AUDIT_OUT=results/phase3-dc-eviction-six-seed-v1` and `PHASE3_EVICTION_ADMISSION=DC`. The new manifest, raw runs and audit are in `results/phase3-dc-eviction-six-seed-v1/`. Treat the latest available audit summary as the completion evidence for the analysis.

@@ -1,0 +1,57 @@
+{
+  "DG_75_percent_per_client_count_rule_checked": true,
+  "E1_admission_and_model_hash_parity_DG_DM_DC": true,
+  "E1_cells_checked": 48,
+  "all_metrics_recomputed_from_saved_confusion_matrices": true,
+  "analysis_role": "development-only exploratory; not in the original 29-test family",
+  "comparison_rows": 60,
+  "completion_manifest_sha256": "0626201527f9bb88d9b9aab607c181754d8e3ace1170590f37e3a4bf81e304a3",
+  "doses": [
+    0.0,
+    0.1,
+    0.3,
+    0.5
+  ],
+  "environment": {
+    "numpy": "2.3.5",
+    "python": "3.12.14",
+    "torch": "2.7.0+cpu"
+  },
+  "environment_matches_frozen_controls": true,
+  "final_test_accessed": false,
+  "input_and_attack_parity_checked": true,
+  "limits": [
+    "No per-example admission score vectors or accepted ID lists were stored; the audit verifies source-score hashes, policy metadata and counts, but cannot independently rerank every row.",
+    "The 12 seeds vary synthetic ownership and training randomness on one fixed CICIDS2017-derived capture; they are not independent sites or captures.",
+    "No sealed final-test or qualified external-method outcomes were accessed.",
+    "Confidence intervals are descriptive whole-seed bootstrap intervals; no confirmatory significance claim is made."
+  ],
+  "nonownership_input_hashes_match_frozen_controls": true,
+  "outputs": [
+    "paired-metrics.csv",
+    "paired-comparisons.csv",
+    "dg-admission-counts.csv",
+    "dg-dm-dc-comparison.png",
+    "dg-dm-dc-comparison.pdf"
+  ],
+  "paired_control_trajectories": 96,
+  "schema": "phase3-dg-baseline-audit-v1",
+  "seed_pairs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    42
+  ],
+  "status": "passed",
+  "study_identity_sha256": "148f5f5f3a3d48f5312ce8b05efd0a02630d28f2e4ef32caf328cc5f3cb91026",
+  "verified_DG_trajectories": 48,
+  "verified_checkpoints": 192
+}

@@ -89,10 +89,10 @@ seeds share one historical capture, and the nine confirmations use development
 seeds 101–103. Keep the earlier 76-feature outcomes separate by profile/runtime.
 
 The later DG-v5 and DR eviction-v2 blocks each have 48 manifest-verified runs.
-The [late results table](#development-results-and-coverage-checks) records what
-was verified and the means computed from confusion matrices. Paired contrasts,
-full source and model identity checks, and revised report integration are still
-open. Consult earlier attempts only to explain failure and recovery.
+The [late results table](#development-results-and-coverage-checks) records the
+means computed from confusion matrices. The later paired audits, plots and
+interpretation are linked in the [Phase 3 extension findings](docs/phase3-six-hour-findings.md).
+Consult earlier attempts only to explain failure and recovery.
 
 The documented CPU findings include adverse DC acquisition and false-alarm
 behavior relative to DM, and weak single-attacker effects. Preserve negative
@@ -210,7 +210,7 @@ The late DG-v5 and DR eviction-v2 checks verified all 96 result-file hashes and 
 | DR FIFO | 0 | .288806 | .000000 | .000000 | .125216 | .304991 |
 | DR FIFO | .5 | .290439 | .095745 | -.000331 | .119851 | .335697 |
 
-The manifest checks establish file integrity and coverage. Full source and model identity checks, matched-reference contrasts with uncertainty, and revised-report integration remain open. Audit the eviction variants against the matching DR/NONE reservoir. Phase 2's separate DC eviction commitment remains open. The eviction audit script defaults to v1. Set `PHASE3_EVICTION_AUDIT_OUT` to `results/phase3-eviction-baseline-v2` and check its local data prerequisites before running it.
+The manifest checks establish file integrity and coverage. The [extension findings](docs/phase3-six-hour-findings.md) provide the later audited matched-reference contrasts, uncertainty and remaining limits. Phase 2's separate DC eviction comparison is addressed by a [fixed six-seed exploratory extension](docs/phase3-six-hour-extension.md). Check that study's completion and audit records before using its outcomes.
 
 The revised report's ablation section already includes replay-loss and quota results. At dose .5 it reports H/A/FAR of .0008/.3469/.0780 for DQ, .0026/.2744/.1852 for DC without logit replay and .0454/.1361/.4679 for DC without replay labels. See [the revised TeX and its ablation table](submissions/phase3-audited-report/phase3-report.tex) and the [quota figure](submissions/phase3-audited-report/figures/quota-ablations.pdf).
 
@@ -222,8 +222,8 @@ summaries above are navigation aids; independently verify them against raw evide
 
 | Priority | Gap and next action | Acceptance evidence |
 | --- | --- | --- |
-| 1 | Audit and integrate DG-v5 and DR eviction-v2 from existing results. Use the executed-source snapshots, compare DG to the paired DM/DC controls, and compare each eviction policy to the matching DR/NONE reservoir. | Verify model/source/input identity as well as file hashes. Publish per-seed paired contrasts and uncertainty, link the report to the result files, and describe both blocks as development evidence. |
-| 2 | Reconcile the original DC-specific eviction proposal with the executed DR/NONE variants. | Either document the scope amendment and limit the claim to DR/NONE, or budget a separately authorized paired DC block. Keep identical replay capacity and compare against the paired DC reservoir at each dose. |
+| 1 | Carry the completed DG-v5 and DR eviction-v2 paired audits into the next report revision. | Use the [extension findings](docs/phase3-six-hour-findings.md) for per-seed effects, uncertainty and limitations. Keep both blocks in the development evidence. |
+| 2 | Verify and report the new [six-seed DC eviction study](docs/phase3-six-hour-extension.md). | Require the complete paired matrix and passing audit before interpretation. Limit the result to the six-seed exploratory design. The other six seeds remain open. |
 | 3 | Resolve the real final-test gate if held-out confirmation is required. | The [readiness record](docs/phase3-plan/final-test-readiness.md) still records the real test as sealed. Review the [synthetic qualification](results/phase3-rigorous-audit-v1/final-evaluator-qualification-v1.json), verify actual role and component isolation, and freeze the method, checkpoints, analysis, and release decision before access. |
 | 4 | Close cost and reproducibility gaps. | Report what wall time and checkpoint sizes measure. Benchmark serialization, registry traffic and peak process memory if the report needs those claims. Record whether a clean checkout can reproduce the report, recompute evidence, and rerun training as three separate checks. |
 | 5 | Decide whether the optional external replication is feasible. | Establish schema, provenance, stage support and evaluator isolation before launching a full-method run. Otherwise document the justified omission and keep the train-only and discovery results in their stated scope. |

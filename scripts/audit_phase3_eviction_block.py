@@ -1,4 +1,4 @@
-"""Independent verification and paired analysis of the 48-cell eviction block."""
+"""Independent verification and paired analysis of a declared eviction block."""
 from __future__ import annotations
 
 import csv
@@ -20,7 +20,7 @@ from src.phase3.common import array_identity, identity as model_identity, read_j
 
 OUT = Path(os.environ.get('PHASE3_EVICTION_AUDIT_OUT', ROOT / 'results/phase3-eviction-baseline-v1'))
 CONTROL = ROOT / 'results/phase3-overnight/runs'
-SEEDS = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 42)
+SEEDS = (1, 2, 3, 4, 5, 6) if OUT.name == 'phase3-dc-eviction-six-seed-v1' else (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 42)
 DOSES = ((0, 1), (1, 2))
 POLICIES = ('fifo', 'class_balanced')
 ADMISSION = os.environ.get('PHASE3_EVICTION_ADMISSION', 'NONE')
@@ -81,7 +81,7 @@ def endpoints(run, eligible, arrival, clean):
 def bootstrap(differences, rng, draws=20000):
     x = np.asarray(differences, dtype=np.float64)
     if x.shape != (len(SEEDS),) or not np.isfinite(x).all():
-        raise ValueError('Expected 12 finite paired whole-seed differences')
+        raise ValueError(f'Expected {len(SEEDS)} finite paired whole-seed differences')
     samples = x[rng.integers(0, len(x), size=(draws, len(x)))].mean(axis=1)
     return float(x.mean()), float(np.median(x)), float(np.quantile(samples, .025)), float(np.quantile(samples, .975))
 
@@ -93,8 +93,11 @@ def main():
     control_completion = read_json(ROOT / 'results/phase3-overnight/completion.json')
     control_hashes = control_completion.get('files', {})
     dev = read_json(ROOT / 'data/processed/phase3-reference74-v1/development/manifest.json')
-    if completion.get('status') != 'complete' or completion.get('block') != 'eviction' or completion.get('count') != 48:
-        raise RuntimeError('A complete 48-cell eviction block is required')
+    expected_cells = len(SEEDS) * len(DOSES) * len(POLICIES)
+    if completion.get('status') != 'complete' or completion.get('block') != 'eviction' or completion.get('count') != expected_cells:
+        raise RuntimeError(f'A complete {expected_cells}-cell eviction block is required')
+    if tuple(study.get('seeds', ())) != SEEDS or completion.get('admission', 'NONE') != ADMISSION:
+        raise RuntimeError('Eviction seed or admission scope differs from the declared analysis')
     if completion.get('final_test_accessed') is not False or study.get('final_test_accessed') is not False:
         raise RuntimeError('Final-test access must remain false')
     for key in ('python', 'torch', 'numpy'):
@@ -110,6 +113,7 @@ def main():
     arrival = list(map(int, dev['arrival']))
     raw, result_hashes, checkpoint_hashes = {}, {}, {}
     e1_parity = 0
+    divergent_admission_stages = 0
     for policy in POLICIES:
         for seed in SEEDS:
             for dose in DOSES:
@@ -139,8 +143,12 @@ def main():
                                    for c in current_admission]
                     reference_ids = [(c['client'], c['raw'], c['admitted'], c['admitted_ids_sha256'])
                                      for c in reference_admission]
+                    if [c[:3] for c in current_ids] != [c[:3] for c in reference_ids]:
+                        raise RuntimeError(f'Admission counts changed: {policy}/{seed}/{dose}/E{stage}')
                     if current_ids != reference_ids:
-                        raise RuntimeError(f'Admission changed under eviction treatment: {policy}/{seed}/{dose}/E{stage}')
+                        if ADMISSION == 'NONE' or stage == 1:
+                            raise RuntimeError(f'Unexpected admission ID change: {policy}/{seed}/{dose}/E{stage}')
+                        divergent_admission_stages += 1
                     if ADMISSION == 'NONE' and any(int(c['raw']) != int(c['admitted']) for c in current_admission):
                         raise RuntimeError(f'Unfiltered admission did not retain every input row: {policy}/{seed}/{dose}/E{stage}')
                 if run['stages'][0]['model_sha256'] == ref['stages'][0]['model_sha256']:
@@ -165,8 +173,11 @@ def main():
                         if policy != 'reservoir' and int(client.get('insertion_order_bytes', -1)) != 4000:
                             raise RuntimeError('Eviction insertion-order accounting mismatch')
                 raw[(policy, seed, dose)] = run
-    if len(result_hashes) != 48 or len(checkpoint_hashes) != 192:
+    if len(result_hashes) != expected_cells or len(checkpoint_hashes) != 4 * expected_cells:
         raise RuntimeError('Unexpected result or checkpoint inventory size')
+    if (result_hashes != completion.get('result_files_sha256')
+            or checkpoint_hashes != completion.get('checkpoint_files_sha256')):
+        raise RuntimeError('Result or checkpoint hashes differ from the completion manifest')
 
     # Retain whole-file digest inventories alongside the derived tables.
     audit = OUT / 'audit'
@@ -177,6 +188,7 @@ def main():
         'checkpoint_files_sha256': checkpoint_hashes, 'result_count': len(result_hashes),
         'checkpoint_count': len(checkpoint_hashes), 'e1_model_parity_cells': e1_parity,
         'e1_model_parity_scope': 'diagnostic only; full-policy eviction is active from E1',
+        'stages_with_different_admitted_ids_from_reservoir': divergent_admission_stages,
         'final_test_accessed': False,
     }
     (audit / 'integrity.json').write_text(json.dumps(integrity, indent=2) + '\n', encoding='utf-8')
@@ -232,7 +244,7 @@ def main():
                     continue
                 mean, median, lo, hi = bootstrap(differences, rng)
                 compare_rows.append({'dose': d, 'contrast': 'class_balanced-fifo', 'metric': metric,
-                    'n_paired_seeds': 12, 'mean_difference': mean, 'median_difference': median,
+                    'n_paired_seeds': len(SEEDS), 'mean_difference': mean, 'median_difference': median,
                     'whole_seed_bootstrap95_low': lo, 'whole_seed_bootstrap95_high': hi,
                     'seed_differences': json.dumps(differences)})
         for policy in POLICIES:
@@ -253,7 +265,7 @@ def main():
                     differences.append(float(current - ref_metric))
                 mean, median, lo, hi = bootstrap(differences, rng)
                 compare_rows.append({'dose': d, 'contrast': f'{policy}-reservoir', 'metric': metric,
-                    'n_paired_seeds': 12, 'mean_difference': mean, 'median_difference': median,
+                    'n_paired_seeds': len(SEEDS), 'mean_difference': mean, 'median_difference': median,
                     'whole_seed_bootstrap95_low': lo, 'whole_seed_bootstrap95_high': hi,
                     'seed_differences': json.dumps(differences)})
     write_csv(audit / 'paired-comparisons.csv', compare_rows)

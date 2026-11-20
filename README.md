@@ -1,3 +1,5 @@
+> **Current project handoff (20 November 2026):** Read [AGENT_HANDOFF.md](AGENT_HANDOFF.md) for the full experiment inventory, exact submitted report, current source paths and remaining work. Older dated status sections below are historical. See [GitHub Releases](https://github.com/ahmedbilalazhar/cl-ids-adversarial/releases) for large evidence archives.
+
 > Parallel Kaggle planning: [operator guide](docs/kaggle-phase3/PARALLEL-RUN-GUIDE.md). Twelve paired blocks on eight qualified contributors take two whole-block waves; final release remains pending.
 
 > To run the current qualification: [short Kaggle setup and readiness verdict](docs/kaggle-phase3/QUICKSTART.md). The final twelve-seed study remains sealed.
